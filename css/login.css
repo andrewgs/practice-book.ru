@@ -1,0 +1,43 @@
+.b-auth-form {
+  width: 406px;
+  height: 63px;
+  background: url(../images/login_bg.gif) no-repeat top left;
+  position: absolute;
+  left: 280px;
+  top: 129px;
+  z-index: 10000;
+}
+
+.h-auth-form {
+  padding: 10px;
+}
+
+.b-auth-inputs {
+  color: #000000;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.b-auth-inputs span {
+  padding-left: 10px;
+}
+
+.b-auth-links {
+  color: #000000;
+  font-size: 1.1em;
+  padding-left: 40px;
+}
+
+.b-auth-links span {
+  float: right;
+}
+
+.b-auth-links a {
+  color: #0e2f72;
+  text-decoration: underline;
+}
+
+.auth_input {
+  width: 110px;
+}

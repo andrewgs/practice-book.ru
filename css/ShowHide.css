@@ -1,0 +1,19 @@
+img.showhide {
+  padding: 0 8px;
+}
+.trigger {
+  background: #fff;
+  cursor: pointer;
+}		
+.trigger:hover {
+  cursor: pointer;
+  background: #eee;
+}		
+.expanded {
+  background: #fff;
+  cursor: pointer;
+}
+.expanded:hover {
+  background: #eee;
+  cursor: pointer;
+}

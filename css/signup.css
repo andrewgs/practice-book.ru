@@ -1,0 +1,92 @@
+/* menu */
+.b-left-side {
+  width: 690px;
+  float: left;
+  margin-bottom: 10px;
+  padding-top: 15px;
+}
+
+.b-block-name {
+  color: #d1221f;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding-left: 13px;
+  margin-bottom: 5px;
+  height: 1%;
+}
+
+.b-inside-left {
+  border: 2px solid #0e2f72;
+  border-width: 2px 0 0 0;
+}
+
+.h-inside-left {
+  padding: 1px 0 10px 0;
+}
+
+.b-content-362-ins {
+  width: 362px;
+  float: left;
+}
+
+.h-block {
+  padding: 8px;
+  height: 1%;
+  overflow: hidden;
+}
+
+.join_input {
+  width: 182px;
+}
+
+.join_textarea {
+  font-size: 12px;
+  width: 345px;
+  height: 300px;
+  overflow: auto;
+}
+
+.b-join-button {
+  text-align: center;
+  font-size: 12px;
+}
+
+.b-join-button input {
+  width: auto;
+}
+
+.clr {
+  clear: both;
+  font-size: 1px;
+  line-height: 1px;
+  height: 0;
+  overflow:hidden;
+}
+
+.join_error {
+  color: #d1221f;
+  padding: 7px;
+  margin-top: -8px;
+  font-size: 11px;
+}
+
+.join_success {
+  color: #07b728;
+  padding: 7px;
+  margin-top: -8px;
+  font-size: 11px;
+}
+
+div#centered {
+	border: 1px dotted #FF4500;
+	background-color: white;
+	height: 50%;
+	width: 40%;
+	position: absolute;
+	left: 30%;
+	top: 25%;
+	color: black;
+	vertical-align: middle;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}

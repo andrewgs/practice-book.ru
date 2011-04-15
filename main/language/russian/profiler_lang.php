@@ -1,0 +1,15 @@
+<?php
+$lang['profiler_database'] = 'ÁÀÇÀ ÄÀÍÍÛÕ';
+$lang['profiler_controller_info'] = 'ÊËÀÑÑ/ÌÅÒÎÄ';
+$lang['profiler_benchmarks']    = 'ÏÐÎÈÇÂÎÄÈÒÅËÜÍÎÑÒÜ';
+$lang['profiler_queries']       = 'ÇÀÏÐÎÑÛ';
+$lang['profiler_get_data']      = 'ÄÀÍÍÛÅ GET';
+$lang['profiler_post_data']     = 'ÄÀÍÍÛÅ POST';
+$lang['profiler_uri_string']    = 'ÑÒÐÎÊÀ URI';
+$lang['profiler_memory_usage']  = 'ÈÑÏÎËÜÇÎÂÀÍÈÅ ÏÀÌßÒÈ';
+$lang['profiler_no_db']         = 'Äðàéâåð ÁÄ íå çàãðóæåí';
+$lang['profiler_no_queries']    = 'Íè îäíîãî çàïðîñà íå áûëî âûïîëíåíî';
+$lang['profiler_no_post']       = 'Îòñóòñòâóþò äàííûå, ïåðåäàííûå ìåòîäîì POST';
+$lang['profiler_no_get']        = 'Îòñóòñòâóþò äàííûå, ïåðåäàííûå ìåòîäîì GET';
+$lang['profiler_no_uri']        = 'Îòñóòñòâóþò äàííûå, ïåðåäàííûå ÷åðåç URI';
+$lang['profiler_no_memory']     = 'Ñòàòèñòèêà èñïîëüçîâàíèÿ ïàìÿòè íåäîñòóïíà';
