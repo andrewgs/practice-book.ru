@@ -31,6 +31,8 @@ class Users_interface extends CI_Controller {
 		$this->load->model('documentsmodel');
 		$this->load->model('specialsmodel');
 		$this->load->model('othertextmodel');
+		$this->load->model('productgroupmodel');
+		$this->load->model('productionunitmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -644,6 +646,9 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			else:
 				$user = $this->usersmodel->auth_admin($_POST['login-name'],$_POST['login-pass']);
 				if($user):
+					if($user['ustatus'] == 'disabled'):
+						redirect("admin");
+					endif;
 					$this->session->sess_destroy();
 					$this->session->sess_create();
 					$this->session->set_userdata('cookieaid',md5($user['uemail'].$user['uconfirmation']));
@@ -723,6 +728,24 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 
 	/* -----------------------------------------	other function -------------------------------------------*/
 
+	function support(){
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('name','','required|strip_tags|trim');
+			$this->form_validation->set_rules('email','','required|strip_tags|valid_email|trim');
+			$this->form_validation->set_rules('theme','','required|strip_tags|trim');
+			$this->form_validation->set_rules('message','','required|strip_tags|trim');
+			if(!$this->form_validation->run()):
+				redirect($_POST['uri']);
+			else:
+				$this->load->model('supportmodel');
+				$success = $this->supportmodel->insert_record($_POST);
+				redirect($_POST['uri']);
+			endif;
+		else:
+			show_404();
+		endif;
+	}
+	
 	function sendmail($email,$msg,$subject,$from){
 		
 		$config['smtp_host'] = 'localhost';

@@ -23,6 +23,17 @@ class Activitymodel extends CI_Model {
 		return NULL;
 	}
 	
+	function insert_record($insertdata){
+			
+		$this->act_title 		= $insertdata['title'];
+		$this->act_parentid		= $insertdata['parentid'];
+		$this->act_fulltitle	= $insertdata['full'];
+		$this->act_final 		= $insertdata['final'];	
+		
+		$this->db->insert('tbl_activity',$this);
+		return $this->db->insert_id();
+	}
+	
 	function read_records_by_pid($ParentID){
 		
 		$this->db->where('act_parentid',$ParentID);
@@ -46,6 +57,13 @@ class Activitymodel extends CI_Model {
 	function read_records(){
 		
 		$this->db->order_by('act_id');
+		$query = $this->db->get('tbl_activity');
+		return $query->result_array();
+	}
+	
+	function read_records_order_by_pid(){
+		
+		$this->db->order_by('act_parentid ASC,act_id ASC');
 		$query = $this->db->get('tbl_activity');
 		return $query->result_array();
 	}
@@ -109,6 +127,17 @@ class Activitymodel extends CI_Model {
 		$this->db->where('act_parentid',$pid);
 		$query = $this->db->get('tbl_activity');
 		return $query->result_array();
+	}
+
+	function save_activity($id,$title,$parent,$full,$final){
+	
+		$this->db->set('act_title',$title);
+		$this->db->set('act_parentid',$parent);
+		$this->db->set('act_fulltitle',$full);
+		$this->db->set('act_final',$final);
+		$this->db->where('act_id',$id);
+		$this->db->update('tbl_activity');
+		return $this->db->affected_rows();
 	}
 }
 ?>

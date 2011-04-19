@@ -16,7 +16,6 @@
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/admin.css">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">

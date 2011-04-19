@@ -23,7 +23,7 @@
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/price','Прайс-координатор');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/tender','Тендер');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/company','Компании отросли');?></li>
-					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/news','Новости отросли');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/news','Новости');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/manager','Прайс-менеджер');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/persona','Персона');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/whomain','Кто главный?');?></li>
@@ -46,6 +46,7 @@
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/manager','Добавление федерального менеджера');?></li>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/administrator','Добавление администратора');?></li>
 					<li><?=anchor('admin/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет');?></li>
+					<li><?=anchor('admin/shutdown/'.$userinfo['uconfirmation'],'Завершить сеанс');?></li>
 				</ul>
 			</li>
 		</ul>

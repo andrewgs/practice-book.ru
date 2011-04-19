@@ -25,7 +25,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
-		<?php $this->load->view('admin_interface/header'); ?>
+		<?php $this->load->view('admin_interface/header-nomenu'); ?>
 		<div id="main">
 			<section id="frmlogin">
 				<div class="container_12">

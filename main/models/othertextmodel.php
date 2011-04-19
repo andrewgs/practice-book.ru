@@ -21,6 +21,23 @@ class Othertextmodel extends CI_Model {
 		return NULL;
 	}
 	
+	function read_field($id,$field){
+		
+		$this->db->where('otxt_id',$id);
+		$query = $this->db->get('tbl_othertext',1);
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0][$field];
+		return NULL;
+	}
+	
+	function write_field($id,$value,$field){
+		
+		$this->db->set($field,trim($value));
+		$this->db->where('otxt_id',$id);
+		$this->db->update('tbl_othertext');
+	}
+	
+	
 	function read_group($start,$end){
 		
 		$this->db->order_by('otxt_id');

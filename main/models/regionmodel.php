@@ -42,7 +42,7 @@ class Regionmodel extends CI_Model {
 		$this->reg_name 	= $insertdata['name'];
 		$this->reg_area		= $insertdata['area'];
 		$this->reg_district	= $insertdata['district'];
-		$this->reg_center 	= $insertdata['center'];	
+		$this->reg_center 	= "";	
 		
 		$this->db->insert('tbl_regions',$this);
 		return $this->db->insert_id();
@@ -76,5 +76,14 @@ class Regionmodel extends CI_Model {
 		return FALSE;
 	}
 
+	function save_region($id,$name,$area,$dictr){
+	
+		$this->db->set('reg_name',$name);
+		$this->db->set('reg_area',$area);
+		$this->db->set('reg_district',$dictr);
+		$this->db->where('reg_id',$id);
+		$this->db->update('tbl_regions');
+		return $this->db->affected_rows();
+	}
 }
 ?>

@@ -305,7 +305,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
     font: 12px/19px arial,sans-serif;
     padding: 0 0 0 2px;
 }
-.reg-form-input,.edit-form-input,.date-form-input,.reg-form-small{
+.reg-form-input,.edit-form-input,.date-form-input,
+.reg-form-small,.small200-form-input,.small100-form-input,
+.edit275-form-input,.edit60-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -323,7 +325,21 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .date-form-input{
 	width: 80px;
 }
-.reg-form-textarea,.edit-form-textarea{
+.edit60-form-input{
+	width: 60px;
+}
+.edit275-form-input{
+	width: 275px;
+}
+.small100-form-input{
+	width: 100px;
+}
+.small200-form-input{
+	width: 200px;
+}
+.reg-form-textarea,.edit-form-textarea,
+.small-form-textarea,.edit275-form-textarea,
+.edit200-form-textarea{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -338,8 +354,32 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .edit-form-textarea{
     width: 900px;
 }
+.edit275-form-textarea{
+	width: 275px;
+}
+.edit200-form-textarea{
+	width: 200px;
+}
 .reg-form-small {
     width: 30px;
+}
+.small-form-textarea {
+    width: 420px;
+}
+
+.select-price,.medium-select-price{
+	background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #D0D0D0;
+    font: bold normal 125% serif;
+	margin: 2px 0 0 0;
+    width: 55px;
+	height: 30px;
+		-moz-border-radius: 5px;
+	 -webkit-border-radius: 5px;
+			 border-radius: 5px;
+}
+.medium-select-price{
+	width: 140px;
 }
 span.necessarily{
 	font: 18px arial,sans-serif;

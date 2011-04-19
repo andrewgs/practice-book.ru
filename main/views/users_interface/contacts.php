@@ -12,6 +12,10 @@
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
+	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
+	<!--[if lt IE 7]>
+	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
+	<![endif]-->
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
@@ -125,12 +129,16 @@
 			</div>
 			<div class="clear"></div>
 		</div>
+		<div id="support-modal-content">
+			<?php $this->load->view('forms/frmsupport'); ?>
+		</div>
 		<?php $this->load->view('users_interface/footer/footer'); ?>
 	</div> <!-- end of #container -->
 <script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script src="<?= $baseurl; ?>javascript/jquery.bgiframe.min.js?v=1"></script>
 	<script src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script src="<?= $baseurl; ?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
@@ -179,7 +187,45 @@
 			function shotduwn(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){$("#loginstatus").load("<?= $baseurl; ?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});}});};
 				
 			function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?= $baseurl; ?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?= $baseurl; ?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});}else msgerror(data.message);},"json");}};
-				
+			$("a#Support").click(function(e){
+			$("#support-modal-content").modal();
+			return false;
+		});
+		$("#SendSupport").click(function(event){
+			var err = false;
+			 $("#formRep .inpvalue").css('border-color','#D0D0D0');
+			 var name = $("#name").val();
+			 var email = $("#email").val();
+			 var theme = $("#theme").val();
+			 var message = $("#message").val();
+			if(name == ''){
+				err = true;
+				$("#name").css('border-color','#ff0000');
+			}
+			if(email == ''){
+				err = true;
+				$("#email").css('border-color','#ff0000');
+			}
+			if(theme == ''){
+				err = true;
+				$("#theme").css('border-color','#ff0000');
+			}
+			if(message == ''){
+				err = true;
+				$("#message").css('border-color','#ff0000');
+			}
+			if(err){
+				event.preventDefault();
+				$("#error").html('<font size="3" color="#FF0000"><b>Пропущены обязательные поля</b></font>');
+			}else if(!isValidEmailAddress(email)){
+				event.preventDefault();
+				$("#error").html('<font size="3" color="#FF0000"><b>Не верный E-mail</b></font>');
+			}
+		});
+		function isValidEmailAddress(emailAddress){
+			var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+			return pattern.test(emailAddress);
+		};
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}
 				
 				});

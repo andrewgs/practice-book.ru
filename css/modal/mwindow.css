@@ -2,7 +2,7 @@
 #company-modal-content,#news-modal-content,
 #persona-modal-content,#documents-modal-content,
 #document-modal-content,#specials-modal-content,
-#tips-modal-content{
+#tips-modal-content,#support-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}

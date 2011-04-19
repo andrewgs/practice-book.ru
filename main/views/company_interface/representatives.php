@@ -39,9 +39,6 @@
 			font: normal small-caps 14px/16px fantasy;
 			margin: 0 10px 10px 0;
 		}
-		.online{
-			margin-left: 20px;
-		}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

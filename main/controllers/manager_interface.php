@@ -27,6 +27,8 @@ class Manager_interface extends CI_Controller{
 		$this->load->model('personamodel');
 		$this->load->model('documentsmodel');
 		$this->load->model('specialsmodel');
+		$this->load->model('productgroupmodel');
+		$this->load->model('productionunitmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -144,7 +146,6 @@ class Manager_interface extends CI_Controller{
 		
 		if(!isset($activity) or empty($activity)) show_404();
 		if(!isset($region) or empty($region)) show_404();
-		if(!isset($parent_act) or empty($parent_act)) show_404();
 		
 		$this->session->set_userdata('activity',$activity);
 		$this->session->set_userdata('region',$region);
@@ -157,7 +158,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -191,6 +192,9 @@ class Manager_interface extends CI_Controller{
 			$pagevar['manager'] = $this->usersmodel->read_federal($activity);
 			if(!$pagevar['manager']):
 				$pagevar['manager'] = $this->usersmodel->read_federal($parent);
+				if(!$pagevar['manager']):
+					$pagevar['manager'] = $this->usersmodel->read_single_federal($activity);
+				endif;
 			endif;
 			$mraid = $this->manregactmodel->insert_record($pagevar['manager']['uid'],$region,$activity);
 			$this->productsmodel->insert_empty($mraid);
@@ -428,7 +432,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -493,7 +497,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -560,7 +564,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -629,7 +633,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -696,7 +700,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -774,7 +778,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -831,7 +835,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -919,7 +923,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -994,9 +998,41 @@ class Manager_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 
+	/* ====================================== НЕ ОБХОДИМО ЗАПОЛНИТЬ КТО ГЛАВНЫЙ ===========================================*/
 	function edit_whomain(){
 		
 	}
+	/* ====================================== НЕ ОБХОДИМО ЗАПОЛНИТЬ КТО ГЛАВНЫЙ ===========================================*/
+
+	function edit_coordinator(){
+		
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Редактирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'group'			=> array(),
+					'products'		=> array()
+			);
+		
+		$pagevar['manager']['activitypath'] = "Прайс-координатор";
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$pagevar['group'] = $this->productgroupmodel->read_records($activity);
+		if(count($pagevar['group']) == 1):
+			$pagevar['products'] = $this->productionunitmodel->read_records_title($pagevar['group'][0]['prg_id'],$mraid);
+		endif;
+		/*print_r($pagevar['group']); echo '<br/>';
+		print_r($pagevar['products']);exit;*/
+		$this->load->view('manager_interface/price-coordinator/edit-coordinator',$pagevar);
+	}
+	
 	/* ====================================== END EDIT CONTROL PANEL ===========================================*/
 	
 	function filedelete($file){
@@ -1219,7 +1255,7 @@ class Manager_interface extends CI_Controller{
 			case 'manager-list':$pagevar = array('magager'=>array(),'userinfo'=>$this->user);
 								$activity = $this->session->userdata('activity');
 								$parent = $this->session->userdata('parent_act');
-								if(!$activity || !$parent) exit;
+								if(!$activity) exit;
 								$pagevar['managers'] = $this->usersmodel->read_single_managers($activity);
 								if(!$pagevar['managers']):
 									$pagevar['managers'] = $this->usersmodel->read_managers($activity);
@@ -1227,12 +1263,29 @@ class Manager_interface extends CI_Controller{
 								$pagevar['federal'] = $this->usersmodel->read_federal($activity);
 								if(!$pagevar['federal']):
 									$pagevar['federal'] = $this->usersmodel->read_federal($parent);
+									if(!$pagevar['federal']):
+										$pagevar['federal'] = $this->usersmodel->read_single_federal($activity);
+									endif;
 								endif;
 								$pagevar['managers'][count($pagevar['managers'])] = $pagevar['federal'];
 								$this->load->view('forms/frmmanlist',$pagevar);
 								break;
 					default :	show_404();
 		endswitch;
+	}
+
+	function product_unit_load(){
+	
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		
+		$group = $this->input->post('group');
+		if(!isset($group) or empty($group)) show_404();
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$pagevar = array('products'=>$this->productionunitmodel->read_records_title($group,$mraid));
+		$this->load->view('manager_interface/price-coordinator/select-product-unit',$pagevar);
 	}
 	
 	function set_manager_on_region(){
@@ -1241,7 +1294,7 @@ class Manager_interface extends CI_Controller{
 			$parent = $this->session->userdata('parent_act');
 			$region = $this->session->userdata('region');
 			
-			if(!$activity || !$region || !$parent) show_404();
+			if(!$activity || !$region) show_404();
 			$mraid = $this->manregactmodel->record_exist($region,$activity);
 			if($mraid):
 				$this->manregactmodel->set_manager_on_region($mraid,$_POST['manager']);
@@ -1364,7 +1417,7 @@ class Manager_interface extends CI_Controller{
 		$activity = $this->session->userdata('activity');
 		$parent = $this->session->userdata('parent_act');
 		$region = $this->session->userdata('region');
-		if(!$activity || !$region || !$parent) show_404();
+		if(!$activity || !$region) show_404();
 		
 		$pagevar = array(
 					'description'	=> '',

@@ -111,5 +111,22 @@ class Companymodel extends CI_Model {
 		$this->db->update('tbl_company');
 		return $this->db->affected_rows();
 	}
+
+	function read_records(){
+	
+		$sql = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_date,cmp_rating FROM tbl_company ORDER BY cmp_rating DESC,cmp_name";
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	function save_company_rating($cid,$rating){
+		
+		$this->db->set('cmp_rating',$rating);
+		$this->db->where('cmp_id',$cid);
+		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
+	}
 }
 ?>

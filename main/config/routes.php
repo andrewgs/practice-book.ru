@@ -14,6 +14,7 @@ $route['job'] = "users_interface/job";
 $route['about'] = "users_interface/about_project";
 $route['contacts'] = "users_interface/contacts";
 $route['conditions-cooperation'] = "users_interface/cooperation";
+$route['support'] = "users_interface/support";
 
 /* ----------------------------------------	registering company -------------------------------------------*/
 $route['registering/step-1'] = "users_interface/newcompany1";
@@ -64,6 +65,8 @@ $route['views/manager-list/:any'] = "manager_interface/views";
 $route['manager/set-manager-region/:any'] = "manager_interface/set_manager_on_region";
 $route['manager/manager-list/:any'] = "manager_interface/manager_list";
 
+$route['listbox/product-unit-list/:any'] = "manager_interface/product_unit_load";
+
 $route['manager/edit-product/:any'] = "manager_interface/edit_product";
 $route['manager/edit-pitfalls/:any'] = "manager_interface/edit_pitfalls";
 $route['manager/delete-pitfalls/:any'] = "manager_interface/delete_pitfalls";
@@ -85,6 +88,7 @@ $route['manager/edit-tips/:any'] = "manager_interface/edit_tips";
 $route['manager/delete-tips/:any'] = "manager_interface/delete_tips";
 $route['manager/save-tips/:any'] = "manager_interface/save_tips";
 $route['manager/edit-whomain/:any'] = "manager_interface/edit_whomain";
+$route['manager/edit-coordinator/:any'] = "manager_interface/edit_coordinator";
 /************************************	ADMIN INTRERFACE	***********************************************/
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";
@@ -94,7 +98,15 @@ $route['admin/activity-content/:any/:any'] = "admin_interface/activity_content";
 $route['admin/information-list/:any/:any'] = "admin_interface/information_list";
 $route['admin/registration/:any/:any'] = "admin_interface/registration_users";
 $route['admin/cabinet/:any'] = "admin_interface/cabinet";
+$route['admin/shutdown/:any'] = "admin_interface/shutdown";
 
+$route['admin/save-region/:any']= "admin_interface/save_region";
+$route['admin/save-activity/:any']= "admin_interface/save_activity";
+$route['admin/save-user/:any']= "admin_interface/save_user";
+$route['admin/delete-user/:any']= "admin_interface/dalete_user";
+$route['admin/save-company/:any']= "admin_interface/save_company";
+$route['admin/save-profile/:any']= "admin_interface/save_profile";
+$route['admin/delete-message/:any']= "admin_interface/delete_message";
 /************************************	COMPANY INTRERFACE	***********************************************/
 
 $route['company/control-panel/:any'] = "company_interface/cpanel";

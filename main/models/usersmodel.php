@@ -81,7 +81,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_manager($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
 		$query = $this->db->query($sql, array($activity));
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -89,30 +89,63 @@ class Usersmodel extends CI_Model {
 	}
 	
 	function read_federal($activity){
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
 		$query = $this->db->query($sql, array($activity));
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
 	
+	function read_records($type){
+		switch ($type):
+			// администраторы
+			case '0' : 	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,uactivity FROM tbl_user WHERE umanager=0 AND upriority=0 AND ucompany=0";
+						break;
+			//федеральные менеджеры
+			case '1' : 	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,uactivity FROM tbl_user WHERE umanager=1 AND upriority=1 AND ucompany=0";
+						$this->db->where('ucompany',0);
+						$this->db->where('umanager',1);
+						$this->db->where('upriority',1);
+						break;
+			//региональные менеджеры
+			case '2' :	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,uactivity FROM tbl_user WHERE umanager=1 AND upriority=0 AND ucompany=0";
+						break;
+			//представители компании
+			case '3' :	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,uactivity FROM tbl_user WHERE umanager=0 AND ucompany>0";
+						break;
+		endswitch;
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
 	function read_managers($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = (select act_parentid from tbl_activity where act_id = ?)";
 		$query = $this->db->query($sql, array($activity));
 		return $query->result_array();
 	}
 	
 	function read_single_managers($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND uactivity = ? ORDER BY uid";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid";
 		$query = $this->db->query($sql,array($activity));
 		return $query->result_array();
 	}
 	
 	function read_single_manager($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND uactivity = ? ORDER BY uid LIMIT 1";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
+		$query = $this->db->query($sql,array($activity));
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0];
+		return NULL;
+	}
+	
+	function read_single_federal($activity){
+			
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
 		$query = $this->db->query($sql,array($activity));
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -121,7 +154,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_single_manager_byid($uid,$text){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND uid = $uid ORDER BY uid";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND udestroy = '3000-01-01' AND uid = $uid ORDER BY uid";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -156,6 +189,7 @@ class Usersmodel extends CI_Model {
 		
 		$this->db->select('uid,ucompany,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity');
 		$this->db->where('uid',$id);
+		$this->db->where('udestroy','3000-01-01');
 		$query = $this->db->get('tbl_user');
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -166,6 +200,7 @@ class Usersmodel extends CI_Model {
 		
 		$this->db->where('uid',$uid);
 		$this->db->where('ustatus','enabled');
+		$this->db->where('udestroy','3000-01-01');
 		$this->db->set($field,$data);
 		$this->db->update('tbl_user');
 		return $this->db->affected_rows();
@@ -262,58 +297,12 @@ class Usersmodel extends CI_Model {
 		return FALSE;
 	}
 	
-	function update_profile($updatedata,$uid){
-			
-		$data = array('uname'=>$updatedata['name'],'usubname'=>$updatedata['subname'],'uemail'=>$updatedata['email'],
-					'usite'=>strtolower($updatedata['sitename']),'uweddingdate'=>$updatedata['weddingdate']);
-		$this->db->set($data);
-		$this->db->where('uid',$uid);
-		$this->db->update('users');
-		return TRUE;
-	}
-	
-	function changepassword($updatedata,$uid){
-			
-		$this->db->set('upassword',md5($updatedata['password']));
-		$this->db->set('ucryptpassword',$this->encrypt->encode($updatedata['password']));
-		$this->db->where('uid',$uid);
-		$this->db->update('users');
-		return TRUE;
-	}
-	
 	function close_user($uid){
 		
 		$this->db->set('ulastlogindate',date("Y-m-d"));
 		$this->db->set('udestroy','DATE_ADD(CURDATE(),INTERVAL 30 DAY)',FALSE);
 		$this->db->where('uid',$uid);
 		$this->db->update('tbl_user');
-	}
-
-	function open_user($uid){
-		
-		$this->db->set('udestroy','3000-01-01');
-		$this->db->where('uid',$uid);
-		$this->db->update('users');
-	}
-
-	function close_status($site){
-			
-		$this->db->where('usite',$site);
-		$this->db->where('udestroy !=','3000-01-01');
-		$query = $this->db->get('users',1);
-		$data = $query->result_array();
-		if(count($data)>0) return TRUE;
-		return FALSE;
-	}
-
-	function read_status($uid){
-			
-		$this->db->select('ustatus AS status');
-		$this->db->where('uid',$uid);
-		$query = $this->db->get('users',1);
-		$data = $query->result_array();
-		if(isset($data[0])) return $data[0]['status'];
-		return FALSE;
 	}
 
 	function get_image($id){
@@ -323,6 +312,24 @@ class Usersmodel extends CI_Model {
 		$query = $this->db->get('tbl_user');
 		$data = $query->result_array();
 		return $data[0]['uphoto'];
+	}
+
+	function save_user($uid,$data,$priority,$activity){
+		
+		$this->db->set('udestroy',$data);
+		$this->db->set('upriority',$priority);
+		$this->db->set('uactivity',$activity);
+		$this->db->where('uid',$uid);
+		$this->db->update('tbl_user');
+		return $this->db->affected_rows();
+	}
+
+	function delete_record($uid){
+	
+		$this->db->where('uid',$uid);
+		$this->db->where('ustatus','disabled');
+		$this->db->delete('tbl_user');
+		return $this->db->affected_rows();
 	}
 }
 ?>

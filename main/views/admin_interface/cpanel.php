@@ -19,6 +19,17 @@
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/admin.css">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<style type="text/css">
+		.h470{
+			min-height: 470px;
+		}
+		.w918{
+			width: 918px;
+		}
+		div.ButtonOperation{
+			min-height:30px;
+		}
+	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -30,6 +41,7 @@
 		<div id="main">
 			<section id="frmlogin">
 				<div class="container_12">
+					<?php $this->load->view('admin_interface/support-list'); ?>
 					<div class="clear"></div>
 				</div>
 			</section>
@@ -40,6 +52,22 @@
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+		
+			$(".btnDelete").click(function(){
+				var curID = $(this).attr("rID");
+				var mesID = $("td[rID='"+curID+"']").text();
+				$.post(
+					"<?=$baseurl;?>admin/delete-message/<?=$userinfo['uconfirmation'];?>",
+					{'id':mesID},
+					function(data){
+						if(data.status){
+							$("tr[rID='"+curID+"']").fadeOut("slow",function(){
+								$("tr[rID='"+curID+"']").remove();
+							});
+						}else
+							msgerror(data.message);
+					},"json");
+			});
 			function msgerror(msg){
 				$.blockUI({
 					message: msg,
