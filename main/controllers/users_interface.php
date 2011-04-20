@@ -721,6 +721,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'prsavatar'	: 	$image = $this->personamodel->get_image($id); break;
 			case 'docavatar'	: 	$image = $this->documentsmodel->get_image($id); break;
 			case 'specials'		: 	$image = $this->specialsmodel->get_image($id); break;
+			case 'puravatar'	: 	$image = $this->productionunitmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;

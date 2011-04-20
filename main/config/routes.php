@@ -47,6 +47,7 @@ $route['companynews/viewimage/:num'] = "users_interface/viewimage";
 $route['prsavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['docavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['specials/viewimage/:num'] = "users_interface/viewimage";
+$route['puravatar/viewimage/:num'] = "users_interface/viewimage";
 
 /* ------------------------------------------ other -------------------------------------------------------*/
 $route['script_error'] = "users_interface/showerror";
@@ -66,6 +67,7 @@ $route['manager/set-manager-region/:any'] = "manager_interface/set_manager_on_re
 $route['manager/manager-list/:any'] = "manager_interface/manager_list";
 
 $route['listbox/product-unit-list/:any'] = "manager_interface/product_unit_load";
+$route['listbox/product-unit-form/:any'] = "manager_interface/product_form_load";
 
 $route['manager/edit-product/:any'] = "manager_interface/edit_product";
 $route['manager/edit-pitfalls/:any'] = "manager_interface/edit_pitfalls";
@@ -89,6 +91,8 @@ $route['manager/delete-tips/:any'] = "manager_interface/delete_tips";
 $route['manager/save-tips/:any'] = "manager_interface/save_tips";
 $route['manager/edit-whomain/:any'] = "manager_interface/edit_whomain";
 $route['manager/edit-coordinator/:any'] = "manager_interface/edit_coordinator";
+$route['manager/product-unit-dalete/:any'] = "manager_interface/product_unit_dalete";
+$route['manager/product-unit-info/:any'] = "manager_interface/product_unit_info";
 /************************************	ADMIN INTRERFACE	***********************************************/
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";

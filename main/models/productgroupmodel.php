@@ -18,7 +18,7 @@ class Productgroupmodel extends CI_Model {
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
-
+	
 	function read_records($activity){
 	
 		$this->db->where('prg_activity',$activity);
@@ -36,10 +36,10 @@ class Productgroupmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function insert_record($insertdata){
+	function insert_record($title,$activity){
 		
-		$this->prg_title	= strip_tags($insertdata['title']);
-		$this->prg_activity	= $insertdata['activity'];
+		$this->prg_title	= htmlspecialchars(trim($title));
+		$this->prg_activity	= $activity;
 		
 		$this->db->insert('tbl_productgroup',$this);
 		return $this->db->insert_id();

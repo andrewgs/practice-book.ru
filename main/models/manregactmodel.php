@@ -6,6 +6,7 @@ class Manregactmodel extends CI_Model {
 	var $mra_uid = 0;
 	var $mra_rid = "";
 	var $mra_aid = "";
+	var $mra_banner = "";
 	
 	function __construct(){
 
@@ -24,9 +25,10 @@ class Manregactmodel extends CI_Model {
 
 	function insert_record($uid,$rid,$aid){
 		
-		$this->mra_uid = $uid;
-		$this->mra_rid = $rid;
-		$this->mra_aid = $aid;
+		$this->mra_uid 		= $uid;
+		$this->mra_rid 		= $rid;
+		$this->mra_aid 		= $aid;
+		$this->mra_banner 	= "";
 		$this->db->insert('tbl_mra',$this);
 		return $this->db->insert_id();
 	}
@@ -44,6 +46,20 @@ class Manregactmodel extends CI_Model {
 	
 		$this->db->set('mra_uid', $uid);
 		$this->db->where('mra_id',$mra_id);
+		$this->db->update('tbl_mra');
+	}
+	
+	function save_banner($mra_id,$banner){
+		
+		$this->db->set('mra_banner',$banner);
+		$this->db->where('mra_id',$mra_id);
+		$this->db->update('tbl_mra');
+	}
+	
+	function save_banners($activity,$banner){
+		
+		$this->db->set('mra_banner',$banner);
+		$this->db->where('mra_aid',$activity);
 		$this->db->update('tbl_mra');
 	}
 }

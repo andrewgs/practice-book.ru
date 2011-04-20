@@ -23,19 +23,16 @@
 		div.ButtonOperation{
 			min-height:30px;
 		}
-		.NewsDel, .NewsCancel, .EraserInput{
+		.NewsDel{
 			float: right;
 			padding: 5px;
 			margin-right: 10px;
 			cursor: pointer;
 		}
-		.NewsExc, .NewsEdit, .NewsSave{
+		.NewsSave{
 			float: right;
 			padding: 5px;
 			cursor: pointer;
-		}
-		.NewsExc{
-			cursor:help;
 		}
 		.h150{
 			min-height: 150px;
@@ -48,35 +45,12 @@
 			margin: 10px 0 10px 0;
 			padding: 5px 0 5px 0;
 		}
-		.repData{
-			margin: 15px 0 0 0;
-		}
-		span.text{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 0 10px 10px 0;
-			cursor:help;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-			text-align:justify;
-			min-height: 100px;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		.btnHidden{
-			display:none;
-		}
-		.tmpTitle,.tmpDesc,.newsID{
-			display:none;
-		}
-		.button-insert{
-			margin: 20px 0 20px 0;
-		}
 		#lists select{
 			margin-right: 10px;
 			font: bold italic 125% serif;
+		}
+		#formUnit{
+			margin-top:10px;
 		}
 	</style>
 </head>
@@ -97,7 +71,7 @@
 					<div id="frmInsProductUnit" style="display:none;">
 						<?php $this->load->view('manager_interface/price-coordinator/insproductunit');?>
 					</div>
-					<button id="InsProductUnit" style="height:2.5em; margin-top:15px; min-width: 130px;">
+					<button id="InsProductUnit" style="height:2.5em; margin-top:15px; min-width: 130px; display:none;">
 						<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить позицию</font>
 					</button>
 					<div class="clear"></div>
@@ -122,21 +96,89 @@
 		$(document).ready(function(){
 		
 			$("#select-group").change(function(){
+				$("#select-unit").die();
+				$(".digital").die();
+				$("#UnitSave").die();
+				$("#UnitDel").die();
 				$("#select-unit").remove();
 				$("#pulist").text('');
+				$("#formUnit").text('');
+				if($("#frmInsProductUnit").is(":visible")){
+					$("#frmInsProductUnit").slideUp("slow",function(){
+						$("#frmInsProductUnit").hide();
+						$("#InsProductUnit").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить позицию</font>');
+					});
+				}
+				$("#InsProductUnit").hide();
+				$("input:hidden[name='groupvalue']").val(0);
+				$("#select-products").die();
 				$("#select-products").remove();
 				if($(this).val()>0){
 					$(this).css('float','left');
+					$("input:hidden[name='groupvalue']").val($(this).val());
+					$("#InsProductUnit").show();
 					$("#pulist").text('Ждите идет построение списка...');
 					$("#pulist").load("<?=$baseurl;?>listbox/product-unit-list/<?=$userinfo['uconfirmation'];?>",
 						{'group':$(this).val()},
 						function(){
 							$("#select-products").live('change',function(){
+								$("#select-unit").die();
+								$(".digital").die();
+								$("#UnitSave").die();
+								$("#UnitDel").die();
 								$("#select-unit").remove();
+								$("#formUnit").text('');
 								if($("#select-products").val()>0){
 									$("#select-products").css('float','left');
 									$("#select-products").after('<input type="button" class="lnk-submit" id="select-unit" value="ОК"/>');
-									$("#select-unit").live('click',function(){alert("Вышло!");});
+									$("#select-unit").live('click',function(){
+										$("#formUnit").load("<?=$baseurl;?>listbox/product-unit-form/<?=$userinfo['uconfirmation'];?>",
+											{'group':$("#select-group").val(),'unit':$("#select-products").val()},
+											function(){
+												$(".digital").live('keypress',function(e){
+													if(e.which!=8 && e.which!=46 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+												});
+												$("#UnitSave").live('click',function(event){
+													var title = $("#uptitle").val();
+													$("#uptitle").css('border-color','#D0D0D0');
+													if(title == ''){
+														$("#uptitle").css('border-color','#FF0000');
+														event.preventDefault();
+														msgerror('Пропущены обязательные поля');
+													}
+												});
+												$("#UnitDel").live('click',function(event){
+													event.preventDefault();
+													$.post(
+														"<?=$baseurl;?>manager/product-unit-dalete/<?=$userinfo['uconfirmation'];?>",
+														{'group':$("#select-group").val(),'unit':$("#select-products").val()},
+														function(data){
+															if(data.status){
+																$("#select-unit").die();
+																$(".digital").die();
+																$("#UnitSave").die();
+																$("#UnitDel").die();
+																$("#select-unit").remove();
+																$("#pulist").text('');
+																$("#formUnit").text('');
+																if($("#frmInsProductUnit").is(":visible")){
+																	$("#frmInsProductUnit").slideUp("slow",function(){
+																		$("#frmInsProductUnit").hide();
+																		$("#InsProductUnit").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить позицию</font>');
+																	});
+																}
+																$("#InsProductUnit").hide();
+																$("input:hidden[name='groupvalue']").val(0);
+																$("#select-products").die();
+																$("#select-products").remove();
+																$("#select-group").val(0);
+															}else msgerror(data.message);
+														},"json");
+																						
+												});
+											}
+										);
+									});
 								}
 							});
 						}

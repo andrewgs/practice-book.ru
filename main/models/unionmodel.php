@@ -115,5 +115,17 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data;
 		return NULL;
 	}
+
+	function read_product_group($activity,$mraid){
+		
+		$query = "SELECT prg_id,prg_title FROM tbl_productgroup INNER JOIN tbl_productionunit WHERE prg_id = pri_groupcode AND prg_activity = $activity AND pri_mraid = $mraid GROUP BY prg_id";
+		
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+		
+		
+	}
 }
 ?>

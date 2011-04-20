@@ -6,7 +6,7 @@
 		</div>
 		<div class="box-content h150 w918">
 		<label class="label-input">Название новой группы позиций: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
-			<input class="edit-form-input inppgvalue" maxlength="8" id="pgtitle" name="title" type="text" value="<?=set_value('title');?>">
+			<input class="edit-form-input inppgvalue" maxlength="250" id="pgtitle" name="title" type="text" value="<?=set_value('title');?>">
 			<div class="clear"></div>
 			<input class="btn-action margin-1em" id="addProductGroup" type="submit" name="sbmpg" value="Добавить группу"/>
 		</div>

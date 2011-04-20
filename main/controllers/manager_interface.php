@@ -182,6 +182,10 @@ class Manager_interface extends CI_Controller{
 					'documents'		=> array(),
 					'specials'		=> array(),
 					'tips'			=> array(),
+					'unitgroups'	=> array(),
+					'units'			=> array(),
+					'group'			=> 0,
+					'banner'		=> "",
 					'top_rating'	=> 50,
 					'low_rating'	=> 20
 			);
@@ -279,6 +283,23 @@ class Manager_interface extends CI_Controller{
 					$pagevar['specials'][$i]['spc_note'] .= '. ... ';
 				endif;
 			endfor;
+			$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
+			$pagevar['unitgroups'] = $this->unionmodel->read_product_group($activity,$mraid);
+			if($pagevar['unitgroups']):
+				$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+				$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+				$pagevar['units'] = $this->productionunitmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$mraid);
+				if($pagevar['units']):
+					$pagevar['units'][0]['pri_lowpricecode'] = $monetary[$pagevar['units'][0]['pri_lowpricecode']];
+					$pagevar['units'][0]['pri_optimumpricecode'] = $monetary[$pagevar['units'][0]['pri_optimumpricecode']];
+					$pagevar['units'][0]['pri_toppricecode'] = $monetary[$pagevar['units'][0]['pri_toppricecode']];
+					$pagevar['units'][0]['pri_unitscode'] = $unitsof[$pagevar['units'][0]['pri_unitscode']];
+					if(count($pagevar['unitgroups']) == 1):
+						$pagevar['group'] = $pagevar['unitgroups'][0]['prg_id'];
+						$pagevar['unitgroups'] = NULL;
+					endif;
+				endif;
+			endif;
 		endif;
 		$pagevar['company']['all'] = $this->unionmodel->select_company_by_region($activity,$region);
 		for($i=0;$i<count($pagevar['company']['all']);$i++):
@@ -998,11 +1019,36 @@ class Manager_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 
-	/* ====================================== НЕ ОБХОДИМО ЗАПОЛНИТЬ КТО ГЛАВНЫЙ ===========================================*/
 	function edit_whomain(){
+	
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
 		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Редактирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'banner'		=> ""
+			);
+		
+		$pagevar['manager']['activitypath'] = "Кто-главный";
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if($this->input->post('submit')):
+			if($this->user['priority'] && isset($_POST['all'])):
+				$this->manregactmodel->save_banners($activity,$_POST['banner']);
+				redirect('manager/control-panel/'.$this->user['uconfirmation']);
+			endif;
+			$this->manregactmodel->save_banner($mraid,$_POST['banner']);
+			redirect('manager/control-panel/'.$this->user['uconfirmation']);
+		endif;
+		$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
+		$this->load->view('manager_interface/edit-banner',$pagevar);
 	}
-	/* ====================================== НЕ ОБХОДИМО ЗАПОЛНИТЬ КТО ГЛАВНЫЙ ===========================================*/
 
 	function edit_coordinator(){
 		
@@ -1024,13 +1070,115 @@ class Manager_interface extends CI_Controller{
 		
 		$pagevar['manager']['activitypath'] = "Прайс-координатор";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
-		$pagevar['group'] = $this->productgroupmodel->read_records($activity);
-		if(count($pagevar['group']) == 1):
-			$pagevar['products'] = $this->productionunitmodel->read_records_title($pagevar['group'][0]['prg_id'],$mraid);
+		if($this->input->post('sbmpg')):
+			if($_POST['title']):
+				$this->productgroupmodel->insert_record($_POST['title'],$activity);
+				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+			endif;
 		endif;
-		/*print_r($pagevar['group']); echo '<br/>';
-		print_r($pagevar['products']);exit;*/
+		
+		if($this->input->post('subsave')):
+			$this->form_validation->set_rules('grouplist','','required|trim');
+			$this->form_validation->set_rules('productlist','','required|trim');
+			$this->form_validation->set_rules('title','название','required|trim');
+			$this->form_validation->set_rules('note','','trim');
+			$this->form_validation->set_rules('lowprice','','trim');
+			$this->form_validation->set_rules('lowpricecode','','trim');
+			$this->form_validation->set_rules('optimumprice','','trim');
+			$this->form_validation->set_rules('optimumpricecode','','trim');
+			$this->form_validation->set_rules('topprice','','trim');
+			$this->form_validation->set_rules('toppricecode','','trim');
+			$this->form_validation->set_rules('unitscode','','trim');
+			$this->form_validation->set_rules('riskslowprice','','trim');
+			$this->form_validation->set_rules('advantages','','trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['subsave'] = NULL;
+				$this->edit_coordinator();
+				return FALSE;
+			else:
+				$_POST['subsave'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],90,90,TRUE);
+				else:
+					$_POST['image'] = "";
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$_POST['riskslowprice'] = preg_replace('/\n{2}/','<br>',$_POST['riskslowprice']);
+				$_POST['advantages'] = preg_replace('/\n{2}/','<br>',$_POST['advantages']);
+				
+				$this->productionunitmodel->update_record($_POST['productlist'],$mraid,$_POST,$_POST['grouplist']);
+				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		
+		if($this->input->post('subdel')):
+			print_r($_POST);
+			exit;
+		endif;
+		
+		if($this->input->post('sbmpu')):
+			$this->form_validation->set_rules('groupvalue','','required|trim');
+			$this->form_validation->set_rules('title','название','required|trim');
+			$this->form_validation->set_rules('note','','trim');
+			$this->form_validation->set_rules('lowprice','','trim');
+			$this->form_validation->set_rules('lowpricecode','','trim');
+			$this->form_validation->set_rules('optimumprice','','trim');
+			$this->form_validation->set_rules('optimumpricecode','','trim');
+			$this->form_validation->set_rules('topprice','','trim');
+			$this->form_validation->set_rules('toppricecode','','trim');
+			$this->form_validation->set_rules('unitscode','','trim');
+			$this->form_validation->set_rules('riskslowprice','','trim');
+			$this->form_validation->set_rules('advantages','','trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['sbmpu'] = NULL;
+				$this->edit_coordinator();
+				return FALSE;
+			else:
+				if(!$_POST['groupvalue']):
+		show_error("Отсутствует код гпуппы<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+				endif;
+				$_POST['sbmpu'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],90,90,TRUE);
+				else:
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$_POST['riskslowprice'] = preg_replace('/\n{2}/','<br>',$_POST['riskslowprice']);
+				$_POST['advantages'] = preg_replace('/\n{2}/','<br>',$_POST['advantages']);
+				
+				/*if($this->user['priority'] && isset($_POST['all'])):
+					if(!$_POST['image']):
+						$mraid = $this->manregactmodel->record_exist($region,$activity);
+						$product = $this->productsmodel->record_exist($mraid);
+						$_POST['image'] = $this->productsmodel->get_image($product);
+					endif;
+					$this->unionmodel->update_product($activity,$_POST);
+					redirect('manager/control-panel/'.$this->user['uconfirmation']);
+				endif;*/
+				
+//				print_r($_POST);exit;
+				$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
+				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		$pagevar['group'] = $this->productgroupmodel->read_records($activity);
 		$this->load->view('manager_interface/price-coordinator/edit-coordinator',$pagevar);
+	}
+	
+	function product_unit_dalete(){
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$pgid = trim($this->input->post('group'));
+		$puid = trim($this->input->post('unit'));
+		if(!isset($pgid) or empty($pgid)) show_404();
+		if(!isset($puid) or empty($puid)) show_404();
+		$success = $this->productionunitmodel->delete_record($puid,$pgid);
+		if($success) $statusval['status'] = TRUE;
+		echo json_encode($statusval);
 	}
 	
 	/* ====================================== END EDIT CONTROL PANEL ===========================================*/
@@ -1125,8 +1273,8 @@ class Manager_interface extends CI_Controller{
 			return FALSE;
 		endif;
 		return TRUE;
-	}
-
+	}	
+	
 	function save_profile(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при сохранении','retvalue'=>'');
@@ -1287,6 +1435,58 @@ class Manager_interface extends CI_Controller{
 		$pagevar = array('products'=>$this->productionunitmodel->read_records_title($group,$mraid));
 		$this->load->view('manager_interface/price-coordinator/select-product-unit',$pagevar);
 	}
+
+	function product_form_load(){
+	
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		$group = $this->input->post('group');
+		$unit = $this->input->post('unit');
+		if(!isset($group) or empty($group)) show_404();
+		if(!isset($unit) or empty($unit)) show_404();
+		
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$pagevar = array('baseurl'=>base_url(),'unit'=>array());
+		$pagevar['unit'] = $this->productionunitmodel->read_unit($unit,$group);
+		$this->load->view('manager_interface/price-coordinator/select-product-form',$pagevar);
+	}
+	
+	function product_unit_info(){
+	
+		$unit = array();
+		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+		$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		$group = $this->input->post('group');
+		$unit = $this->input->post('unit');
+		if(!$group || !$unit) show_404();
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$unitinfo = $this->productionunitmodel->read_unit($unit,$group);
+		
+		$punit['note'] = $unitinfo['pri_note'];
+		$punit['image'] = '<img src="'.base_url().'puravatar/viewimage/'.$unitinfo['pri_id'].'"class="floated" alt=""/>';
+		$punit['lowprice'] = $unitinfo['pri_lowprice'];
+		$punit['optimumprice'] = $unitinfo['pri_optimumprice'];
+		$punit['topprice'] = $unitinfo['pri_topprice'];
+		$punit['risks'] = $unitinfo['pri_riskslowprice'];
+		$punit['advantage'] = $unitinfo['pri_advantages'];
+		
+		$punit['lowpricecode'] = $monetary[$unitinfo['pri_lowpricecode']];
+		$punit['optimumpricecode'] = $monetary[$unitinfo['pri_optimumpricecode']];
+		$punit['toppricecode'] = $monetary[$unitinfo['pri_toppricecode']];
+		$punit['unitscode'] = $unitsof[$unitinfo['pri_unitscode']];
+		if($punit['unitscode']):
+			$punit['lowpricecode'] .= '/'.$punit['unitscode'];
+			$punit['optimumpricecode'] .= '/'.$punit['unitscode'];
+			$punit['toppricecode'] .= '/'.$punit['unitscode'];
+		endif;
+		echo json_encode($punit);
+	}
 	
 	function set_manager_on_region(){
 		if($this->input->post('manager')):
@@ -1307,55 +1507,6 @@ class Manager_interface extends CI_Controller{
 		endif;
 	}
 
-	function resize_img($tmpName,$wgt,$hgt){
-			
-		chmod($tmpName,0777);
-		$img = getimagesize($tmpName);		
-		$size_x = $img[0];
-		$size_y = $img[1];
-		$wight = $wgt;
-		$height = $hgt; 
-		if(($size_x < $wgt) or ($size_y < $hgt)):
-			$this->resize_image($tmpName,$wgt,$hgt,FALSE);
-			$image = file_get_contents($tmpName);
-			return $image;
-		endif;
-		if($size_x > $size_y):
-			$this->resize_image($tmpName,$size_x,$hgt,TRUE);
-		else:
-			$this->resize_image($tmpName,$wgt,$size_y,TRUE);
-		endif;
-		$img = getimagesize($tmpName);		
-		$size_x = $img[0];
-		$size_y = $img[1];
-		switch ($img[2]){
-			case 1: $image_src = imagecreatefromgif($tmpName); break;
-			case 2: $image_src = imagecreatefromjpeg($tmpName); break;
-			case 3:	$image_src = imagecreatefrompng($tmpName); break;
-		}
-		$x = round(($size_x/2)-($wgt/2));
-		$y = round(($size_y/2)-($hgt/2));
-		if($x < 0):
-			$x = 0;	$wight = $size_x;
-		endif;
-		if($y < 0):
-			$y = 0; $height = $size_y;
-		endif;
-		$image_dst = ImageCreateTrueColor($wight,$height);
-		imageCopy($image_dst,$image_src,0,0,$x,$y,$wight,$height);
-		imagePNG($image_dst,$tmpName);
-		imagedestroy($image_dst);
-		imagedestroy($image_src);
-		$image = file_get_contents($tmpName);
-		/*$file = fopen($tmpName,'rb');
-		$image = fread($file,filesize($tmpName));
-		fclose($file);
-		header('Content-Type: image/jpeg' );
-		echo $image;
-		exit();*/
-		return $image;
-	}
-	
 	function resize_image($image,$wgt,$hgt,$ratio){
 	
 		$this->load->library('image_lib');

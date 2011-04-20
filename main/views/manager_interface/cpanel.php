@@ -49,8 +49,8 @@
 		.h150{
 			min-height: 150px;
 		}
-		.h375{
-			height: 375px;
+		.h365{
+			height: 365px;
 		}
 		.nshNote{
 			margin-bottom: 10px;
@@ -69,6 +69,19 @@
 		}
 		.RightLink{
 			float:right;
+		}
+		#lists select{
+			margin-right: 10px;
+			font: bold italic 125% serif;
+		}
+		#formUnit,#unitImage{
+			margin-top:20px;
+		}
+		#pulist{
+			margin-top:10px;
+		}
+		.btnHidden{
+			display:none;
 		}
 	</style>
 </head>
@@ -115,7 +128,7 @@
 								<div class="box-header">
 									<h2><?= $othertext[0]['otxt_note']; ?></h2> 
 								</div>
-								<div class="box-content h375 w575">
+								<div class="box-content h365 w575">
 								<?php if($product && !empty($product['pr_note'])): ?>
 									<img src="<?=$baseurl;?>mpavatar/viewimage/<?=$product['pr_id'];?>" class="floated" alt=""/>
 									<div class="nsh-title"><?=$product['pr_title'];?></div>
@@ -169,7 +182,7 @@
 											<b><?=$pitfalls[$i]['pf_date'];?></b>
 										</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<div class="nsh-title"><?=$pitfalls[$i]['pf_title'];?></div>
 										<div class="nshNote"><?=$pitfalls[$i]['full_note'];?></div>
 									</div>
@@ -219,7 +232,7 @@
 											<b><?=$questions[$i]['mraq_date'];?></b>
 										</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<span class="text">Вопрос:</span>
 										<div class="nsh-title"><?=$questions[$i]['mraq_title'];?></div>
 										<span class="text">Ответ:</span>
@@ -271,7 +284,7 @@
 											<b><?=$tips[$i]['tps_date'];?></b>
 										</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<div class="nsh-title"><?=$tips[$i]['tps_title'];?></div>
 										<div class="nshNote"><?=$tips[$i]['full_note'];?></div>
 									</div>
@@ -284,6 +297,11 @@
 						<?php endfor; ?>
 					</div>
 					<div class="grid_5">
+<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
+<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
+<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
+<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
+<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
@@ -297,23 +315,61 @@
 							</div>
 							<div class="box-content exception">
 								<div style="min-height:160px">
-									<?= $othertext[3]['otxt_content']; ?>
+								<?php if($unitgroups || $units): ?>
+									<div id="lists">
+									<?php if($unitgroups): ?>
+										<select name="grouplist" id="select-group" class="mixed-combo" size="1" style="width: 250px;">
+											<option value="0">Выберите группу</option>
+										<?php for($i=0;$i<count($unitgroups);$i++):?>
+											<option value="<?=$unitgroups[$i]['prg_id'];?>"><?=$unitgroups[$i]['prg_title'];?></option>
+										<?php endfor; ?>
+										</select>
+										<div id="pulist"></div>
+									<?php else: ?>
+										<div id="hdngroup" class="btnHidden"><?=$group;?></div>
+										<div id="pulist">
+											<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
+											<?php for($i=0;$i<count($units);$i++):?>
+												<option value="<?=$units[$i]['pri_id'];?>"><?=$units[$i]['pri_title'];?></option>
+											<?php endfor; ?>
+											</select>
+										</div>
+									<?php endif;?>
+									</div>
+									<div id="unitImage">
+										<img src="<?=$baseurl;?>puravatar/viewimage/<?=$units[0]['pri_id'];?>"class="floated" alt=""/>
+									</div>
+									<div id="formUnit">
+										<?=$units[0]['pri_note'];?>
+									</div>
+								<?php else: ?>
+								<?= $othertext[3]['otxt_content']; ?>
+								<?php endif; ?>
 								</div>
 								<div style="clear:both"></div>
 								<div class="price-content-separator">
 									<h3 class="mt5">Низкая цена <span class="desc">[Верхний предел]</span></h3>
 									<div class="price-border">
 										<div class="price-pos">
-											<div class="price-pos1">5000</div>
-											<div class="price-pos2">$</div>
+											<div class="price-pos1" id="lowprice">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_lowprice'];?>
+											<?php else: ?>
+												1000
+											<?php endif; ?>
+											</div>
+											<div class="price-pos2" id="lowpricecode">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_lowpricecode'];?>
+											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+											<?php else: ?>
+												руб.
+											<?php endif; ?>
+											</div>
 										</div>
 										<div class="price-actions">
-											<?= form_open("manager/offers-low-price/".$userinfo['uconfirmation']); ?>
-												<input type="submit" class="goog-button" tabindex="0" value="Список предложений &raquo;" >
-											<?= form_close(); ?>
-											<?= form_open("manager/risks/".$userinfo['uconfirmation']); ?>
-												<input type="submit" class="goog-button" tabindex="1" value="Возможные риски &raquo;">
-											<?= form_close(); ?>
+											<input type="button" class="goog-button window" tabindex="0" value="Список предложений">
+											<input type="button" id="winRisks" class="goog-button window" tabindex="1" value="Возможные риски">
 										</div>
 										<div class="price-schema">
 											<img alt="" title="Перейти к графику изменения цены" src="<?=$baseurl;?>images/diagram.png" />
@@ -325,13 +381,24 @@
 									<h3 class="mt5">Оптимальная цена <span class="desc">[Усред. значение]</span></h3>
 									<div class="price-border">
 										<div class="price-pos">
-											<div class="price-pos1">2700</div>
-											<div class="price-pos2">€</div>
+											<div class="price-pos1" id="optimumprice">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_optimumprice'];?>
+											<?php else: ?>
+												5000
+											<?php endif; ?>
+											</div>
+											<div class="price-pos2" id="optimumpricecode">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_optimumpricecode'];?>
+											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+											<?php else: ?>
+												руб.
+											<?php endif; ?>
+											</div>
 										</div>
 										<div class="price-actions">
-											<?= form_open("manager/offers-optimal-price/".$userinfo['uconfirmation']); ?>
-												<input type="submit" class="goog-button" tabindex="0" value="Список предложений &raquo;" id="">
-											<?= form_close(); ?>
+											<input type="button" class="goog-button" tabindex="0" value="Список предложений">
 										</div>
 										<div class="price-schema">
 											<img alt="" title="" src="<?=$baseurl;?>images/diagram.png" />
@@ -343,16 +410,25 @@
 									<h3 class="mt5">Высокая цена <span class="desc">[Нижний предел]</span></h3>
 									<div class="price-border">
 										<div class="price-pos">
-											<div class="price-pos1">10000</div>
-											<div class="price-pos2">руб.</div>
+											<div class="price-pos1" id="topprice">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_topprice'];?>
+											<?php else: ?>
+												10000
+											<?php endif; ?>
+											</div>
+											<div class="price-pos2" id="toppricecode">
+											<?php if($unitgroups || $units): ?>
+												<?=$units[0]['pri_toppricecode'];?>
+											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+											<?php else: ?>
+												руб.
+											<?php endif; ?>
+											</div>
 										</div>
 										<div class="price-actions">
-											<?= form_open("manager/offers-hight-price/".$userinfo['uconfirmation']); ?>
-												<input type="submit" class="goog-button" tabindex="0" value="Список предложений &raquo;" >
-											<?= form_close(); ?>
-											<?= form_open("manager/benefits/".$userinfo['uconfirmation']); ?>
-												<input type="submit" class="goog-button" tabindex="1" value="Преимущества &raquo;">
-											<?= form_close(); ?>
+										<input type="button" class="goog-button" tabindex="0" value="Список предложений">
+										<input type="button" id="winAdvantage" class="goog-button window" tabindex="1" value="Преимущества">
 										</div>
 										<div class="price-schema">
 											<img alt="" title="" src="<?=$baseurl;?>images/diagram.png" />
@@ -364,6 +440,44 @@
 							<div class="box-bottom-links h20">
 								<span class="box-footer-text"></span>
 								<div class="clear"></div>
+							</div>
+						</div>
+						<div id="risks-modal-content">
+							<div class="box">
+								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<h3>Возможные риски</h3>
+									<div id="risks">
+									<?php if($unitgroups || $units): ?>
+										<?=$units[0]['pri_riskslowprice'];?>
+									<?php endif; ?>
+									</div>
+								</div>
+								<div class="box-bottom-links h20">
+									&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+						<div id="advantage-modal-content">
+							<div class="box">
+								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<h3>Преимущества высокой цены</h3>
+									<div id="advantage">
+									<?php if($unitgroups || $units): ?>
+										<?=$units[0]['pri_advantages'];?>
+									<?php endif; ?>
+									</div>
+								</div>
+								<div class="box-bottom-links h20">
+									&nbsp;
+									<div class="clear"></div>
+								</div>
 							</div>
 						</div>
 						<!--<div class="box-tender">
@@ -473,7 +587,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 									<?php for($i=0;$i<count($company['all']);$i++):?>
 										<div class="content-separator">
 											<div class="floated">
@@ -506,7 +620,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
@@ -574,7 +688,7 @@
 								<div class="box-header"><b><?=$manager['activitypath'];?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
-								<div class="box-content h375 w575">
+								<div class="box-content h365 w575">
 								<h3>Новости отросли</h3><hr/>
 								<?php for($i=0;$i<count($activitynews);$i++):?>
 									<div class="content-separator">
@@ -618,7 +732,7 @@
 								<div class="box-header"><b><?=$manager['activitypath'];?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
-								<div class="box-content h375 w575">
+								<div class="box-content h365 w575">
 									<span class="text">Список пуст</span>
 									<div class="clear"></div>
 								</div>
@@ -709,7 +823,7 @@
 								<div class="box-header">
 									<h2><?= $othertext[13]['otxt_note']; ?></h2> 
 								</div>
-								<div class="box-content h375 w575">
+								<div class="box-content h365 w575">
 								<?php if($persona && !empty($persona['prs_note'])): ?>
 									<img src="<?=$baseurl;?>prsavatar/viewimage/<?=$persona['prs_id'];?>" class="floated" alt=""/>
 									<div class="nsh-title"><?=$persona['prs_title'];?></div>
@@ -736,7 +850,11 @@
 								</div>
 							</div>
 							<div class="box-content">
-								<?= $othertext[19]['otxt_content']; ?>
+								<?php if($banner): ?>
+									<?=$banner;?>
+								<?php else: ?>
+									<?= $othertext[19]['otxt_content']; ?>
+								<?php endif; ?>
 							</div>
 						</div>
 						<div class="box">
@@ -782,7 +900,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 									<?php for($i=0;$i<count($documents);$i++):?>
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>docavatar/viewimage/<?=$documents[$i]['doc_id'];?>" class="floated" alt=""/>
@@ -804,7 +922,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
@@ -861,7 +979,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 									<h3>Новинки отросли</h3><hr/>
 									<?php for($i=0;$i<count($specials);$i++):?>
 										<div class="content-separator">
@@ -871,8 +989,8 @@
 											<div class="nshNote"><?=$specials[$i]['full_note'];?></div>
 											<div class="clear"></div>
 										</div>
-									</div>
 									<?php endfor; ?>
+									</div>
 									<div class="box-bottom-links h20">
 										&nbsp;
 										<div class="clear"></div>
@@ -885,7 +1003,7 @@
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
-									<div class="box-content h375 w575">
+									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
@@ -916,6 +1034,60 @@
 		$(".edit").click(function(){
 			window.location.href="<?=$baseurl;?>manager/edit-"+this.id+"/<?=$userinfo['uconfirmation']?>";
 		});
+		
+		$("#select-group").change(function(){
+			$("#select-products").die();
+			$("#select-products").remove();
+			$("#pulist").text('');
+			if($("#select-group").val()>0){
+				$("#pulist").text('Ждите идет построение списка...');
+				$("#pulist").load("<?=$baseurl;?>listbox/product-unit-list/<?=$userinfo['uconfirmation'];?>",
+					{'group':$("#select-group").val()},
+					function(){
+						$("#select-products").live('change',function(){
+							if($("#select-products").val()>0){
+								$.post(
+									"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+									{'group':$("#select-group").val(),'unit':$("#select-products").val()},
+									function(data){
+										$("#unitImage").html(data.image);
+										$("#formUnit").html(data.note);
+										$("#lowprice").html(data.lowprice);
+										$("#lowpricecode").html(data.lowpricecode);
+										$("#optimumprice").html(data.optimumprice);
+										$("#optimumpricecode").html(data.optimumpricecode);
+										$("#topprice").html(data.topprice);
+										$("#toppricecode").html(data.toppricecode);
+										$("#risks").html(data.risks);
+										$("#advantage").html(data.advantage);
+									},"json");
+							}
+						});
+					}
+				);
+			}
+		});
+		
+		$("#single-select-products").change(function(){
+			if($(this).val()>0){
+				$.post(
+					"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+					{'group':$("#hdngroup").text(),'unit':$(this).val()},
+					function(data){
+						$("#unitImage").html(data.image);
+						$("#formUnit").html(data.note);
+						$("#lowprice").html(data.lowprice);
+						$("#lowpricecode").html(data.lowpricecode);
+						$("#optimumprice").html(data.optimumprice);
+						$("#optimumpricecode").html(data.optimumpricecode);
+						$("#topprice").html(data.topprice);
+						$("#toppricecode").html(data.toppricecode);
+						$("#risks").html(data.risks);
+						$("#advantage").html(data.advantage);
+					},"json");
+			}
+		});
+		
 		$("a#winProduct").click(function(e){
 			$('#product-modal-content').modal();
 			return false;
@@ -954,6 +1126,15 @@
 			$("#tips-modal-content").modal();
 			return false;
 		});
+		$("input#winRisks").click(function(e){
+			$("#risks-modal-content").modal();
+			return false;
+		});
+		$("input#winAdvantage").click(function(e){
+			$("#advantage-modal-content").modal();
+			return false;
+		});
+		
 		function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		

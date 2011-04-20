@@ -23,18 +23,30 @@ class Productionunitmodel extends CI_Model {
 		parent::__construct();
 	}
 	
-	function read_record($id){
+	function read_record($id,$group){
 	
 		$this->db->where('pri_id',$id);
+		$this->db->where('pri_groupcode',$group);
+		$query = $this->db->get('tbl_productionunit',1);
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0];
+		return NULL;
+	}
+	
+	function read_unit($id,$group){
+		$this->db->select('pri_id,pri_title,pri_note,pri_lowprice,pri_lowpricecode,pri_optimumprice,pri_optimumpricecode,pri_topprice,pri_toppricecode,pri_unitscode,pri_riskslowprice,pri_advantages');
+		$this->db->where('pri_id',$id);
+		$this->db->where('pri_groupcode',$group);
 		$query = $this->db->get('tbl_productionunit',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
 
-	function read_records($activity){
-	
-		$this->db->where('pri_activity',$activity);
+	function read_units($group,$mraid){
+		$this->db->select('pri_id,pri_title,pri_note,pri_lowprice,pri_lowpricecode,pri_optimumprice,pri_optimumpricecode,pri_topprice,pri_toppricecode,pri_unitscode,pri_riskslowprice,pri_advantages');
+		$this->db->where('pri_groupcode',$group);
+		$this->db->where('pri_mraid',$mraid);
 		$query = $this->db->get('tbl_productionunit');
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -64,7 +76,7 @@ class Productionunitmodel extends CI_Model {
 		$this->pri_optimumpricecode = $insertdata['optimumpricecode'];
 		$this->pri_topprice		 	= trim($insertdata['topprice']);
 		$this->pri_toppricecode	 	= $insertdata['toppricecode'];
-		$this->pri_unitscode		= trim($insertdata['unitscode']);
+		$this->pri_unitscode		= $insertdata['unitscode'];
 		$this->pri_riskslowprice	= strip_tags($insertdata['riskslowprice'],'<br>');
 		$this->pri_advantages		= strip_tags($insertdata['advantages'],'<br>');
 		$this->pri_image			= $insertdata['image'];
@@ -96,10 +108,9 @@ class Productionunitmodel extends CI_Model {
 		$this->db->update('tbl_productionunit');
 	}
 
-	function delete_record($id,$mraid,$groupe){
+	function delete_record($id,$groupe){
 	
 		$this->db->where('pri_id',$id);
-		$this->db->where('pri_mraid',$mraid);
 		$this->db->where('pri_groupcode',$groupe);
 		$this->db->delete('tbl_productionunit');
 		return $this->db->affected_rows();
