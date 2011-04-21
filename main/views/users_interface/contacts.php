@@ -23,7 +23,7 @@
 			width: 940px;
 			border-bottom: solid 1px #c4c4c4;
 		}
-		.accordion h3 {
+		.accordion h3,.accordion h4{
 			background: #e9e7e7 url(<?=$baseurl;?>images/arrow-square.gif) no-repeat right -51px;
 			padding: 7px 15px;
 			margin: 0;
@@ -32,10 +32,14 @@
 			border-bottom: none;
 			cursor: pointer;
 		}
-		.accordion h3:hover {
-			background-color: #e3e2e2;
+		.accordion h4{
+			font: normal 120%/100% Arial, Helvetica, sans-serif;
 		}
-		.accordion h3.active {
+		.accordion
+		.accordion h3:hover{
+			background-color: #c0dcc0;
+		}
+		.accordion h3.active{
 			background-position: right 5px;
 		}
 		.accordion .accordion-content {
@@ -55,27 +59,6 @@
 			border-top: 2px solid #D0D0D0;
 			border-bottom: 2px solid #D0D0D0;
 		}
-		.single-federal{
-			height:150px;
-		}
-		.single-regional{
-			width: 320px;
-		}
-		.manager-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-			border-top: 2px solid #D0D0D0;
-			border-bottom: 2px solid #D0D0D0;
-		}
-		.multi-federals{
-			margin: 10px 0 10px 0;
-			border-top: 2px dashed #D0D0D0;
-		}
-		.federal-region{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 10px 0 5px 0;
-		}
 		span.text{
 			font: normal small-caps 14px/16px fantasy;
 			margin: 0 10px 10px 0;
@@ -84,12 +67,14 @@
 			margin:5px 5px 0 10px;
 			cursor: pointer;
 		}
+		.manager-container{
+			font: bold italic 125% serif;
+			margin: 10px 0 10px 0;
+			padding: 5px 0 5px 0;
+		}
 		.online{
 			position:relative;
 			left: 25px;
-		}
-		.activityLink{
-			
 		}
 	</style> 
 </head>
@@ -109,15 +94,28 @@
 				<div class="grid_12">
 					<h1 align="center">На данной странице Вы можете ознакомится с полным списком отрослей<br/> и получить подробную информацию о сотрудниках нашей компании</h1>
 					
-					<div class="accordion">
-						<?php for($i = 0;$i < count($activitylist); $i++): ?>
-						<h3 aSelect="<?= $activitylist[$i]['act_id']; ?>" cLoad="0">
-							&diams;&nbsp;&nbsp;<?= $activitylist[$i]['act_fulltitle']; ?>
-						</h3> 
-						<div class="accordion-content">&nbsp;</div>
-						<?php endfor; ?>
-					</div> 
-					
+					<?php
+						function build_tree($cats,$parent_id){
+							if(isset($cats[$parent_id])):
+								$tree = '<div class="accordion">';
+								foreach($cats[$parent_id] as $cat):
+									if(!$cat['act_final']):
+										$tree .= '<h3 aSelect="'.$cat['act_id'].'" cLoad="0">&crarr;&nbsp;&nbsp;'.$cat['act_fulltitle'].'</h3>';
+									else:
+										$tree .= '<h4 aSelect="'.$cat['act_id'].'" cLoad="0">&diams;&nbsp;&nbsp;'.$cat['act_fulltitle'].'</h4>';
+									endif;
+									$tree .= '<div class="accordion-content"><div id="ac'.$cat['act_id'].'"></div>';
+									$tree .=  build_tree($cats,$cat['act_id']);
+									$tree .= '</div>';
+								endforeach;
+								$tree .= '</div>';
+							else:
+								 return null;
+							endif;
+							return $tree;
+						}
+						echo build_tree($activitylist,0);
+					?>
 					
 					<!--<div class="content-separator">
 						<img class="floated" src=""><strong></strong>
@@ -149,6 +147,8 @@
 			$("#select-activity").change(function(){change_activity($(this));});
 			
 			$(".accordion h3:first").addClass("active");
+			$(".accordion h4:first").addClass("active");
+			
 			$(".accordion .accordion-content").hide();
 			$(".accordion h3").click(function(){
 				$(this).next(".accordion-content").slideToggle("slow").siblings(".accordion-content:visible").slideUp("slow");
@@ -157,12 +157,20 @@
 				if(parseInt(actLoad) == 0){
 					$(this).attr("cLoad","1");
 					var actVal = $(this).attr("aSelect");
-					$(this).next(".accordion-content").html('<img id="loading" class="loadData" src="<?=$baseurl;?>images/loading.gif"/>');
-					$(this).next(".accordion-content").load("<?=$baseurl;?>show/contact/"+actVal,
-						{'activity':actVal},
-						function(){
-//							alert("Данные загружены");
-						});
+					$("#ac"+actVal).html('<img id="loading" class="loadData" src="<?=$baseurl;?>images/loading.gif"/>');
+					$("#ac"+actVal).load("<?=$baseurl;?>show/contact/",{'activity':actVal},function(){});
+				}
+			});
+			
+			$(".accordion h4").click(function(){
+				$(this).next(".accordion-content").slideToggle("slow").siblings(".accordion-content:visible").slideUp("slow");
+				$(this).toggleClass("active");$(this).siblings("h4").removeClass("active");
+				var actLoad = $(this).attr("cLoad");
+				if(parseInt(actLoad) == 0){
+					$(this).attr("cLoad","1");
+					var actVal = $(this).attr("aSelect");
+					$("#ac"+actVal).html('<img id="loading" class="loadData" src="<?=$baseurl;?>images/loading.gif"/>');
+					$("#ac"+actVal).load("<?=$baseurl;?>show/contact/",{'activity':actVal},function(){});
 				}
 			});
 			

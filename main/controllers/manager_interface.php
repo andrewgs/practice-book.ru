@@ -29,6 +29,7 @@ class Manager_interface extends CI_Controller{
 		$this->load->model('specialsmodel');
 		$this->load->model('productgroupmodel');
 		$this->load->model('productionunitmodel');
+		$this->load->model('cmpunitsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -1072,7 +1073,10 @@ class Manager_interface extends CI_Controller{
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		if($this->input->post('sbmpg')):
 			if($_POST['title']):
-				$this->productgroupmodel->insert_record($_POST['title'],$activity);
+				$pg = $this->productgroupmodel->group_exist('prg_title',$_POST['title'],$activity);
+				if(!$pg):
+					$this->productgroupmodel->insert_record($_POST['title'],$activity);
+				endif;
 				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
 		endif;
@@ -1113,11 +1117,6 @@ class Manager_interface extends CI_Controller{
 			endif;
 		endif;
 		
-		if($this->input->post('subdel')):
-			print_r($_POST);
-			exit;
-		endif;
-		
 		if($this->input->post('sbmpu')):
 			$this->form_validation->set_rules('groupvalue','','required|trim');
 			$this->form_validation->set_rules('title','название','required|trim');
@@ -1151,17 +1150,14 @@ class Manager_interface extends CI_Controller{
 				$_POST['riskslowprice'] = preg_replace('/\n{2}/','<br>',$_POST['riskslowprice']);
 				$_POST['advantages'] = preg_replace('/\n{2}/','<br>',$_POST['advantages']);
 				
-				/*if($this->user['priority'] && isset($_POST['all'])):
-					if(!$_POST['image']):
-						$mraid = $this->manregactmodel->record_exist($region,$activity);
-						$product = $this->productsmodel->record_exist($mraid);
-						$_POST['image'] = $this->productsmodel->get_image($product);
+				$cmplist = $this->unionmodel->select_company_by_region($activity,$region);
+				for($i=0;$i<count($cmplist);$i++):
+					$cmpunit = $this->cmpunitsmodel->unit_exist($cmplist[$i]['cmp_id'],$_POST['groupvalue'],$_POST['title']);
+					if(!$cmpunit):
+						$this->cmpunitsmodel->insert_empty($cmplist[$i]['cmp_id'],$_POST,$_POST['groupvalue']);
 					endif;
-					$this->unionmodel->update_product($activity,$_POST);
-					redirect('manager/control-panel/'.$this->user['uconfirmation']);
-				endif;*/
+				endfor;
 				
-//				print_r($_POST);exit;
 				$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
 				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
@@ -1458,14 +1454,9 @@ class Manager_interface extends CI_Controller{
 		$unit = array();
 		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
 		$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
-		$activity = $this->session->userdata('activity');
-		$parent = $this->session->userdata('parent_act');
-		$region = $this->session->userdata('region');
-		if(!$activity || !$region) show_404();
 		$group = $this->input->post('group');
 		$unit = $this->input->post('unit');
 		if(!$group || !$unit) show_404();
-		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$unitinfo = $this->productionunitmodel->read_unit($unit,$group);
 		
 		$punit['note'] = $unitinfo['pri_note'];

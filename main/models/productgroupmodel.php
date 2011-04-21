@@ -61,8 +61,9 @@ class Productgroupmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
-	function group_exist($field,$parameter){
+	function group_exist($field,$parameter,$activity){
 			
+		$this->db->where('prg_activity',$activity);
 		$this->db->where($field,$parameter);
 		$query = $this->db->get('tbl_productgroup',1);
 		$data = $query->result_array();

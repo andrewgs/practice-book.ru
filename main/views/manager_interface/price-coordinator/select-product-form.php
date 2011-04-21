@@ -69,7 +69,7 @@
 			</td>
 			<td> 
 				<label class="label-input">Изображение:</label><br/>
-				<img src="<?=$baseurl;?>puravatar/viewimage/<?=$unit['pri_id'];?>"class="floated" alt=""/>
+				<img src="<?=$baseurl;?>puravatar/viewimage/<?=$unit['pri_id'];?>" alt=""/><br/>				
 				<input class="edit150-form-input" type="file" name="userfile">
 			</td>
 		</tr>

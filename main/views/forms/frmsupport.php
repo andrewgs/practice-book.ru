@@ -4,7 +4,7 @@
 		<div class="box-header"><b>Отправить нам сообщение</b>
 			<div class="box-search" id="error">&nbsp;</div>
 		</div>
-		<div class="box-content h375 w575">
+		<div class="box-content w575">
 			<div class="grid_2">
 				<label class="label-input">Имя: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 				<label class="label-input">E-mail: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
@@ -15,7 +15,7 @@
 				<input class="reg-form-input inpvalue" id="name" name="name" type="text" maxlength="100" value=""/><br/>
 				<input class="reg-form-input inpvalue" id="email" name="email" type="text" maxlength="100" value=""/><br/>
 				<input class="reg-form-input inpvalue" id="theme" name="theme" type="text" maxlength="100" value=""/><br/>
-				<textarea class="small-form-textarea inpvalue" name="message" id="message" cols="20" rows="13"></textarea>
+				<textarea class="small-form-textarea inpvalue" name="message" id="message" cols="25" rows="13"></textarea>
 			</div>
 			<div class="clear"></div>
 			<div class="grid_2">

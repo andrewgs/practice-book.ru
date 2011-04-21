@@ -129,7 +129,7 @@
 				if($("#frmInsNews").is(":hidden")){
 					$("#insNews").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
 					$("#frmInsNews").slideDown("slow");
-					var height = $(window).height()+100;
+					var height = ($(window).height()*$(".content-separator").size())/2;
 					$('html, body').animate({scrollTop:height+'px'},"slow");
 				}else{
 					$("#frmInsNews").slideUp("slow",function(){

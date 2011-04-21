@@ -297,11 +297,6 @@
 						<?php endfor; ?>
 					</div>
 					<div class="grid_5">
-<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
-<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
-<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
-<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
-<!--	/* -----------------------------------------------------------------------------------------------------------*/					-->
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
@@ -360,8 +355,7 @@
 											</div>
 											<div class="price-pos2" id="lowpricecode">
 											<?php if($unitgroups || $units): ?>
-												<?=$units[0]['pri_lowpricecode'];?>
-											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+												<?=$units[0]['pri_lowpricecode'];?><?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
 											<?php else: ?>
 												руб.
 											<?php endif; ?>
@@ -390,8 +384,7 @@
 											</div>
 											<div class="price-pos2" id="optimumpricecode">
 											<?php if($unitgroups || $units): ?>
-												<?=$units[0]['pri_optimumpricecode'];?>
-											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+												<?=$units[0]['pri_optimumpricecode'];?><?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
 											<?php else: ?>
 												руб.
 											<?php endif; ?>
@@ -419,8 +412,7 @@
 											</div>
 											<div class="price-pos2" id="toppricecode">
 											<?php if($unitgroups || $units): ?>
-												<?=$units[0]['pri_toppricecode'];?>
-											<?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
+												<?=$units[0]['pri_toppricecode'];?><?php if($units[0]['pri_unitscode']):?>/<?=$units[0]['pri_unitscode'];?><?php endif;?>
 											<?php else: ?>
 												руб.
 											<?php endif; ?>

@@ -151,6 +151,15 @@ class Usersmodel extends CI_Model {
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
+
+	function read_single_federals($activity){
+			
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid";
+		$query = $this->db->query($sql,array($activity));
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
 	
 	function read_single_manager_byid($uid,$text){
 			

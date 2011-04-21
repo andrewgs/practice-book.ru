@@ -46,6 +46,9 @@
 		.w600{
 			width: 600px;
 		}
+		.h150{
+			min-height: 150px;
+		}
 		.online{
 			margin-left: 20px;
 		}
@@ -67,6 +70,19 @@
 		}
 		.h20{
 			min-height: 20px;
+		}
+		#lists select{
+			margin-right: 10px;
+			font: bold italic 125% serif;
+		}
+		#formUnit,#unitImage{
+			margin-top:20px;
+		}
+		#pulist,#gulist{
+			margin-top:10px;
+		}
+		.btnHidden{
+			display:none;
 		}
 	</style>
 </head>
@@ -123,47 +139,56 @@
 						<div class="box">
 							<div class="box-header w600">
 								<h2>Прайс компании</h2>
-								<div class="box-search">
-									<span class="box-controls ask">?</span>
-								</div>
+								<div class="box-search"></div>
 							</div>
-							<div class="box-content">
-								<div style="width: 100px">
-									<select id="" >
-										<option value="1">Популярные позиции</option>
-										<option value="2">Ручки</option>
-										<option value="3">Карандаши</option>
-										<option value="4">Фломастеры</option>
-										<option value="5">Бумага</option>
+							<div class="box-content h150">
+							<?php if($unitgroups || $units): ?>
+								<div id="lists">
+								<?php if($unitgroups): ?>
+									<select name="grouplist" id="select-group" class="mixed-combo" size="1" style="width: 250px;">
+										<option value="0">Выберите группу</option>
+									<?php for($i=0;$i<count($unitgroups);$i++):?>
+										<option value="<?=$unitgroups[$i]['prg_id'];?>"><?=$unitgroups[$i]['prg_title'];?></option>
+									<?php endfor; ?>
 									</select>
-									<div class="clear"></div>
+									<div id="pulist"></div>
+								<?php else: ?>
+									<div id="hdngroup" class="btnHidden"><?=$group;?></div>
+									<div id="pulist">
+									<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
+										<?php for($i=0;$i<count($units);$i++):?>
+											<option value="<?=$units[$i]['cu_id'];?>"><?=$units[$i]['cu_title'];?></option>
+										<?php endfor; ?>
+										</select>
+									</div>
+								<?php endif;?>
 								</div>
-								<br> <br>
-								<div style="width: 600px">
+							<?php endif; ?>
+								<div class="clear"></div>
+								<div id="formUnit">
 									<table class="price-table">
 										<thead>
 											<tr>
-												<th style="width: 100px" >Фото</th>
+												<th style="width: 100px">Фото</th>
 												<th style="width: 400px">Позиция</th>
 												<th style="width: 150px">Цена</th>
+												<th style="width: 120px">Единицы</th>
 											</tr>
 										</thead>
 										<tbody>
+										<?php for($i=0;$i<count($units);$i++):?>
 											<tr>
-												<td><img alt="Компания BDBD" src="images/company_bdbd.jpg" /></td>
-												<td><p><strong>Компания «BroaDBanD Group»</strong></p></td>
-												<td class="col-price-company">74500</td>
+												<td>
+												<img src="<?=$baseurl;?>curavatar/viewimage/<?=$units[$i]['cu_id'];?>"class="floated" alt=""/>
+												</td>
+												<td>
+													<p><strong><?=$units[$i]['cu_title'];?></strong></p>
+													<p><?=$units[$i]['cu_note'];?></p>
+												</td>
+												<td class="col-price-company"><?=$units[$i]['cu_price'];?></td>
+												<td class=""><strong><?=$units[$i]['cu_priceunit'];?><?php if($units[$i]['cu_unitscode']):?>/<?=$units[$i]['cu_unitscode'];?><?php endif;?></strong></td>
 											</tr>
-											<tr>
-												<td><img alt="Компания BDBD" src="images/company_bdbd.jpg" /></td>
-												<td><p><strong>Компания «BroaDBanD Group»</strong></p></td>
-												<td class="col-price-company">7500</td>
-											</tr>
-											<tr>
-												<td><img alt="Компания BDBD" src="images/company_bdbd.jpg" /></td>
-												<td><p><strong>Компания «BroaDBanD Group»</strong></p></td>
-												<td class="col-price-company">80000</td>
-											</tr>
+										<?php endfor;?>
 										</tbody>
 									</table>
 								</div>
@@ -171,7 +196,7 @@
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
-									<!--<a href="#">Подробная информация &raquo;</a>-->
+									<?=anchor('company/price-management/'.$userinfo['uconfirmation'],'Управление прайс-листом',array('class'=>'readNSh'));?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -272,6 +297,16 @@
 					$(this).css('float','left');
 					$(this).after('<input type="button" class="lnk-submit" id="change-region" value="Продолжить"/>');
 					$("#change-region").live('click',function(){$("#regionview").submit();});};});
+					
+			$("#select-group").change(function(){
+				$("#pulist").text('');
+				if($("#select-group").val()>0){
+					$("#select-group").css('float','left');
+					$("#pulist").text('Ждите идет построение списка...');
+					$("#formUnit").load("<?=$baseurl;?>company/products-unit-info/<?=$userinfo['uconfirmation'];?>",
+						{'group':$("#select-group").val()},function(data){$("#pulist").text('');},"json");
+				}
+			});
 		});
 	</script>
 </body>

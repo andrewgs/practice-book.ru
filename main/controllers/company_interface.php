@@ -20,6 +20,8 @@ class Company_interface extends CI_Controller {
 		$this->load->model('unionmodel');
 		$this->load->model('cmpnewsmodel');
 		$this->load->model('cmpsharesmodel');
+		$this->load->model('productgroupmodel');
+		$this->load->model('cmpunitsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -61,7 +63,11 @@ class Company_interface extends CI_Controller {
 					'regions'		=> array(),
 					'representative'=> $this->usersmodel->read_representative($this->user['cid']),
 					'news'			=> $this->cmpnewsmodel->read_limit_records($this->user['cid'],3),
-					'shares'		=> $this->cmpsharesmodel->read_limit_records($this->user['cid'],3)
+					'shares'		=> $this->cmpsharesmodel->read_limit_records($this->user['cid'],3),
+					'unitgroups'	=> array(),
+					'units'			=> array(),
+					'association'	=> array(),
+					'group'			=> 0,
 					
 			);
 		for($i = 0;$i < count($pagevar['news']); $i++):
@@ -85,6 +91,23 @@ class Company_interface extends CI_Controller {
 		$pagevar['company']['cmp_graph'] = $pagevar['company']['cmp_rating'];
 		if($pagevar['company']['cmp_rating'] > 175):
 			$pagevar['company']['cmp_graph'] = 175;
+		endif;
+		
+		$pagevar['unitgroups'] = $this->unionmodel->read_cmpproduct_group($this->user['cid']);
+		if($pagevar['unitgroups']):
+			$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+			$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+			$pagevar['units'] = $this->cmpunitsmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$this->user['cid']);
+			if($pagevar['units']):
+				for($i=0;$i<count($pagevar['units']);$i++):
+					$pagevar['units'][$i]['cu_priceunit'] = $monetary[$pagevar['units'][$i]['cu_priceunit']];
+					$pagevar['units'][$i]['cu_unitscode'] = $unitsof[$pagevar['units'][$i]['cu_unitscode']];
+				endfor;
+				if(count($pagevar['unitgroups']) == 1):
+					$pagevar['group'] = $pagevar['unitgroups'][0]['prg_id'];
+					$pagevar['unitgroups'] = NULL;
+				endif;
+			endif;
 		endif;
 		$pagevar['title'] = $pagevar['company']['cmp_name']	.' - Practice-Book';
 		$this->session->set_userdata('region',$this->user['region']);
@@ -427,7 +450,6 @@ class Company_interface extends CI_Controller {
 	function delele_representatives(){
 		$statusval = array('status'=>TRUE,'message'=>'Ошибка при удалении');
 		$repid = trim($this->input->post('id'));
-		$this->db->insert('test',array('id'=>'','data'=>$repid));
 		if(!isset($repid) or empty($repid)) show_404();
 		$this->usersmodel->close_user($repid);
 		echo json_encode($statusval);
@@ -586,6 +608,113 @@ class Company_interface extends CI_Controller {
 		$this->load->view('company_interface/shares-management',$pagevar);
 	}
 
+	function price_management(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Управление новостями компании',
+					'news'			=> array(),
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
+			);
+			
+		if($this->input->post('sbmpg')):
+			if($_POST['title']):
+				$pg = $this->productgroupmodel->group_exist('prg_title',$_POST['title'],$_POST['activityvalue']);
+				if(!$pg):
+					$this->productgroupmodel->insert_record($_POST['title'],$_POST['activityvalue']);
+				endif;
+				redirect('company/price-management/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+			
+		if($this->input->post('subsave')):
+			$this->form_validation->set_rules('activity','','required|trim');
+			$this->form_validation->set_rules('groupslist','','required|trim');
+			$this->form_validation->set_rules('productlist','','required|trim');
+			$this->form_validation->set_rules('title','название','required|trim');
+			$this->form_validation->set_rules('note','','trim');
+			$this->form_validation->set_rules('price','','trim');
+			$this->form_validation->set_rules('pricecode','','trim');
+			$this->form_validation->set_rules('unitscode','','trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['subsave'] = NULL;
+				$this->price_management();
+				return FALSE;
+			else:
+				$_POST['subsave'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],90,90,TRUE);
+				else:
+					$_POST['image'] = "";
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				
+				$this->cmpunitsmodel->update_record($_POST['productlist'],$this->user['cid'],$_POST,$_POST['groupslist']);
+				redirect('company/price-management/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		
+		if($this->input->post('sbmpu')):
+			$this->form_validation->set_rules('groupvalue','','required|trim');
+			$this->form_validation->set_rules('activityvalue','','required|trim');
+			$this->form_validation->set_rules('title','название','required|trim');
+			$this->form_validation->set_rules('note','','trim');
+			$this->form_validation->set_rules('price','','trim');
+			$this->form_validation->set_rules('pricecode','','trim');
+			$this->form_validation->set_rules('unitscode','','trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['sbmpu'] = NULL;
+				$this->price_management();
+				return FALSE;
+			else:
+				if(!$_POST['groupvalue'] || !$_POST['activityvalue']):
+					show_error("Отсутствует код гпуппы или код отросли<br/>Сообщите о возникшей ошибке разработчикам.");
+				endif;
+				$_POST['sbmpu'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],90,90,TRUE);
+				else:
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				
+				$this->cmpunitsmodel->insert_record($this->user['cid'],$_POST,$_POST['groupvalue']);
+				redirect('company/price-management/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		$pagevar['group'] = $this->unionmodel->read_cmpproduct_group($this->user['cid']);
+		$this->load->view('company_interface/price-management',$pagevar);
+	}
+
+	function products_unit_info(){
+	
+		$pagevar = array('baseurl'=>base_url(),'units'=> array());
+		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+		$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+		$group = $this->input->post('group');
+		if(!$group) show_404();
+		$pagevar['units'] = $this->cmpunitsmodel->read_units($group,$this->user['cid']);
+		
+		for($i=0;$i<count($pagevar['units']);$i++):
+			$pagevar['units'][$i]['cu_priceunit'] = $monetary[$pagevar['units'][$i]['cu_priceunit']];
+			$pagevar['units'][$i]['cu_unitscode'] = $unitsof[$pagevar['units'][$i]['cu_unitscode']];
+			if($pagevar['units'][$i]['cu_unitscode']):
+				$pagevar['units'][$i]['cu_priceunit'] .= '/'.$pagevar['units'][$i]['cu_unitscode'];
+			endif;
+		endfor;
+		$this->load->view("company_interface/products-table",$pagevar);
+	}
+
 	function shares_save(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','title'=>'','desc'=>'');
@@ -627,6 +756,46 @@ class Company_interface extends CI_Controller {
 			$statusval['date'] = $this->cmpsharesmodel->read_field($sid,$this->user['cid'],'sh_pdateend');
 			$statusval['date'] = $this->operation_date_minus($statusval['date']);
 		}
+		echo json_encode($statusval);
+	}
+
+	function group_unit_load(){
+	
+		$activity = $this->input->post('activity');
+		if(!isset($activity) or empty($activity)) show_404();
+		
+		$pagevar = array('groups'=>$this->productgroupmodel->read_records($activity));
+		$this->load->view('company_interface/select-group-unit',$pagevar);
+	}
+	
+	function group_cmpunit_load(){
+		
+		$group = $this->input->post('group');
+		if(!isset($group) or empty($group)) show_404();
+		$pagevar = array('products'=>$this->cmpunitsmodel->read_units($group,$this->user['cid']));
+		$this->load->view('company_interface/select-product-unit',$pagevar);
+	}
+
+	function product_cmpunit_form(){
+	
+		$group = $this->input->post('group');
+		$unit = $this->input->post('unit');
+		if(!isset($group) or empty($group)) show_404();
+		if(!isset($unit) or empty($unit)) show_404();
+		$pagevar = array('baseurl'=>base_url(),'unit'=>array());
+		$pagevar['unit'] = $this->cmpunitsmodel->read_record($unit,$group);
+		$this->load->view('company_interface/select-product-form',$pagevar);
+	}
+
+	function product_unit_dalete(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$pgid = trim($this->input->post('group'));
+		$puid = trim($this->input->post('unit'));
+		if(!isset($pgid) or empty($pgid)) show_404();
+		if(!isset($puid) or empty($puid)) show_404();
+		$success = $this->cmpunitsmodel->delete_record($puid,$pgid);
+		if($success) $statusval['status'] = TRUE;
 		echo json_encode($statusval);
 	}
 }

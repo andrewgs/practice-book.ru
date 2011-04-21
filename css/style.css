@@ -307,7 +307,7 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .reg-form-input,.edit-form-input,.date-form-input,
 .reg-form-small,.small200-form-input,.small100-form-input,
-.edit250-form-input,.edit60-form-input{
+.edit250-form-input,.edit350-form-input,.edit60-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -318,6 +318,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 		-moz-border-radius: 5px;
 	 -webkit-border-radius: 5px;
 			 border-radius: 5px;	
+}
+.edit350-form-input{
+	 width: 350px;
 }
 .edit-form-input{
 	 width: 600px;
@@ -339,7 +342,7 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .reg-form-textarea,.edit-form-textarea,
 .small-form-textarea,.edit250-form-textarea,
-.edit200-form-textarea{
+.edit200-form-textarea,.edit350-form-textarea{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -353,6 +356,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .edit-form-textarea{
     width: 900px;
+}
+.edit350-form-textarea{
+    width: 350px;
 }
 .edit250-form-textarea{
 	width: 250px;

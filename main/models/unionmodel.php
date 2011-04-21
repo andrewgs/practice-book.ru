@@ -27,7 +27,7 @@ class Unionmodel extends CI_Model {
 	
 	function select_company_by_region($activity,$region){
 		
-		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company inner join tbl_companyservices on tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = ? AND tbl_company.cmp_region = ? ORDER BY tbl_company.cmp_rating DESC";
+		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company INNER JOIN tbl_companyservices ON tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = ? AND tbl_company.cmp_region = ? ORDER BY tbl_company.cmp_rating DESC";
 		$query = $this->db->query($query,array($activity,$region));
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -124,8 +124,16 @@ class Unionmodel extends CI_Model {
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		return NULL;
+	}
+	
+	function read_cmpproduct_group($cmpid){
 		
+		$query = "SELECT prg_id,prg_title FROM tbl_productgroup INNER JOIN tbl_companyunits WHERE prg_id = cu_groupcode AND cu_cmpid = $cmpid AND prg_activity IN (SELECT cs_srvid FROM tbl_companyservices WHERE cs_cmpid = $cmpid) GROUP BY prg_id";
 		
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
 	}
 }
 ?>

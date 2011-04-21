@@ -48,6 +48,9 @@ $route['prsavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['docavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['specials/viewimage/:num'] = "users_interface/viewimage";
 $route['puravatar/viewimage/:num'] = "users_interface/viewimage";
+$route['curavatar/viewimage/:num'] = "users_interface/viewimage";
+
+$route['show/contact'] = "users_interface/show_contact";
 
 /* ------------------------------------------ other -------------------------------------------------------*/
 $route['script_error'] = "users_interface/showerror";
@@ -128,3 +131,10 @@ $route['company/shares-management/:any'] = "company_interface/shares_management"
 $route['company/shares-save/:any'] = "company_interface/shares_save";
 $route['company/shares-delete/:any'] = "company_interface/shares_delete";
 $route['company/shares-extend-day/:any'] = "company_interface/shares_extend_day";
+$route['company/price-management/:any'] = "company_interface/price_management";
+
+$route['listbox/group-unit-list/:any'] = "company_interface/group_unit_load";
+$route['listbox/product-cmpunit-list/:any'] = "company_interface/group_cmpunit_load";
+$route['company/product-cmpunit-form/:any'] = "company_interface/product_cmpunit_form";
+$route['company/product-unit-dalete/:any'] = "company_interface/product_unit_dalete";
+$route['company/products-unit-info/:any'] = "company_interface/products_unit_info";

@@ -39,16 +39,6 @@
 		<?php $link = 'company/control-panel/'.$userinfo['uconfirmation']; ?>
 		<?= anchor($link,'Управление',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
 	</div>
-	<div class="other-nav">
-		<form id="ManActData" method="post" action="<?= $baseurl; ?>settings">
-			<select name="region" id="select-region" class="mixed-combo" size="1" style="width: 200px;">
-				<option value="0">Выберите город</option>
-			<?php for($i = 0; $i < count($regions); $i++):?>
-				<option value="<?=$regions[$i]['reg_id'];?>"><?=$regions[$i]['reg_name'];?></option>
-			<?php endfor; ?>
-			</select>
-		</form>
-	</div>
 	<section id="auth">
 		<span class="welcome-message">Здравствуйте, <?= $userinfo['ufullname']; ?></span>
 		<?php $cablink = 'company/cabinet/'.$userinfo['uconfirmation']; ?>

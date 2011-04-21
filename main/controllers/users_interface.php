@@ -33,6 +33,7 @@ class Users_interface extends CI_Controller {
 		$this->load->model('othertextmodel');
 		$this->load->model('productgroupmodel');
 		$this->load->model('productionunitmodel');
+		$this->load->model('cmpunitsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -286,6 +287,13 @@ class Users_interface extends CI_Controller {
 			$pagevar['regions'] = $this->regionmodel->read_records();
 		endif;
 		$this->session->unset_userdata('regstatus');
+		
+		$services = $this->activitymodel->read_records();
+		if(count($services)>0):
+			for($i=0;$i<count($services);$i++):
+				$pagevar['activitylist'][$services[$i]['act_parentid']][] = $services[$i];
+			endfor;
+		endif;
 		$this->load->view('users_interface/contacts',$pagevar);
 	}
 
@@ -722,11 +730,28 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'docavatar'	: 	$image = $this->documentsmodel->get_image($id); break;
 			case 'specials'		: 	$image = $this->specialsmodel->get_image($id); break;
 			case 'puravatar'	: 	$image = $this->productionunitmodel->get_image($id); break;
+			case 'curavatar'	: 	$image = $this->cmpunitsmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;
 	}
-
+	
+	function show_contact(){
+	
+		$activity = $this->input->post('activity');
+//		$this->db->insert('test',array('data'=>$activity));
+		if(!$activity) show_404();
+		$pagevar = array('baseurl'=>base_url(),'contact'=>array());
+		
+		$pid = $this->activitymodel->read_field($activity,'act_parentid');
+		if($pid):
+			$pagevar['contact'] = $this->usersmodel->read_single_managers($activity);
+		else:
+			$pagevar['contact'] = $this->usersmodel->read_single_federals($activity);
+		endif;
+//		print_r($pagevar['contact']);
+		$this->load->view('users_interface/single-contact',$pagevar);
+	}
 	/* -----------------------------------------	other function -------------------------------------------*/
 
 	function support(){

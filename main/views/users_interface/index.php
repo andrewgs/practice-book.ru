@@ -28,9 +28,6 @@
 		.h20{
 			min-height: 20px;
 		}
-		.h375{
-			height: 375px;
-		}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
