@@ -81,4 +81,14 @@ class Productsmodel extends CI_Model {
 		$data = $query->result_array();
 		return $data[0]['pr_image'];
 	}
+
+	function product_empty($mraid){
+	
+		$this->db->select('TRIM(pr_title) AS title');
+		$this->db->where('pr_mraid',$mraid);
+		$query = $this->db->get('tbl_products',1);
+		$data = $query->result_array();
+		if($data[0]['title']) return TRUE;
+		return FALSE;
+	}
 }

@@ -1407,3 +1407,9 @@ div.regLabel{
 	color: #d1221f;
 	font-size: 11px;
 }
+.valid_error {
+	margin: 20px 0 0 180px;
+	color: #d1221f;
+	font-size: 14px;
+}
+

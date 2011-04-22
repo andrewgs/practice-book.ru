@@ -20,6 +20,16 @@ $route['support'] = "users_interface/support";
 $route['started'] = "users_interface/select_settings";
 $route['users/select-region'] = "users_interface/create_select_region";
 $route['users/select-activity'] = "users_interface/create_select_activity";
+$route['activity-information/region/:num/activity/:num'] = "users_interface/activity_information";
+$route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list";
+$route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
+$route['product-info/region/:num/activity/:num'] = "users_interface/product_unit_info";
+
+/* ----------------------------------------------- company ------------------------------------------------*/
+
+$route['company-info/:num'] = "users_interface/company_info";
+$route['representatives/company/:num'] = "users_interface/representatives_list";
+$route['company/products-group-list'] = "users_interface/products_unit_info";
 
 /* ----------------------------------------	registering company -------------------------------------------*/
 $route['registering/step-1'] = "users_interface/newcompany1";
@@ -59,6 +69,9 @@ $route['show/contact'] = "users_interface/show_contact";
 
 /* ------------------------------------------ other -------------------------------------------------------*/
 $route['script_error'] = "users_interface/showerror";
+$route['send-manager-email'] = "users_interface/send_manager_mail";
+
+$route['selection'] = "users_interface/selection";
 
 /***********************************	MANAGER INTRERFACE	***********************************************/
 $route['manager/control-panel/:any'] = "manager_interface/cpanel";

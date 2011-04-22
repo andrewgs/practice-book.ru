@@ -91,7 +91,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
-	<?php $this->load->view('manager_interface/header'); ?>
+	<?php $this->load->view('users_interface/header/header-noauth'); ?>
 		<div id="main">
 			<section id="info-boxes">
 				<div class="container_12">
@@ -100,7 +100,6 @@
 							<div class="box-header w278">
 								<h2><?= $othertext[0]['otxt_note']; ?></h2> 
 								<div class="box-search">
-				<input type="button" id="product" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[0]['otxt_help'];?></span>
@@ -112,8 +111,6 @@
 								<img src="<?=$baseurl;?>mpavatar/viewimage/<?=$product['pr_id'];?>" class="floated" alt=""/>
 								<div class="nsh-title"><?=$product['pr_title'];?></div>
 								<div class="nshNote"><?=$product['pr_note'];?></div>
-							<?php else: ?>
-								<?= $othertext[0]['otxt_content']; ?>
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
@@ -133,8 +130,6 @@
 									<img src="<?=$baseurl;?>mpavatar/viewimage/<?=$product['pr_id'];?>" class="floated" alt=""/>
 									<div class="nsh-title"><?=$product['pr_title'];?></div>
 									<div class="nshNote"><?=$product['full_note'];?></div>
-								<?php else: ?>
-									<?= $othertext[0]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<div class="box-bottom-links h20">
@@ -147,7 +142,6 @@
 							<div class="box-header brighted w278">
 								<h2><?= $othertext[1]['otxt_note']; ?></h2>
 								<div class="box-search">
-				<input type="button" id="pitfalls" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[1]['otxt_help'];?></span>
@@ -165,8 +159,6 @@
 									</div>
 								</div>	
 								<?php endfor; ?>
-							<?php else: ?>
-								<?= $othertext[1]['otxt_content']; ?>
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links brighted h20">
@@ -186,8 +178,7 @@
 										<div class="nsh-title"><?=$pitfalls[$i]['pf_title'];?></div>
 										<div class="nshNote"><?=$pitfalls[$i]['full_note'];?></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -197,7 +188,6 @@
 							<div class="box-header w278">
 								<h2><?= $othertext[2]['otxt_note']; ?></h2>
 								<div class="box-search">
-				<input type="button" id="questions" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[2]['otxt_help'];?></span>
@@ -215,12 +205,9 @@
 									</div>
 								</div>	
 								<?php endfor; ?>
-							<?php else: ?>
-								<?= $othertext[2]['otxt_content']; ?>
 							<?php endif; ?>
 							</div>
-							<div class="box-bottom-links h20">
-								&nbsp;
+							<div class="box-bottom-links h20">&nbsp;
 								<div class="clear"></div>
 							</div>
 						</div>
@@ -238,8 +225,7 @@
 										<span class="text">Ответ:</span>
 										<div class="nshNote"><?=$questions[$i]['full_note'];?></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -249,7 +235,6 @@
 							<div class="box-header w278">
 								<h2><?= $othertext[18]['otxt_note']; ?></h2>
 								<div class="box-search">
-				<input type="button" id="tips" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[18]['otxt_help'];?></span>
@@ -267,8 +252,6 @@
 									</div>
 								</div>	
 								<?php endfor; ?>
-							<?php else: ?>
-								<?= $othertext[18]['otxt_content']; ?>
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
@@ -288,8 +271,7 @@
 										<div class="nsh-title"><?=$tips[$i]['tps_title'];?></div>
 										<div class="nshNote"><?=$tips[$i]['full_note'];?></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -301,7 +283,6 @@
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
 								<div class="box-search">
-			<input type="button" id="coordinator" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[3]['otxt_help'];?></span>
@@ -337,8 +318,6 @@
 									<div id="formUnit">
 										<?=$units[0]['pri_note'];?>
 									</div>
-								<?php else: ?>
-								<?= $othertext[3]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<div style="clear:both"></div>
@@ -350,7 +329,7 @@
 											<?php if($unitgroups || $units): ?>
 												<?=$units[0]['pri_lowprice'];?>
 											<?php else: ?>
-												1000
+												&mdash;
 											<?php endif; ?>
 											</div>
 											<div class="price-pos2" id="lowpricecode">
@@ -379,7 +358,7 @@
 											<?php if($unitgroups || $units): ?>
 												<?=$units[0]['pri_optimumprice'];?>
 											<?php else: ?>
-												5000
+												&mdash;
 											<?php endif; ?>
 											</div>
 											<div class="price-pos2" id="optimumpricecode">
@@ -407,7 +386,7 @@
 											<?php if($unitgroups || $units): ?>
 												<?=$units[0]['pri_topprice'];?>
 											<?php else: ?>
-												10000
+												&mdash;
 											<?php endif; ?>
 											</div>
 											<div class="price-pos2" id="toppricecode">
@@ -436,7 +415,7 @@
 						</div>
 						<div id="risks-modal-content">
 							<div class="box">
-								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+								<div class="box-header"><b><?=$activitypath;?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
 								<div class="box-content h365 w575">
@@ -447,15 +426,14 @@
 									<?php endif; ?>
 									</div>
 								</div>
-								<div class="box-bottom-links h20">
-									&nbsp;
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
 						</div>
 						<div id="advantage-modal-content">
 							<div class="box">
-								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+								<div class="box-header"><b><?=$activitypath;?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
 								<div class="box-content h365 w575">
@@ -466,25 +444,28 @@
 									<?php endif; ?>
 									</div>
 								</div>
-								<div class="box-bottom-links h20">
-									&nbsp;
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
 						</div>
-						<!--<div class="box-tender">
-							<div class="box-header w358">
-								<h2 style="text-align:center">
-									<?= anchor('#','&nbsp;&nbsp;&nbsp;Объявить тендер &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
-								</h2>
-								<div class="box-search h20">
-									<a class="tooltip" href="">
-										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
-										<span class="classic"><?=$othertext[4]['otxt_help'];?></span>
-									</a>
+						<?php if($userinfo['status']): ?>
+							<?php if($userinfo['cid']): ?>
+								<div class="box-tender">
+									<div class="box-header w358">
+										<h2 style="text-align:center">
+											<?= anchor('#','&nbsp;&nbsp;&nbsp;Объявить тендер &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
+										</h2>
+										<div class="box-search h20">
+											<a class="tooltip" href="">
+												<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+												<span class="classic"><?=$othertext[4]['otxt_help'];?></span>
+											</a>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>-->
+							<?php endif; ?>
+						<? endif; ?>
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[5]['otxt_note'];?></h2>
@@ -515,8 +496,6 @@
 										<div class="clear"></div>
 									</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[6]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<h3><a href="#"><?= $othertext[7]['otxt_note'];?></a></h3>
@@ -538,8 +517,6 @@
 										<div class="clear"></div>
 									</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[7]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<h3><a href="#"><?= $othertext[8]['otxt_note'];?></a></h3>
@@ -561,8 +538,6 @@
 										<div class="clear"></div>
 									</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[9]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 							</div>
@@ -576,7 +551,7 @@
 						<?php if(count($company['all'])): ?>
 							<div id="company-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
@@ -600,8 +575,7 @@
 										</div>
 									<?php endfor; ?>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -609,15 +583,14 @@
 						<?php else: ?>
 							<div id="company-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -627,7 +600,6 @@
 							<div class="box-header w358">
 								<h2><?= $othertext[9]['otxt_note'];?></h2>
 								<div class="box-search">
-					<input type="button" id="news" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[9]['otxt_help'];?></span>
@@ -646,8 +618,6 @@
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[10]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<h3><a href="#"><?= $othertext[11]['otxt_note'];?></a></h3>
@@ -661,8 +631,6 @@
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[11]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 							</div>
@@ -677,7 +645,7 @@
 					<?php if(count($activitynews) || count($companynews)): ?>
 						<div id="news-modal-content">
 							<div class="box">
-								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+								<div class="box-header"><b><?=$activitypath;?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
 								<div class="box-content h365 w575">
@@ -712,8 +680,7 @@
 									</div>
 								<?php endfor; ?>
 								</div>
-								<div class="box-bottom-links h20">
-									&nbsp;
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
@@ -721,15 +688,14 @@
 					<?php else: ?>
 						<div id="news-modal-content">
 							<div class="box">
-								<div class="box-header"><b><?=$manager['activitypath'];?></b>
+								<div class="box-header"><b><?=$activitypath;?></b>
 									<div class="box-search">&nbsp;</div>
 								</div>
 								<div class="box-content h365 w575">
 									<span class="text">Список пуст</span>
 									<div class="clear"></div>
 								</div>
-								<div class="box-bottom-links h20">
-									&nbsp;
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
@@ -772,7 +738,12 @@
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
-									<?= anchor('manager/manager-list/'.$userinfo['uconfirmation'],'Менеджеры');?>
+									<?= anchor("manager-list/region/$curregion/activity/$curactivity",'Менеджеры');?>
+								</div>
+								<div class="left">
+									<a href="#" id="winEmail" class="window" title="Отправить менеджеру личное сообщение">
+										<img src="<?=$baseurl?>images/email.png"/>
+									</a>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -781,7 +752,6 @@
 							<div class="box-header w220">
 								<h2><?= $othertext[13]['otxt_note'];?></h2>
 								<div class="box-search h150">
-				<input type="button" id="persona" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[13]['otxt_help'];?></span>
@@ -793,8 +763,6 @@
 								<img src="<?=$baseurl;?>prsavatar/viewimage/<?=$persona['prs_id'];?>" class="floated" alt=""/>
 								<div class="nsh-title"><?=$persona['prs_title'];?></div>
 								<div class="nshNote"><?=$persona['prs_note'];?></div>
-							<?php else: ?>
-								<?= $othertext[13]['otxt_content']; ?>
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
@@ -814,21 +782,18 @@
 									<img src="<?=$baseurl;?>prsavatar/viewimage/<?=$persona['prs_id'];?>" class="floated" alt=""/>
 									<div class="nsh-title"><?=$persona['prs_title'];?></div>
 									<div class="nshNote"><?=$persona['full_note'];?></div>
-								<?php else: ?>
-									<?= $othertext[13]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
-								<div class="box-bottom-links h20">
-									&nbsp;
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
 						</div>
+						<?php if($banner): ?>
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[19]['otxt_note'];?></h2>
 								<div class="box-search h150">
-				<input type="button" id="whomain" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[19]['otxt_help'];?></span>
@@ -836,18 +801,14 @@
 								</div>
 							</div>
 							<div class="box-content">
-								<?php if($banner): ?>
-									<?=$banner;?>
-								<?php else: ?>
-									<?= $othertext[19]['otxt_content']; ?>
-								<?php endif; ?>
+								<?=$banner;?>
 							</div>
 						</div>
+						<?php endif; ?>
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[14]['otxt_note'];?></h2>
 								<div class="box-search h150">
-			<input type="button" id="documents" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[14]['otxt_help'];?></span>
@@ -865,8 +826,6 @@
 										<div class="clear"></div>
 									</div>	
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[14]['otxt_content']; ?>
 								<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
@@ -876,11 +835,10 @@
 								<div class="clear"></div>
 							</div>
 						</div>
-						
 						<?php if(count($documents)): ?>
 							<div id="document-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
@@ -893,8 +851,7 @@
 										</div>
 									<?php endfor; ?>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -902,15 +859,14 @@
 						<?php else: ?>
 							<div id="document-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -920,7 +876,6 @@
 							<div class="box-header w220">
 								<h2><?= $othertext[15]['otxt_note'];?></h2>
 								<div class="box-search h10">
-				<input type="button" id="specials" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[15]['otxt_help'];?></span>
@@ -939,14 +894,10 @@
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
-								<?php else: ?>
-									<?= $othertext[16]['otxt_content']; ?>
 								<?php endif; ?>
 								</div>
 								<h3><a href="#"><?= $othertext[17]['otxt_note'];?></a></h3>
-								<div class="box-content">
-									<?= $othertext[17]['otxt_content']; ?>
-								</div>
+								<div class="box-content">&nbsp;</div>
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
@@ -955,11 +906,10 @@
 								<div class="clear"></div>
 							</div>
 						</div>
-						
 						<?php if(count($specials)): ?>
 							<div id="specials-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
@@ -974,8 +924,7 @@
 										</div>
 									<?php endfor; ?>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -983,15 +932,14 @@
 						<?php else: ?>
 							<div id="specials-modal-content">
 								<div class="box">
-									<div class="box-header"><b><?=$manager['activitypath'];?></b>
+									<div class="box-header"><b><?=$activitypath;?></b>
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
 										<span class="text">Список пуст</span>
 										<div class="clear"></div>
 									</div>
-									<div class="box-bottom-links h20">
-										&nbsp;
+									<div class="box-bottom-links h20">&nbsp;
 										<div class="clear"></div>
 									</div>
 								</div>
@@ -1002,35 +950,32 @@
 				</div>
 			</section>
 		</div>
+		<div id="email-modal-content">
+			<?php $this->load->view('forms/frmsendmail'); ?>
+		</div>
 		<div class="clear"></div>
-		<?php $this->load->view('manager_interface/footer'); ?>
+		<?php $this->load->view('users_interface/footer/footer-nomenu'); ?>
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
-		$(".tooltip").click(function(event){event.preventDefault();})
-		$("#select-region").change(function(){change_region($(this));});
-		$("#select-activity").change(function(){change_activity($(this));});
-		$(".edit").click(function(){
-			window.location.href="<?=$baseurl;?>manager/edit-"+this.id+"/<?=$userinfo['uconfirmation']?>";
-		});
-		
+		$(document).ready(function(){
+
 		$("#select-group").change(function(){
 			$("#select-products").die();
 			$("#select-products").remove();
 			$("#pulist").text('');
 			if($("#select-group").val()>0){
 				$("#pulist").text('Ждите идет построение списка...');
-				$("#pulist").load("<?=$baseurl;?>listbox/product-unit-list/<?=$userinfo['uconfirmation'];?>",
+				$("#pulist").load("<?=$baseurl;?>product-unit/region/<?=$curregion;?>/activity/<?=$curactivity;?>",
 					{'group':$("#select-group").val()},
 					function(){
 						$("#select-products").live('change',function(){
 							if($("#select-products").val()>0){
 								$.post(
-									"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+									"<?=$baseurl;?>product-info/region/<?=$curregion;?>/activity/<?=$curactivity;?>",
 									{'group':$("#select-group").val(),'unit':$("#select-products").val()},
 									function(data){
 										$("#unitImage").html(data.image);
@@ -1054,7 +999,7 @@
 		$("#single-select-products").change(function(){
 			if($(this).val()>0){
 				$.post(
-					"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>product-info/region/<?=$curregion;?>/activity/<?=$curactivity;?>",
 					{'group':$("#hdngroup").text(),'unit':$(this).val()},
 					function(data){
 						$("#unitImage").html(data.image);
@@ -1069,6 +1014,11 @@
 						$("#advantage").html(data.advantage);
 					},"json");
 			}
+		});
+		
+		$("a#winEmail").click(function(e){
+			$("#email-modal-content").modal();
+			return false;
 		});
 		
 		$("a#winProduct").click(function(e){
@@ -1118,8 +1068,42 @@
 			return false;
 		});
 		
-		function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
-		function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
+		$("#SendEmail").click(function(event){
+			var err = false;
+			 $("#formRep .inpvalue").css('border-color','#D0D0D0');
+			 var name = $("#name").val();
+			 var email = $("#email").val();
+			 var theme = $("#theme").val();
+			 var message = $("#message").val();
+			if(name == ''){
+				err = true;
+				$("#name").css('border-color','#ff0000');
+			}
+			if(email == ''){
+				err = true;
+				$("#email").css('border-color','#ff0000');
+			}
+			if(theme == ''){
+				err = true;
+				$("#theme").css('border-color','#ff0000');
+			}
+			if(message == ''){
+				err = true;
+				$("#message").css('border-color','#ff0000');
+			}
+			if(err){
+				event.preventDefault();
+				$("#error").html('<font size="3" color="#FF0000"><b>Пропущены обязательные поля</b></font>');
+			}else if(!isValidEmailAddress(email)){
+				event.preventDefault();
+				$("#error").html('<font size="3" color="#FF0000"><b>Не верный E-mail</b></font>');
+			}
+		});
+		function isValidEmailAddress(emailAddress){
+			var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+			return pattern.test(emailAddress);
+		};
+		
 		
 		$("#accordion").accordion({animated: false,autoHeight: false});$("#accordion-1").accordion({animated: false,autoHeight: false});$("#accordion-2").accordion({animated: false,autoHeight: false});$("#slider-range-price").slider({range: true,min: 3200,max: 15000,values: [4500, 9000],slide: function(event, ui){$("#price-amount").val(ui.values[0] + ' - ' + ui.values[1]);}});$("#slider-range-rate").slider({range: true,min: 0,max: 100,values: [15, 70],slide: function(event, ui){$("#rate-amount").val(ui.values[0] + ' - ' + ui.values[1]);}});});
 	</script>

@@ -51,13 +51,26 @@
 					<b><?= $text; ?></b>
 					<?php if($timer): ?>
 						<script>
-							window.setTimeout("window.location='<?= $baseurl; ?>'",<?= $timer ?>);
+							<?php if($uri): ?>
+								window.setTimeout("window.location='<?= $baseurl.$uri;?>'",<?= $timer ?>);
+							<?php else: ?>
+								window.setTimeout("window.location='<?= $baseurl; ?>'",<?= $timer ?>);
+							<?php endif; ?>
 						</script>
 						<br>
-						<font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на главную страницу</font>
+						<?php if($uri): ?>
+							<font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на предыдущую страницу</font>
+						<?php else: ?>
+							<font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на главную страницу</font>
+						<?php endif; ?>
 					<?php endif; ?>
 					<br>
-					<a href="<?= $baseurl; ?>">Переход на главную страницу</a>
+					<?php if($uri): ?>
+						<a href="<?= $baseurl.$uri; ?>">Переход на предыдущую страницу</a>
+					<?php else: ?>
+						<a href="<?= $baseurl; ?>">Переход на главную страницу</a>
+					<?php endif; ?>
+					
 				</div>
 			</div>
 		</div>

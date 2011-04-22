@@ -77,7 +77,16 @@ class Companymodel extends CI_Model {
 		if(count($data)) return $data[0]['cmp_id'];
 		return FALSE;
 	}
-
+	
+	function company_exist_byid($id){
+		
+		$this->db->where('cmp_id',$id);
+		$query = $this->db->get('tbl_company',1);
+		$data = $query->result_array();
+		if($data) return TRUE;
+		return FALSE;
+	}
+	
 	function company_id($field,$parameter){
 			
 		$this->db->where($field,$parameter);

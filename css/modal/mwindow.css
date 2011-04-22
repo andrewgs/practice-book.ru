@@ -3,7 +3,8 @@
 #persona-modal-content,#documents-modal-content,
 #document-modal-content,#specials-modal-content,
 #tips-modal-content,#support-modal-content,
-#risks-modal-content,#advantage-modal-content{
+#risks-modal-content,#advantage-modal-content,
+#questions-modal-content,#email-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}

@@ -119,5 +119,14 @@ class Regionmodel extends CI_Model {
 		$this->db->update('tbl_regions');
 		return $this->db->affected_rows();
 	}
+
+	function region_exist($id){
+			
+		$this->db->where('reg_id',$id);
+		$query = $this->db->get('tbl_regions',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
 }
 ?>

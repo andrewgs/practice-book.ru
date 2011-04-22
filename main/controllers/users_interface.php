@@ -34,6 +34,7 @@ class Users_interface extends CI_Controller {
 		$this->load->model('productgroupmodel');
 		$this->load->model('productionunitmodel');
 		$this->load->model('cmpunitsmodel');
+		$this->load->model('jobsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -356,6 +357,7 @@ class Users_interface extends CI_Controller {
 					'activity'		=> array(),
 					'region'		=> array(),
 					'boxtitle'		=> 'Регион/Округ',
+					'activitypath'	=> FALSE
 			);
 		$pagevar['region'] = $this->regionmodel->read_districts();
 		$pagevar['activity'] = $this->activitymodel->level_activity(0);
@@ -391,6 +393,452 @@ class Users_interface extends CI_Controller {
 			$pagevar['activity'] = $this->activitymodel->level_activity($act_id);
 		endif;
 		$this->load->view('users_interface/activity-box-select',$pagevar);
+	}
+	
+	function activity_information(){
+		
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> $this->activitymodel->read_field($activity,'act_title').' - Practice-Book',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'curactivity'	=> $activity,
+					'curregion'		=> $region,
+					'activitypath'	=> "",
+					'othertext'		=> array(),
+					'activity'		=> array(),
+					'region'		=> array(),
+					'pitfalls'		=> array(),
+					'questions'		=> array(),
+					'product'		=> array(),
+					'regions'		=> array(),
+					'manager' 		=> array(),
+					'activitynews'	=> array(),
+					'company'		=> array(),
+					'news'			=> array(),
+					'companynews'	=> array(),
+					'persona'		=> array(),
+					'documents'		=> array(),
+					'specials'		=> array(),
+					'tips'			=> array(),
+					'unitgroups'	=> array(),
+					'units'			=> array(),
+					'group'			=> 0,
+					'banner'		=> "",
+					'top_rating'	=> 50,
+					'low_rating'	=> 20
+			);
+		$pagevar['manager']['jobs'] = array();
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		
+		if(!$mraid):
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Работа',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(55),
+					'activitypath'	=> ''
+			);
+			$this->load->view('users_interface/no-activity-record',$pagevar);
+			return FALSE;
+		else:
+			$product = $this->productsmodel->product_empty($mraid);
+			if(!$product):
+				$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Работа',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(55),
+					'activitypath'	=> ''
+				);
+				$this->load->view('users_interface/no-activity-record',$pagevar);
+				return FALSE;
+			endif;
+		endif;
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		$pagevar['manager']['jobs'] = array();
+		$pagevar['othertext'] = $this->othertextmodel->read_group(1,20);
+		$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
+		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
+		$pagevar['product'] = $this->productsmodel->read_record($mraid);
+		$pagevar['product']['full_note'] = $pagevar['product']['pr_note'];
+		if(mb_strlen($pagevar['product']['pr_note'],'UTF-8') > 600):									
+			$pagevar['product']['pr_note'] = mb_substr($pagevar['product']['pr_note'],0,600,'UTF-8');	
+			$pos = mb_strrpos($pagevar['product']['pr_note'],'.',0,'UTF-8');
+			$pagevar['product']['pr_note'] = mb_substr($pagevar['product']['pr_note'],0,$pos,'UTF-8');
+			$pagevar['product']['pr_note'] .= '. ... ';
+		endif;
+		$pagevar['persona'] = $this->personamodel->read_record($mraid);
+		$pagevar['persona']['full_note'] = $pagevar['persona']['prs_note'];
+		if(mb_strlen($pagevar['persona']['prs_note'],'UTF-8') > 200):									
+			$pagevar['persona']['prs_note'] = mb_substr($pagevar['persona']['prs_note'],0,200,'UTF-8');	
+			$pos = mb_strrpos($pagevar['persona']['prs_note'],'.',0,'UTF-8');
+			$pagevar['persona']['prs_note'] = mb_substr($pagevar['persona']['prs_note'],0,$pos,'UTF-8');
+			$pagevar['persona']['prs_note'] .= '. ... ';
+		endif;
+		$pagevar['pitfalls'] = $this->unionmodel->read_pitfalls_limit($activity,3);
+		for($i = 0;$i < count($pagevar['pitfalls']); $i++):
+			$pagevar['pitfalls'][$i]['full_note'] = $pagevar['pitfalls'][$i]['pf_note'];
+			$pagevar['pitfalls'][$i]['pf_date'] = $this->operation_date($pagevar['pitfalls'][$i]['pf_date']);
+			if(mb_strlen($pagevar['pitfalls'][$i]['pf_note'],'UTF-8') > 325):									
+				$pagevar['pitfalls'][$i]['pf_note'] = mb_substr($pagevar['pitfalls'][$i]['pf_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['pitfalls'][$i]['pf_note'],'.',0,'UTF-8');
+				$pagevar['pitfalls'][$i]['pf_note'] = mb_substr($pagevar['pitfalls'][$i]['pf_note'],0,$pos,'UTF-8');
+				$pagevar['pitfalls'][$i]['pf_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['tips'] = $this->unionmodel->read_tips_limit($activity,3);
+		for($i = 0;$i < count($pagevar['tips']); $i++):
+			$pagevar['tips'][$i]['full_note'] = $pagevar['tips'][$i]['tps_note'];
+			$pagevar['tips'][$i]['tps_date'] = $this->operation_date($pagevar['tips'][$i]['tps_date']);
+			if(mb_strlen($pagevar['tips'][$i]['tps_note'],'UTF-8') > 325):									
+				$pagevar['tips'][$i]['tps_note'] = mb_substr($pagevar['tips'][$i]['tps_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['tips'][$i]['tps_note'],'.',0,'UTF-8');
+				$pagevar['tips'][$i]['tps_note'] = mb_substr($pagevar['tips'][$i]['tps_note'],0,$pos,'UTF-8');
+				$pagevar['tips'][$i]['tps_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['questions'] = $this->unionmodel->read_questions($activity);
+		for($i = 0;$i < count($pagevar['questions']); $i++):
+			$pagevar['questions'][$i]['full_note'] = $pagevar['questions'][$i]['mraq_note'];
+			$pagevar['questions'][$i]['mraq_date'] = $this->operation_date($pagevar['questions'][$i]['mraq_date']);
+			if(mb_strlen($pagevar['questions'][$i]['mraq_note'],'UTF-8') > 325):									
+				$pagevar['questions'][$i]['mraq_note'] = mb_substr($pagevar['questions'][$i]['mraq_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['questions'][$i]['mraq_note'],'.',0,'UTF-8');
+				$pagevar['questions'][$i]['mraq_note'] = mb_substr($pagevar['questions'][$i]['mraq_note'],0,$pos,'UTF-8');
+				$pagevar['questions'][$i]['mraq_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['activitynews'] = $this->activitynewsmodel->read_limit_records($mraid,5);
+		for($i = 0;$i < count($pagevar['activitynews']); $i++):
+			$pagevar['activitynews'][$i]['full_note'] = $pagevar['activitynews'][$i]['an_note'];
+			$pagevar['activitynews'][$i]['an_date'] = $this->operation_date($pagevar['activitynews'][$i]['an_date']);
+			if(mb_strlen($pagevar['activitynews'][$i]['an_note'],'UTF-8') > 325):									
+				$pagevar['activitynews'][$i]['an_note'] = mb_substr($pagevar['activitynews'][$i]['an_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['activitynews'][$i]['an_note'],'.',0,'UTF-8');
+				$pagevar['activitynews'][$i]['an_note'] = mb_substr($pagevar['activitynews'][$i]['an_note'],0,$pos,'UTF-8');
+				$pagevar['activitynews'][$i]['an_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['specials'] = $this->specialsmodel->read_limit_records($mraid,5);
+		for($i = 0;$i < count($pagevar['specials']); $i++):
+			$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
+			$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
+			if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 325):									
+				$pagevar['specials'][$i]['spv_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],'.',0,'UTF-8');
+				$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,$pos,'UTF-8');
+				$pagevar['specials'][$i]['spc_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
+		$pagevar['unitgroups'] = $this->unionmodel->read_product_group($activity,$mraid);
+		if($pagevar['unitgroups']):
+			$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+			$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+			$pagevar['units'] = $this->productionunitmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$mraid);
+			if($pagevar['units']):
+				$pagevar['units'][0]['pri_lowpricecode'] = $monetary[$pagevar['units'][0]['pri_lowpricecode']];
+				$pagevar['units'][0]['pri_optimumpricecode'] = $monetary[$pagevar['units'][0]['pri_optimumpricecode']];
+				$pagevar['units'][0]['pri_toppricecode'] = $monetary[$pagevar['units'][0]['pri_toppricecode']];
+				$pagevar['units'][0]['pri_unitscode'] = $unitsof[$pagevar['units'][0]['pri_unitscode']];
+				if(count($pagevar['unitgroups']) == 1):
+					$pagevar['group'] = $pagevar['unitgroups'][0]['prg_id'];
+					$pagevar['unitgroups'] = NULL;
+				endif;
+			endif;
+		endif;
+		$pagevar['company']['all'] = $this->unionmodel->select_company_by_region($activity,$region);
+		for($i=0;$i<count($pagevar['company']['all']);$i++):
+			$pagevar['company']['all'][$i]['cmp_graph'] = $pagevar['company']['all'][$i]['cmp_rating'];
+			if($pagevar['company']['all'][$i]['cmp_rating'] > 75):
+				$pagevar['company']['all'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['company']['all'][$i]['full_description'] = $pagevar['company']['all'][$i]['cmp_description'];
+			if(mb_strlen($pagevar['company']['all'][$i]['cmp_description'],'UTF-8') > 250):
+				$pagevar['company']['all'][$i]['cmp_description'] = mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,250,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pagevar['company']['all'][$i]['cmp_description'] =mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,$pos,'UTF-8');
+				$pagevar['company']['all'][$i]['cmp_description'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['company']['trustee'] = $this->unionmodel->select_company_by_rating($activity,$region,'>=',$pagevar['top_rating'],0);
+		for($i=0;$i<count($pagevar['company']['trustee']);$i++):
+			$pagevar['company']['trustee'][$i]['cmp_graph'] = $pagevar['company']['trustee'][$i]['cmp_rating'];
+			if($pagevar['company']['trustee'][$i]['cmp_rating'] > 75):
+				$pagevar['company']['trustee'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['company']['trustee'][$i]['full_description'] = $pagevar['company']['trustee'][$i]['cmp_description'];
+			if(mb_strlen($pagevar['company']['trustee'][$i]['cmp_description'],'UTF-8') > 250):
+		$pagevar['company']['trustee'][$i]['cmp_description'] = mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,250,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+		$pagevar['company']['trustee'][$i]['cmp_description'] =mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,$pos,'UTF-8');
+				$pagevar['company']['trustee'][$i]['cmp_description'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['company']['blacklist'] = $this->unionmodel->select_company_by_rating($activity,$region,'<=',$pagevar['low_rating'],180);
+		for($i=0;$i<count($pagevar['company']['blacklist']);$i++):
+			$pagevar['company']['blacklist'][$i]['cmp_graph'] = $pagevar['company']['blacklist'][$i]['cmp_rating'];
+			if($pagevar['company']['blacklist'][$i]['cmp_rating'] > 75):
+				$pagevar['company']['blacklist'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['company']['blacklist'][$i]['full_description'] = $pagevar['company']['blacklist'][$i]['cmp_description'];
+			if(mb_strlen($pagevar['company']['blacklist'][$i]['cmp_description'],'UTF-8') > 250):
+	$pagevar['company']['blacklist'][$i]['cmp_description'] = mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,250,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+	$pagevar['company']['blacklist'][$i]['cmp_description'] =mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,$pos,'UTF-8');
+				$pagevar['company']['blacklist'][$i]['cmp_description'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['companynews'] = $this->unionmodel->read_cmpnews_by_activity($activity,$region);
+		for($i = 0;$i<count($pagevar['companynews']); $i++):
+			$pagevar['companynews'][$i]['cmp_graph'] = $pagevar['companynews'][$i]['cmp_rating'];
+			if($pagevar['companynews'][$i]['cmp_rating'] > 75):
+				$pagevar['companynews'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['companynews'][$i]['full_note'] = $pagevar['companynews'][$i]['cn_note'];
+			$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
+			if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 325):									
+				$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],'.',0,'UTF-8');
+				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
+				$pagevar['companynews'][$i]['cn_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['documents'] = $this->unionmodel->read_documents($activity);
+		$pagevar['manager']['jobs'] = $this->jobsmodel->read_records_year($pagevar['manager']['uid'],2);
+		$pagevar['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
+		$this->load->view('users_interface/activity-info',$pagevar);
+	}
+	
+	function manager_list(){
+	
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Cписок менеджеров - '.$this->activitymodel->read_field($activity,'act_title').' - Practice-Book',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'curactivity'	=> $activity,
+					'curregion'		=> $region,
+					'activity'		=> array(),
+					'regions'		=> array(),
+					'manager' 		=> array(),
+					'managers' 		=> array(),
+					'federal'		=> array()
+			);
+		
+		$pagevar['federal'] = $this->usersmodel->read_federal($activity);
+		if(!$pagevar['federal']):
+			$pagevar['federal'] = $this->usersmodel->read_federal($parent);
+		endif;
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if(!$mraid):
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		endif;
+		$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
+		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,'AND upriority=0');
+		if($pagevar['manager']):
+			$pagevar['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
+		elseif($pagevar['federal']):
+			$pagevar['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['federal']['uid'],$activity,$region);
+		else:
+			$pagevar['activitypath'] = "Отсутствуют менеджеры";
+		endif;
+		if($this->user['priority']):
+			$pagevar['regions'] = $this->regionmodel->read_records();
+		else:
+			$pagevar['regions'] = $this->unionmodel->mra_region($this->user['uid']);	
+		endif;
+		$activity = $this->activitymodel->read_records();
+		if(count($activity) > 0):
+			for($i = 0; $i < count($activity); $i++):
+				$activitylist[$activity[$i]['act_parentid']][] = $activity[$i];
+			endfor;
+		endif;
+		$mas = array();
+		$mas = $this->activity_select($activitylist,$this->user['activity'],$mas);
+		$pagevar['activity'] = $mas;
+		if(!$pagevar['activity']) $pagevar['activity'] = $this->activitymodel->read_activity($this->user['activity']);
+		$this->load->view('users_interface/manager-list',$pagevar);
+		
+	}
+
+	function product_unit_load(){
+	
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$group = $this->input->post('group');
+		if(!isset($group) or empty($group)) show_404();
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$pagevar = array('products'=>$this->productionunitmodel->read_records_title($group,$mraid));
+		$this->load->view('manager_interface/price-coordinator/select-product-unit',$pagevar);
+	}
+
+	function product_unit_info(){
+	
+		$unit = array();
+		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+		$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+		$group = $this->input->post('group');
+		$unit = $this->input->post('unit');
+		if(!$group || !$unit) show_404();
+		$unitinfo = $this->productionunitmodel->read_unit($unit,$group);
+		
+		$punit['note'] = $unitinfo['pri_note'];
+		$punit['image'] = '<img src="'.base_url().'puravatar/viewimage/'.$unitinfo['pri_id'].'"class="floated" alt=""/>';
+		$punit['lowprice'] = $unitinfo['pri_lowprice'];
+		$punit['optimumprice'] = $unitinfo['pri_optimumprice'];
+		$punit['topprice'] = $unitinfo['pri_topprice'];
+		$punit['risks'] = $unitinfo['pri_riskslowprice'];
+		$punit['advantage'] = $unitinfo['pri_advantages'];
+		
+		$punit['lowpricecode'] = $monetary[$unitinfo['pri_lowpricecode']];
+		$punit['optimumpricecode'] = $monetary[$unitinfo['pri_optimumpricecode']];
+		$punit['toppricecode'] = $monetary[$unitinfo['pri_toppricecode']];
+		$punit['unitscode'] = $unitsof[$unitinfo['pri_unitscode']];
+		if($punit['unitscode']):
+			$punit['lowpricecode'] .= '/'.$punit['unitscode'];
+			$punit['optimumpricecode'] .= '/'.$punit['unitscode'];
+			$punit['toppricecode'] .= '/'.$punit['unitscode'];
+		endif;
+		echo json_encode($punit);
+	}
+	
+	/* ------------------------------------------------	company -------------------------------------------*/
+	
+	function company_info(){
+		
+		$company = $this->uri->segment(2);
+		if(!$this->companymodel->company_exist_byid($company)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Панель управления компанией',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($company),
+					'regions'		=> array(),
+					'representative'=> $this->usersmodel->read_representative($company),
+					'news'			=> $this->cmpnewsmodel->read_limit_records($company,3),
+					'shares'		=> $this->cmpsharesmodel->read_limit_records($company,3),
+					'unitgroups'	=> array(),
+					'units'			=> array(),
+					'association'	=> array(),
+					'group'			=> 0,
+					'activitypath'	=> ''
+					
+			);
+		$pagevar['activitypath'] = $pagevar['company']['cmp_name'];
+		for($i = 0;$i < count($pagevar['news']); $i++):
+			$pagevar['news'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['news'][$i]['cn_pdatebegin']);
+			if(mb_strlen($pagevar['news'][$i]['cn_note'],'UTF-8') > 325):									
+				$pagevar['news'][$i]['cn_note'] = mb_substr($pagevar['news'][$i]['cn_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['news'][$i]['cn_note'],'.',0,'UTF-8');
+				$pagevar['news'][$i]['cn_note'] = mb_substr($pagevar['news'][$i]['cn_note'],0,$pos,'UTF-8');
+				$pagevar['news'][$i]['cn_note'] .= '. ... ';
+			endif;
+		endfor;
+		for($i = 0;$i < count($pagevar['shares']); $i++):
+			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
+			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 325):									
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],'.',0,'UTF-8');
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,$pos,'UTF-8');
+				$pagevar['shares'][$i]['sh_note'] .= '. ... ';
+			endif;
+		endfor;
+		$pagevar['company']['cmp_graph'] = $pagevar['company']['cmp_rating'];
+		if($pagevar['company']['cmp_rating'] > 175):
+			$pagevar['company']['cmp_graph'] = 175;
+		endif;
+		
+		$pagevar['unitgroups'] = $this->unionmodel->read_cmpproduct_group($company);
+		if($pagevar['unitgroups']):
+			$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+			$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+			$pagevar['units'] = $this->cmpunitsmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$company);
+			if($pagevar['units']):
+				for($i=0;$i<count($pagevar['units']);$i++):
+					$pagevar['units'][$i]['cu_priceunit'] = $monetary[$pagevar['units'][$i]['cu_priceunit']];
+					$pagevar['units'][$i]['cu_unitscode'] = $unitsof[$pagevar['units'][$i]['cu_unitscode']];
+				endfor;
+				if(count($pagevar['unitgroups']) == 1):
+					$pagevar['group'] = $pagevar['unitgroups'][0]['prg_id'];
+					$pagevar['unitgroups'] = NULL;
+				endif;
+			endif;
+		endif;
+		$pagevar['title'] = $pagevar['company']['cmp_name']	.' - Practice-Book';
+		$this->load->view('users_interface/company-info',$pagevar);
+	}
+	
+	function representatives_list(){
+	
+		$company = $this->uri->segment(3);
+		if(!$this->companymodel->company_exist_byid($company)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Управление представителями',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'activitypath'	=> '',
+					'company'		=> $this->companymodel->read_record($company),
+					'representative' => $this->usersmodel->read_representatives($company)
+			);
+		$pagevar['activitypath'] = $pagevar['company']['cmp_name'];
+		$this->load->view('users_interface/representatives',$pagevar);
+	}
+	
+	function products_unit_info(){
+	
+		$pagevar = array('baseurl'=>base_url(),'units'=> array());
+		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
+		$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
+		$group = $this->input->post('group');
+		$company = $this->input->post('company');
+		if(!$group || !$company) show_404();
+		$pagevar['units'] = $this->cmpunitsmodel->read_units($group,$company);
+		
+		for($i=0;$i<count($pagevar['units']);$i++):
+			$pagevar['units'][$i]['cu_priceunit'] = $monetary[$pagevar['units'][$i]['cu_priceunit']];
+			$pagevar['units'][$i]['cu_unitscode'] = $unitsof[$pagevar['units'][$i]['cu_unitscode']];
+			if($pagevar['units'][$i]['cu_unitscode']):
+				$pagevar['units'][$i]['cu_priceunit'] .= '/'.$pagevar['units'][$i]['cu_unitscode'];
+			endif;
+		endfor;
+		$this->load->view("company_interface/products-table",$pagevar);
 	}
 	
 	/* ----------------------------------------	registering company -------------------------------------------*/
@@ -659,13 +1107,17 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		if(!isset($password) or empty($password)) show_404();
 		$user = $this->usersmodel->auth_user($login,$password);
 		if($user):
-			if($user['ustatus'] == 'enabled'):
-				$this->session->set_userdata('login_id',md5($user['uemail'].$user['uconfirmation']));
-				$this->session->set_userdata('userid',$user['uid']);
-				$this->usersmodel->active_user($user['uid']);
-				$statusval['status'] = TRUE;
+			if($user['umanager'] || $user['ucompany']):
+				if($user['ustatus'] == 'enabled'):
+					$this->session->set_userdata('login_id',md5($user['uemail'].$user['uconfirmation']));
+					$this->session->set_userdata('userid',$user['uid']);
+					$this->usersmodel->active_user($user['uid']);
+					$statusval['status'] = TRUE;
+				else:
+					$statusval['message'] = 'Учетная запись не активирована';
+				endif;
 			else:
-				$statusval['message'] = 'Учетная запись не активирована';
+				$statusval['message'] = 'Для администратора данная авторизация не допустима';
 			endif;
 		endif; 
 		echo json_encode($statusval);
@@ -790,17 +1242,14 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 	function show_contact(){
 	
 		$activity = $this->input->post('activity');
-//		$this->db->insert('test',array('data'=>$activity));
 		if(!$activity) show_404();
 		$pagevar = array('baseurl'=>base_url(),'contact'=>array());
-		
 		$pid = $this->activitymodel->read_field($activity,'act_parentid');
 		if($pid):
 			$pagevar['contact'] = $this->usersmodel->read_single_managers($activity);
 		else:
 			$pagevar['contact'] = $this->usersmodel->read_single_federals($activity);
 		endif;
-//		print_r($pagevar['contact']);
 		$this->load->view('users_interface/single-contact',$pagevar);
 	}
 	/* -----------------------------------------	other function -------------------------------------------*/
@@ -820,6 +1269,36 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			endif;
 		else:
 			show_404();
+		endif;
+	}
+	
+	function send_manager_mail(){
+			
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
+		if($this->input->post('submit')):
+			if(!$_POST['manmail']) show_error("Не верный или отсутствует адрес получателя<br/>Обратитесь в техподдержку");
+			$_POST['message'] = preg_replace('/\n{2}/','<br>',$_POST['message']);
+			if($this->sendmail($_POST['manmail'],strip_tags($_POST['message'],'<br>'),htmlspecialchars($_POST['name'].' - '.$_POST['theme']),$_POST['email'])):
+				$pagevar['text'] = 'Сообщение отправлено';
+				$pagevar['uri'] = $_POST['uri'];
+				$this->load->view('users_interface/message',$pagevar);
+				return TRUE;
+				redirect($_POST['uri']);
+			else:
+				$this->email->print_debugger();
+			endif;
 		endif;
 	}
 	
@@ -995,5 +1474,32 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			endforeach;
 		endif;
 		return $mas;
+	}
+
+	function operation_date($field){
+			
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5 $nmonth \$1 г."; 
+		return preg_replace($pattern, $replacement,$field);
+	}
+
+	function operation_date_slash($field){
+		
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5/\$3/\$1"; 
+		return preg_replace($pattern, $replacement,$field);
+	}
+
+	function operation_date_minus($field){
+		
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5-\$3-\$1"; 
+		return preg_replace($pattern, $replacement,$field);
 	}
 }

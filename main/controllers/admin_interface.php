@@ -86,6 +86,7 @@ class Admin_interface extends CI_Controller {
 			case 'jobs'						: $record_id = 52; break;
 			case 'about'					: $record_id = 53; break;
 			case 'conditions-cooperation'	: $record_id = 54; break;
+			case 'no-activity'				: $record_id = 55; break;
 			default : show_404();
 		endswitch;
 		if($this->input->post('submit')):

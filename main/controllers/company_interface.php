@@ -526,7 +526,7 @@ class Company_interface extends CI_Controller {
 			$statusval['desc'] = strip_tags($note,'<br>');
 		}
 		echo json_encode($statusval);
-	}
+	}
 	
 	function news_delete(){
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');

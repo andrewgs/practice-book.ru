@@ -140,5 +140,15 @@ class Activitymodel extends CI_Model {
 		$this->db->update('tbl_activity');
 		return $this->db->affected_rows();
 	}
+
+	function activity_exist($id){
+			
+		$this->db->where('act_id',$id);
+		$this->db->where('act_final',1);
+		$query = $this->db->get('tbl_activity',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
 }
 ?>

@@ -48,7 +48,6 @@
 	<div id="container">
 		<?php $this->load->view('users_interface/header/header-noauth'); ?>
 		<div id="main">
-		<?= form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
 			<div class="container_12">
 				<div class="grid_12">
 					<div class="grid_8 prefix_2">
@@ -76,9 +75,8 @@
 					</div>
 				</div>
 				<div class="clear"></div>
-				<input class="btn-action margin-1em btnHidden" id="setParam" type="submit" name="submit" value="Получить информацию"/>
+				<input class="btn-action margin-1em btnHidden" id="setParam" type="button" name="submit" value="Получить информацию"/>
 			</div>
-		<?= form_close(); ?>
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('users_interface/footer/footer-nomenu'); ?>
@@ -186,6 +184,18 @@
 					}
 				);
 			}
+			
+			$("#setParam").click(function(event){
+			
+				var actID = $("#activityValue").val();
+				var regID = $("#regionValue").val();
+				if(actID == '' || regID == ''){
+					$(this).css('float','left');
+					$(this).after('<div class="valid_error">Ошибка! Повторите выбор снова</div>');
+					$(".valid_error").fadeOut(3000,function(){$(this).remove();});
+				}else
+					window.setTimeout("window.location='<?=$baseurl;?>activity-information/region/"+regID+"/activity/"+actID+"'",1000);
+			});
 		});
 	</script>
 <!--[if lt IE 7 ]>
