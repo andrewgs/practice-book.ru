@@ -16,6 +16,11 @@ $route['contacts'] = "users_interface/contacts";
 $route['conditions-cooperation'] = "users_interface/cooperation";
 $route['support'] = "users_interface/support";
 
+/* --------------------------------------------- started work ---------------------------------------------*/
+$route['started'] = "users_interface/select_settings";
+$route['users/select-region'] = "users_interface/create_select_region";
+$route['users/select-activity'] = "users_interface/create_select_activity";
+
 /* ----------------------------------------	registering company -------------------------------------------*/
 $route['registering/step-1'] = "users_interface/newcompany1";
 $route['registering/step-2'] = "users_interface/newcompany2";

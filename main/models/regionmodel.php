@@ -37,6 +37,40 @@ class Regionmodel extends CI_Model {
 		return NULL;
 	}
 	
+	function read_districts(){
+		
+		$this->db->select('reg_id AS id,reg_district AS title');
+		$this->db->order_by('reg_district','ASC');
+		$this->db->group_by('reg_district');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else NULL;
+	}
+	
+	function read_area($district){
+		
+		$this->db->select('reg_id AS id,reg_area AS title');
+		$this->db->where('reg_district',$district);
+		$this->db->order_by('reg_area','ASC');
+		$this->db->group_by('reg_area');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else NULL;
+	}
+	
+	function read_cities($area){
+		
+		$this->db->select('reg_id AS id,reg_name AS title');
+		$this->db->where('reg_area',$area);
+		$this->db->order_by('reg_name','ASC');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else NULL;
+	}
+	
 	function insert_record($insertdata){
 			
 		$this->reg_name 	= $insertdata['name'];

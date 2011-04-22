@@ -342,6 +342,57 @@ class Users_interface extends CI_Controller {
 		$this->load->view('users_interface/cooperation',$pagevar);
 	}
 
+	/* --------------------------------------------- started work ---------------------------------------------*/
+	
+	function select_settings(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'regions'		=> array(),
+					'activity'		=> array(),
+					'region'		=> array(),
+					'boxtitle'		=> 'Регион/Округ',
+			);
+		$pagevar['region'] = $this->regionmodel->read_districts();
+		$pagevar['activity'] = $this->activitymodel->level_activity(0);
+		$this->load->view('users_interface/select-settings',$pagevar);
+	}
+	
+	function create_select_region(){
+	
+		$lselect = $this->input->post('lselect');
+		$reg_title = $this->input->post('rtitle');
+		if(!$lselect || !$reg_title) show_404();
+		$pagevar = array('baseurl'=>base_url(),'region'=>array(),'boxtitle'=>'','lselect'=>$lselect);
+		switch ($lselect):
+			case '1': 	$pagevar['boxtitle'] = 'Область/Край';
+						$pagevar['region'] = $this->regionmodel->read_area($reg_title);
+						break;
+			case '2': 	$pagevar['boxtitle'] = 'Город';
+						$pagevar['region'] = $this->regionmodel->read_cities($reg_title);
+						break;
+			default : show_404();
+		endswitch;
+		$this->load->view('users_interface/region-box-select',$pagevar);
+	}
+
+	function create_select_activity(){
+	
+		$act_id = $this->input->post('aid');
+		$final = $this->input->post('final');
+		if(!$act_id) show_404();
+		if(!$final) $final = 0;
+		$pagevar = array('baseurl'=>base_url(),'activity'=>array());
+		if(!$final):
+			$pagevar['activity'] = $this->activitymodel->level_activity($act_id);
+		endif;
+		$this->load->view('users_interface/activity-box-select',$pagevar);
+	}
+	
 	/* ----------------------------------------	registering company -------------------------------------------*/
 	
 	function newcompany1(){

@@ -123,6 +123,7 @@ class Activitymodel extends CI_Model {
 	}
 	
 	function level_activity($pid){
+	
 		$this->db->order_by('act_title');
 		$this->db->where('act_parentid',$pid);
 		$query = $this->db->get('tbl_activity');

@@ -4,7 +4,6 @@
 		<nav role="main">
 			<ul class="header-nav">
 				<li><?= anchor('/','Главная'); ?></li>
-				<li><div id="contact-form"><?= anchor('#','Техподдержка',array('id'=>'Support')); ?></div></li>
 				<li><?= anchor('ideas','Идеи'); ?></li>
 				<li><?= anchor('job','Работа'); ?></li>
 				<li><?= anchor('about','О проекте'); ?></li>
