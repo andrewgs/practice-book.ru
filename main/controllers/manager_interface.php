@@ -121,6 +121,7 @@ class Manager_interface extends CI_Controller{
 					if(!$mraid):
 						$mraid = $this->manregactmodel->insert_record($newmanager,$_POST['region'][$i],$_POST['activity']);
 						$this->productsmodel->insert_empty($mraid);
+						$this->personamodel->insert_empty($mraid);
 					endif;
 				endfor;
 				$this->session->set_userdata('newman_id',$newmanager);
