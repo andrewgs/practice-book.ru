@@ -9,7 +9,7 @@ class Cmpsharesmodel extends CI_Model {
 	var $sh_logo 		= "";
 	var $sh_pdatebegin 	= "";
 	var $sh_pdateend	= "";
-	
+	var $sh_activity 	= "";
 	
 	function __construct(){
 
@@ -24,6 +24,7 @@ class Cmpsharesmodel extends CI_Model {
 		$this->sh_logo			= $insertdata['photo'];
 		$this->sh_pdatebegin	= $insertdata['pdatebegin'];
 		$this->sh_pdateend		= $insertdata['pdateend'];
+		$this->sh_activity		= $insertdata['activity'];
 		
 		$this->db->insert('tbl_cmpshares',$this);
 		return $this->db->insert_id();

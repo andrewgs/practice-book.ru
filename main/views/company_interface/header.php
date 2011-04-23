@@ -2,7 +2,7 @@
 	<div class="container_12 highlight" id="loginstatus">
 		<section id="auth">
 			<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
-			<?= anchor('company/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
+			<?= anchor('representative/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
 			<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 		</section>
 		<div class="clear"></div>

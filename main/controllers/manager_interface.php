@@ -118,14 +118,15 @@ class Manager_interface extends CI_Controller{
 				endif;
 				for($i = 0;$i < count($_POST['region']);$i++):
 					$mraid = $this->manregactmodel->record_exist($_POST['region'][$i],$_POST['activity']);
-					echo $mraid,'&nbsp;&nbsp;'; 
 					if(!$mraid):
 						$mraid = $this->manregactmodel->insert_record($newmanager,$_POST['region'][$i],$_POST['activity']);
 						$this->productsmodel->insert_empty($mraid);
 					endif;
 				endfor;
 				$this->session->set_userdata('newman_id',$newmanager);
-				$message = 'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+				
+				$message = 'Логин - '.$_POST['login']."\n".'Пароль - '.$_POST['password']."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+				
 				if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
 					redirect('manager/cabinet/'.$this->user['uconfirmation']);
 				else:
@@ -182,6 +183,7 @@ class Manager_interface extends CI_Controller{
 					'persona'		=> array(),
 					'documents'		=> array(),
 					'specials'		=> array(),
+					'shares'		=> array(),
 					'tips'			=> array(),
 					'unitgroups'	=> array(),
 					'units'			=> array(),
@@ -359,6 +361,25 @@ class Manager_interface extends CI_Controller{
 				$pagevar['companynews'][$i]['cn_note'] .= '. ... ';
 			endif;
 		endfor;
+		
+		$pagevar['shares'] = $this->unionmodel->read_cmpshares_by_activity($activity,$region);
+		for($i = 0;$i<count($pagevar['shares']); $i++):
+			$pagevar['shares'][$i]['cmp_graph'] = $pagevar['shares'][$i]['cmp_rating'];
+			if($pagevar['shares'][$i]['cmp_rating'] > 75):
+				$pagevar['shares'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['shares'][$i]['full_note'] = $pagevar['shares'][$i]['sh_note'];
+			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
+			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 325):									
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,325,'UTF-8');	
+				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],'.',0,'UTF-8');
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,$pos,'UTF-8');
+				$pagevar['shares'][$i]['sh_note'] .= '. ... ';
+			endif;
+		endfor;
+		
+		
+		
 		$pagevar['documents'] = $this->unionmodel->read_documents($activity);
 		$pagevar['manager']['jobs'] = $this->jobsmodel->read_records_year($pagevar['manager']['uid'],2);
 		$pagevar['manager']['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
@@ -1309,7 +1330,7 @@ class Manager_interface extends CI_Controller{
 							endif;
 							break;
 							
-			case 'vphones': if(preg_match("/^[0-9 ]{6,}$/i",$fdata)):
+			case 'vphones': if(preg_match("/^[0-9\- +\(\),]{6,}$/i",$fdata)):
 								$this->usersmodel->save_single_data($this->user['uid'],'uphone',$fdata);
 								$statusval['status'] 	= TRUE;
 								$statusval['retvalue'] 	= $fdata;
@@ -1496,6 +1517,55 @@ class Manager_interface extends CI_Controller{
 		else:
 			show_error("Отсутствует ID менеджера!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 		endif;
+	}
+
+	function resize_img($tmpName,$wgt,$hgt){
+			
+		chmod($tmpName,0777);
+		$img = getimagesize($tmpName);		
+		$size_x = $img[0];
+		$size_y = $img[1];
+		$wight = $wgt;
+		$height = $hgt; 
+		if(($size_x < $wgt) or ($size_y < $hgt)):
+			$this->resize_image($tmpName,$wgt,$hgt,FALSE);
+			$image = file_get_contents($tmpName);
+			return $image;
+		endif;
+		if($size_x > $size_y):
+			$this->resize_image($tmpName,$size_x,$hgt,TRUE);
+		else:
+			$this->resize_image($tmpName,$wgt,$size_y,TRUE);
+		endif;
+		$img = getimagesize($tmpName);		
+		$size_x = $img[0];
+		$size_y = $img[1];
+		switch ($img[2]){
+			case 1: $image_src = imagecreatefromgif($tmpName); break;
+			case 2: $image_src = imagecreatefromjpeg($tmpName); break;
+			case 3:	$image_src = imagecreatefrompng($tmpName); break;
+		}
+		$x = round(($size_x/2)-($wgt/2));
+		$y = round(($size_y/2)-($hgt/2));
+		if($x < 0):
+			$x = 0;	$wight = $size_x;
+		endif;
+		if($y < 0):
+			$y = 0; $height = $size_y;
+		endif;
+		$image_dst = ImageCreateTrueColor($wight,$height);
+		imageCopy($image_dst,$image_src,0,0,$x,$y,$wight,$height);
+		imagePNG($image_dst,$tmpName);
+		imagedestroy($image_dst);
+		imagedestroy($image_src);
+		$image = file_get_contents($tmpName);
+		/*$file = fopen($tmpName,'rb');
+		$image = fread($file,filesize($tmpName));
+		fclose($file);
+		header('Content-Type: image/jpeg' );
+		echo $image;
+		exit();*/
+		return $image;
 	}
 
 	function resize_image($image,$wgt,$hgt,$ratio){

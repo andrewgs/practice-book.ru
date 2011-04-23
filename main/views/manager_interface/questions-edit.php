@@ -68,7 +68,7 @@
 		.btnHidden{
 			display:none;
 		}
-		.tmpTitle,.tmpDesc,.newsID{
+		.tmpTitle,.tmpDesc,.newsID,.tmpCheckBox{
 			display:none;
 		}
 		.chackForAll{
@@ -145,6 +145,12 @@
 				$(objDescID).after('<div class="tmpDesc" id="tds'+curID+'">&nbsp;</div>');
 				$("#tds"+curID).text(objDescID.html());
 				$(objDescID).html("<textarea class=\"edit-form-textarea mbottom\" name=\"note\" id=\"ads"+curID+"\" cols=\"50\" rows=\"12\">"+valDesc+"</textarea>");
+				
+				var objCheckBox = $("#pr"+curID);
+				var valCheckBox = objCheckBox.attr("checked");
+				$(objDescID).after('<div class="tmpCheckBox" id="tcb'+curID+'"></div>');
+				if(valCheckBox) $("#tcb"+curID).text('checked');
+
 				$("#dl"+curID).slideUp("slow",function(){$("#c"+curID).slideDown("slow");});
 				$("#e"+curID).slideUp("slow",function(){$("#s"+curID).slideDown("slow");});
 				$("#pr"+curID).removeAttr("disabled");
@@ -165,6 +171,10 @@
 					$("#tds"+curID).remove();
 					$("#ds"+curID).html(objDescID.text());
 				});
+				var valCheckBox = $("#tcb"+curID).text();
+				if(valCheckBox=='checked') $("#pr"+curID).attr("checked","checked");
+				else $("#pr"+curID).removeAttr("checked");
+				
 				$("#c"+curID).slideUp("slow",function(){$("#dl"+curID).slideDown("slow");});
 				$("#s"+curID).slideUp("slow",function(){$("#e"+curID).slideDown("slow");});
 				$("#pr"+curID).attr("disabled","disabled");
@@ -226,6 +236,7 @@
 								$("#tds"+curID).remove();
 								$("#ds"+curID).html(data.desc);
 							});
+							$("#tcb"+curID).remove();
 							$("#c"+curID).slideUp("slow",function(){$("#dl"+curID).slideDown("slow");});
 							$("#s"+curID).slideUp("slow",function(){$("#e"+curID).slideDown("slow");});
 							$("#pr"+curID).attr("disabled","disabled");

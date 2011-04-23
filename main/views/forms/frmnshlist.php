@@ -2,10 +2,10 @@
 	<?php for($i = 0;$i < count($news); $i++): ?>
 	<div class="newsID" id="id<?=$i?>"><?=$news[$i]['id'];?></div>
 	<div class="content-separator" id="cs<?=$i?>">
-		<div class="nshDate"><span class="text" title="Дата начала публикации новости">Начальная дата:</span>
+		<div class="nshDate"><span class="text" title="Дата начала публикации">Начальная дата:</span>
 			<?=$news[$i]['pdatebegin'];?>
 		</div>
-		<div class="nshDate" id="nsh<?=$i?>"><span class="text" title="Дата окончания публикации новости">Конечная дата:</span>
+		<div class="nshDate" id="nsh<?=$i?>"><span class="text" title="Дата окончания публикации">Конечная дата:</span>
 			<?php if($news[$i]['pdateend'] != "01-01-3000"):?>
 				<span id="sped<?=$i?>"><?=$news[$i]['pdateend'];?></span>
 			<?php else: ?>

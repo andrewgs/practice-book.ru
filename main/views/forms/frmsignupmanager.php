@@ -93,9 +93,5 @@
 	</div>
 	<div class="clear"></div>
 	<hr size="2px"/>
-	
-	<div class="form-reqs" style="text-align: center">
-		Нажав на кнопку <b>"Зарегистрировать"</b>, вы соглашаетесь с условиями <?= anchor($baseurl.'license','лицензионного соглашения')?>
-	</div>
 	<input class="btn-action margin-1em" type="submit" id="btnSubmit" name="submit" value="Зарегистрировать"/>
 <?= form_close(); ?>

@@ -296,6 +296,7 @@ class Admin_interface extends CI_Controller {
 	}
 	
 	function registration_users(){
+	
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',

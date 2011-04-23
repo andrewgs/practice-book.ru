@@ -11,7 +11,7 @@
 		</div>
 		<div class="grid_3 dateperiod">
 			<div class="divdate">
-				<label class="date-label-input" title="Новость будет опубликована с указанной даты">Начальная дата: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+				<label class="date-label-input" title="Будет опубликована с указанной даты">Начальная дата: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<input class="date-form-input inpvalue" id="begin-date" name="pdatebegin" type="text" readonly="readonly" value="<?=set_value('pdatebegin');?>"/>
 			</div>
 			<div class="divdate">

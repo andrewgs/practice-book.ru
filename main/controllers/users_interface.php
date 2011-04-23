@@ -1044,7 +1044,8 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					'logo' 			=> 'default',
 					'timer' 		=> FALSE,
 					'cmpid' 		=> 1,
-					'cmpname'		 => ''
+					'cmpname'		=> '',
+					'uri'			=> ''
 			);
 		$cmpid = $this->session->userdata('companyid');
 		$userid = $this->session->userdata('userid');
@@ -1234,6 +1235,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'specials'		: 	$image = $this->specialsmodel->get_image($id); break;
 			case 'puravatar'	: 	$image = $this->productionunitmodel->get_image($id); break;
 			case 'curavatar'	: 	$image = $this->cmpunitsmodel->get_image($id); break;
+			case 'shares'		: 	$image = $this->cmpsharesmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;
@@ -1253,7 +1255,110 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		$this->load->view('users_interface/single-contact',$pagevar);
 	}
 	/* -----------------------------------------	other function -------------------------------------------*/
-
+	
+	function registration_request(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'activitypath'	=> FALSE,
+					'activity'		=> array(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
+		
+		$manager = $this->uri->segment(2);
+		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('login','','required|valid_email|callback_login_check|trim');
+			$this->form_validation->set_message('valid_email','Укажите правильный адрес');
+			$this->form_validation->set_rules('fname','','required|trim');
+			$this->form_validation->set_rules('sname','','required|trim');
+			$this->form_validation->set_rules('tname','','required|trim');
+			$this->form_validation->set_rules('phones','','required|min_length[6]|integer|trim');
+			$this->form_validation->set_rules('status','','required|trim');
+			$this->form_validation->set_rules('education','','required|trim');
+			$this->form_validation->set_rules('birthday','','required|trim');
+			$this->form_validation->set_rules('region','','required|trim');
+			$this->form_validation->set_rules('experience','','required|trim');
+			$this->form_validation->set_rules('activity','','');
+			$this->form_validation->set_rules('newactivity','','');
+			$this->form_validation->set_rules('newactivity','','');
+			$this->form_validation->set_rules('actValue','','');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->registration_request();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if(!$_POST['activity'] && !$_POST['newactivity']):
+					show_error("Отсутствуют данные<br/>Обратитесь в техподдержку");
+				else:
+					$_POST['experience'] = preg_replace('/\n{2}/','<br>',$_POST['experience']);
+					$email = 'admin@practice-book.ru';
+					$message = "Анкета на регистрацию менеджера \n";
+					$message .= 'ФИО - '.$_POST['fname'].' '.$_POST['sname'].' '.$_POST['tname']."\n";
+					$message .= 'E-Mail - '.$_POST['login']."\n";
+					$message .= 'Телефон - '.$_POST['phones']."\n";
+					$message .= 'Симейное положение - '.$_POST['status']."\n";
+					$message .= 'Образование - '.$_POST['education']."\n";
+					$message .= 'День рождения - '.$_POST['birthday']."\n";
+					$message .= 'Место проживания - '.$_POST['region']."\n";
+					$message .= 'Опыт работы - '.$_POST['experience']."\n";
+					switch ($manager):
+						case 'federal-manager' : 	if(!$_POST['activity']):
+														$message .= 'Моя сфера деятельности - '.$_POST['newactivity']."\n";
+													else:
+														$message .= 'Выбрана сфера деятельности - '.$_POST['actValue']."\n";
+													endif;
+													$theme = 'Анкета на регистрацию федерального менеджера';
+													break;
+													
+						case 'regional-manager' : 	$message .= 'Моя сфера деятельности - '.$_POST['newactivity']."\n";
+													if($_POST['actValue']):
+														$manemail = $this->usersmodel->read_single_manager($_POST['actValue']);
+														if(!$manemail):
+															$manemail = $this->usersmodel->read_manager($_POST['actValue']);
+															if($manemail):
+																$email = $manemail['uemail'];
+															endif;
+														endif;
+													endif;
+													$theme = 'Анкета на регистрацию регионального менеджера';
+													break;
+					endswitch;
+					if($this->sendmail($email,strip_tags($message,'<br>'),$theme,$_POST['login'])):
+						$pagevar['text'] = 'Сообщение отправлено';
+						$this->load->view('users_interface/message',$pagevar);
+						return TRUE;
+					else:
+						$this->email->print_debugger();
+					endif;
+				endif;
+			endif;
+		endif;
+		
+		switch ($manager):
+			case 'federal-manager' : 	$pagevar['activitypath'] = 'Анкета на регистрацию федерального менеджера';
+										$pagevar['activity'] = $this->activitymodel->level_activity(0);
+										$this->load->view('users_interface/registration-request-federal',$pagevar);
+										break;
+			case 'regional-manager' : 	$pagevar['activitypath'] = 'Анкета на регистрацию регионального менеджера';
+										$pagevar['activity'] = $this->activitymodel->level_activity(0);
+										$this->load->view('users_interface/registration-request-regional',$pagevar);
+										break;
+			default					:	show_404();
+		endswitch;
+	}
+	
 	function support(){
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('name','','required|strip_tags|trim');
@@ -1295,7 +1400,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 				$pagevar['uri'] = $_POST['uri'];
 				$this->load->view('users_interface/message',$pagevar);
 				return TRUE;
-				redirect($_POST['uri']);
+//				redirect($_POST['uri']);
 			else:
 				$this->email->print_debugger();
 			endif;

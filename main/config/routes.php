@@ -64,6 +64,7 @@ $route['docavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['specials/viewimage/:num'] = "users_interface/viewimage";
 $route['puravatar/viewimage/:num'] = "users_interface/viewimage";
 $route['curavatar/viewimage/:num'] = "users_interface/viewimage";
+$route['shares/viewimage/:num'] = "users_interface/viewimage";
 
 $route['show/contact'] = "users_interface/show_contact";
 
@@ -71,7 +72,8 @@ $route['show/contact'] = "users_interface/show_contact";
 $route['script_error'] = "users_interface/showerror";
 $route['send-manager-email'] = "users_interface/send_manager_mail";
 
-$route['selection'] = "users_interface/selection";
+$route['registration-request/federal-manager'] = "users_interface/registration_request";
+$route['registration-request/regional-manager'] = "users_interface/registration_request";
 
 /***********************************	MANAGER INTRERFACE	***********************************************/
 $route['manager/control-panel/:any'] = "manager_interface/cpanel";
@@ -139,6 +141,9 @@ $route['company/cabinet/:any'] = "company_interface/profile";
 $route['company/representatives/:any'] = "company_interface/management";
 $route['company/save-profile/:any'] = "company_interface/save_profile";
 $route['company/delete-representatives/:any'] = "company_interface/delele_representatives";
+
+$route['representative/cabinet/:any'] = "company_interface/representative_cabinet";
+$route['representative/save-profile/:any'] = "company_interface/representative_save_profile";
 /* ------------------------------------------ view/add/edit ----------------------------------------------------*/
 $route['company/news-management/:any'] = "company_interface/news_management";
 $route['company/news-save/:any'] = "company_interface/news_save";

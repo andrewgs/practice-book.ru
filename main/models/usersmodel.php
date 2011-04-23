@@ -172,7 +172,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_representatives($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,upriority');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,upriority,uskype,uicq');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->order_by('upriority','DESC');
@@ -184,7 +184,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_representative($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,upriority');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,upriority,uskype,uicq');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->where('upriority',1);
@@ -196,7 +196,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_info($id){
 		
-		$this->db->select('uid,ucompany,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity');
+		$this->db->select('uid,ucompany,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity,uskype,uicq');
 		$this->db->where('uid',$id);
 		$this->db->where('udestroy','3000-01-01');
 		$query = $this->db->get('tbl_user');

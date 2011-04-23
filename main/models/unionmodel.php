@@ -75,6 +75,15 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data;
 		else return null;
 	}
+	
+	function read_cmpshares_by_activity($activity,$region){
+		
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_company.cmp_rating,tbl_cmpshares.sh_id,tbl_cmpshares.sh_title,tbl_cmpshares.sh_note,tbl_cmpshares.sh_pdatebegin FROM tbl_cmpshares inner join tbl_company on tbl_company.cmp_id = tbl_cmpshares.sh_cmpid WHERE tbl_cmpshares.sh_activity = $activity AND tbl_company.cmp_region = $region AND tbl_cmpshares.sh_pdatebegin <= CURDATE() ORDER BY tbl_company.cmp_rating DESC,tbl_company.cmp_id ASC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
 
 	function read_pitfalls_limit($activity,$limit){
 	

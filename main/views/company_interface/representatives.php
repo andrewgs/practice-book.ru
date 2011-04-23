@@ -39,6 +39,10 @@
 			font: normal small-caps 14px/16px fantasy;
 			margin: 0 10px 10px 0;
 		}
+		.federal-skype-icq img{
+			margin:5px 5px 0 10px;
+			cursor: pointer;
+		}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

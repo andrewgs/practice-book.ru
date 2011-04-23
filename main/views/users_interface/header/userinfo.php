@@ -41,7 +41,7 @@
 	</div>
 	<section id="auth">
 		<span class="welcome-message">Здравствуйте, <?= $userinfo['ufullname']; ?></span>
-		<?php $cablink = 'company/cabinet/'.$userinfo['uconfirmation']; ?>
+		<?php $cablink = 'representative/cabinet/'.$userinfo['uconfirmation']; ?>
 		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
 		<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 	</section>

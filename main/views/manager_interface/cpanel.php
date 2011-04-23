@@ -930,7 +930,7 @@
 							<div id="accordion-2">
 								<h3><a href="#"><?= $othertext[16]['otxt_note'];?></a></h3>
 								<div class="box-content">
-									<?php if($specials): ?>
+								<?php if($specials): ?>
 									<?php for($i=0;$i<count($specials);$i++):?>
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>specials/viewimage/<?=$specials[$i]['spc_id'];?>" class="floated" alt=""/>
@@ -945,7 +945,18 @@
 								</div>
 								<h3><a href="#"><?= $othertext[17]['otxt_note'];?></a></h3>
 								<div class="box-content">
+								<?php if($shares): ?>
+									<?php for($i=0;$i<count($shares);$i++):?>
+										<div class="content-separator">
+									<img src="<?=$baseurl;?>shares/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
+											<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
+											<div class="nshNote"><?=$shares[$i]['sh_note'];?></div>
+											<div class="clear"></div>
+										</div>
+									<?php endfor; ?>
+								<?php else: ?>
 									<?= $othertext[17]['otxt_content']; ?>
+								<?php endif; ?>
 								</div>
 							</div>
 							<div class="box-bottom-links h20">

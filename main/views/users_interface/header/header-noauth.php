@@ -10,7 +10,7 @@
 				<li><?= anchor('contacts','Контакты'); ?></li>
 			</ul>
 		</nav>
-		<?php if($activitypath): ?>
+		<?php if(isset($activitypath)): ?>
 		<br><br>
 		<ul class="header-nav2">
 			<li><?=$activitypath;?></li>

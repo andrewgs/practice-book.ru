@@ -7,6 +7,18 @@
 		<div class="rep-phone"><span class="text">Тел.:</span><?= $representative[$i]['uphone']; ?></div>
 		<div class="rep-email"><span class="text">E-mail:</span><?=$representative[$i]['uemail']; ?></div>
 		<div class="rep-posiotion"><span class="text">Должность:</span><?=$representative[$i]['uposition']; ?></div>
+		<?php if($representative[$i]['uskype']): ?>
+			<div class="federal-skype-icq">
+				<img src="<?=$baseurl;?>images/skype.png" border="0" title="skype" alt=""/>
+				<span class="text"><?=$representative[$i]['uskype'];?></span>
+			</div>
+		<?php endif; ?>
+		<?php if($representative[$i]['uicq']): ?>
+			<div class="federal-skype-icq">
+				<img src="<?=$baseurl;?>images/icq.png" border="0" title="icq" alt=""/>
+				<span class="text"><?=$representative[$i]['uicq'];?></span>
+			</div>
+		<?php endif; ?>
 		<?php if($userinfo['priority'] and !$representative[$i]['upriority']): ?>
 			<input type="image" title="Удалить" class="ajaxdel" id="rep<?=$i;?>" src="<?= $baseurl; ?>images/delete.png" />
 		<?php endif; ?>

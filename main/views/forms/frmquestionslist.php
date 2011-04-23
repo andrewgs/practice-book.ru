@@ -23,7 +23,7 @@
 				<?php if($questions[$i]['mraq_priority']): ?>
 	<input type="checkbox" name="priority" value="1" checked disabled id="pr<?=$i?>" title="Отметьте, если вопрос важный">Показывать в списке
 				<?php else: ?>
-	<input type="checkbox" name="priority" value="1" disabled id="pr<?=$i?>" title="Отметьте, если вопрос являеться важным">Показывать в списке
+	<input type="checkbox" name="priority" value="1" disabled id="pr<?=$i?>" title="Отметьте, если вопрос важный">Показывать в списке
 				<?php endif; ?>
 		<input type="image" title="Удалить" class="NewsDel" id="dl<?=$i?>" nID="<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />
 		<input type="image" title="Редактировать" class="NewsEdit" id="e<?=$i?>" nID="<?=$i?>" src="<?=$baseurl;?>images/edit.png" />

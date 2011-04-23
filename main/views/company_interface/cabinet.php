@@ -65,7 +65,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
-		<?php $this->load->view('company_interface/header-nocab'); ?>
+		<?php $this->load->view('company_interface/header'); ?>
 		<div id="main">
 			<?php $this->load->view('forms/frmcmpsprofile'); ?>
 		</div>

@@ -67,7 +67,7 @@ class Company_interface extends CI_Controller {
 					'unitgroups'	=> array(),
 					'units'			=> array(),
 					'association'	=> array(),
-					'group'			=> 0,
+					'group'			=> 0
 					
 			);
 		for($i = 0;$i < count($pagevar['news']); $i++):
@@ -113,6 +113,105 @@ class Company_interface extends CI_Controller {
 		$this->session->set_userdata('region',$this->user['region']);
 		$pagevar['regions'] = $this->regionmodel->read_records();
 		$this->load->view('company_interface/cpanel',$pagevar);
+	}
+
+	function representative_cabinet(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Панель управления компанией',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'representative'=> $this->usersmodel->read_representative($this->user['cid']),
+			);
+		if($this->input->post('fileupload')):
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			if(!$this->form_validation->run()):
+				$_POST['fileupload'] = NULL;
+				$this->profile();
+				return FALSE;
+			else:
+				$photo = $this->resize_img($_FILES['userfile']['tmp_name'],96,120);
+				$this->usersmodel->save_single_data($this->user['uid'],'uphoto',$photo);
+				redirect('representative/cabinet/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		$pagevar['representative'] = $this->usersmodel->read_record($this->user['uid']);
+		$pagevar['representative']['fullname'] = $pagevar['representative']['uname'].' '.$pagevar['representative']['usubname'].' '.$pagevar['representative']['uthname'];
+		$pagevar['representative']['activitypath'] = 'Личный кабинет';
+		$this->load->view('company_interface/representative-cabinet',$pagevar);
+	}
+
+	function representative_save_profile(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при сохранении','retvalue'=>'');
+		$fname = trim($this->input->post('id'));
+		$fdata = trim($this->input->post('value'));
+		if(!isset($fname) or empty($fname)) show_404();
+		if(!isset($fdata) or empty($fdata)) show_404();
+		switch ($fname):
+			case 'vlogin': 	if(preg_match("/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i",$fdata)):
+								if($this->usersmodel->user_exist('uemail',$fdata)):
+									$statusval['status'] 	= FALSE;
+									$statusval['message'] 	= 'Логин уже занят';
+									break;
+								endif;
+								$res = $this->usersmodel->save_single_data($this->user['uid'],'uemail',$fdata);
+								if($res):
+									$this->session->set_userdata('login_id',md5($fdata.$this->user['uconfirmation']));
+									$this->session->set_userdata('userid',$this->user['uid']);
+								endif;
+								$statusval['status'] 	= TRUE;
+								$statusval['retvalue'] 	= $fdata;
+							else:
+								$statusval['status'] 	= FALSE;
+								$statusval['message'] 	= 'Не верный формат E-mail';
+							endif;
+							break;
+							
+			case 'vpass': 	if(mb_strlen($fdata,'UTF-8') >= 6):
+								$this->usersmodel->save_single_data($this->user['uid'],'upassword',md5($fdata));
+								$this->usersmodel->save_single_data($this->user['uid'],'ucryptpassword',$this->encrypt->encode($fdata));
+								$statusval['status'] = TRUE;
+								$statusval['retvalue'] 	= 'Пароль изменен';
+							else:
+								$statusval['status'] 	= FALSE;
+								$statusval['message'] 	= 'Короткий пароль';
+							endif;
+							break;
+							
+			case 'vphones': if(preg_match("/^[0-9\- +\(\),]{6,}$/i",$fdata)):
+								$this->usersmodel->save_single_data($this->user['uid'],'uphone',$fdata);
+								$statusval['status'] 	= TRUE;
+								$statusval['retvalue'] 	= $fdata;
+							else:
+								$statusval['status'] 	= FALSE;
+								$statusval['message'] 	= 'Не верный номер телефона';
+							endif;
+							break;
+							
+			case 'vicq': 	if(preg_match("/^[0-9 ]{4,12}$/i",$fdata)):
+								$this->usersmodel->save_single_data($this->user['uid'],'uicq',$fdata);
+								$statusval['status'] 	= TRUE;
+								$statusval['retvalue'] 	= $fdata;
+							else:
+								$statusval['status'] 	= FALSE;
+								$statusval['message'] 	= 'Не верный номер ICQ';
+							endif;
+							break;
+			case 'vskype': 	$this->usersmodel->save_single_data($this->user['uid'],'uskype',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+		case 'vposition': 	$this->usersmodel->save_single_data($this->user['uid'],'uposition',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+		endswitch;
+		echo json_encode($statusval);
 	}
 	
 	function operation_date($field){
@@ -173,6 +272,7 @@ class Company_interface extends CI_Controller {
 	}
 
 	function management(){
+	
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('login','','required|valid_email|callback_login_check|trim');
 			$this->form_validation->set_rules('password','','required|min_length[6]|trim');
@@ -526,7 +626,7 @@ class Company_interface extends CI_Controller {
 			$statusval['desc'] = strip_tags($note,'<br>');
 		}
 		echo json_encode($statusval);
-	}
+	}
 	
 	function news_delete(){
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
@@ -565,7 +665,8 @@ class Company_interface extends CI_Controller {
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
-					'typeavatar'	=> 'cshavatar'
+					'typeavatar'	=> 'cshavatar',
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title',' "Оглавление" ','required|trim');
