@@ -966,8 +966,7 @@
 								<div class="clear"></div>
 							</div>
 						</div>
-						
-						<?php if(count($specials)): ?>
+						<?php if(count($specials) || count($shares)): ?>
 							<div id="specials-modal-content">
 								<div class="box">
 									<div class="box-header"><b><?=$manager['activitypath'];?></b>
@@ -981,6 +980,17 @@
 									<img src="<?=$baseurl;?>specials/viewimage/<?=$specials[$i]['spc_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$specials[$i]['spc_title'];?></div>
 											<div class="nshNote"><?=$specials[$i]['full_note'];?></div>
+											<div class="clear"></div>
+										</div>
+									<?php endfor; ?>
+									<div class="clear"></div><br/>
+									<h3>Скидки и акции отросли</h3><hr/>
+									<?php for($i=0;$i<count($shares);$i++):?>
+										<div class="content-separator">
+											<div class="nshDate"><?=$shares[$i]['sh_date'];?></div>
+									<img src="<?=$baseurl;?>shares/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
+											<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
+											<div class="nshNote"><?=$shares[$i]['full_note'];?></div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>

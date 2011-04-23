@@ -1324,9 +1324,9 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 													
 						case 'regional-manager' : 	$message .= 'Моя сфера деятельности - '.$_POST['newactivity']."\n";
 													if($_POST['actValue']):
-														$manemail = $this->usersmodel->read_single_manager($_POST['actValue']);
+														$manemail = $this->usersmodel->read_single_federal($_POST['actValue']);
 														if(!$manemail):
-															$manemail = $this->usersmodel->read_manager($_POST['actValue']);
+															$manemail = $this->usersmodel->read_federal($_POST['actValue']);
 															if($manemail):
 																$email = $manemail['uemail'];
 															endif;
