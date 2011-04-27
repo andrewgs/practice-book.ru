@@ -19,7 +19,7 @@
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
 	<![endif]-->
-	<link rel="stylesheet" type='text/css' href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/custom.css">
 	
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>

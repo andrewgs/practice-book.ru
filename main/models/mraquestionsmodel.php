@@ -33,7 +33,8 @@ class Mraquestionsmodel extends CI_Model {
 	}
 
 	function read_records($mraid){
-	
+		
+		$this->db->order_by('mraq_date','DESC');
 		$this->db->where('mraq_mraid',$mraid);
 		$query = $this->db->get('tbl_mraquestions');
 		$data = $query->result_array();
@@ -51,6 +52,7 @@ class Mraquestionsmodel extends CI_Model {
 		$this->mraq_priority	= 0;
 		
 		$this->db->insert('tbl_mraquestions',$this);
+		return $this->db->insert_id();
 	}
 	
 	function insert_answer($mraid,$insertdata){

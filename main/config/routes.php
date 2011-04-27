@@ -21,6 +21,7 @@ $route['started'] = "users_interface/select_settings";
 $route['users/select-region'] = "users_interface/create_select_region";
 $route['users/select-activity'] = "users_interface/create_select_activity";
 $route['activity-information/region/:num/activity/:num'] = "users_interface/activity_information";
+$route['announce-tender/region/:num/activity/:num'] = "users_interface/announce_tender";
 $route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list";
 $route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
 $route['product-info/region/:num/activity/:num'] = "users_interface/product_unit_info";
@@ -74,6 +75,9 @@ $route['send-manager-email'] = "users_interface/send_manager_mail";
 
 $route['registration-request/federal-manager'] = "users_interface/registration_request";
 $route['registration-request/regional-manager'] = "users_interface/registration_request";
+
+$route['add-pitfall'] = "users_interface/ajax_add_pitfall";
+$route['add-question'] = "users_interface/ajax_add_question";
 
 /***********************************	MANAGER INTRERFACE	***********************************************/
 $route['manager/control-panel/:any'] = "manager_interface/cpanel";

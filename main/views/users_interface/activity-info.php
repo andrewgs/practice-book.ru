@@ -80,7 +80,7 @@
 		#pulist{
 			margin-top:10px;
 		}
-		.btnHidden{
+		.btnHidden,#addPitfallsForm,#AskQuestionForm{
 			display:none;
 		}
 	</style>
@@ -162,9 +162,21 @@
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links brighted h20">
-								<div class="right">&nbsp;</div>
+								<div class="left">
+									<a href="#" id="addPitfalls" class="window">Добавить</a>
+								</div>
+								<div class="right" id="PFStatus"></div>
 								<div class="clear"></div>
 							</div>
+						</div>
+						<div id="addPitfallsForm">
+							Название <span class="necessarily" title="Поле не может быть пустым">*</span><br/>
+							<input class="edit285-form-input" id="TitlePF" type="text" value="" maxlength="200"/>
+							<div class="clear"></div>
+							Описание: <span class="necessarily" title="Поле не может быть пустым">*</span><br/>
+							<textarea class="edit285-form-textarea" id="TextPF" cols="20" rows="4"></textarea>
+							<div class="clear"></div>
+							<input type="button" class="lnk-submit" id="addPF" value="Добавить"/>
 						</div>
 						<?php for($i=0;$i<count($pitfalls);$i++):?>
 							<div id="pitfalls-modal-content" PF="<?=$i;?>">
@@ -207,9 +219,19 @@
 								<?php endfor; ?>
 							<?php endif; ?>
 							</div>
-							<div class="box-bottom-links h20">&nbsp;
+							<div class="box-bottom-links h20">
+								<div class="left">
+									<a href="#" id="AskQuestion" class="window">Задать вопрос</a>
+								</div>
+								<div class="right" id="AQStatus"></div>
 								<div class="clear"></div>
 							</div>
+						</div>
+						<div id="AskQuestionForm">
+							Вопрос: <span class="necessarily" title="Поле не может быть пустым">*</span><br/>
+							<input class="edit285-form-input" id="TextAQ" type="text" value="" maxlength="200"/>
+							<div class="clear"></div><br/>
+							<input type="button" class="lnk-submit" id="addQ" value="Добавить"/>
 						</div>
 						<?php for($i=0;$i<count($questions);$i++):?>
 							<div id="questions-modal-content" Quest="<?=$i;?>">
@@ -454,7 +476,8 @@
 								<div class="box-tender">
 									<div class="box-header w358">
 										<h2 style="text-align:center">
-											<?= anchor('#','&nbsp;&nbsp;&nbsp;Объявить тендер &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
+											<?php $link = 'announce-tender/region/'.$this->uri->segment(3).'/activity/'.$this->uri->segment(5);?>
+											<?= anchor($link,'&nbsp;&nbsp;&nbsp;Объявить тендер &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
 										</h2>
 										<div class="box-search h20">
 											<a class="tooltip" href="">
@@ -960,6 +983,7 @@
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -994,6 +1018,75 @@
 					}
 				);
 			}
+		});
+		
+		$("#addPitfalls").click(function(event){
+			event.preventDefault();
+			$("#PFStatus").text('');
+			$("#addPitfallsForm").toggle(500,function(){
+				if($("#addPitfallsForm").is(":hidden")) $("#addPitfalls").text("Добавить");
+				else $("#addPitfalls").text("Отменить");
+			});
+			$("#TextPF").css('border-color','#D0D0D0');
+			$("#TitlePF").css('border-color','#D0D0D0');
+			$("#TextPF").val('');$("#TitlePF").val('');
+		});
+		
+		$("#AskQuestion").click(function(event){
+			event.preventDefault();
+			$("#AQStatus").text('');
+			$("#AskQuestionForm").toggle(500,function(){
+				if($("#AskQuestionForm").is(":hidden")) $("#AskQuestion").text("Задать вопрос");
+				else $("#AskQuestion").text("Отменить");
+			});
+			$("#TextAQ").css('border-color','#D0D0D0');
+			$("#TextAQ").val('');
+		});
+		
+		$("#addPF").click(function(){
+			var err = false;
+			var title = $("#TitlePF").val();
+			if(title==""){
+				$("#TitlePF").css('border-color','#ff0000');
+				err = true;
+			}
+			var text = $("#TextPF").val();
+			if(text==""){
+				$("#TextPF").css('border-color','#ff0000');
+				err = true;
+			}
+			if(err){
+				msgerror('Пропущены обязательные поля');
+			}else
+				$.post(
+					"<?=$baseurl;?>add-pitfall",
+					{'title':$("#TitlePF").val(),'note':$("#TextPF").val(),'activity':<?=$this->uri->segment(5);?>,'region':<?=$this->uri->segment(3);?>},
+					function(data){
+						if(data.status){
+							$("#addPitfallsForm").hide(500,function(){$("#addPitfalls").text("Добавить");});
+							$("#PFStatus").css('color','#008000');
+							$("#PFStatus").text(data.message);
+						}else msgerror(data.message);
+					},"json");
+		});
+		
+		$("#addQ").click(function(){
+			var title = $("#TextAQ").val();
+			if(title==""){
+				$("#TextAQ").css('border-color','#ff0000');
+				msgerror('Пропущены обязательные поля');
+				return false;
+			}else
+				$.post(
+					"<?=$baseurl;?>add-question",
+					{'title':title,'activity':<?=$this->uri->segment(5);?>,'region':<?=$this->uri->segment(3);?>},
+					function(data){
+						if(data.status){
+							$("#AskQuestionForm").hide(500,function(){$("#AskQuestion").text("Задать вопрос");});
+							$("#AQStatus").css('color','#008000');
+							$("#AQStatus").text(data.message);
+						}else msgerror(data.message);
+					},"json");
 		});
 		
 		$("#single-select-products").change(function(){
@@ -1104,6 +1197,14 @@
 			return pattern.test(emailAddress);
 		};
 		
+		function msgerror(msg){
+				$.blockUI({
+					message: msg,
+					css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}
+				});
+				window.setTimeout($.unblockUI,1000);
+				return false;
+			}
 		
 		$("#accordion").accordion({animated: false,autoHeight: false});$("#accordion-1").accordion({animated: false,autoHeight: false});$("#accordion-2").accordion({animated: false,autoHeight: false});$("#slider-range-price").slider({range: true,min: 3200,max: 15000,values: [4500, 9000],slide: function(event, ui){$("#price-amount").val(ui.values[0] + ' - ' + ui.values[1]);}});$("#slider-range-rate").slider({range: true,min: 0,max: 100,values: [15, 70],slide: function(event, ui){$("#rate-amount").val(ui.values[0] + ' - ' + ui.values[1]);}});});
 	</script>

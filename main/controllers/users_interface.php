@@ -840,6 +840,99 @@ class Users_interface extends CI_Controller {
 		endfor;
 		$this->load->view("company_interface/products-table",$pagevar);
 	}
+
+	function announce_tender(){
+		
+		if(!$this->user['cid'])	show_404();
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Объявление тендера',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'activitypath'	=> 'Объявление тендера',
+					'company'		=> array(),
+					'top_rating'	=> 50,
+					'low_rating'	=> 20,
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> 'activity-information/region/'.$this->uri->segment(3).'/activity/'.$this->uri->segment(5) 
+			);
+		if($this->input->post('submit')):
+			
+			$this->form_validation->set_rules('theme','','required|htmlspecialchars|trim');
+			$this->form_validation->set_rules('note','','required|strip_tags|trim');
+			$this->form_validation->set_rules('summa','','required|htmlspecialchars|trim');
+			$this->form_validation->set_rules('dateover','','required|trim');
+			$this->form_validation->set_rules('payment','','required|htmlspecialchars|trim');
+			$this->form_validation->set_rules('time','','trim|htmlspecialchars');
+			$this->form_validation->set_rules('info','','trim|strip_tags');
+			$this->form_validation->set_rules('cmp[]','','required');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->announce_tender();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$cmpinfo = $this->companymodel->read_record($this->user['cid']);
+				
+				$from = $cmpinfo['cmp_email'];
+				$message = 'Организация '.$cmpinfo['cmp_name'].', '.$cmpinfo['cmp_uraddress'].' объявляет тендер: '."\n";
+				$message .= 'Контактное лицо - '.$this->user['ufullname']."\n";
+				$message .= 'Контактный телефон - '.$cmpinfo['cmp_phone']."\n";
+				$message .= 'Факс - '.$cmpinfo['cmp_telfax']."\n";
+				$message .= 'E-Mail - '.$cmpinfo['cmp_email']."\n\n\n";
+				$message .= 'Тема тендера - '.$_POST['theme']."\n\n\n";
+				$message .= 'Описание:'."\n\n".$_POST['note']."\n\n\n";
+				$message .= 'Сумма контракта (тыс.руб.) - '.$_POST['summa']."\n\n";
+				$message .= 'Дата окончания тендера - '.$_POST['dateover']."\n\n";
+				$message .= 'Форма оплаты - '.$_POST['payment']."\n\n";
+				if($_POST['time'] !=''):
+					$message .= 'Срок выполнения работ - '.$_POST['time']."\n\n";
+				endif;
+				if($_POST['info'] != ''):
+					$message .= 'Дополнительная информация:'."\n\n".$_POST['info']."\n\n";
+				endif;
+				$theme = 'Объявление тендера';
+				for($i=0;$i<count($_POST['cmp']);$i++):
+					$email = $this->companymodel->read_field($_POST['cmp'][$i],'cmp_email');
+					if(!$this->sendmail($email,strip_tags($message,'<br>'),$theme,$from)):
+						$this->email->print_debugger();
+						exit;
+					endif;
+				endfor;
+				$pagevar['text'] = 'Извещение разослано по выбранным огранизациям';
+				$this->load->view('users_interface/message',$pagevar);
+				return TRUE;
+			endif;
+		endif;	
+		$pagevar['company'] = $this->unionmodel->select_company_by_region($activity,$region);
+		for($i=0;$i<count($pagevar['company']);$i++):
+			$pagevar['company'][$i]['cmp_graph'] = $pagevar['company'][$i]['cmp_rating'];
+			if($pagevar['company'][$i]['cmp_rating'] > 75):
+				$pagevar['company'][$i]['cmp_graph'] = 75;
+			endif;
+			$pagevar['company'][$i]['full_description'] = $pagevar['company'][$i]['cmp_description'];
+			if(mb_strlen($pagevar['company'][$i]['cmp_description'],'UTF-8') > 250):
+				$pagevar['company'][$i]['cmp_description'] = mb_substr($pagevar['company'][$i]['cmp_description'],0,250,'UTF-8');
+				$pos = mb_strrpos($pagevar['company'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pagevar['company'][$i]['cmp_description'] =mb_substr($pagevar['company'][$i]['cmp_description'],0,$pos,'UTF-8');
+				$pagevar['company'][$i]['cmp_description'] .= '. ... ';
+			endif;
+		endfor;
+		$this->load->view('users_interface/announce-tender',$pagevar);
+		
+	}
 	
 	/* ----------------------------------------	registering company -------------------------------------------*/
 	
@@ -1256,6 +1349,49 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 	}
 	/* -----------------------------------------	other function -------------------------------------------*/
 	
+	function ajax_add_pitfall(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при добавлении');
+		$title = trim($this->input->post('title'));
+		$note = trim($this->input->post('note'));
+		$activity = trim($this->input->post('activity'));
+		$region = trim($this->input->post('region'));
+		
+		if(!isset($title) or empty($title)) show_404();
+		if(!isset($note) or empty($note)) show_404();
+		if(!isset($activity) or empty($activity)) show_404();
+		if(!isset($region) or empty($region)) show_404();
+		
+		$note = preg_replace('/\n{2}/','<br>',$note);
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$success = $this->pitfallsmodel->user_insert_record($mraid,$title,$note);
+		if($success){
+			$statusval['status'] = TRUE;
+			$statusval['message'] = "Отправлено на проверку";
+		}
+		echo json_encode($statusval);
+	}
+	
+	function ajax_add_question(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при добавлении');
+		$title = trim($this->input->post('title'));
+		$activity = trim($this->input->post('activity'));
+		$region = trim($this->input->post('region'));
+		
+		if(!isset($title) or empty($title)) show_404();
+		if(!isset($activity) or empty($activity)) show_404();
+		if(!isset($region) or empty($region)) show_404();
+		
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		$success = $this->mraquestionsmodel->insert_record($mraid,$title);
+		if($success){
+			$statusval['status'] = TRUE;
+			$statusval['message'] = "Отправлено на проверку";
+		}
+		echo json_encode($statusval);
+	}
+	
 	function registration_request(){
 	
 		$pagevar = array(
@@ -1409,6 +1545,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 	
 	function sendmail($email,$msg,$subject,$from){
 		
+		$this->email->clear(TRUE);
 		$config['smtp_host'] = 'localhost';
 		$config['charset'] = 'utf-8';
 		$config['wordwrap'] = TRUE;

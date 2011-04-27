@@ -931,6 +931,7 @@ class Manager_interface extends CI_Controller{
 	}
 
 	function delete_document(){
+	
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
 		$docid = trim($this->input->post('id'));
 		if(!isset($docid) or empty($docid)) show_404();
@@ -1502,6 +1503,7 @@ class Manager_interface extends CI_Controller{
 	}
 	
 	function set_manager_on_region(){
+	
 		if($this->input->post('manager')):
 			$activity = $this->session->userdata('activity');
 			$parent = $this->session->userdata('parent_act');

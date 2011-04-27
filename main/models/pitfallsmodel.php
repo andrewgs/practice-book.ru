@@ -33,6 +33,7 @@ class Pitfallsmodel extends CI_Model {
 	
 	function read_records($mraid){
 	
+		$this->db->order_by('pf_date','DESC');
 		$this->db->where('pf_mraid',$mraid);
 		$query = $this->db->get('tbl_pitfalls');
 		$data = $query->result_array();
@@ -62,7 +63,19 @@ class Pitfallsmodel extends CI_Model {
 		
 		$this->db->insert('tbl_pitfalls',$this);
 	}
-
+	
+	function user_insert_record($mraid,$title,$note){
+		
+		$this->pf_mraid	= $mraid;
+		$this->pf_title	= htmlspecialchars($title);
+		$this->pf_note	= strip_tags($note,'<br>');
+		$this->pf_date	= date("Y-m-d");
+		$this->pf_status = 0;
+		
+		$this->db->insert('tbl_pitfalls',$this);
+		return $this->db->insert_id();
+	}
+	
 	function insert_empty($mraid){
 		
 		$this->pf_mraid	= $mraid;

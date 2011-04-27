@@ -48,7 +48,7 @@
 					<?php else: ?>
 					<center><img src="<?=$baseurl;?>/companylogo/viewimage/<?=$cmpid;?>" vspace="10" border="0" alt="<?=$cmpname;?>"/></center>
 					<?php endif; ?>
-					<b><?= $text; ?></b>
+					<br/><br/><b><?= $text; ?></b>
 					<?php if($timer): ?>
 						<script>
 							<?php if($uri): ?>
@@ -59,9 +59,9 @@
 						</script>
 						<br>
 						<?php if($uri): ?>
-							<font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на предыдущую страницу</font>
+							<br/><br/><font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на предыдущую страницу</font>
 						<?php else: ?>
-							<font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на главную страницу</font>
+							<br/><br/><font size="2">Через несколько секунд, Вас автоматически<br>перенаправит на главную страницу</font>
 						<?php endif; ?>
 					<?php endif; ?>
 					<br>

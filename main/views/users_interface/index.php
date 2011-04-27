@@ -47,10 +47,10 @@
 					<div class="grid_12 alpha omega">
 						<div class="slogan">
 							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan.png" />
-							<img alt="" class="right" src="<?= $baseurl; ?>images/company_boxes_1.png" />
+							<img alt="" class="right" src="<?=$baseurl;?>images/company_boxes_1.png" />
 						</div>
-						<button id="btn-sign-in" class="btn-user-action">А билетик на сеанс уже приобрели?</button><br/>
-						<button id="btn-sign-in" class="btn-user-action imaging">Пойти в кино</button>
+						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
+						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -58,7 +58,7 @@
 					<div class="grid_12 alpha omega">
 						<div class="slogan">
 							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-1.png" />
-							<img alt="" class="right" src="<?= $baseurl; ?>images/thesis-1.png" />
+							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-1.png" />
 						</div>
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
@@ -69,7 +69,7 @@
 					<div class="grid_12 alpha omega">
 						<div class="slogan">
 							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-2.png" />
-							<img alt="" class="right" src="<?= $baseurl; ?>images/thesis-2.png" />
+							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-2.png" />
 						</div>
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
@@ -80,7 +80,7 @@
 					<div class="grid_12 alpha omega">
 						<div class="slogan">
 							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-3.png" />
-							<img alt="" class="right" src="<?= $baseurl; ?>images/thesis-3.png" />
+							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-3.png" />
 						</div>
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>

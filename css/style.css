@@ -253,7 +253,7 @@ footer[role="contentinfo"] {
 .w70  { width: 70px; }
 .w80  { width: 80px; }
 .w280 { width: 280px; }
-.w300 { width: 300px; }
+.w940 { width: 940px; }
 
 
 footer nav {
@@ -308,7 +308,7 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .reg-form-input,.edit-form-input,.date-form-input,
 .reg-form-small,.small200-form-input,.small100-form-input,
 .edit250-form-input,.edit350-form-input,.edit60-form-input,
-.edit750-form-input,.edit450-form-input{
+.edit750-form-input,.edit450-form-input,.edit285-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -319,6 +319,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 		-moz-border-radius: 5px;
 	 -webkit-border-radius: 5px;
 			 border-radius: 5px;	
+}
+.edit285-form-input{
+	 width: 285px;
 }
 .edit350-form-input{
 	 width: 350px;
@@ -350,7 +353,8 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .reg-form-textarea,.edit-form-textarea,
 .small-form-textarea,.edit250-form-textarea,
 .edit200-form-textarea,.edit350-form-textarea,
-.edit450-form-textarea,.edit750-form-textarea{
+.edit450-form-textarea,.edit750-form-textarea,
+.edit285-form-textarea,.edit600-form-textarea{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -365,6 +369,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .edit-form-textarea{
     width: 900px;
 }
+.edit600-form-textarea{
+   width: 600px;
+}
 .edit750-form-textarea{
 	width: 750px;
 }
@@ -376,6 +383,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .edit250-form-textarea{
 	width: 250px;
+}
+.edit285-form-textarea{
+	width: 285px;
 }
 .edit200-form-textarea{
 	width: 200px;
@@ -793,7 +803,7 @@ min-height: 450px;
 			border-radius: 2px;
 }
 
-.box-content {
+.box-content,.box-content-nolimit {
 	background:none repeat scroll 0 0 #FFFFFF;
 	clear:both;
 	/* Максимальная высота контейнера с содержанием окна */
@@ -805,7 +815,9 @@ min-height: 450px;
 	   -moz-border-radius: 0 0 5px 5px;
 			border-radius: 0 0 5px 5px;	
 }
-
+.box-content-nolimit{
+	max-height:none;
+}
 .box-content.exception {
 	max-height: none;
 }
