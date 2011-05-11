@@ -35,6 +35,7 @@ class Mraquestionsmodel extends CI_Model {
 	function read_records($mraid){
 		
 		$this->db->order_by('mraq_date','DESC');
+		$this->db->order_by('mraq_id','DESC');
 		$this->db->where('mraq_mraid',$mraid);
 		$query = $this->db->get('tbl_mraquestions');
 		$data = $query->result_array();

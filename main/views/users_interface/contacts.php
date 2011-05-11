@@ -20,62 +20,20 @@
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		.accordion {
-			width: 940px;
-			border-bottom: solid 1px #c4c4c4;
-		}
-		.accordion h3,.accordion h4{
-			background: #e9e7e7 url(<?=$baseurl;?>images/arrow-square.gif) no-repeat right -51px;
-			padding: 7px 15px;
-			margin: 0;
-			font: bold 120%/100% Arial, Helvetica, sans-serif;
-			border: solid 1px #c4c4c4;
-			border-bottom: none;
-			cursor: pointer;
-		}
-		.accordion h4{
-			font: normal 120%/100% Arial, Helvetica, sans-serif;
-		}
+			width: 940px;border-bottom: solid 1px #c4c4c4;}
+		.accordion h3,.accordion h4{background: #e9e7e7 url(<?=$baseurl;?>images/arrow-square.gif) no-repeat right -51px;padding: 7px 15px;
+			margin: 0;font: bold 120%/100% Arial, Helvetica, sans-serif;border: solid 1px #c4c4c4;border-bottom: none;cursor: pointer;}
+		.accordion h4{font: normal 120%/100% Arial, Helvetica, sans-serif;}
 		.accordion
-		.accordion h3:hover{
-			background-color: #c0dcc0;
-		}
-		.accordion h3.active{
-			background-position: right 5px;
-		}
-		.accordion .accordion-content {
-			background: #f7f7f7;
-			margin: 0px auto;
-			padding:  10px 15px 20px;
-			border-left: solid 1px #c4c4c4;
-			border-right: solid 1px #c4c4c4;
-		}
-		.loadData{
-			margin: 10px 520px 0px 420px;
-		}
-		.federal-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-			border-top: 2px solid #D0D0D0;
-			border-bottom: 2px solid #D0D0D0;
-		}
-		span.text{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 0 10px 10px 0;
-		}
-		.federal-skype-icq img{
-			margin:5px 5px 0 10px;
-			cursor: pointer;
-		}
-		.manager-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-		}
-		.online{
-			position:relative;
-			left: 25px;
-		}
+		.accordion h3:hover{background-color: #c0dcc0;}
+		.accordion h3.active{background-position: right 5px;}
+		.accordion .accordion-content {background: #f7f7f7;margin: 0px auto;padding:  10px 15px 20px;border-left: solid 1px #c4c4c4;border-right: solid 1px #c4c4c4;}
+		.loadData{margin: 10px 520px 0px 420px;}
+		.federal-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;border-top: 2px solid #D0D0D0;border-bottom: 2px solid #D0D0D0;}
+		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;}
+		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
+		.manager-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
+		.online{position:relative;left: 25px;}
 	</style> 
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

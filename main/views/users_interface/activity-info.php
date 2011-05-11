@@ -24,65 +24,24 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		span.text{
-			font: bold small-caps 12px/14px sans-serif;
-			margin: 0 5px 0 0;
-		}
-		.w278{
-			width: 278px;
-		}
-		.w358{
-			width: 358px;
-		}
-		.w575{
-			width: 575px;
-		}
-		.w220{
-			width: 220;
-		}
-		.online{
-			margin-left: 20px;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		.h150{
-			min-height: 150px;
-		}
-		.h365{
-			height: 365px;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-		}
-		.nshDate{
-			font: italic bold 90% serif;
-			text-align: right;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		.existAnswer{
-			font: italic bold 90% serif;
-			text-align: right;
-		}
-		.RightLink{
-			float:right;
-		}
-		#lists select{
-			margin-right: 10px;
-			font: bold italic 125% serif;
-		}
-		#formUnit,#unitImage{
-			margin-top:20px;
-		}
-		#pulist{
-			margin-top:10px;
-		}
-		.btnHidden,#addPitfallsForm,#AskQuestionForm{
-			display:none;
-		}
+		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		.w278{width: 278px;}
+		.w358{width: 358px;}
+		.w575{width: 575px;}
+		.w220{width: 220;}
+		.online{margin-left: 20px;}
+		.h20{min-height: 20px;}
+		.h150{min-height: 150px;}
+		.h365{height: 365px;}
+		.nshNote{margin-bottom: 10px;}
+		.nshDate{font: normal bold 90% serif;text-align: right;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
+		.existAnswer{font: normal bold 90% serif;text-align: right;}
+		.RightLink{float:right;}
+		#lists select{margin-right: 10px;font: bold normal 125% serif;}
+		#formUnit,.unitImage{margin-top:20px;}
+		#pulist{margin-top:10px;}
+		.btnHidden,#addPitfallsForm,#AskQuestionForm{display:none;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -165,7 +124,9 @@
 								<div class="left">
 									<a href="#" id="addPitfalls" class="window">Добавить</a>
 								</div>
-								<div class="right" id="PFStatus"></div>
+								<div class="right" ></div>
+									<a href="#" id="winPitfallsList" class="window">Полный список</a>
+									<div id="PFStatus"></div>
 								<div class="clear"></div>
 							</div>
 						</div>
@@ -196,6 +157,24 @@
 								</div>
 							</div>
 						<?php endfor; ?>
+						<div id="pitfalls-modal-content-list">
+							<div class="box">
+								<div class="box-header">Подводные камни
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<?php for($i=0;$i<count($pitfalls);$i++):?>
+									<div class="content-separator">
+										<div class="nsh-title"><?=($i+1).'. '.$pitfalls[$i]['pf_title'];?></div>
+										<div class="nshNote"><?=$pitfalls[$i]['full_note'];?></div>
+									</div>
+								<?php endfor; ?>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
 						<div class="box">
 							<div class="box-header w278">
 								<h2><?= $othertext[2]['otxt_note']; ?></h2>
@@ -223,7 +202,10 @@
 								<div class="left">
 									<a href="#" id="AskQuestion" class="window">Задать вопрос</a>
 								</div>
-								<div class="right" id="AQStatus"></div>
+								<div class="right">
+									<a href="#" id="winAQList" class="window">Полный список</a>
+									<div id="AQStatus"></div>
+								</div>
 								<div class="clear"></div>
 							</div>
 						</div>
@@ -253,6 +235,26 @@
 								</div>
 							</div>
 						<?php endfor; ?>
+						<div id="questions-modal-content-list" Quest="<?=$i;?>">
+							<div class="box">
+								<div class="box-header">Вопросы
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<?php for($i=0;$i<count($questions);$i++):?>
+									<div class="content-separator">
+										<span class="text">Вопрос:</span>
+										<div class="nsh-title"><?=($i+1).'. '.$questions[$i]['mraq_title'];?></div>
+										<span class="text">Ответ:</span>
+										<div class="nshNote"><?=$questions[$i]['full_note'];?></div>
+									</div>
+								<?php endfor; ?>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
 						<div class="box">
 							<div class="box-header w278">
 								<h2><?= $othertext[18]['otxt_note']; ?></h2>
@@ -277,7 +279,9 @@
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
-								<div class="right">&nbsp;</div>
+								<div class="right">
+									<a href="#" id="winTipsList" class="window">Полный список</a>
+								</div>
 								<div class="clear"></div>
 							</div>
 						</div>
@@ -299,8 +303,47 @@
 								</div>
 							</div>
 						<?php endfor; ?>
+						<div id="tips-modal-content-list" PF="<?=$i;?>">
+							<div class="box">
+								<div class="box-header">Cоветы
+									<div class="box-search"></div>
+								</div>
+								<div class="box-content h365 w575">
+								<?php for($i=0;$i<count($tips);$i++):?>
+									<div class="content-separator">
+										<div class="nsh-title"><?=($i+1).'. '.$tips[$i]['tps_title'];?></div>
+										<div class="nshNote"><?=$tips[$i]['full_note'];?></div>
+									</div>
+								<?php endfor; ?>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="grid_5">
+						<div id="unit-modal-note-content">
+							<div class="box">
+								<div class="box-header">
+									<div id="UnitTitle">
+										<?=$units[0]['pri_title'];?>
+									</div>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+									<div class="unitImage">
+										<img src="<?=$baseurl;?>puravatar/viewimage/<?=$units[0]['pri_id'];?>"class="floated" alt=""/>
+									</div>
+									<div id="UnitNote">
+										<?=$units[0]['full_note'];?>
+									</div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
@@ -334,11 +377,14 @@
 										</div>
 									<?php endif;?>
 									</div>
-									<div id="unitImage">
+									<div class="unitImage">
 										<img src="<?=$baseurl;?>puravatar/viewimage/<?=$units[0]['pri_id'];?>"class="floated" alt=""/>
 									</div>
 									<div id="formUnit">
 										<?=$units[0]['pri_note'];?>
+									</div>
+									<div style="text-align:right;margin-top:10px;">
+										<a href="#" id="winUnitNote" class="window"><nobr>Читать полностью</nobr></a>
 									</div>
 								<?php endif; ?>
 								</div>
@@ -774,7 +820,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[13]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[13]['otxt_help'];?></span>
@@ -816,7 +862,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[19]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[19]['otxt_help'];?></span>
@@ -831,7 +877,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[14]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
 										<span class="classic"><?=$othertext[14]['otxt_help'];?></span>
@@ -1002,8 +1048,10 @@
 									"<?=$baseurl;?>product-info/region/<?=$curregion;?>/activity/<?=$curactivity;?>",
 									{'group':$("#select-group").val(),'unit':$("#select-products").val()},
 									function(data){
-										$("#unitImage").html(data.image);
+										$(".unitImage").html(data.image);
 										$("#formUnit").html(data.note);
+										$("#UnitNote").html(data.full);
+										$("#UnitTitle").html(data.title);
 										$("#lowprice").html(data.lowprice);
 										$("#lowpricecode").html(data.lowpricecode);
 										$("#optimumprice").html(data.optimumprice);
@@ -1095,8 +1143,10 @@
 					"<?=$baseurl;?>product-info/region/<?=$curregion;?>/activity/<?=$curactivity;?>",
 					{'group':$("#hdngroup").text(),'unit':$(this).val()},
 					function(data){
-						$("#unitImage").html(data.image);
+						$(".unitImage").html(data.image);
 						$("#formUnit").html(data.note);
+						$("#UnitNote").html(data.full);
+						$("#UnitTitle").html(data.title);
 						$("#lowprice").html(data.lowprice);
 						$("#lowpricecode").html(data.lowpricecode);
 						$("#optimumprice").html(data.optimumprice);
@@ -1123,7 +1173,21 @@
 			$("#pitfalls-modal-content[PF='"+PF+"']").modal();
 			return false;
 		});
+		$("a#winPitfallsList").click(function(e){
+			$("#pitfalls-modal-content-list").modal();
+			return false;
+		});
+		$("a#winAQList").click(function(e){
+			var quest = $(this).attr("Quest");
+			$("#questions-modal-content-list").modal();
+			return false;
+		});
 		$("a#winQuestion").click(function(e){
+			var quest = $(this).attr("Quest");
+			$("#questions-modal-content[Quest='"+quest+"']").modal();
+			return false;
+		});
+		$("a#winAQList").click(function(e){
 			var quest = $(this).attr("Quest");
 			$("#questions-modal-content[Quest='"+quest+"']").modal();
 			return false;
@@ -1152,6 +1216,10 @@
 			$("#tips-modal-content").modal();
 			return false;
 		});
+		$("a#winTipsList").click(function(e){
+			$("#tips-modal-content-list").modal();
+			return false;
+		});
 		$("input#winRisks").click(function(e){
 			$("#risks-modal-content").modal();
 			return false;
@@ -1160,7 +1228,10 @@
 			$("#advantage-modal-content").modal();
 			return false;
 		});
-		
+		$("a#winUnitNote").click(function(e){
+			$("#unit-modal-note-content").modal();
+			return false;
+		});
 		$("#SendEmail").click(function(event){
 			var err = false;
 			 $("#formRep .inpvalue").css('border-color','#D0D0D0');

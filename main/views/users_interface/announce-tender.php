@@ -20,16 +20,9 @@
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<link rel="stylesheet" href="<?=$baseurl;?>css/datepicker/jquery.ui.all.css" type="text/css" />
 	<style type="text/css">
-		.h20{
-			min-height: 20px;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
+		.h20{min-height: 20px;}
+		.nshNote{margin-bottom: 10px;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

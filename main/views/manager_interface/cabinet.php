@@ -19,70 +19,20 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.ajaxsave,.ajaxdel,.ajaxSaveFile {
-			float: right;
-			padding: 5px;
-			margin-right: 55px;
-			cursor: pointer;
-		}
-		#period-jobs{
-			float: right;
-			padding-bottom: 10px;
-			margin: 0 133px 0 0;
-		}
-		.job-sections h3{
-			margin: 5px 10px 15px 0;
-			float: left;
-		}
-		.jobs{
-			margin: 5px 10px 5px 0;
-			float: right;
-		}
-		.vRight{
-			font: bold italic 120% serif;
-			float: right;
-			margin-right: 95px;
-		}
-		#loading{
-			margin: 0px 0px -7px 0px;
-		}
-		.jodData{
-			margin: 0px;
-		}
-		.jobPosiotion{
-			margin: 0px 0px 15px 10px;
-		}
-		.divDelJob{
-			float: right;
-			margin-right: 10px;
-		}
-		.btn-delete{
-			-moz-border-radius: 3px 3px 3px 3px;
-			background: none repeat scroll 0 0 #879042;
-			border: 0 none;
-			color: #FFFFFF;
-			cursor: pointer;
-			font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;
-			padding: 2px 8px;
-			text-decoration: none;
-		}
-		#del-load{
-			float: right;
-			margin-right: 55px;
-		}
-		.box-controls {
-			display:block;
-			float:right;
-			height:16px;
-			margin:10px 130px 0 5px;
-			text-indent:-9999px;
-			width:16px;
-		}
-		.messageBox{
-			margin: 10px 0 0px 0px;
-			font: bold italic 125% serif;
-			color: #808080;
-		}
+		.ajaxsave,.ajaxdel,.ajaxSaveFile {float: right;padding: 5px;margin-right: 55px;cursor: pointer;}
+		#period-jobs{float: right;padding-bottom: 10px;margin: 0 133px 0 0;}
+		.job-sections h3{margin: 5px 10px 15px 0;float: left;}
+		.jobs{margin: 5px 10px 5px 0;float: right;}
+		.vRight{font: bold normal 120% serif;float: right;margin-right: 95px;}
+		#loading{margin: 0px 0px -7px 0px;}
+		.jodData{margin: 0px;}
+		.jobPosiotion{margin: 0px 0px 15px 10px;}
+		.divDelJob{float: right;margin-right: 10px;}
+		.btn-delete{-moz-border-radius: 3px 3px 3px 3px;background: none repeat scroll 0 0 #879042;border: 0 none;color: #FFFFFF;cursor: pointer;
+			font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-decoration: none;}
+		#del-load{float: right;margin-right: 55px;}
+		.box-controls {display:block;float:right;height:16px;margin:10px 130px 0 5px;text-indent:-9999px;width:16px;}
+		.messageBox{margin: 10px 0 0px 0px;font: bold normal 125% serif;color: #808080;}
 		.box-controls.ask { background: url("<?= $baseurl; ?>/images/ask_transparent.png") no-repeat scroll 0 0 transparent; }
 	</style>
 </head>

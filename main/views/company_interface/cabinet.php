@@ -19,43 +19,13 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.ajaxsave,.ajaxdel,.ajaxSaveFile {
-			float: right;
-			padding: 5px;
-			margin-right: 50px;
-			cursor: pointer;
-		}
-		.mbottom{
-			margin-bottom: 10px;
-		}
-		.vRight{
-			font: bold italic 120% serif;
-			float: right;
-			color: #00ff00;
-			margin-right: 95px;
-		}
-		#loading{
-			float: right;
-			padding: 5px;
-			cursor: pointer;
-			margin: 0px 50px -2px 0;
-		}
-		.box-controls {
-			display:block;
-			float:right;
-			height:16px;
-			margin:10px 20px 0 5px;
-			text-indent:-9999px;
-			width:16px;
-		}
-		.messageBox{
-			margin: 10px 0 0px 0px;
-			font: bold italic 125% serif;
-			color: #808080;
-		}
-		#company-data{
-			margin: 10px 0 10px 0;
-		}
+		.ajaxsave,.ajaxdel,.ajaxSaveFile {float: right;padding: 5px;margin-right: 50px;cursor: pointer;}
+		.mbottom{margin-bottom: 10px;}
+		.vRight{font: bold normal 120% serif;float: right;color: #00ff00;margin-right: 95px;}
+		#loading{float: right;padding: 5px;cursor: pointer;margin: 0px 50px -2px 0;}
+		.box-controls {display:block;float:right;height:16px;margin:10px 20px 0 5px;text-indent:-9999px;width:16px;}
+		.messageBox{margin: 10px 0 0px 0px;font: bold normal 125% serif;color: #808080;}
+		#company-data{margin: 10px 0 10px 0;}
 		.box-controls.ask { background: url("<?= $baseurl; ?>/images/ask_transparent.png") no-repeat scroll 0 0 transparent; }
 	</style>
 </head>

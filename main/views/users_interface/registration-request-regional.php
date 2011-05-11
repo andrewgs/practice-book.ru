@@ -18,22 +18,11 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.w575{
-			width: 575px;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		.w265{
-			width: 265px;
-		}
-		.activity{
-			font: bold italic 125% serif;
-			margin: 0px;
-		}
-		.activityList{
-			margin-left: -20px;
-		}
+		.w575{width: 575px;}
+		.h20{min-height: 20px;}
+		.w265{width: 265px;}
+		.activity{font: bold normal 125% serif;margin: 0px;}
+		.activityList{margin-left: -20px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

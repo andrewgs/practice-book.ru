@@ -20,57 +20,19 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		div.ButtonOperation{
-			min-height:30px;
-		}
-		.NewsDel, .NewsCancel, .EraserInput{
-			float: right;
-			padding: 5px;
-			margin-right: 10px;
-			cursor: pointer;
-		}
-		.NewsExc, .NewsEdit, .NewsSave{
-			float: right;
-			padding: 5px;
-			cursor: pointer;
-		}
-		.NewsExc{
-			cursor:help;
-		}
-		.h150{
-			min-height: 150px;
-		}
-		.w918{
-			width: 918px;
-		}
-		.rep-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-		}
-		.repData{
-			margin: 15px 0 0 0;
-		}
-		span.text{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 0 10px 10px 0;
-			cursor:help;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-			text-align:justify;
-			min-height: 100px;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		.btnHidden{
-			display:none;
-		}
-		.tmpTitle,.tmpDesc,.newsID{
-			display:none;
-		}
+		div.ButtonOperation{min-height:30px;}
+		.NewsDel, .NewsCancel, .EraserInput{float: right;padding: 5px;margin-right: 10px;cursor: pointer;}
+		.NewsExc, .NewsEdit, .NewsSave{float: right;padding: 5px;cursor: pointer;}
+		.NewsExc{cursor:help;}
+		.h150{min-height: 150px;}
+		.w918{width: 918px;}
+		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
+		.repData{margin: 15px 0 0 0;}
+		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;cursor:help;}
+		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 100px;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
+		.btnHidden{display:none;}
+		.tmpTitle,.tmpDesc,.newsID{display:none;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

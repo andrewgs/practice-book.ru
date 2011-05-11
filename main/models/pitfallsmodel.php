@@ -34,6 +34,7 @@ class Pitfallsmodel extends CI_Model {
 	function read_records($mraid){
 	
 		$this->db->order_by('pf_date','DESC');
+		$this->db->order_by('pf_id','DESC');
 		$this->db->where('pf_mraid',$mraid);
 		$query = $this->db->get('tbl_pitfalls');
 		$data = $query->result_array();

@@ -33,6 +33,8 @@ class Tipsmodel extends CI_Model {
 	
 	function read_records($mraid){
 	
+		$this->db->order_by('tps_date','DESC');
+		$this->db->order_by('tps_id','DESC');
 		$this->db->where('tps_mraid',$mraid);
 		$query = $this->db->get('tbl_tips');
 		$data = $query->result_array();

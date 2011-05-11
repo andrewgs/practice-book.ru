@@ -779,7 +779,7 @@ class Company_interface extends CI_Controller {
 				return FALSE;
 			else:
 				if(!$_POST['groupvalue'] || !$_POST['activityvalue']):
-					show_error("Отсутствует код гпуппы или код отросли<br/>Сообщите о возникшей ошибке разработчикам.");
+					show_error("Отсутствует код гпуппы или код отрасли<br/>Сообщите о возникшей ошибке разработчикам.");
 				endif;
 				$_POST['sbmpu'] = NULL;
 				if($_FILES['userfile']['error'] != 4):

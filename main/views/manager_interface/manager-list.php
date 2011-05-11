@@ -19,38 +19,14 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		span.text{
-			font: bold small-caps 12px/14px sans-serif;
-			margin: 0 5px 0 0;
-		}
-		.online{
-			margin-left: 20px;
-		}
-		.h150{
-			min-height: 150px;
-		}
-		.w918{
-			width: 918px;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		.ajaxdel{
-			float: right;
-			padding: 5px;
-			margin-right: 50px;
-			cursor: pointer;
-		}
-		.manager-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-		}
-		.federal-skype-icq img{
-			margin:5px 5px 0 10px;
-			cursor: pointer;
-		}
+		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		.online{margin-left: 20px;}
+		.h150{min-height: 150px;}
+		.w918{width: 918px;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
+		.ajaxdel{float: right;padding: 5px;margin-right: 50px;cursor: pointer;}
+		.manager-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
+		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

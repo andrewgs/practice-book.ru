@@ -16,9 +16,7 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		#tree, .jquery-tree-controls{
-			margin-left: 1em;
-		}
+		#tree, .jquery-tree-controls{margin-left: 1em;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

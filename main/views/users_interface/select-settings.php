@@ -18,26 +18,12 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.w575{
-			width: 575px;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		#dregion {
-			padding: 10px 0 20px 10px;
-		}
-		.activity,.region{
-			font: bold italic 125% serif;
-			margin: 0px;
-		}
-		.activityList,.regionList{
-			margin-top: 10px;
-			margin-left: -20px;
-		}
-		.btnHidden{
-			display:none;
-		}
+		.w575{width: 575px;}
+		.h20{min-height: 20px;}
+		#dregion {padding: 10px 0 20px 10px;}
+		.activity,.region{font: bold normal 125% serif;margin: 0px;}
+		.activityList,.regionList{margin-top: 10px;margin-left: -20px;}
+		.btnHidden{display:none;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

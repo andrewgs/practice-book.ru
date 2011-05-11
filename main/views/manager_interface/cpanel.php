@@ -24,65 +24,24 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		span.text{
-			font: bold small-caps 12px/14px sans-serif;
-			margin: 0 5px 0 0;
-		}
-		.w278{
-			width: 278px;
-		}
-		.w358{
-			width: 358px;
-		}
-		.w575{
-			width: 575px;
-		}
-		.w220{
-			width: 220;
-		}
-		.online{
-			margin-left: 20px;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		.h150{
-			min-height: 150px;
-		}
-		.h365{
-			height: 365px;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-		}
-		.nshDate{
-			font: italic bold 90% serif;
-			text-align: right;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		.existAnswer{
-			font: italic bold 90% serif;
-			text-align: right;
-		}
-		.RightLink{
-			float:right;
-		}
-		#lists select{
-			margin-right: 10px;
-			font: bold italic 125% serif;
-		}
-		#formUnit,#unitImage{
-			margin-top:20px;
-		}
-		#pulist{
-			margin-top:10px;
-		}
-		.btnHidden{
-			display:none;
-		}
+		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		.w278{width: 278px;}
+		.w358{width: 358px;}
+		.w575{width: 575px;}
+		.w220{width: 220;}
+		.online{margin-left: 20px;}
+		.h20{min-height: 20px;}
+		.h150{min-height: 150px;}
+		.h365{height: 365px;}
+		.nshNote{margin-bottom: 10px;}
+		.nshDate{font: normal bold 90% serif;text-align: right;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
+		.existAnswer{font: normal bold 90% serif;text-align: right;}
+		.RightLink{float:right;}
+		#lists select{margin-right: 10px;font: bold normal 125% serif;}
+		#formUnit,.unitImage{margin-top:20px;}
+		#pulist{margin-top:10px;}
+		.btnHidden{display:none;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -297,6 +256,27 @@
 						<?php endfor; ?>
 					</div>
 					<div class="grid_5">
+						<div id="unit-modal-note-content">
+							<div class="box">
+								<div class="box-header">
+									<div id="UnitTitle">
+										<?=$units[0]['pri_title'];?>
+									</div>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+									<div class="unitImage">
+										<img src="<?=$baseurl;?>puravatar/viewimage/<?=$units[0]['pri_id'];?>"class="floated" alt=""/>
+									</div>
+									<div id="UnitNote">
+										<?=$units[0]['full_note'];?>
+									</div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
@@ -331,11 +311,14 @@
 										</div>
 									<?php endif;?>
 									</div>
-									<div id="unitImage">
+									<div class="unitImage">
 										<img src="<?=$baseurl;?>puravatar/viewimage/<?=$units[0]['pri_id'];?>"class="floated" alt=""/>
 									</div>
 									<div id="formUnit">
 										<?=$units[0]['pri_note'];?>
+									</div>
+									<div style="text-align:right;margin-top:10px;">
+										<a href="#" id="winUnitNote" class="window"><nobr>Читать полностью</nobr></a>
 									</div>
 								<?php else: ?>
 								<?= $othertext[3]['otxt_content']; ?>
@@ -472,19 +455,6 @@
 								</div>
 							</div>
 						</div>
-						<!--<div class="box-tender">
-							<div class="box-header w358">
-								<h2 style="text-align:center">
-									<?= anchor('#','&nbsp;&nbsp;&nbsp;Объявить тендер &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
-								</h2>
-								<div class="box-search h20">
-									<a class="tooltip" href="">
-										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
-										<span class="classic"><?=$othertext[4]['otxt_help'];?></span>
-									</a>
-								</div>
-							</div>
-						</div>-->
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[5]['otxt_note'];?></h2>
@@ -681,6 +651,7 @@
 									<div class="box-search">&nbsp;</div>
 								</div>
 								<div class="box-content h365 w575">
+							<?php if(count($activitynews)): ?>
 								<h3>Новости отросли</h3><hr/>
 								<?php for($i=0;$i<count($activitynews);$i++):?>
 									<div class="content-separator">
@@ -691,6 +662,8 @@
 										<div class="clear"></div>
 									</div>
 								<?php endfor; ?>
+							<?php endif; ?>
+							<?php if(count($companynews)): ?>
 								<h3>Новости компаний отросли</h3><hr/>
 								<?php for($i=0;$i<count($companynews);$i++):?>
 									<div class="content-separator">
@@ -711,6 +684,7 @@
 										<div class="clear"></div>
 									</div>
 								<?php endfor; ?>
+							<?php endif; ?>
 								</div>
 								<div class="box-bottom-links h20">
 									&nbsp;
@@ -780,7 +754,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[13]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 				<input type="button" id="persona" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
@@ -827,7 +801,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[19]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 				<input type="button" id="whomain" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
@@ -846,7 +820,7 @@
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[14]['otxt_note'];?></h2>
-								<div class="box-search h150">
+								<div class="box-search">
 			<input type="button" id="documents" title="Редактировать" class="box-controls edit" style="width:10px;height:16px;border:none">
 									<a class="tooltip" href="">
 										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
@@ -973,6 +947,7 @@
 										<div class="box-search">&nbsp;</div>
 									</div>
 									<div class="box-content h365 w575">
+								<?php if(count($specials)):?>
 									<h3>Новинки отросли</h3><hr/>
 									<?php for($i=0;$i<count($specials);$i++):?>
 										<div class="content-separator">
@@ -983,7 +958,9 @@
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
+								<?php endif; ?>
 									<div class="clear"></div><br/>
+								<?php if(count($shares)):?>
 									<h3>Скидки и акции отросли</h3><hr/>
 									<?php for($i=0;$i<count($shares);$i++):?>
 										<div class="content-separator">
@@ -994,6 +971,7 @@
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
+								<?php endif; ?>
 									</div>
 									<div class="box-bottom-links h20">
 										&nbsp;
@@ -1054,8 +1032,10 @@
 									"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
 									{'group':$("#select-group").val(),'unit':$("#select-products").val()},
 									function(data){
-										$("#unitImage").html(data.image);
+										$(".unitImage").html(data.image);
 										$("#formUnit").html(data.note);
+										$("#UnitNote").html(data.full);
+										$("#UnitTitle").html(data.title);
 										$("#lowprice").html(data.lowprice);
 										$("#lowpricecode").html(data.lowpricecode);
 										$("#optimumprice").html(data.optimumprice);
@@ -1078,8 +1058,10 @@
 					"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
 					{'group':$("#hdngroup").text(),'unit':$(this).val()},
 					function(data){
-						$("#unitImage").html(data.image);
+						$(".unitImage").html(data.image);
 						$("#formUnit").html(data.note);
+						$("#UnitNote").html(data.full);
+						$("#UnitTitle").html(data.title);
 						$("#lowprice").html(data.lowprice);
 						$("#lowpricecode").html(data.lowpricecode);
 						$("#optimumprice").html(data.optimumprice);
@@ -1138,7 +1120,10 @@
 			$("#advantage-modal-content").modal();
 			return false;
 		});
-		
+		$("a#winUnitNote").click(function(e){
+			$("#unit-modal-note-content").modal();
+			return false;
+		});
 		function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		

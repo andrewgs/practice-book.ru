@@ -18,12 +18,8 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h20{
-			min-height: 20px;
-		}
-		.h250{
-			min-height: 250px;
-		}
+		.h20{min-height: 20px;}
+		.h250{min-height: 250px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

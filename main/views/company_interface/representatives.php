@@ -19,30 +19,11 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.ajaxdel{
-			float: right;
-			padding: 5px;
-			margin-right: 50px;
-			cursor: pointer;
-		}
-		.rep-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-			border-top: 2px solid #D0D0D0;
-			border-bottom: 2px solid #D0D0D0;
-		}
-		.repData{
-			margin: 15px 0 0 0;
-		}
-		span.text{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 0 10px 10px 0;
-		}
-		.federal-skype-icq img{
-			margin:5px 5px 0 10px;
-			cursor: pointer;
-		}
+		.ajaxdel{float: right;padding: 5px;margin-right: 50px;cursor: pointer;}
+		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;border-top: 2px solid #D0D0D0;border-bottom: 2px solid #D0D0D0;}
+		.repData{margin: 15px 0 0 0;}
+		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;}
+		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

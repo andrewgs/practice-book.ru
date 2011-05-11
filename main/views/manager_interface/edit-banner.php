@@ -20,21 +20,10 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h150{
-			min-height: 150px;
-		}
-		.w918{
-			width: 918px;
-		}
-		.chackForAll{
-			float:right;
-			margin: 10px 10px 0 0;
-			font: normal bold 125% normal;
-		}
-		.msgForAll{
-			float:right;
-			margin: 30px -155px 0 0;
-		}
+		.h150{min-height: 150px;}
+		.w918{width: 918px;}
+		.chackForAll{float:right;margin: 10px 10px 0 0;font: normal bold 125% normal;}
+		.msgForAll{float:right;margin: 30px -155px 0 0;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

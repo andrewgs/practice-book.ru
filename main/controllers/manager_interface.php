@@ -82,7 +82,7 @@ class Manager_interface extends CI_Controller{
 			$this->form_validation->set_rules('tname','отчество','required|trim');
 			$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
 			$this->form_validation->set_rules('icq','ICQ','min_length[4]|integer|trim');
-			$this->form_validation->set_rules('activity','отросли','required');
+			$this->form_validation->set_rules('activity','отрасли','required');
 			$this->form_validation->set_rules('region[]','регионы','required');
 			$this->form_validation->set_message('integer','Только целые числа');
 			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
@@ -217,52 +217,49 @@ class Manager_interface extends CI_Controller{
 			$pagevar['product']['full_note'] = $pagevar['product']['pr_note'];
 			if(mb_strlen($pagevar['product']['pr_note'],'UTF-8') > 600):									
 				$pagevar['product']['pr_note'] = mb_substr($pagevar['product']['pr_note'],0,600,'UTF-8');	
-				$pos = mb_strrpos($pagevar['product']['pr_note'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['product']['pr_note'],' ',0,'UTF-8');
 				$pagevar['product']['pr_note'] = mb_substr($pagevar['product']['pr_note'],0,$pos,'UTF-8');
-				$pagevar['product']['pr_note'] .= '. ... ';
+				$pagevar['product']['pr_note'] .= ' ... ';
 			endif;
 			$pagevar['persona'] = $this->personamodel->read_record($mraid);
 			$pagevar['persona']['full_note'] = $pagevar['persona']['prs_note'];
 			if(mb_strlen($pagevar['persona']['prs_note'],'UTF-8') > 200):									
 				$pagevar['persona']['prs_note'] = mb_substr($pagevar['persona']['prs_note'],0,200,'UTF-8');	
-				$pos = mb_strrpos($pagevar['persona']['prs_note'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['persona']['prs_note'],' ',0,'UTF-8');
 				$pagevar['persona']['prs_note'] = mb_substr($pagevar['persona']['prs_note'],0,$pos,'UTF-8');
-				$pagevar['persona']['prs_note'] .= '. ... ';
+				$pagevar['persona']['prs_note'] .= ' ... ';
 			endif;
-//			$pagevar['pitfalls'] = $this->pitfallsmodel->read_limit_records($mraid,3);
-			$pagevar['pitfalls'] = $this->unionmodel->read_pitfalls_limit($activity,3);
+			$pagevar['pitfalls'] = $this->unionmodel->read_pitfalls_limit($activity,25);
 			for($i = 0;$i < count($pagevar['pitfalls']); $i++):
 				$pagevar['pitfalls'][$i]['full_note'] = $pagevar['pitfalls'][$i]['pf_note'];
 				$pagevar['pitfalls'][$i]['pf_date'] = $this->operation_date($pagevar['pitfalls'][$i]['pf_date']);
-				if(mb_strlen($pagevar['pitfalls'][$i]['pf_note'],'UTF-8') > 325):									
-					$pagevar['pitfalls'][$i]['pf_note'] = mb_substr($pagevar['pitfalls'][$i]['pf_note'],0,325,'UTF-8');	
-					$pos = mb_strrpos($pagevar['pitfalls'][$i]['pf_note'],'.',0,'UTF-8');
+				if(mb_strlen($pagevar['pitfalls'][$i]['pf_note'],'UTF-8') > 175):									
+					$pagevar['pitfalls'][$i]['pf_note'] = mb_substr($pagevar['pitfalls'][$i]['pf_note'],0,175,'UTF-8');	
+					$pos = mb_strrpos($pagevar['pitfalls'][$i]['pf_note'],' ',0,'UTF-8');
 					$pagevar['pitfalls'][$i]['pf_note'] = mb_substr($pagevar['pitfalls'][$i]['pf_note'],0,$pos,'UTF-8');
-					$pagevar['pitfalls'][$i]['pf_note'] .= '. ... ';
+					$pagevar['pitfalls'][$i]['pf_note'] .= ' ... ';
 				endif;
 			endfor;
-//			$pagevar['tips'] = $this->tipsmodel->read_limit_records($mraid,3);
-			$pagevar['tips'] = $this->unionmodel->read_tips_limit($activity,3);
+			$pagevar['tips'] = $this->unionmodel->read_tips_limit($activity,25);
 			for($i = 0;$i < count($pagevar['tips']); $i++):
 				$pagevar['tips'][$i]['full_note'] = $pagevar['tips'][$i]['tps_note'];
 				$pagevar['tips'][$i]['tps_date'] = $this->operation_date($pagevar['tips'][$i]['tps_date']);
-				if(mb_strlen($pagevar['tips'][$i]['tps_note'],'UTF-8') > 325):									
-					$pagevar['tips'][$i]['tps_note'] = mb_substr($pagevar['tips'][$i]['tps_note'],0,325,'UTF-8');	
-					$pos = mb_strrpos($pagevar['tips'][$i]['tps_note'],'.',0,'UTF-8');
+				if(mb_strlen($pagevar['tips'][$i]['tps_note'],'UTF-8') > 175):									
+					$pagevar['tips'][$i]['tps_note'] = mb_substr($pagevar['tips'][$i]['tps_note'],0,175,'UTF-8');	
+					$pos = mb_strrpos($pagevar['tips'][$i]['tps_note'],' ',0,'UTF-8');
 					$pagevar['tips'][$i]['tps_note'] = mb_substr($pagevar['tips'][$i]['tps_note'],0,$pos,'UTF-8');
-					$pagevar['tips'][$i]['tps_note'] .= '. ... ';
+					$pagevar['tips'][$i]['tps_note'] .= ' ... ';
 				endif;
 			endfor;
-//			$pagevar['questions'] = $this->mraquestionsmodel->read_select_records($mraid);
 			$pagevar['questions'] = $this->unionmodel->read_questions($activity);
 			for($i = 0;$i < count($pagevar['questions']); $i++):
 				$pagevar['questions'][$i]['full_note'] = $pagevar['questions'][$i]['mraq_note'];
 				$pagevar['questions'][$i]['mraq_date'] = $this->operation_date($pagevar['questions'][$i]['mraq_date']);
-				if(mb_strlen($pagevar['questions'][$i]['mraq_note'],'UTF-8') > 325):									
-					$pagevar['questions'][$i]['mraq_note'] = mb_substr($pagevar['questions'][$i]['mraq_note'],0,325,'UTF-8');	
-					$pos = mb_strrpos($pagevar['questions'][$i]['mraq_note'],'.',0,'UTF-8');
+				if(mb_strlen($pagevar['questions'][$i]['mraq_note'],'UTF-8') > 175):									
+					$pagevar['questions'][$i]['mraq_note'] = mb_substr($pagevar['questions'][$i]['mraq_note'],0,175,'UTF-8');	
+					$pos = mb_strrpos($pagevar['questions'][$i]['mraq_note'],' ',0,'UTF-8');
 					$pagevar['questions'][$i]['mraq_note'] = mb_substr($pagevar['questions'][$i]['mraq_note'],0,$pos,'UTF-8');
-					$pagevar['questions'][$i]['mraq_note'] .= '. ... ';
+					$pagevar['questions'][$i]['mraq_note'] .= ' ... ';
 				endif;
 			endfor;
 			$pagevar['activitynews'] = $this->activitynewsmodel->read_limit_records($mraid,5);
@@ -271,9 +268,9 @@ class Manager_interface extends CI_Controller{
 				$pagevar['activitynews'][$i]['an_date'] = $this->operation_date($pagevar['activitynews'][$i]['an_date']);
 				if(mb_strlen($pagevar['activitynews'][$i]['an_note'],'UTF-8') > 325):									
 					$pagevar['activitynews'][$i]['an_note'] = mb_substr($pagevar['activitynews'][$i]['an_note'],0,325,'UTF-8');	
-					$pos = mb_strrpos($pagevar['activitynews'][$i]['an_note'],'.',0,'UTF-8');
+					$pos = mb_strrpos($pagevar['activitynews'][$i]['an_note'],' ',0,'UTF-8');
 					$pagevar['activitynews'][$i]['an_note'] = mb_substr($pagevar['activitynews'][$i]['an_note'],0,$pos,'UTF-8');
-					$pagevar['activitynews'][$i]['an_note'] .= '. ... ';
+					$pagevar['activitynews'][$i]['an_note'] .= ' ... ';
 				endif;
 			endfor;
 			$pagevar['specials'] = $this->specialsmodel->read_limit_records($mraid,5);
@@ -282,9 +279,9 @@ class Manager_interface extends CI_Controller{
 				$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
 				if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 325):									
 					$pagevar['specials'][$i]['spv_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,325,'UTF-8');	
-					$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],'.',0,'UTF-8');
+					$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],' ',0,'UTF-8');
 					$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,$pos,'UTF-8');
-					$pagevar['specials'][$i]['spc_note'] .= '. ... ';
+					$pagevar['specials'][$i]['spc_note'] .= ' ... ';
 				endif;
 			endfor;
 			$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
@@ -294,6 +291,13 @@ class Manager_interface extends CI_Controller{
 				$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
 				$pagevar['units'] = $this->productionunitmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$mraid);
 				if($pagevar['units']):
+					$pagevar['units'][0]['full_note'] = $pagevar['units'][0]['pri_note'];
+					if(mb_strlen($pagevar['units'][0]['pri_note'],'UTF-8') > 300):									
+						$pagevar['units'][0]['pri_note'] = mb_substr($pagevar['units'][0]['pri_note'],0,300,'UTF-8');	
+						$pos = mb_strrpos($pagevar['units'][0]['pri_note'],' ',0,'UTF-8');
+						$pagevar['units'][0]['pri_note'] = mb_substr($pagevar['units'][0]['pri_note'],0,$pos,'UTF-8');
+						$pagevar['units'][0]['pri_note'] .= ' ... ';
+					endif;
 					$pagevar['units'][0]['pri_lowpricecode'] = $monetary[$pagevar['units'][0]['pri_lowpricecode']];
 					$pagevar['units'][0]['pri_optimumpricecode'] = $monetary[$pagevar['units'][0]['pri_optimumpricecode']];
 					$pagevar['units'][0]['pri_toppricecode'] = $monetary[$pagevar['units'][0]['pri_toppricecode']];
@@ -314,9 +318,9 @@ class Manager_interface extends CI_Controller{
 			$pagevar['company']['all'][$i]['full_description'] = $pagevar['company']['all'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['all'][$i]['cmp_description'],'UTF-8') > 250):
 				$pagevar['company']['all'][$i]['cmp_description'] = mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,250,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 				$pagevar['company']['all'][$i]['cmp_description'] =mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['all'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['all'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['company']['trustee'] = $this->unionmodel->select_company_by_rating($activity,$region,'>=',$pagevar['top_rating'],0);
@@ -328,9 +332,9 @@ class Manager_interface extends CI_Controller{
 			$pagevar['company']['trustee'][$i]['full_description'] = $pagevar['company']['trustee'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['trustee'][$i]['cmp_description'],'UTF-8') > 250):
 		$pagevar['company']['trustee'][$i]['cmp_description'] = mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,250,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 		$pagevar['company']['trustee'][$i]['cmp_description'] =mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['trustee'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['trustee'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['company']['blacklist'] = $this->unionmodel->select_company_by_rating($activity,$region,'<=',$pagevar['low_rating'],180);
@@ -342,9 +346,9 @@ class Manager_interface extends CI_Controller{
 			$pagevar['company']['blacklist'][$i]['full_description'] = $pagevar['company']['blacklist'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['blacklist'][$i]['cmp_description'],'UTF-8') > 250):
 	$pagevar['company']['blacklist'][$i]['cmp_description'] = mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,250,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 	$pagevar['company']['blacklist'][$i]['cmp_description'] =mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['blacklist'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['blacklist'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['companynews'] = $this->unionmodel->read_cmpnews_by_activity($activity,$region);
@@ -357,9 +361,9 @@ class Manager_interface extends CI_Controller{
 			$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
 			if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 325):									
 				$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,325,'UTF-8');	
-				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],' ',0,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
-				$pagevar['companynews'][$i]['cn_note'] .= '. ... ';
+				$pagevar['companynews'][$i]['cn_note'] .= ' ... ';
 			endif;
 		endfor;
 		
@@ -373,14 +377,11 @@ class Manager_interface extends CI_Controller{
 			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
 			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 325):									
 				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,325,'UTF-8');	
-				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],' ',0,'UTF-8');
 				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,$pos,'UTF-8');
-				$pagevar['shares'][$i]['sh_note'] .= '. ... ';
+				$pagevar['shares'][$i]['sh_note'] .= ' ... ';
 			endif;
 		endfor;
-		
-		
-		
 		$pagevar['documents'] = $this->unionmodel->read_documents($activity);
 		$pagevar['manager']['jobs'] = $this->jobsmodel->read_records_year($pagevar['manager']['uid'],2);
 		$pagevar['manager']['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
@@ -521,7 +522,7 @@ class Manager_interface extends CI_Controller{
 					$this->productsmodel->update_record($mraid,$_POST);
 					redirect('manager/control-panel/'.$this->user['uconfirmation']);
 				else:
-		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 				endif;
 			endif;
 		endif;
@@ -621,7 +622,7 @@ class Manager_interface extends CI_Controller{
 					'manager'		=> array()
 			);
 		
-		$pagevar['manager']['activitypath'] = "Вопросы по отросли";
+		$pagevar['manager']['activitypath'] = "Вопросы по отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$pagevar['questions'] = $this->mraquestionsmodel->read_records($mraid);
 		
@@ -756,7 +757,7 @@ class Manager_interface extends CI_Controller{
 					'news'			=> array(),
 					'manager'		=> array()
 			);
-		$pagevar['manager']['activitypath'] = "Новости отросли";
+		$pagevar['manager']['activitypath'] = "Новости отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$pagevar['news'] = $this->activitynewsmodel->read_records($mraid);
 		for($i = 0;$i < count($pagevar['news']); $i++):
@@ -858,7 +859,7 @@ class Manager_interface extends CI_Controller{
 					$this->personamodel->update_record($mraid,$_POST);
 					redirect('manager/control-panel/'.$this->user['uconfirmation']);
 				else:
-		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 				endif;
 			endif;
 		endif;
@@ -911,8 +912,6 @@ class Manager_interface extends CI_Controller{
 				$_FILES['userfile']['name'] = preg_replace('/.+(.)(\.)+/',date("Ymdhis")."\$2", $_FILES['userfile']['name']);
 				$_POST['link'] = 'documents/'.$_FILES['userfile']['name'];
 				if(!$this->fileupload('userfile',FALSE)):
-					$pagevar['errorcode'] = '0x0012';
-					$this->load->view('main/error',$pagevar);
 					return FALSE;
 				endif;
 				switch ($_POST['doctype']):
@@ -980,7 +979,7 @@ class Manager_interface extends CI_Controller{
 					'specials'		=> array(),
 					'manager'		=> array()
 			);
-		$pagevar['manager']['activitypath'] = "Новинки отросли";
+		$pagevar['manager']['activitypath'] = "Новинки отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$pagevar['specials'] = $this->specialsmodel->read_records($mraid);
 		for($i = 0;$i < count($pagevar['specials']); $i++):
@@ -1161,7 +1160,7 @@ class Manager_interface extends CI_Controller{
 				return FALSE;
 			else:
 				if(!$_POST['groupvalue']):
-		show_error("Отсутствует код гпуппы<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		show_error("Отсутствует код гпуппы<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 				endif;
 				$_POST['sbmpu'] = NULL;
 				if($_FILES['userfile']['error'] != 4):
@@ -1221,7 +1220,7 @@ class Manager_interface extends CI_Controller{
 		$config['overwrite'] 		= $overwrite;
 		$this->upload->initialize($config);
 		if(!$this->upload->do_upload($userfile)):
-			show_error('Ошибка при загрузки файла!<br/>Сообщите о возникшей ошибке разработчикам.');
+//			show_error('Ошибка при загрузки файла!<br/>Сообщите о возникшей ошибке разработчикам.');
 		endif;
 		return TRUE;
 	}
@@ -1483,6 +1482,14 @@ class Manager_interface extends CI_Controller{
 		$unitinfo = $this->productionunitmodel->read_unit($unit,$group);
 		
 		$punit['note'] = $unitinfo['pri_note'];
+		$punit['full'] = $unitinfo['pri_note'];
+		if(mb_strlen($punit['note'],'UTF-8') > 300):									
+			$punit['note'] = mb_substr($punit['note'],0,300,'UTF-8');	
+			$pos = mb_strrpos($punit['note'],' ',0,'UTF-8');
+			$punit['note'] = mb_substr($punit['note'],0,$pos,'UTF-8');
+			$punit['note'] .= ' ... ';
+		endif;
+		$punit['title'] = $unitinfo['pri_title'];
 		$punit['image'] = '<img src="'.base_url().'puravatar/viewimage/'.$unitinfo['pri_id'].'"class="floated" alt=""/>';
 		$punit['lowprice'] = $unitinfo['pri_lowprice'];
 		$punit['optimumprice'] = $unitinfo['pri_optimumprice'];
@@ -1515,10 +1522,10 @@ class Manager_interface extends CI_Controller{
 				$this->manregactmodel->set_manager_on_region($mraid,$_POST['manager']);
 				redirect('manager/manager-list/'.$this->user['uconfirmation']);
 			else:
-		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 			endif;
 		else:
-			show_error("Отсутствует ID менеджера!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+			show_error("Отсутствует ID менеджера!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 		endif;
 	}
 
@@ -1654,7 +1661,7 @@ class Manager_interface extends CI_Controller{
 		endif;
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		if(!$mraid):
-		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отросль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 		endif;
 		$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
 		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,'AND upriority=0');

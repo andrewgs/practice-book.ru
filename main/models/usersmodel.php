@@ -23,7 +23,7 @@ class Usersmodel extends CI_Model {
 	var $uposition		= '';	/* Должность пользователя*/
 	var $upriority		= 1;	/* Приоритет пользователя*/
 	var $umanager		= 1;	/* Статус пользователя*/
-	var $uactivity		= 1;	/* Отросль пользователя*/
+	var $uactivity		= 1;	/* Отрасль пользователя*/
 	
 	function __construct(){
         

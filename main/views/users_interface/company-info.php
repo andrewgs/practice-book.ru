@@ -19,71 +19,25 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		#info-boxes{
-			margin-top: 25px;
-		}
-		.company-name{
-			margin-top: 10px;
-			font: italic bold 140% serif;
-		}
-		.company-text{
-			text-align: justify;
-			margin: 10px 0 10px 0;
-		}
-		span.text{
-			font: bold small-caps 12px/14px sans-serif;
-			margin: 0 5px 0 0;
-		}
-		.company-data{
-			margin-top: 0.3em;
-		}
-		.rep-name,news-title{
-			font: italic bold 140% serif;
-		}
-		.w278{
-			width: 278px;
-		}
-		.w600{
-			width: 600px;
-		}
-		.h150{
-			min-height: 150px;
-		}
-		.online{
-			margin-left: 20px;
-		}
-		.nshDate{
-			font: italic bold 90% serif;
-			text-align: right;
-		}
-		.nshNote{
-			margin-bottom: 10px;
-			text-align:justify;
-		}
-		.nsh-title{
-			font: normal bold 120% normal;
-			margin: 5px 0 15px 3px;
-		}
-		a.readNSh{
-			font: italic normal 130% serif;
-			text-align: right;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		#lists select{
-			margin-right: 10px;
-			font: bold italic 125% serif;
-		}
-		#formUnit,#unitImage{
-			margin-top:20px;
-		}
-		#pulist,#gulist{
-			margin-top:10px;
-		}
-		.btnHidden{
-			display:none;
-		}
+		#info-boxes{margin-top: 25px;}
+		.company-name{margin-top: 10px;	font: normal bold 140% serif;}
+		.company-text{text-align: justify;margin: 10px 0 10px 0;}
+		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		.company-data{	margin-top: 0.3em;}
+		.rep-name,news-title{font: normal bold 140% serif;}
+		.w278{width: 278px;}
+		.w600{width: 600px;}
+		.h150{min-height: 150px;}
+		.online{margin-left: 20px;}
+		.nshDate{font: normal bold 90% serif;text-align: right;}
+		.nshNote{margin-bottom: 10px;text-align:justify;}
+		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
+		a.readNSh{font: italic normal 130% serif;text-align: right;}
+		.h20{min-height: 20px;}
+		#lists select{margin-right: 10px;font: bold normal 125% serif;}
+		#formUnit,#unitImage{margin-top:20px;}
+		#pulist,#gulist{margin-top:10px;}
+		.btnHidden{display:none;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

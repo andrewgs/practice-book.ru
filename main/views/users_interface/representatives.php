@@ -15,28 +15,11 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.rep-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-			border-top: 2px solid #D0D0D0;
-			border-bottom: 2px solid #D0D0D0;
-		}
-		span.text{
-			font: normal small-caps 14px/16px fantasy;
-			margin: 0 10px 10px 0;
-		}
-		.w918{
-			width: 918px;
-		}
-		.manager-container{
-			font: bold italic 125% serif;
-			margin: 10px 0 10px 0;
-			padding: 5px 0 5px 0;
-		}
-		.online{
-			margin-left: 20px;
-		}
+		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;border-top: 2px solid #D0D0D0;border-bottom: 2px solid #D0D0D0;}
+		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;}
+		.w918{width: 918px;}
+		.manager-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
+		.online{margin-left: 20px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

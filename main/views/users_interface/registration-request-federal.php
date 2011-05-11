@@ -18,18 +18,10 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.w575{
-			width: 575px;
-		}
-		.h20{
-			min-height: 20px;
-		}
-		.w265{
-			width: 265px;
-		}
-		#activityList{
-			margin: 30px 0 0 10px;
-		}
+		.w575{width: 575px;}
+		.h20{min-height: 20px;}
+		.w265{width: 265px;}
+		#activityList{margin: 30px 0 0 10px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

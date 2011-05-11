@@ -13,25 +13,8 @@
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
 	<style type="text/css">
-		div#centered {
-			border: 1px dotted #FF4500;
-			background-color: white;
-			height: 50%;
-			width: 40%;
-			position: absolute;
-			left: 30%;
-			top: 25%;
-			color: black;
-			vertical-align: middle;
-			padding-top: 40px;
-			font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-			font-size: 16px;
-		}
-		a {
-			color: #435867;
-			font-weight: bold;
-			font-size: 10px;
-		}
+		div#centered {border: 1px dotted #FF4500;background-color: white;height: 50%;width: 40%;position: absolute;left: 30%;top: 25%;color: black;vertical-align: middle;padding-top: 40px;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 16px;}
+		a {color: #435867;font-weight: bold;font-size: 10px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

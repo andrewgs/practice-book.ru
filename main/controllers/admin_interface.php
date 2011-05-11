@@ -261,7 +261,7 @@ class Admin_interface extends CI_Controller {
 								break;
 			case 'activity'		: 	if($this->input->post('submit')):
 										$this->form_validation->set_rules('title',' "название" ','required|trim');
-										$this->form_validation->set_rules('parentid',' "id гл.отросли" ','required|integer|trim');
+										$this->form_validation->set_rules('parentid',' "id гл.отрасли" ','required|integer|trim');
 										$this->form_validation->set_rules('full',' "полное название" ','required|trim');
 										$this->form_validation->set_rules('final',' "признак конца" ','required|integer|trim');
 										$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -317,7 +317,7 @@ class Admin_interface extends CI_Controller {
 					$this->form_validation->set_rules('sname','имя','required|trim');
 					$this->form_validation->set_rules('tname','отчество','required|trim');
 					$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
-					$this->form_validation->set_rules('activity','отросли','required|callback_activity_chack');
+					$this->form_validation->set_rules('activity','отрасли','required|callback_activity_chack');
 					$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
 					if(!$this->form_validation->run()):
 						$_POST['submit'] = NULL;

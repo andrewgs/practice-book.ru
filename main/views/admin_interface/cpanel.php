@@ -20,15 +20,9 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h470{
-			min-height: 470px;
-		}
-		.w918{
-			width: 918px;
-		}
-		div.ButtonOperation{
-			min-height:30px;
-		}
+		.h470{min-height: 470px;}
+		.w918{width: 918px;}
+		div.ButtonOperation{min-height:30px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
