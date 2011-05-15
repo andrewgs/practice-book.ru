@@ -48,6 +48,12 @@ endif; ?>
 				<textarea class="edit-form-textarea" name="note" id="prNote" cols="40" rows="18"><?=$note;?></textarea>
 				<div class="clear"></div>
 				<input class="btn-action" id="saveProduct" type="submit" name="submit" value="Сохранить"/>
+				<?php if($userinfo['priority']): ?>
+					<div class="chackForAll">
+				<input type="checkbox" name="all" value="1" id="forAllRegion" title="Отметьте, если нужно показывать персону на все регионы"> Для всех регионов
+					</div>
+					<div class="msgForAll fvalid_error" id="msgAllRegion">&nbsp;</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

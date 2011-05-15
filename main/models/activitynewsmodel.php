@@ -51,7 +51,7 @@ class Activitynewsmodel extends CI_Model {
 	
 	function read_limit_records($mraid,$limit){
 	
-		$this->db->select('an_id,an_mraid,an_title,an_note,an_date');
+		$this->db->select('an_id,an_mraid,an_title,an_note,an_date,an_source');
 		$this->db->where('an_mraid',$mraid);
 		$this->db->where('an_date <=',date("Y-m-d"));
 		$this->db->order_by('an_id desc, an_date desc');

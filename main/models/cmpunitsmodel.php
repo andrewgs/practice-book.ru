@@ -82,7 +82,7 @@ class Cmpunitsmodel extends CI_Model {
 		$this->cu_title 		= htmlspecialchars(trim($insertdata['title']));
 		$this->cu_note 			= strip_tags($insertdata['note'],'<br>');
 		$this->cu_price			= "0.00";
-		$this->cu_priceunit 	= "руб.";
+		$this->cu_priceunit 	= 1;
 		$this->cu_image			= $insertdata['image'];
 		$this->cu_groupcode		= $groupe;
 		$this->cu_unitscode		= 0;

@@ -68,12 +68,13 @@ class Tipsmodel extends CI_Model {
 	function insert_empty($mraid){
 		
 		$this->tps_mraid	= $mraid;
-		$this->tps_date	= date("Y-m-d");
+		$this->tps_date		= date("Y-m-d");
 		
 		$this->db->insert('tbl_tips',$this);
 	}
 
 	function delete_record($pfid){
+	
 		$this->db->where('tps_id',$pfid);
 		$this->db->delete('tbl_tips');
 		return $this->db->affected_rows();
@@ -88,5 +89,17 @@ class Tipsmodel extends CI_Model {
 		$this->db->set('tps_status',1);
 		$this->db->update('tbl_tips');
 		return $this->db->affected_rows();
+	}
+
+	function user_insert_record($mraid,$title,$note){
+		
+		$this->tps_mraid	= $mraid;
+		$this->tps_title	= htmlspecialchars($title);
+		$this->tps_note		= strip_tags($note,'<br>');
+		$this->tps_date		= date("Y-m-d");
+		$this->tps_status 	= 0;
+		
+		$this->db->insert('tbl_tips',$this);
+		return $this->db->insert_id();
 	}
 }

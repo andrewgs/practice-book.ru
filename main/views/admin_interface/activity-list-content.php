@@ -11,7 +11,7 @@
 				<tr class="odd">
 					<th scope="col" abbr="ID">ID</th>
 					<th scope="col" abbr="НАЗВАНИЕ">НАЗВАНИЕ</th>	
-					<th scope="col" abbr="ID ГЛАВНОЙ ОТРОСЛИ">ГЛ.ОТРОСЛЬ</th>
+					<th scope="col" abbr="ID ГЛАВНОЙ ОТРАСЛИ">ГЛ.отрасль</th>
 					<th scope="col" abbr="ПОЛНОЕ НАЗВАНИЕ">ПОЛНОЕ НАЗВАНИЕ</th>
 					<th scope="col" abbr="ПРИЗНАК КОНЦА">КОНЕЦ(0/1)</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>

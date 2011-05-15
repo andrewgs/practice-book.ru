@@ -223,6 +223,14 @@ class Admin_interface extends CI_Controller {
 												$pagevar['text']['note'] = $this->othertextmodel->read_field(20,'otxt_content');
 												$pagevar['text']['help'] = $this->othertextmodel->read_field(20,'otxt_help');
 											 	break;
+			case 'consultation'				: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(21,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(21,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(21,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(21,'otxt_help');
+											 	break;
 			default : show_404();
 		endswitch;
 		$this->load->view("admin_interface/activity-content",$pagevar);

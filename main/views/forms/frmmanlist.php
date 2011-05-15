@@ -1,6 +1,6 @@
 <?= form_open('manager/set-manager-region/'.$userinfo['uconfirmation'],array('id'=>'formSetManager')); ?>
 	<div class="grid_12">
-	<label class="label-input">Список менеджеров текущей отросли: <span class="necessarily" title="Обязательно нужно указать">*</span></label> 
+	<label class="label-input">Список менеджеров текущей отрасли: <span class="necessarily" title="Обязательно нужно указать">*</span></label> 
 		<div class="box-content" >
 		<?php for($i=0;$i<count($managers);$i++):?>
 			<div class="rep-name">

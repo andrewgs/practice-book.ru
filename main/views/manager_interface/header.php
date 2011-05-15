@@ -4,7 +4,7 @@
 		<?php $link = 'manager/set-cpanel/'.$userinfo['uconfirmation']; ?>
 		<form id="ManActData" method="post" action="<?=$baseurl.$link;?>">
 			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="width: 200px;">
-				<option value="0">Выберите отросль</option>
+				<option value="0">Выберите отрасль</option>
 			<?php for($i = 0; $i < count($activity); $i++): ?>
 				<?php if($activity[$i]['act_final'] == 0): ?>
 					<optgroup label="<?=$activity[$i]['act_title'];?>">

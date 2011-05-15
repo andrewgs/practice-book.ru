@@ -15,17 +15,18 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">Страница отросли</a>
+				<a href="#">Страница отрасли</a>
 				<ul>
-					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/product','Продукт отросли');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/product','Продукт отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/pitfalls','Подводные камни');?></li>
-					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/questions','Вопросы по отросли');?></li>
-					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/tips','Советы по отросли');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/questions','Вопросы по отрасли');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/tips','Советы по отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/price','Прайс-координатор');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/tender','Тендер');?></li>
-					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/company','Компании отросли');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/company','Компании отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/news','Новости');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/manager','Прайс-менеджер');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/consultation','Консультации');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/persona','Персона');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/whomain','Кто главный?');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/documents','Документооборот');?></li>
@@ -36,7 +37,7 @@
 				<a href="#">Информационные списки</a>
 				<ul>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/regions','Список регионов');?></li>
-					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/activity','Список отрослей');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/activity','Список отраслей');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users','Список пользователей');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/company','Список компаний');?></li>
 				</ul>

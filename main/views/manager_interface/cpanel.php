@@ -28,7 +28,8 @@
 		.w278{width: 278px;}
 		.w358{width: 358px;}
 		.w575{width: 575px;}
-		.w220{width: 220;}
+		.w220{width: 220px;}
+		.mw220{max-width: 220px;}
 		.online{margin-left: 20px;}
 		.h20{min-height: 20px;}
 		.h150{min-height: 150px;}
@@ -222,7 +223,7 @@
 									<div class="nsh-title"><?=($i+1).'. '.$tips[$i]['tps_title'];?></div>
 									<div class="nshNote">
 										<?=$tips[$i]['tps_note'];?>
-										<a href="#" id="winTips" PF="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>
+										<a href="#" id="winTips" TPS="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>
 									</div>
 								</div>	
 								<?php endfor; ?>
@@ -236,7 +237,7 @@
 							</div>
 						</div>
 						<?php for($i=0;$i<count($tips);$i++):?>
-							<div id="tips-modal-content" PF="<?=$i;?>">
+							<div id="tips-modal-content" TPS="<?=$i;?>">
 								<div class="box">
 									<div class="box-header">&nbsp;
 										<div class="box-search">
@@ -256,6 +257,7 @@
 						<?php endfor; ?>
 					</div>
 					<div class="grid_5">
+					<?php if($units):?>
 						<div id="unit-modal-note-content">
 							<div class="box">
 								<div class="box-header">
@@ -277,6 +279,7 @@
 								</div>
 							</div>
 						</div>
+					<?php endif; ?>
 						<div class="box">
 							<div class="box-header w358">
 								<h2><?= $othertext[3]['otxt_note']; ?></h2>
@@ -316,8 +319,12 @@
 									</div>
 									<div id="formUnit">
 										<?=$units[0]['pri_note'];?>
-									</div>
-									<div style="text-align:right;margin-top:10px;">
+									</div> 
+								<?php if($long_note): ?>
+									<div style="text-align:right;margin-top:10px;" id="divNote">
+								<?php else: ?>
+									<div style="text-align:right;margin-top:10px;" id="divNote" class="btnHidden">
+								<?php endif; ?>
 										<a href="#" id="winUnitNote" class="window"><nobr>Читать полностью</nobr></a>
 									</div>
 								<?php else: ?>
@@ -345,7 +352,7 @@
 											</div>
 										</div>
 										<div class="price-actions">
-											<input type="button" class="goog-button window" tabindex="0" value="Список предложений">
+											<input type="button" id="lowOfferList" class="goog-button" tabindex="0" value="Список предложений">
 											<input type="button" id="winRisks" class="goog-button window" tabindex="1" value="Возможные риски">
 										</div>
 										<div class="price-schema">
@@ -374,7 +381,7 @@
 											</div>
 										</div>
 										<div class="price-actions">
-											<input type="button" class="goog-button" tabindex="0" value="Список предложений">
+										<input type="button" id="optimumOfferList" class="goog-button" tabindex="0" value="Список предложений">
 										</div>
 										<div class="price-schema">
 											<img alt="" title="" src="<?=$baseurl;?>images/diagram.png" />
@@ -402,7 +409,7 @@
 											</div>
 										</div>
 										<div class="price-actions">
-										<input type="button" class="goog-button" tabindex="0" value="Список предложений">
+										<input type="button" id="topOfferList" class="goog-button" tabindex="0" value="Список предложений">
 										<input type="button" id="winAdvantage" class="goog-button window" tabindex="1" value="Преимущества">
 										</div>
 										<div class="price-schema">
@@ -432,6 +439,19 @@
 								</div>
 								<div class="box-bottom-links h20">
 									&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+						<div id="offer-modal-content">
+							<div class="box">
+								<div class="box-header"><div id="offerTitle">&nbsp;</div>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+									<div id="offerList">&nbsp;</div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
 									<div class="clear"></div>
 								</div>
 							</div>
@@ -652,26 +672,31 @@
 								</div>
 								<div class="box-content h365 w575">
 							<?php if(count($activitynews)): ?>
-								<h3>Новости отросли</h3><hr/>
+								<h3>Новости отрасли</h3><hr/>
 								<?php for($i=0;$i<count($activitynews);$i++):?>
 									<div class="content-separator">
 										<div class="nshDate"><?=$activitynews[$i]['an_date'];?></div>
 								<img src="<?=$baseurl;?>activitynews/viewimage/<?=$activitynews[$i]['an_id'];?>" class="floated" alt=""/>
 										<div class="nsh-title"><?=$activitynews[$i]['an_title'];?></div>
 										<div class="nshNote"><?=$activitynews[$i]['full_note'];?></div>
+									<?php if(!empty($activitynews[$i]['an_source'])):?>
+										<div class="RightLink">
+											<?=anchor($activitynews[$i]['an_source'],'Источник',array('TARGET'=>'_blank'));?>
+										</div>
+									<?php endif; ?>
 										<div class="clear"></div>
 									</div>
 								<?php endfor; ?>
 							<?php endif; ?>
 							<?php if(count($companynews)): ?>
-								<h3>Новости компаний отросли</h3><hr/>
+								<h3>Новости компаний отрасли</h3><hr/>
 								<?php for($i=0;$i<count($companynews);$i++):?>
 									<div class="content-separator">
 										<div class="nshDate"><?=$companynews[$i]['cn_pdatebegin'];?></div>
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$companynews[$i]['cmp_id'];?>" alt=""/>
 											<div class="company-rate">рейтинг: <?=$companynews[$i]['cmp_rating'];?></div>
-										<?php if($company['all'][$i]['cmp_graph'] <= $low_rating): ?>
+										<?php if($companynews[$i]['cmp_graph'] <= $low_rating): ?>
 										<div class="company-rate-bad" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>
 										<div class="company-rate-graph" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
@@ -681,6 +706,9 @@
 								<img src="<?=$baseurl;?>companynews/viewimage/<?=$companynews[$i]['cn_id'];?>" class="floated" alt=""/>
 										<div class="nsh-title"><?=$companynews[$i]['cn_title'];?></div>
 										<div class="nshNote"><?=$companynews[$i]['full_note'];?></div>
+										<div class="RightLink">
+											<?= anchor('company-info/'.$companynews[$i]['cmp_id'],'На страницу компании');?>
+										</div>
 										<div class="clear"></div>
 									</div>
 								<?php endfor; ?>
@@ -720,9 +748,11 @@
 									</a>
 								</div>
 							</div>
-							<div class="box-content h150">
+							<div class="box-content h150 mw220">
 								<img src="<?=$baseurl;?>mavatar/viewimage/<?=$manager['uid'];?>" class="floated" alt="">
 								<strong><?=$manager['uname'].' '.$manager['usubname'].' '.$manager['uthname']; ?></strong>
+								<div class="clear"></div>
+								<?=$manager['uachievement'];?>
 								<div class="clear"></div>
 								<?php for($i = 0; $i <count($manager['jobs']); $i++):?>
 									<?php if(count($manager['jobs'])>1 && $i>0 && $i<count($manager['jobs'])): ?>
@@ -751,6 +781,22 @@
 								<div class="clear"></div>
 							</div>
 						</div>
+						
+						<div class="box-consustation">
+							<div class="box-header w220">
+								<h2 style="text-align:center">
+									<?php $link = 'manager/consultation/'.$userinfo['uconfirmation'];?>
+									<?= anchor($link,'&nbsp;&nbsp;&nbsp;Консультирование &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
+								</h2>
+								<div class="box-search h20">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[20]['otxt_help'];?></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[13]['otxt_note'];?></h2>
@@ -762,7 +808,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="box-content">
+							<div class="box-content mw220">
 							<?php if($persona && !empty($persona['prs_note'])): ?>
 								<img src="<?=$baseurl;?>prsavatar/viewimage/<?=$persona['prs_id'];?>" class="floated" alt=""/>
 								<div class="nsh-title"><?=$persona['prs_title'];?></div>
@@ -772,6 +818,11 @@
 							<?php endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
+							<?php if(!empty($persona['prs_source'])):?>
+								<div class="left">
+									<?=anchor($persona['prs_source'],'Источник',array('TARGET'=>'_blank'));?>
+								</div>
+							<?php endif; ?>
 								<div class="right">
 									<a href="#" id="winPersona" class="window"><nobr>Читать полностью</nobr></a>
 								</div>
@@ -809,7 +860,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="box-content">
+							<div class="box-content mw220">
 								<?php if($banner): ?>
 									<?=$banner;?>
 								<?php else: ?>
@@ -828,7 +879,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="box-content">
+							<div class="box-content mw220">
 								<?php if($documents): ?>
 									<?php for($i=0;$i<count($documents);$i++):?>
 									<div class="content-separator">
@@ -948,26 +999,44 @@
 									</div>
 									<div class="box-content h365 w575">
 								<?php if(count($specials)):?>
-									<h3>Новинки отросли</h3><hr/>
+									<h3>Новинки отрасли</h3><hr/>
 									<?php for($i=0;$i<count($specials);$i++):?>
 										<div class="content-separator">
 											<div class="nshDate"><?=$specials[$i]['spc_date'];?></div>
 									<img src="<?=$baseurl;?>specials/viewimage/<?=$specials[$i]['spc_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$specials[$i]['spc_title'];?></div>
 											<div class="nshNote"><?=$specials[$i]['full_note'];?></div>
+										<?php if(!empty($specials[$i]['spc_source'])):?>
+											<div class="RightLink">
+												<?=anchor($specials[$i]['spc_source'],'Источник',array('TARGET'=>'_blank'));?>
+											</div>
+										<?php endif; ?>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
 								<?php endif; ?>
 									<div class="clear"></div><br/>
 								<?php if(count($shares)):?>
-									<h3>Скидки и акции отросли</h3><hr/>
+									<h3>Скидки и акции отрасли</h3><hr/>
 									<?php for($i=0;$i<count($shares);$i++):?>
 										<div class="content-separator">
-											<div class="nshDate"><?=$shares[$i]['sh_date'];?></div>
+											<div class="nshDate"><?=$shares[$i]['sh_pdatebegin'];?></div>
+											<div class="floated">
+												<img src="<?=$baseurl;?>companythumb/viewimage/<?=$shares[$i]['cmp_id'];?>" alt=""/>
+												<div class="company-rate">рейтинг: <?=$shares[$i]['cmp_rating'];?></div>
+										<?php if($shares[$i]['cmp_graph'] <= $low_rating): ?>
+											<div class="company-rate-bad" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php else: ?>
+											<div class="company-rate-graph" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php endif; ?>
+											</div>
+											<div class="nsh-title"><?=$shares[$i]['cmp_name'];?></div>
 									<img src="<?=$baseurl;?>shares/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
 											<div class="nshNote"><?=$shares[$i]['full_note'];?></div>
+											<div class="RightLink">
+												<?= anchor('company-info/'.$shares[$i]['cmp_id'],'На страницу компании');?>
+											</div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
@@ -1009,7 +1078,8 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
+		$(document).ready(function(){
+		$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
 		$(".tooltip").click(function(event){event.preventDefault();})
 		$("#select-region").change(function(){change_region($(this));});
 		$("#select-activity").change(function(){change_activity($(this));});
@@ -1034,6 +1104,8 @@
 									function(data){
 										$(".unitImage").html(data.image);
 										$("#formUnit").html(data.note);
+										if(data.longnote) $("#divNote").show();
+										else $("#divNote").hide();
 										$("#UnitNote").html(data.full);
 										$("#UnitTitle").html(data.title);
 										$("#lowprice").html(data.lowprice);
@@ -1060,6 +1132,8 @@
 					function(data){
 						$(".unitImage").html(data.image);
 						$("#formUnit").html(data.note);
+						if(data.longnote) $("#divNote").show();
+						else $("#divNote").hide();
 						$("#UnitNote").html(data.full);
 						$("#UnitTitle").html(data.title);
 						$("#lowprice").html(data.lowprice);
@@ -1109,7 +1183,8 @@
 			return false;
 		});
 		$("a#winTips").click(function(e){
-			$("#tips-modal-content").modal();
+			var tip = $(this).attr("TPS");
+			$("#tips-modal-content[TPS='"+tip+"']").modal();
 			return false;
 		});
 		$("input#winRisks").click(function(e){
@@ -1124,6 +1199,35 @@
 			$("#unit-modal-note-content").modal();
 			return false;
 		});
+		$("input#lowOfferList").click(function(e){
+			var product = $("#UnitTitle").text();
+			var bprice = 0;
+			var eprice = parseFloat($("#lowprice").text());
+			offer_list(product,bprice,eprice);
+		});
+		$("input#optimumOfferList").click(function(e){
+			var product = $("#UnitTitle").text();
+			var lprice = parseFloat($("#lowprice").text());
+			var oprice = parseFloat($("#optimumprice").text());
+			var tprice = parseFloat($("#topprice").text());
+			var bprice = (oprice+lprice)/2;
+			var eprice = (oprice+tprice)/2;
+			offer_list(product,bprice,eprice);
+		});
+		$("input#topOfferList").click(function(e){
+			var product = $("#UnitTitle").text();
+			var oprice = parseFloat($("#optimumprice").text());
+			var tprice = parseFloat($("#topprice").text());
+			var bprice = (oprice+tprice)/2;
+			var eprice = 0;
+			offer_list(product,bprice,eprice);
+		});
+		
+		function offer_list(product,bprice,eprice){
+			$("#offerTitle").html(product);
+			$("#offerList").load("<?=$baseurl;?>manager/offer-list/<?=$userinfo['uconfirmation'];?>",{'product':product,'bprice':bprice,'eprice':eprice},function(){$("#offer-modal-content").modal();});
+		}
+		
 		function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}
 		

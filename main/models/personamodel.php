@@ -4,6 +4,7 @@ class Personamodel extends CI_Model {
 	
 	var $prs_id	 	= 0;
 	var $prs_mraid 	= 0;
+	var $prs_aid	= 0;
 	var $prs_title 	= "";
 	var $prs_note 	= "";
 	var $prs_image 	= "";
@@ -40,11 +41,13 @@ class Personamodel extends CI_Model {
 		return NULL;
 	}
 	
-	function insert_record($mraid,$insertdata){
+	function insert_record($mraid,$activity,$insertdata){
 		
 		$this->prs_mraid	= $mraid;
+		$this->prs_aid		= $activity;
 		$this->prs_title	= htmlspecialchars($insertdata['title']);
-		$this->prs_note		= strip_tags($insertdata['note']);
+//		$this->prs_note		= strip_tags($insertdata['note']);
+		$this->prs_note		= $insertdata['note'];
 		$this->prs_image	= $insertdata['image'];
 		$this->prs_date		= date("Y-m-d");
 		$this->prs_source 	= htmlspecialchars($insertdata['source']);
@@ -52,22 +55,25 @@ class Personamodel extends CI_Model {
 		$this->db->insert('tbl_persona',$this);
 	}
 
-	function update_record($mraid,$updatedata){
+	function update_record($mraid,$activity,$updatedata){
 		
 		$this->db->set('prs_title',htmlspecialchars($updatedata['title']));
-		$this->db->set('prs_note',strip_tags($updatedata['note'],'<br>'));
+//		$this->db->set('prs_note',strip_tags($updatedata['note'],'<br>'));
+		$this->db->set('prs_note',$updatedata['note']);
 		if($updatedata['image']):
 			$this->db->set('prs_image',$updatedata['image']);
 		endif;
 		$this->db->set('prs_date',date("Y-m-d"));
+		$this->db->set('prs_aid',$activity);
 		$this->db->set('prs_source',htmlspecialchars($updatedata['source']));
 		$this->db->where('prs_mraid',$mraid);
 		$this->db->update('tbl_persona');
 	}
 
-	function insert_empty($mraid){
+	function insert_empty($mraid,$activity){
 		
 		$this->prs_mraid	= $mraid;
+		$this->prs_aid		= $activity;
 		$this->prs_date		= date("Y-m-d");
 		$this->prs_image	= file_get_contents(base_url().'images/no_photo.jpg');
 		
@@ -82,5 +88,17 @@ class Personamodel extends CI_Model {
 		$query = $this->db->get('tbl_persona');
 		$data = $query->result_array();
 		return $data[0]['prs_image'];
+	}
+
+	function save_persons($activity,$updatedata){
+	
+		$this->db->set('prs_title',htmlspecialchars($updatedata['title']));
+//		$this->db->set('prs_note',strip_tags($updatedata['note'],'<br>'));
+		$this->db->set('prs_note',$updatedata['note']);
+		$this->db->set('prs_image',$updatedata['image']);
+		$this->db->set('prs_date',date("Y-m-d"));
+		$this->db->set('prs_source',htmlspecialchars($updatedata['source']));
+		$this->db->where('prs_aid',$activity);
+		$this->db->update('tbl_persona');
 	}
 }

@@ -41,11 +41,17 @@
 				<input type="image" title="Сохранить ICQ" class="ajaxsave" id="icq" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
 			<div class="clear"></div>
-			Ваш Skype: <div class="vRight" id="dskype"><?=$manager['uskype'];?></div><br>
+			Skype: <div class="vRight" id="dskype"><?=$manager['uskype'];?></div><br>
 			<input class="reg-form-input" name="skype" id="vskype" type="text">
 			<span class="btnsave" id="svskype">
 				<input type="image" title="Сохранить SKYPE" class="ajaxsave" id="skype" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
+			<div class="clear"></div>
+			Достижения: <div class="vRight" id="dachi"></div><br>
+			<span class="btnsave" id="svdachi">
+		<input type="image" title="Сохранить" class="ajaxsave" id="achi" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
+			</span>
+			<textarea class="edit270-form-textarea" name="achi" id="vachi" cols="20" rows="5"><?=$manager['uachievement'];?></textarea>
 			<div class="clear"></div>
 		</div>
 		<div class="grid_6">
@@ -92,7 +98,7 @@
 				Ваша сфера услуг : <strong><?= $manager['activity']; ?></strong><br><br>
 				<?php if($manager['upriority']): ?>
 					<div class="form-reqs" style="padding: 15px 10px">
-						<span title="Добавить менеджера к Вашей отросли или подотросли" class="box-controls ask">?</span>
+						<span title="Добавить менеджера к Вашей отрасли или подотрасли" class="box-controls ask">?</span>
 						<button id="regman" style="height:2.5em">
 							<img src="<?=$baseurl;?>images/user-plus.png"><font size="3"> Зарегистрировать менеджера</font>
 						</button>

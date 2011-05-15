@@ -11,7 +11,7 @@
 			<label class="label-input">Справочная информация:</label>
 			<textarea class="edit-form-textarea" name="help" cols="40" rows="9"><?=$text['help'];?></textarea>
 			<?php if($case == "news"): ?>
-				<label class="label-input">Новости отросли:</label>
+				<label class="label-input">Новости отрасли:</label>
 			<?php elseif($case == "specials"):?>
 				<label class="label-input">Новинки:</label>
 			<?php else: ?>

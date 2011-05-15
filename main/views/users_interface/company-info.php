@@ -106,13 +106,7 @@
 									<div id="pulist"></div>
 								<?php else: ?>
 									<div id="hdngroup" class="btnHidden"><?=$group;?></div>
-									<div id="pulist">
-									<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
-										<?php for($i=0;$i<count($units);$i++):?>
-											<option value="<?=$units[$i]['cu_id'];?>"><?=$units[$i]['cu_title'];?></option>
-										<?php endfor; ?>
-										</select>
-									</div>
+									<div id="pulist"></div>
 								<?php endif;?>
 								</div>
 							<?php endif; ?>

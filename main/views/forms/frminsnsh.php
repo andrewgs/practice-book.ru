@@ -26,9 +26,9 @@
 		<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('description'); ?>
 	<textarea class="edit-form-textarea mbottom inpvalue" name="description" id="description" cols="50" rows="5"><?=set_value('description');?></textarea>
-		<label class="label-input"">Новость отросли:<span class="necessarily" title="Поле не может быть пустым">*</span></label>
-		<select name="activity" id="activity" class="mixed-combo inpvalue" size="1" title="Укажите к какой отросли относиться новость" style="width: 400px;">
-			<option value="0">Выберите отросль</option>
+		<label class="label-input"">Новость отрасли:<span class="necessarily" title="Поле не может быть пустым">*</span></label>
+		<select name="activity" id="activity" class="mixed-combo inpvalue" size="1" title="Укажите к какой отрасли относиться новость" style="width: 400px;">
+			<option value="0">Выберите отрасль</option>
 			<?php for($i = 0; $i < count($cmpactivity); $i++): ?>
 				<option value="<?=$cmpactivity[$i]['act_id'];?>"><?=$cmpactivity[$i]['act_fulltitle'];?></option>
 			<?php endfor; ?>

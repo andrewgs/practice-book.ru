@@ -41,7 +41,7 @@
 				<div class="grid_12">
 					<div class="box">
 						<div class="box-header">
-							<h2>Федеральный менеджер отросли</h2>
+							<h2>Федеральный менеджер отрасли</h2>
 							<div class="box-search">
 								<?=anchor('manager/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 							</div>
@@ -72,13 +72,13 @@
 								<?php endif; ?>
 							</div>
 						</div>
-					</div>
+					</div>отрасли
 				</div>
 				<div class="clear"></div>
 					<div class="grid_12">
 						<div class="box">
 							<div class="box-header">
-								<h2>Региональный менеджер отросли</h2>
+								<h2>Региональный менеджер отрасли</h2>
 								<div class="box-search">
 								<?php if($userinfo['priority'] && !isset($manager['uid'])): ?>
 									<a class="lnk-submit" id="menSelect">Выбрать менеджера</a>

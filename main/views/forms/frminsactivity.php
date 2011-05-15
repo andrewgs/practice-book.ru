@@ -4,7 +4,7 @@
 		<?= form_error('title'); ?>
 		<input class="edit-form-input inpvalue" id="title" name="title" type="text" value="<?=set_value('title');?>"/>
 		<div class="clear"></div>
-		<label class="label-input">ID главной отросли <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+		<label class="label-input">ID главной отрасли <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('parentid'); ?>
 		<input class="reg-form-small inpvalue parentid" id="parentid" name="parentid" type="text" value="<?=set_value('parentid');?>"/>
 		<div class="clear"></div>

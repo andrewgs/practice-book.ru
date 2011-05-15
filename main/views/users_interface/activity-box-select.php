@@ -5,7 +5,7 @@
 			<?php $size=count($activity)/3; ?>
 			<?php if($size<=3) $size=10; ?>
 			<select name="activity" class="activity w280" size="<?=$size;?>">
-				<option value="0" selected="selected" disabled="disabled">Выберите отросль</option>
+				<option value="0" selected="selected" disabled="disabled">Выберите отрасль</option>
 			<?php for($i=0;$i<count($activity);$i++): ?>
 				<?php if($activity[$i]['act_final']): ?>
 				<option value="<?=$activity[$i]['act_id'];?>" final="<?=$activity[$i]['act_final'];?>"><?=$activity[$i]['act_title'];?></option>

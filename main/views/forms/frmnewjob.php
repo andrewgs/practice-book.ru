@@ -2,7 +2,7 @@
 <label class="label-input left w300">Должность</label>
 <label class="label-input left w80">Период</label>
 <label class="label-input left w80">работы</label>
-<br/>
+<div class="clear"></div>
 <input class="reg-form-input jobs" name="exp[]" type="text" maxlength="400" value=""/>
 <input class="reg-form-input jobs" name="exp[]" type="text" maxlength="400" value=""/>
 <select class="reg-form-input" style="width:70px" name="exp[]">

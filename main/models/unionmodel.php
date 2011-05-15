@@ -64,7 +64,7 @@ class Unionmodel extends CI_Model {
 	function update_product($activity,$updata){
 	
 		$query = "UPDATE tbl_products SET pr_title = ?, pr_note = ?, pr_image = ?, pr_date = ? WHERE pr_mraid IN (SELECT mra_id FROM tbl_mra WHERE mra_aid = ?)";
-		$this->db->query($query,array(htmlspecialchars($updata['title']),strip_tags($updata['note'],'<br>'),$updata['image'],date("Y-m-d"),$activity));
+		$this->db->query($query,array(htmlspecialchars($updata['title']),$updata['note'],$updata['image'],date("Y-m-d"),$activity));
 	}
 
 	function read_cmpnews_by_activity($activity,$region){
@@ -88,6 +88,16 @@ class Unionmodel extends CI_Model {
 	function read_pitfalls_limit($activity,$limit){
 	
 		$query = "SELECT * FROM tbl_pitfalls WHERE tbl_pitfalls.pf_status = 1 AND tbl_pitfalls.pf_mraid IN (SELECT mra_id FROM tbl_mra WHERE tbl_mra.mra_aid = $activity) ORDER BY tbl_pitfalls.pf_date,tbl_pitfalls.pf_id LIMIT $limit";
+		
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	function read_activity_news($activity,$limit){
+	
+		$query = "SELECT * FROM tbl_activity_news WHERE tbl_activity_news.an_mraid IN (SELECT mra_id FROM tbl_mra WHERE tbl_mra.mra_aid = $activity) ORDER BY tbl_activity_news.an_date,tbl_activity_news.an_id LIMIT $limit";
 		
 		$query = $this->db->query($query);
 		$data = $query->result_array();
@@ -143,6 +153,24 @@ class Unionmodel extends CI_Model {
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		return NULL;
+	}
+
+	function offer_list($product,$bprice,$eprice,$region){
+	
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND (CONCAT(tbl_companyunits.cu_price,0) >= $bprice AND CONCAT(tbl_companyunits.cu_price,0) <= $eprice) ORDER BY tbl_companyunits.cu_price ASC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	function offer_list_top($product,$bprice,$region){
+	
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND CONCAT(tbl_companyunits.cu_price,0) >= $bprice ORDER BY tbl_companyunits.cu_price ASC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
 	}
 }
 ?>

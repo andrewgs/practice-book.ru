@@ -25,7 +25,8 @@ $route['announce-tender/region/:num/activity/:num'] = "users_interface/announce_
 $route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list";
 $route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
 $route['product-info/region/:num/activity/:num'] = "users_interface/product_unit_info";
-
+$route['offer-list/region/:num'] = "users_interface/offer_list";
+$route['consultation/manager/:num'] = "users_interface/consultation_list";
 /* ----------------------------------------------- company ------------------------------------------------*/
 
 $route['company-info/:num'] = "users_interface/company_info";
@@ -78,6 +79,7 @@ $route['registration-request/regional-manager'] = "users_interface/registration_
 
 $route['add-pitfall'] = "users_interface/ajax_add_pitfall";
 $route['add-question'] = "users_interface/ajax_add_question";
+$route['add-tips'] = "users_interface/ajax_add_tips";
 
 /***********************************	MANAGER INTRERFACE	***********************************************/
 $route['manager/control-panel/:any'] = "manager_interface/cpanel";
@@ -120,6 +122,9 @@ $route['manager/edit-whomain/:any'] = "manager_interface/edit_whomain";
 $route['manager/edit-coordinator/:any'] = "manager_interface/edit_coordinator";
 $route['manager/product-unit-dalete/:any'] = "manager_interface/product_unit_dalete";
 $route['manager/product-unit-info/:any'] = "manager_interface/product_unit_info";
+$route['manager/offer-list/:any'] = "manager_interface/offer_list";
+$route['manager/consultation/:any'] = "manager_interface/consultation";
+
 /************************************	ADMIN INTRERFACE	***********************************************/
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";

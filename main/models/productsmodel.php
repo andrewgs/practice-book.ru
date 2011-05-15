@@ -43,7 +43,8 @@ class Productsmodel extends CI_Model {
 		
 		$this->pr_mraid	= $mraid;
 		$this->pr_title	= strip_tags($insertdata['title']);
-		$this->pr_note	= strip_tags($insertdata['note']);
+//		$this->pr_note	= strip_tags($insertdata['note']);
+		$this->pr_note	= $insertdata['note'];
 		$this->pr_image	= $insertdata['image'];
 		$this->pr_date	= date("Y-m-d");
 		
@@ -53,7 +54,8 @@ class Productsmodel extends CI_Model {
 	function update_record($mraid,$updatedata){
 		
 		$this->db->set('pr_title',htmlspecialchars($updatedata['title']));
-		$this->db->set('pr_note',strip_tags($updatedata['note'],'<br>'));
+//		$this->db->set('pr_note',strip_tags($updatedata['note'],'<br>'));
+		$this->db->set('pr_note',$updatedata['note']);
 		if($updatedata['image']):
 			$this->db->set('pr_image',$updatedata['image']);
 		endif;
@@ -67,8 +69,6 @@ class Productsmodel extends CI_Model {
 		$this->pr_mraid	= $mraid;
 		$this->pr_date	= date("Y-m-d");
 		$this->pr_image	= file_get_contents(base_url().'images/no_photo.jpg');
-		
-		
 		$this->db->insert('tbl_products',$this);
 		return $this->db->insert_id();
 	}

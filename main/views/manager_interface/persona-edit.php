@@ -46,11 +46,40 @@
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>ckfinder/ckfinder.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
+		$(document).ready(function(){
+			var config = {
+				skin : 'v2',
+				removePlugins : 'scayt',
+				resize_enabled: false,
+				height: '200px',
+				toolbar:
+				[
+					['Source','-','Preview','-','Templates'],
+					['Cut','Copy','Paste','PasteText'],
+					['Undo','Redo','-','SelectAll','RemoveFormat'],
+					'/',
+					['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+					['NumberedList','BulletedList','-','Outdent','Indent'],
+					['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+					['Link','Unlink'],
+					'/',
+					['Format','-'],
+					['Image','Table','HorizontalRule','SpecialChar','-'],
+					['Maximize', 'ShowBlocks']
+				]
+			};
+			$('#prNote').ckeditor(config);
+			var editor = $('#prNote').ckeditorGet();
+			CKFinder.setupCKEditor(editor,"<?= $baseurl.'ckfinder/'; ?>");
+			
+		$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
 		$("#forAllRegion").click(function(){
 			if(this.checked)
-				$("#msgAllRegion").text("Вся информация о продуктах в других регионах будет перезаписана");
+				$("#msgAllRegion").text("Вся информация о персонах в других регионах будет перезаписана");
 			else
 				$("#msgAllRegion").html("&nbsp;");
 				

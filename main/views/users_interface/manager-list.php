@@ -37,7 +37,7 @@
 				<div class="grid_12">
 					<div class="box">
 						<div class="box-header">
-							<h2>Федеральный менеджер отросли</h2>
+							<h2>Федеральный менеджер отрасли</h2>
 							<div class="box-search">
 					<?=anchor("activity-information/region/$curregion/activity/$curactivity",'Вернуться назад',array('class'=>'lnk-submit'));?>
 							</div>
@@ -74,7 +74,7 @@
 					<div class="grid_12">
 						<div class="box">
 							<div class="box-header">
-								<h2>Региональный менеджер отросли</h2>
+								<h2>Региональный менеджер отрасли</h2>
 								<div class="box-search">&nbsp;</div>
 							</div>
 							<div class="box-content h150 w918">

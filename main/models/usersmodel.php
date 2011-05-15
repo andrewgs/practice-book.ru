@@ -24,6 +24,7 @@ class Usersmodel extends CI_Model {
 	var $upriority		= 1;	/* Приоритет пользователя*/
 	var $umanager		= 1;	/* Статус пользователя*/
 	var $uactivity		= 1;	/* Отрасль пользователя*/
+	var $uachievement	= "";	/* Достижения пользователя*/
 	
 	function __construct(){
         
@@ -54,6 +55,7 @@ class Usersmodel extends CI_Model {
 		$this->umanager 		= $insertdata['manager'];
 		$this->upriority 		= $insertdata['priority'];
 		$this->uactivity 		= $insertdata['activity'];
+		$this->uachievement 	= "";
 		
 		$this->db->insert('tbl_user',$this);
 		return $this->db->insert_id();
@@ -136,7 +138,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_single_manager($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,uachievement FROM tbl_user WHERE umanager=1 AND upriority=0 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
 		$query = $this->db->query($sql,array($activity));
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -145,7 +147,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_single_federal($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,uachievement FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid LIMIT 1";
 		$query = $this->db->query($sql,array($activity));
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
@@ -154,7 +156,7 @@ class Usersmodel extends CI_Model {
 
 	function read_single_federals($activity){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,uachievement FROM tbl_user WHERE umanager=1 AND upriority=1 AND ustatus='enabled' AND udestroy = '3000-01-01' AND uactivity = ? ORDER BY uid";
 		$query = $this->db->query($sql,array($activity));
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -163,7 +165,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_single_manager_byid($uid,$text){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND udestroy = '3000-01-01' AND uid = $uid ORDER BY uid";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,uachievement FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND udestroy = '3000-01-01' AND uid = $uid ORDER BY uid";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];

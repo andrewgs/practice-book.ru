@@ -15,9 +15,7 @@ endif; ?>
 				</div>
 			</div>
 			<div class="box-content h150 w918">
-				<?= form_error('title'); ?>
-				<input class="edit-form-input" id="prTitle" name='title' type='text' value="<?=$title;?>">
-				<div class="clear"></div><br/>
+				<label class="label-input">Изображение:</label>
 				<img src="<?=$baseurl;?>pravatar/viewimage/<?=$product['pr_id'];?>"class="floated" alt=""/>
 				<div class="clear"></div>
 				<?= form_error('userfile'); ?>
@@ -26,6 +24,10 @@ endif; ?>
 				<div class="grid_4" style="margin:0px;width:30%;">
 					<div class="form-reqs">Поддерживаемые форматы: JPG, GIF, PNG</div>
 				</div>
+				<div class="clear"></div>
+				<label class="label-input">Название продукта: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+				<?= form_error('title'); ?>
+				<input class="edit-form-input" id="prTitle" name='title' type='text' value="<?=$title;?>">
 				<div class="clear"></div>
 			</div>
 		</div>

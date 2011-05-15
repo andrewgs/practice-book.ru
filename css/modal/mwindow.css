@@ -6,11 +6,12 @@
 #risks-modal-content,#advantage-modal-content,
 #questions-modal-content,#email-modal-content,
 #pitfalls-modal-content-list,#questions-modal-content-list,
-#tips-modal-content-list,#unit-modal-note-content{
+#tips-modal-content-list,#unit-modal-note-content,
+#offer-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}
-#simplemodal-container {height:470px; width:600px; background-color: #CFD3B3; border:4px solid #DBDADA; padding:8px;}
+#simplemodal-container {height:470px; width:600px; background-color: #DBDADA; border:4px solid #DBDADA; padding:8px;}
 #simplemodal-container .simplemodal-data {padding:0px;}
 #simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
 #simplemodal-container a.modalCloseImg {background:url(../../images/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}

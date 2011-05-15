@@ -42,7 +42,7 @@
 					<div class="clear"></div>
 				</div>
 				<div class="grid_12">
-					<h2>Укажите отросль <span class="necessarily" title="Выбор отросли обязателен">*</span></h2>
+					<h2>Укажите отрасль <span class="necessarily" title="Выбор отрасли обязателен">*</span></h2>
 					<div class="clear"></div>
 					<input type="hidden" name="activity" value="" id="activityValue" />
 					<div class="activityList" aSelect="1">

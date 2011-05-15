@@ -18,7 +18,7 @@
 					<th scope="col" abbr="ЗАКРЫТЫЙ">ЗАКР.</th>
 					<th scope="col" abbr="ПРИОРИТЕТ">ПРИОР.</th>
 					<th scope="col" abbr="ID КОМПАНИИ">КОМП.</th>
-					<th scope="col" abbr="ID ОТРОСЛИ">ОТРОСЛЬ</th>
+					<th scope="col" abbr="ID ОТРАСЛИ">отрасль</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
