@@ -43,10 +43,10 @@ class Company_interface extends CI_Controller {
 			if($this->user['uconfirmation'] != $this->uri->segment(3)) show_404();
 			if($this->session->userdata('login_id') != md5($this->user['ulogin'].$this->user['uconfirmation'])):
 				$this->user = array();
-				show_404();
+				redirect("");
 			endif;
 		else:
-			show_404();
+			redirect("");
 		endif;
 	}
 	
@@ -61,7 +61,7 @@ class Company_interface extends CI_Controller {
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'regions'		=> array(),
-					'representative'=> $this->usersmodel->read_representative($this->user['cid']),
+					'representative' => $this->usersmodel->read_representatives($this->user['cid']),
 					'news'			=> $this->cmpnewsmodel->read_limit_records($this->user['cid'],3),
 					'shares'		=> $this->cmpsharesmodel->read_limit_records($this->user['cid'],3),
 					'unitgroups'	=> array(),
@@ -97,7 +97,8 @@ class Company_interface extends CI_Controller {
 		if($pagevar['unitgroups']):
 			$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
 			$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
-			$pagevar['units'] = $this->cmpunitsmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$this->user['cid']);
+//			$pagevar['units'] = $this->cmpunitsmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$this->user['cid']);
+			$pagevar['units'] = $this->cmpunitsmodel->read_all_units($this->user['cid']);
 			if($pagevar['units']):
 				for($i=0;$i<count($pagevar['units']);$i++):
 					$pagevar['units'][$i]['cu_priceunit'] = $monetary[$pagevar['units'][$i]['cu_priceunit']];
@@ -242,6 +243,7 @@ class Company_interface extends CI_Controller {
 	}
 	
 	function profile(){
+	
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -272,7 +274,18 @@ class Company_interface extends CI_Controller {
 	}
 
 	function management(){
-	
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Управление представителями',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'representative' => $this->usersmodel->read_representatives($this->user['cid'])
+			);
+		
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('login','','required|valid_email|callback_login_check|trim');
 			$this->form_validation->set_rules('password','','required|min_length[6]|trim');
@@ -303,7 +316,6 @@ class Company_interface extends CI_Controller {
 				$_POST['icq'] = $_POST['skype'] = ''; $_POST['priority'] = $_POST['activity'] = 0;
 				$_POST['birthday'] = "0000-00-00"; $_POST['manager'] = 0;
 				$this->usersmodel->insert_record($_POST);
-				
 				$message = 'Для активации аккаунта пройдите по следующей ссылке'.
 				"\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.
 				base_url().'activation/'.$_POST['confirm'].'</a>'.
@@ -312,18 +324,9 @@ class Company_interface extends CI_Controller {
 				if(!$this->sendmail($_POST['login'],$message,$subject,"admin@practice-book.ru")):
 					$this->email->print_debugger();
 				endif;
+				redirect('company/representatives/'.$this->user['uconfirmation']);
 			endif;
 		endif;
-		$pagevar = array(
-					'description'	=> '',
-					'keywords'		=> '',
-					'author'		=> '',
-					'title'			=> 'Practice-Book - Управление представителями',
-					'baseurl' 		=> base_url(),
-					'userinfo'		=> $this->user,
-					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'representative' => $this->usersmodel->read_representatives($this->user['cid'])
-			);
 		$this->load->view('company_interface/representatives',$pagevar);
 	}
 	
@@ -364,14 +367,15 @@ class Company_interface extends CI_Controller {
 								$statusval['status'] 	= TRUE;
 								$statusval['retvalue'] 	= strip_tags($fdata);
 								break;
-			case 'vdescription':
-								$this->companymodel->save_single_data($this->user['cid'],'cmp_description',strip_tags($fdata));
+			case 'vdescription':$fdata = preg_replace('/\n/','<br>',$fdata);
+								$this->companymodel->save_single_data($this->user['cid'],'cmp_description',strip_tags($fdata,'<br>'));
 								$statusval['status'] 	= TRUE;
-								$statusval['retvalue'] 	= strip_tags($fdata);
+								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n",strip_tags($fdata,'<br>'));
 								break;
-			case 'vdetails'	:	$this->companymodel->save_single_data($this->user['cid'],'cmp_details',strip_tags($fdata));
+			case 'vdetails'	:	$fdata = preg_replace('/\n/','<br>',$fdata);
+								$this->companymodel->save_single_data($this->user['cid'],'cmp_details',strip_tags($fdata,'<br>'));
 								$statusval['status'] 	= TRUE;
-								$statusval['retvalue'] 	= strip_tags($fdata);
+								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n",strip_tags($fdata,'<br>'));
 								break;
 			case 'vsite'	:	$this->companymodel->save_single_data($this->user['cid'],'cmp_site',prep_url($fdata));
 								$statusval['status'] 	= TRUE;
@@ -548,9 +552,10 @@ class Company_interface extends CI_Controller {
 	}
 
 	function delele_representatives(){
+	
 		$statusval = array('status'=>TRUE,'message'=>'Ошибка при удалении');
 		$repid = trim($this->input->post('id'));
-		if(!isset($repid) or empty($repid)) show_404();
+		if(!$repid) show_404();
 		$this->usersmodel->close_user($repid);
 		echo json_encode($statusval);
 	}
@@ -567,6 +572,7 @@ class Company_interface extends CI_Controller {
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
+					'name'			=> 'Новости компании',
 					'typeavatar'	=> 'cnavatar',
 					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
 			);
@@ -665,6 +671,7 @@ class Company_interface extends CI_Controller {
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
+					'name'			=> 'Акции компании',
 					'typeavatar'	=> 'cshavatar',
 					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
 			);
@@ -733,7 +740,24 @@ class Company_interface extends CI_Controller {
 				redirect('company/price-management/'.$this->user['uconfirmation']);
 			endif;
 		endif;
-			
+		
+		if($this->input->post('subsavene')):
+			$this->form_validation->set_rules('activity','','required|trim');
+			$this->form_validation->set_rules('groupslist','','required|trim');
+			$this->form_validation->set_rules('productlist','','required|trim');
+			$this->form_validation->set_rules('price','','trim');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['subsave'] = NULL;
+				$this->price_management();
+				return FALSE;
+			else:
+				$_POST['subsave'] = NULL;
+				$this->cmpunitsmodel->update_noedit_record($_POST['productlist'],$this->user['cid'],$_POST,$_POST['groupslist']);
+				redirect('company/price-management/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		
 		if($this->input->post('subsave')):
 			$this->form_validation->set_rules('activity','','required|trim');
 			$this->form_validation->set_rules('groupslist','','required|trim');
@@ -885,7 +909,11 @@ class Company_interface extends CI_Controller {
 		if(!isset($unit) or empty($unit)) show_404();
 		$pagevar = array('baseurl'=>base_url(),'unit'=>array());
 		$pagevar['unit'] = $this->cmpunitsmodel->read_record($unit,$group);
-		$this->load->view('company_interface/select-product-form',$pagevar);
+		if($pagevar['unit']['cu_edit']):
+			$this->load->view('company_interface/select-product-form',$pagevar);
+		else:
+			$this->load->view('company_interface/select-product-noedit',$pagevar);
+		endif;
 	}
 
 	function product_unit_dalete(){

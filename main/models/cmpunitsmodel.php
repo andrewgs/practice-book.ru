@@ -11,6 +11,7 @@ class Cmpunitsmodel extends CI_Model {
 	var $cu_image 		= "";
 	var $cu_groupcode	= 0;
 	var $cu_unitscode	= 0;
+	var $cu_edit		= 1;
 	
 	function __construct(){
 
@@ -29,7 +30,7 @@ class Cmpunitsmodel extends CI_Model {
 	
 	function read_unit($id,$group){
 	
-		$this->db->select('cu_id,cu_title,cu_note,cu_price,cu_priceunit,cu_unitscode');
+		$this->db->select('cu_id,cu_title,cu_note,cu_price,cu_priceunit,cu_unitscode,cu_edit');
 		$this->db->where('cu_id',$id);
 		$this->db->where('cu_groupcode',$group);
 		$query = $this->db->get('tbl_companyunits',1);
@@ -40,9 +41,20 @@ class Cmpunitsmodel extends CI_Model {
 
 	function read_units($group,$cmpid){
 	
-		$this->db->select('cu_id,cu_title,cu_note,cu_price,cu_priceunit,cu_unitscode');
+		$this->db->select('cu_id,cu_title,cu_note,cu_price,cu_priceunit,cu_unitscode,cu_edit');
 		$this->db->where('cu_groupcode',$group);
 		$this->db->where('cu_cmpid',$cmpid);
+		$query = $this->db->get('tbl_companyunits');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	function read_all_units($cmpid){
+	
+		$this->db->select('cu_id,cu_title,cu_note,cu_price,cu_priceunit,cu_unitscode,cu_edit');
+		$this->db->where('cu_cmpid',$cmpid);
+		$this->db->order_by('cu_title');
 		$query = $this->db->get('tbl_companyunits');
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -71,6 +83,7 @@ class Cmpunitsmodel extends CI_Model {
 		$this->cu_image			= $insertdata['image'];
 		$this->cu_groupcode		= $groupe;
 		$this->cu_unitscode		= $insertdata['unitscode'];
+		$this->cu_edit			= 1;
 		
 		$this->db->insert('tbl_companyunits',$this);
 		return $this->db->insert_id();
@@ -85,7 +98,8 @@ class Cmpunitsmodel extends CI_Model {
 		$this->cu_priceunit 	= 1;
 		$this->cu_image			= $insertdata['image'];
 		$this->cu_groupcode		= $groupe;
-		$this->cu_unitscode		= 0;
+		$this->cu_unitscode		= $insertdata['unitscode'];
+		$this->cu_edit			= 0;
 		
 		$this->db->insert('tbl_companyunits',$this);
 		return $this->db->insert_id();
@@ -101,6 +115,15 @@ class Cmpunitsmodel extends CI_Model {
 		if($updatedata['image']):
 			$this->db->set('cu_image',$updatedata['image']);
 		endif;
+		$this->db->where('cu_id',$id);
+		$this->db->where('cu_cmpid',$cmpid);
+		$this->db->where('cu_groupcode',$groupe);
+		$this->db->update('tbl_companyunits');
+	}
+	
+	function update_noedit_record($id,$cmpid,$updatedata,$groupe){
+		
+		$this->db->set('cu_price',trim($updatedata['price']));
 		$this->db->where('cu_id',$id);
 		$this->db->where('cu_cmpid',$cmpid);
 		$this->db->where('cu_groupcode',$groupe);

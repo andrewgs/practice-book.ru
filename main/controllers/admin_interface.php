@@ -288,9 +288,9 @@ class Admin_interface extends CI_Controller {
 									break;
 			case 'users'		: 	$pagevar['list'][0] = $this->usersmodel->read_records(0);
 									$pagevar['list'][0]['caption'] = "Администраторы";
-									$pagevar['list'][1] = $this->usersmodel->read_records(1);
+									$pagevar['list'][1] = $this->unionmodel->users_consultation(1);
 									$pagevar['list'][1]['caption'] = "Федеральные менеджеры";
-									$pagevar['list'][2] = $this->usersmodel->read_records(2);
+									$pagevar['list'][2] = $this->unionmodel->users_consultation(2);
 									$pagevar['list'][2]['caption'] = "Региональные менеджеры";
 									$pagevar['list'][3] = $this->usersmodel->read_records(3);
 									$pagevar['list'][3]['caption'] = "Представители компаний";

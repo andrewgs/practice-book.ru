@@ -21,19 +21,19 @@
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		div.ButtonOperation{min-height:30px;}
-		.NewsDel, .NewsCancel, .EraserInput{float: right;padding: 5px;margin-right: 10px;cursor: pointer;}
-		.NewsExc, .NewsEdit, .NewsSave{float: right;padding: 5px;cursor: pointer;}
+		.NewsDel{float: right;padding: 5px;margin-right: 10px;cursor: pointer;}
+		.NewsSave{float: right;padding: 5px;cursor: pointer;}
 		.NewsExc{cursor:help;}
 		.h150{min-height: 150px;}
 		.w918{width: 918px;}
 		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		.repData{margin: 15px 0 0 0;}
 		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 10px 10px 0;cursor:help;}
-		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 100px;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
-		.btnHidden{display:none;}
-		.tmpTitle,.tmpDesc,.newsID{display:none;}
-		.DocType{font: normal small-caps 14px/16px fantasy;border: 1px solid #D8D8D8;padding: 5px;}
+		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 100px;}
+		.btnHidden,.newsID{display:none;}
+		.chackForAll{float:right;margin: 10px 10px 0 0;font: normal bold 100% normal;}
+		.msgForAll{float:right;margin: 30px -300px 0 0;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -50,13 +50,17 @@
 					<?= validation_errors(); ?>
 					</div>
 					<div class="rep-container">
-						<?php $this->load->view('forms/frmdocslist'); ?>
-						<div id="frmInsPitFalls" style="display:none;">
-							<?php $this->load->view('forms/frminsdocs');?>
+						<?php $this->load->view('forms/frmconsultationlist'); ?>
+						<div id="frmInsConsult" style="display:none;">
+							<?php $this->load->view('forms/frminsconsultation');?>
 						</div>
-						<button id="insPitFalls" style="height:2.5em; margin-top:15px; min-width: 130px;">
+						<button id="insConsult" style="height:2.5em; margin-top:15px; min-width: 130px;">
 							<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>
 						</button>
+						<div class="chackForAll">
+							<input type="checkbox" name="close" value="1" id="CloseConsult" <?php if($close_consult) echo 'checked="checked"';?> title="Отметьте, если хотите приостановить консультирование"> Приостановить консультирование
+						</div>
+						<div class="msgForAll fvalid_error" id="msgCloseConsult">&nbsp;</div>
 					</div>
 				</div>
 			</div>
@@ -73,64 +77,27 @@
 			$("#select-region").change(function(){$("#change-region").remove();if($(this).val()>0){$(this).css('float','left');$(this).after('<input type="button" class="lnk-submit" id="change-region" value="Продолжить"/>');$("#change-region").live('click',function(){$("#regionview").submit();});};});
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			
-			$("#insPitFalls").click(function(){
+			$("#insConsult").click(function(){
 				$("#validError").text('');
-				if($("#frmInsPitFalls").is(":hidden")){
-					$("#insPitFalls").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
-					$("#frmInsPitFalls").slideDown("slow");
+				if($("#frmInsConsult").is(":hidden")){
+					$("#insConsult").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
+					$("#frmInsConsult").slideDown("slow");
 					var height = ($(window).height()*$(".box").size())/2;
 					$("html, body").animate({scrollTop:height+'px'},"slow");
 				}else{
-					$("#frmInsPitFalls").slideUp("slow",function(){
-						$("#frmInsPitFalls").hide();
-						$("#insPitFalls").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>');
+					$("#frmInsConsult").slideUp("slow",function(){
+						$("#frmInsConsult").hide();
+						$("#insConsult").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>');
 						$("#formRep .inpvalue").val('');
 						$("#formRep .inpvalue").css('border-color','#D0D0D0');
-						$('#radio1').attr("checked","checked");
 					 });
 				}
-			});
-			
-			$(".NewsEdit").click(function(){
-				var curID = $(this).attr("nID");
-				var objTitleID = $("#t"+curID);
-				var valTitle = objTitleID.text();
-				$("#img"+curID).hide();
-				$(objTitleID).after('<div class="tmpTitle" id="tt'+curID+'">'+valTitle+'</div>');
-				valTitle = valTitle.replace(/["]/g,"&quot;");
-				$(objTitleID).html("<input class=\"edit-form-input\" name=\"fname\" type=\"text\" id=\"it"+curID+"\" value=\""+valTitle+"\"/>");
-				var objDescID = $("#ds"+curID);
-				var valDesc = objDescID.text();
-				$(objDescID).after('<div class="tmpDesc" id="tds'+curID+'">&nbsp;</div>');
-				$("#tds"+curID).text(objDescID.html());
-				$(objDescID).html("<textarea class=\"edit-form-textarea mbottom\" name=\"note\" id=\"ads"+curID+"\" cols=\"50\" rows=\"12\">"+valDesc+"</textarea>");
-				$("#dl"+curID).slideUp("slow",function(){$("#c"+curID).slideDown("slow");});
-				$("#e"+curID).slideUp("slow",function(){$("#s"+curID).slideDown("slow");});
-			});
-			
-			$(".NewsCancel").click(function(){
-				var curID = $(this).attr("nID");
-				var objTitleID = $("#tt"+curID);
-				$("#it"+curID).fadeOut("slow",function(){
-						$("#it"+curID).remove();
-						$("#tt"+curID).remove();
-						$("#img"+curID).show();
-						$("#t"+curID).html(objTitleID.text());
-					});
-				var objDescID = $("#tds"+curID);
-				$("#ads"+curID).fadeOut("slow",function(){
-					$("#ads"+curID).remove();
-					$("#tds"+curID).remove();
-					$("#ds"+curID).html(objDescID.text());
-				});
-				$("#c"+curID).slideUp("slow",function(){$("#dl"+curID).slideDown("slow");});
-				$("#s"+curID).slideUp("slow",function(){$("#e"+curID).slideDown("slow");});
 			});
 			$(".NewsDel").click(function(){
 				var curID = $(this).attr("nID");
 				var newsID = $("#id"+curID).text();
 				$.post(
-					"<?=$baseurl;?>manager/delete-document/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>manager/delete-consultation/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID},
 					function(data){
 						if(data.status){
@@ -147,13 +114,22 @@
 				var curID = $(this).attr("nID");
 				var newsID = $("#id"+curID).text();
 				var objTitleID = $("#it"+curID);
-				var objDescID = $("#ads"+curID);
+				var objPriceID = $("#pr"+curID);
+				var objPeriodID = $("#pd"+curID);
+				var objDescID = $("#td"+curID);
 				var valTitle = $(objTitleID).val();
+				var valPrice = $(objPriceID).val();
+				var valPeriod = $(objPeriodID).val();
 				var valDesc = $(objDescID).val();
 				$(objTitleID).css('border-color','#D0D0D0');
+				$(objPriceID).css('border-color','#D0D0D0');
 				$(objDescID).css('border-color','#D0D0D0');
 				if(valTitle == ''){
 					$(objTitleID).css('border-color','#ff0000');
+					err = true;
+				}
+				if(objPriceID == ''){
+					$(objPriceID).css('border-color','#ff0000');
 					err = true;
 				}
 				if(valDesc == ''){
@@ -164,26 +140,14 @@
 					msgerror('Пропущены обязательные поля');
 					return false;
 				}else{
-					$.post("<?=$baseurl;?>manager/save-document/<?=$userinfo['uconfirmation'];?>",
-					{'id':newsID,'title':valTitle,'desc':valDesc},
+					$.post("<?=$baseurl;?>manager/save-consultation/<?=$userinfo['uconfirmation'];?>",
+					{'id':newsID,'title':valTitle,'price':valPrice,'period':valPeriod,'desc':valDesc},
 					function(data){
 						if(data.status){
-							var objTitleID = $("#tt"+curID);
-							$("#it"+curID).fadeOut("slow",function(){
-									$("#it"+curID).remove();
-									$("#tt"+curID).remove();
-									$("#img"+curID).show();
-									$("#t"+curID).html(data.title);
-								});
-							var objDescID = $("#tds"+curID);
-							$("#ads"+curID).fadeOut("slow",function(){
-								$("#ads"+curID).remove();
-								$("#tds"+curID).remove();
-								$("#ds"+curID).html(data.desc);
-							});
-							$("#c"+curID).slideUp("slow",function(){$("#dl"+curID).slideDown("slow");});
-							$("#s"+curID).slideUp("slow",function(){$("#e"+curID).slideDown("slow");});
-							$("#ex"+curID).remove();
+							$(objTitleID).css('border-color','#00ff00');
+							$(objPriceID).css('border-color','#00ff00');
+							$(objPeriodID).css('border-color','#00ff00');
+							$(objDescID).css('border-color','#00ff00');
 						}else{
 							msgerror(data.message);
 						}
@@ -191,16 +155,34 @@
 				};
 			});
 			
-			$("#addNews").click(function(event){
+			$("#CloseConsult").click(function(){
+				var check = 0;
+				if(this.checked) check = 1;
+				else check = 0;
+				
+				$.post("<?=$baseurl;?>manager/close-consultation/<?=$userinfo['uconfirmation'];?>",{'check':check},
+					function(data){
+						if(data.status){
+							$("#msgCloseConsult").text(data.message);
+						}
+					},"json");
+				
+			});
+			
+			$(".digital").keypress(function(e){
+				if(e.which!=8 && e.which!=46 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+			});
+			
+			$("#addConsult").click(function(event){
 				var err = false;
 				 $("#formRep .inpvalue").css('border-color','#D0D0D0');
 				if($("#title").val() == ''){
 					err = true;
 					$("#title").css('border-color','#ff0000');
 				}
-				if($("#userfile").val() == ''){
+				if($("#price").val() == ''){
 					err = true;
-					$("#userfile").css('border-color','#ff0000');
+					$("#price").css('border-color','#ff0000');
 				}
 				if($("#note").val() == ''){
 					err = true;

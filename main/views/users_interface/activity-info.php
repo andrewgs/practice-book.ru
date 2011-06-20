@@ -24,7 +24,7 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.w278{width: 278px;}
 		.w358{width: 358px;}
 		.w575{width: 575px;}
@@ -717,7 +717,10 @@
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>activitynews/viewimage/<?=$activitynews[$i]['an_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$activitynews[$i]['an_title'];?></div>
-											<div class="nshNote"><?=$activitynews[$i]['an_note'];?></div>
+											<div class="nshNote">
+												<?=$activitynews[$i]['an_note'];?>
+												<a href="#" id="winActNews" AN="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>	
+											</div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
@@ -730,7 +733,10 @@
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>companynews/viewimage/<?=$companynews[$i]['cn_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$companynews[$i]['cn_title'];?></div>
-											<div class="nshNote"><?=$companynews[$i]['cn_note'];?></div>
+											<div class="nshNote">	
+												<?=$companynews[$i]['cn_note'];?>
+												<a href="#" id="winCmpNews" CN="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>	
+											</div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
@@ -745,6 +751,60 @@
 							</div>
 						</div>
 					</div>
+					<?php for($i=0;$i<count($activitynews);$i++):?>
+						<div id="single-news-modal-content" AN="<?=$i;?>">
+							<div class="box">
+								<div class="box-header">&nbsp;
+									<div class="box-search"><b><?=$activitynews[$i]['an_date'];?></b></div>
+								</div>
+								<div class="box-content h365 w575">
+									<img src="<?=$baseurl;?>activitynews/viewimage/<?=$activitynews[$i]['an_id'];?>" class="floated" alt=""/>
+									<div class="nsh-title"><?=$activitynews[$i]['an_title'];?></div>
+									<div class="nshNote"><?=$activitynews[$i]['full_note'];?></div>
+								<?php if(!empty($activitynews[$i]['an_source'])):?>
+									<div class="RightLink">
+										<?=anchor($activitynews[$i]['an_source'],'Источник',array('TARGET'=>'_blank'));?>
+									</div>
+								<?php endif; ?>
+									<div class="clear"></div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php endfor; ?>
+					<?php for($i=0;$i<count($companynews);$i++):?>
+						<div id="single-cmpnews-modal-content" CN="<?=$i;?>">
+							<div class="box">
+								<div class="box-header">&nbsp;
+									<div class="box-search"><b><?=$companynews[$i]['cn_pdatebegin'];?></b></div>
+								</div>
+								<div class="box-content h365 w575">
+									<div class="floated">
+											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$companynews[$i]['cmp_id'];?>" alt=""/>
+											<div class="company-rate">рейтинг: <?=$companynews[$i]['cmp_rating'];?></div>
+										<?php if($companynews[$i]['cmp_graph'] <= $low_rating): ?>
+										<div class="company-rate-bad" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php else: ?>
+										<div class="company-rate-graph" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php endif; ?>
+									</div>
+									<div class="nsh-title"><?=$companynews[$i]['cmp_name'];?></div>
+									<img src="<?=$baseurl;?>companynews/viewimage/<?=$companynews[$i]['cn_id'];?>" class="floated" alt=""/>
+									<div class="nsh-title"><?=$companynews[$i]['cn_title'];?></div>
+									<div class="nshNote"><?=$companynews[$i]['full_note'];?></div>
+									<div class="RightLink">
+										<?= anchor('company-info/'.$companynews[$i]['cmp_id'],'На страницу компании');?>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php endfor; ?>
 					<?php if(count($activitynews) || count($companynews)): ?>
 						<div id="news-modal-content">
 							<div class="box">
@@ -861,12 +921,11 @@
 								<div class="clear"></div>
 							</div>
 						</div>
-	<!--/* ---------------------------------------------------------------------------------------------------- */-->
 					<?php if($consult): ?>
 						<div class="box-consustation">
 							<div class="box-header w220">
 								<h2 style="text-align:center">
-									<?php $link = 'consultation/manager/'.$userinfo['uid'];?>
+									<?php $link = 'consultation/manager/'.$manager['uid'];?>
 									<?= anchor($link,'&nbsp;&nbsp;&nbsp;Консультирование &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
 								</h2>
 								<div class="box-search h20">
@@ -878,7 +937,6 @@
 							</div>
 						</div>
 					<?php endif; ?>
-	<!--/* ---------------------------------------------------------------------------------------------------- */-->
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[13]['otxt_note'];?></h2>
@@ -1026,7 +1084,10 @@
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>specials/viewimage/<?=$specials[$i]['spc_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$specials[$i]['spc_title'];?></div>
-											<div class="nshNote"><?=$specials[$i]['spc_note'];?></div>
+											<div class="nshNote">
+												<?=$specials[$i]['spc_note'];?>
+												<a href="#" id="winSpecialModel" SM="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>
+											</div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
@@ -1039,7 +1100,10 @@
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>shares/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
 											<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
-											<div class="nshNote"><?=$shares[$i]['sh_note'];?></div>
+											<div class="nshNote">
+												<?=$shares[$i]['sh_note'];?>
+												<a href="#" id="winSharesModel" ShM="<?=$i;?>" class="window"><nobr>Читать полностью</nobr></a>
+											</div>
 											<div class="clear"></div>
 										</div>
 									<?php endfor; ?>
@@ -1055,6 +1119,60 @@
 								<div class="clear"></div>
 							</div>
 						</div>
+						<?php for($i=0;$i<count($specials);$i++):?>
+							<div id="single-specials-modal-content" SM="<?=$i;?>">
+								<div class="box">
+									<div class="box-header">&nbsp;
+										<div class="box-search"><b><?=$specials[$i]['spc_date'];?></b></div>
+									</div>
+									<div class="box-content h365 w575">
+									<img src="<?=$baseurl;?>specials/viewimage/<?=$specials[$i]['spc_id'];?>" class="floated" alt=""/>
+										<div class="nsh-title"><?=$specials[$i]['spc_title'];?></div>
+										<div class="nshNote"><?=$specials[$i]['full_note'];?></div>
+									<?php if(!empty($specials[$i]['spc_source'])):?>
+										<div class="RightLink">
+											<?=anchor($specials[$i]['spc_source'],'Источник',array('TARGET'=>'_blank'));?>
+										</div>
+									<?php endif; ?>
+										<div class="clear"></div>
+									</div>
+									<div class="box-bottom-links h20">&nbsp;
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						<?php endfor; ?>
+						<?php for($i=0;$i<count($shares);$i++):?>
+							<div id="single-shares-modal-content" ShM="<?=$i;?>">
+								<div class="box">
+									<div class="box-header">&nbsp;
+										<div class="box-search"><b><?=$shares[$i]['sh_pdatebegin'];?></b></div>
+									</div>
+									<div class="box-content h365 w575">
+										<div class="floated">
+											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$shares[$i]['cmp_id'];?>" alt=""/>
+											<div class="company-rate">рейтинг: <?=$shares[$i]['cmp_rating'];?></div>
+										<?php if($shares[$i]['cmp_graph'] <= $low_rating): ?>
+											<div class="company-rate-bad" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php else: ?>
+											<div class="company-rate-graph" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
+										<?php endif; ?>
+										</div>
+										<div class="nsh-title"><?=$shares[$i]['cmp_name'];?></div>
+								<img src="<?=$baseurl;?>shares/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
+										<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
+										<div class="nshNote"><?=$shares[$i]['full_note'];?></div>
+										<div class="RightLink">
+											<?= anchor('company-info/'.$shares[$i]['cmp_id'],'На страницу компании');?>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="box-bottom-links h20">&nbsp;
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						<?php endfor; ?>
 						<?php if(count($specials) || count($shares)): ?>
 							<div id="specials-modal-content">
 								<div class="box">
@@ -1331,6 +1449,26 @@
 			$("#pitfalls-modal-content[PF='"+PF+"']").modal();
 			return false;
 		});
+		$("a#winActNews").click(function(e){
+			var AN = $(this).attr("AN");
+			$("#single-news-modal-content[AN='"+AN+"']").modal();
+			return false;
+		});
+		$("a#winCmpNews").click(function(e){
+			var CN = $(this).attr("CN");
+			$("#single-cmpnews-modal-content[CN='"+CN+"']").modal();
+			return false;
+		});
+		$("a#winSpecialModel").click(function(e){
+			var SM = $(this).attr("SM");
+			$("#single-specials-modal-content[SM='"+SM+"']").modal();
+			return false;
+		});
+		$("a#winSharesModel").click(function(e){
+			var ShM = $(this).attr("ShM");
+			$("#single-shares-modal-content[ShM='"+ShM+"']").modal();
+			return false;
+		});
 		$("a#winPitfallsList").click(function(e){
 			$("#pitfalls-modal-content-list").modal();
 			return false;
@@ -1393,26 +1531,21 @@
 		});
 		$("input#lowOfferList").click(function(e){
 			var product = $("#UnitTitle").text();
-			var bprice = 0;
 			var eprice = parseFloat($("#lowprice").text());
-			offer_list(product,bprice,eprice);
+			offer_list(product,0,eprice);
 		});
 		$("input#optimumOfferList").click(function(e){
 			var product = $("#UnitTitle").text();
 			var lprice = parseFloat($("#lowprice").text());
 			var oprice = parseFloat($("#optimumprice").text());
 			var tprice = parseFloat($("#topprice").text());
-			var bprice = (oprice+lprice)/2;
-			var eprice = (oprice+tprice)/2;
-			offer_list(product,bprice,eprice);
+			offer_list(product,lprice,tprice);
 		});
 		$("input#topOfferList").click(function(e){
 			var product = $("#UnitTitle").text();
 			var oprice = parseFloat($("#optimumprice").text());
 			var tprice = parseFloat($("#topprice").text());
-			var bprice = (oprice+tprice)/2;
-			var eprice = 0;
-			offer_list(product,bprice,eprice);
+			offer_list(product,tprice,0);
 		});
 		
 		function offer_list(product,bprice,eprice){

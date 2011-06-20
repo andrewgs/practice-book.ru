@@ -250,8 +250,8 @@ class Manager_interface extends CI_Controller{
 			for($i = 0;$i < count($pagevar['specials']); $i++):
 				$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
 				$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
-				if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 200):									
-					$pagevar['specials'][$i]['spv_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,200,'UTF-8');	
+				if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 150):									
+					$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,150,'UTF-8');	
 					$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],' ',0,'UTF-8');
 					$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,$pos,'UTF-8');
 					$pagevar['specials'][$i]['spc_note'] .= ' ... ';
@@ -382,8 +382,8 @@ class Manager_interface extends CI_Controller{
 			endif;
 			$pagevar['shares'][$i]['full_note'] = $pagevar['shares'][$i]['sh_note'];
 			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
-			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 200):									
-				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,200,'UTF-8');	
+			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 150):									
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,150,'UTF-8');	
 				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],' ',0,'UTF-8');
 				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,$pos,'UTF-8');
 				$pagevar['shares'][$i]['sh_note'] .= ' ... ';
@@ -927,7 +927,7 @@ class Manager_interface extends CI_Controller{
 				$_FILES['userfile']['name'] = preg_replace('/.+(.)(\.)+/',date("Ymdhis")."\$2", $_FILES['userfile']['name']);
 				$_POST['link'] = 'documents/'.$_FILES['userfile']['name'];
 				if(!$this->fileupload('userfile',FALSE)):
-					return FALSE;
+					redirect('manager/edit-documents/'.$this->user['uconfirmation']);
 				endif;
 				switch ($_POST['doctype']):
 					case '1' : $_POST['image'] = file_get_contents(base_url().'images/documents/msword.png'); break;
@@ -1195,7 +1195,6 @@ class Manager_interface extends CI_Controller{
 						$this->cmpunitsmodel->insert_empty($cmplist[$i]['cmp_id'],$_POST,$_POST['groupvalue']);
 					endif;
 				endfor;
-				
 				$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
 				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
@@ -1216,7 +1215,83 @@ class Manager_interface extends CI_Controller{
 	}
 	
 	function consultation(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Консультирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'consult'		=> array(),
+					'close_consult'	=> 0
+			);
+		$pagevar['manager']['activitypath'] = "Консультирование";
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','','required|trim');
+			$this->form_validation->set_rules('note','','trim|strip_tags');
+			$this->form_validation->set_rules('price','','trim');
+			$this->form_validation->set_rules('period','','trim');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->consultation();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->consultationmodel->insert_record($this->user['uid'],$_POST);
+				redirect('manager/consultation/'.$this->user['uconfirmation']);
+			endif;
+		endif;
+		$pagevar['consult'] = $this->consultationmodel->read_records($this->user['uid']);
+		$pagevar['close_consult'] = $this->usersmodel->read_field($this->user['uid'],'ucloseconsult');
+		$this->load->view('manager_interface/consultation',$pagevar);
+	}
+	
+	function delete_consultation(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$cid = trim($this->input->post('id'));
+		if(!isset($cid) or empty($cid)) show_404();
+		$success = $this->consultationmodel->delete_record($cid,$this->user['uid']);
+		if($success) $statusval['status'] = TRUE;
+		echo json_encode($statusval);
+	}
+
+	function save_consultation(){
 		
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','title'=>'','price'=>'','desc'=>'');
+		$cid = $this->input->post('id');
+		$title = htmlspecialchars(trim($this->input->post('title')));
+		$price = htmlspecialchars(trim($this->input->post('price')));
+		$period = trim($this->input->post('period'));
+		$note = strip_tags(trim($this->input->post('desc')));
+//		$note = preg_replace('/\n{2}/','<br>',$note);
+		if(!$cid) show_404();if(!$title) show_404();if(!$price) show_404();if(!$period) show_404();if(!$note) show_404();
+		$success = $this->consultationmodel->save_record($cid,$this->user['uid'],$title,$note,$period,$price,1);
+		if($success){
+			$statusval['status'] = TRUE;
+			$statusval['title'] = htmlspecialchars($title);
+			$statusval['price'] = htmlspecialchars($price);
+			$statusval['desc'] = strip_tags($note,'<br>');
+		}
+		echo json_encode($statusval);
+	}
+	
+	function close_consultation(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Консультирование приостановлено');
+		$check = $this->input->post('check');
+		if(!isset($check)) show_404();
+		$success = $this->usersmodel->close_consult($this->user['uid'],$check);
+		if($success){
+			$statusval['status'] = TRUE;
+			if($check == 0):
+				$statusval['message'] = 'Консультирование возобновлено';
+			endif;
+		}
+		echo json_encode($statusval);
 	}
 	
 	/* ====================================== END EDIT CONTROL PANEL ===========================================*/
@@ -1240,7 +1315,7 @@ class Manager_interface extends CI_Controller{
 		$config['overwrite'] 		= $overwrite;
 		$this->upload->initialize($config);
 		if(!$this->upload->do_upload($userfile)):
-//			show_error('Ошибка при загрузки файла!<br/>Сообщите о возникшей ошибке разработчикам.');
+			return FALSE;
 		endif;
 		return TRUE;
 	}

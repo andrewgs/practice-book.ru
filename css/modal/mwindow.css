@@ -7,7 +7,9 @@
 #questions-modal-content,#email-modal-content,
 #pitfalls-modal-content-list,#questions-modal-content-list,
 #tips-modal-content-list,#unit-modal-note-content,
-#offer-modal-content{
+#offer-modal-content,#consultations-modal-content,
+#single-news-modal-content,#single-cmpnews-modal-content,
+#single-specials-modal-content,#single-shares-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}

@@ -21,8 +21,10 @@
 	<style type="text/css">
 		.ajaxdel{float: right;padding: 5px;margin-right: 50px;cursor: pointer;}
 		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;border-top: 2px solid #D0D0D0;border-bottom: 2px solid #D0D0D0;}
+		.w918{width: 918px;}
+		.online{margin-left: 20px;}
 		.repData{margin: 15px 0 0 0;}
-		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 10px 10px 0;}
 		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
 	</style>
 </head>
@@ -36,24 +38,19 @@
 		<div id="main">
 			<div class="container_12 framing">
 				<div class="grid_12">
-					<div id="validError" style="text-align:center; margin-top:20px;">
-					<?= validation_errors(); ?>
+					<div id="validError" style="text-align:center; margin-top:20px;"><?= validation_errors(); ?></div>
+					<?php $this->load->view('forms/frmrepresentatives'); ?>
+					<div id="frmNewRep" style="display:none;">
+						<?php $this->load->view('forms/frmregrepsentative');?>
 					</div>
-					<h4 style="margin-top: 15px;">Представители компании</h4>
-					<div class="rep-container">
-						<?php $this->load->view('forms/frmrepresentatives'); ?>
-						<div id="frmNewRep" style="display:none;">
-							<?php $this->load->view('forms/frmregrepsentative');?>
-						</div>
-						<?php if($userinfo['priority']): ?>
-							<button id="regman" style="height:2.5em; margin-top:15px; width: 130px;">
-								<img src="<?=$baseurl;?>images/user-plus.png"><font size="3"> Добавить</font>
-							</button>
-						<?php endif; ?>
-					</div>
+					<?php if($userinfo['priority']): ?>
+						<button id="regman" style="height:2.5em; margin:15px 0; width: 130px;">
+							<img src="<?=$baseurl;?>images/user-plus.png"><font size="3"> Добавить</font>
+						</button>
+					<?php endif; ?>
 				</div>
 			</div>
-			<div class="push"></div>
+			<div class="push"></div>			
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('company_interface/footer'); ?>
@@ -119,20 +116,16 @@
 				};
 			});
 			
-			$('.ajaxdel').click(function(){
-				var btnID = this.id;
-				var divRep = $("#v"+btnID);
-				var objID = divRep.attr('repID');
-				$("#"+btnID).hide();
+			$(".ajaxdel").click(function(){
+				var btnRep = $(this).attr("rep");
+				var repID = $("#drep"+btnRep).attr("rID");
 				$.post("<?=$baseurl;?>company/delete-representatives/<?=$userinfo['uconfirmation'];?>",
-					{'id':objID,},
+					{'id':repID},
 					function(data){
-						if(data.status){
-							$("#v"+btnID).remove();
-						}else{
+						if(data.status)
+							$("#drep"+btnRep).remove();
+						else
 							msgerror(data.message);
-							$("#"+btnID).show();
-						}
 					},"json");
 			});	
 			

@@ -26,10 +26,10 @@
 		.NewsExc{cursor:help;}
 		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		.repData{margin: 15px 0 0 0;}
-		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;cursor:help;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 10px 10px 0;cursor:help;}
 		.online{margin-left: 20px;}
 		.nshDate{font: normal bold 90% serif;text-align: right;}
-		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 100px;}
+		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 60px;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
 		.btnHidden{display:none;}
 		.ExtendDay{padding: 5px;margin-left: 10px;cursor: pointer;}
@@ -46,19 +46,14 @@
 		<div id="main">
 			<div class="container_12 framing">
 				<div class="grid_12">
-					<div id="validError" style="text-align:center; margin-top:20px;">
-					<?= validation_errors(); ?>
+					<div id="validError" style="text-align:center; margin-top:20px;"><?= validation_errors(); ?></div>
+					<?php $this->load->view('forms/frmnshlist'); ?>
+					<div id="frmInsNews" style="display:none;">
+						<?php $this->load->view('forms/frminsnsh');?>
 					</div>
-					<h4 style="margin-top: 15px;">Новости компании</h4>
-					<div class="rep-container">
-						<?php $this->load->view('forms/frmnshlist'); ?>
-						<div id="frmInsNews" style="display:none;">
-							<?php $this->load->view('forms/frminsnsh');?>
-						</div>
-						<button id="insNews" style="height:2.5em; margin-top:15px; min-width: 130px;">
-							<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>
-						</button>
-					</div>
+					<button id="insNews" style="height:2.5em; margin:15px 0; min-width: 130px;">
+						<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>
+					</button>
 				</div>
 			</div>
 			<div class="push"></div>
@@ -137,7 +132,7 @@
 				var valDesc = objDescID.text();
 				$(objDescID).after('<div class="tmpDesc" id="tds'+curID+'">&nbsp;</div>');
 				$("#tds"+curID).text(objDescID.html());
-				$(objDescID).html("<textarea class=\"edit-form-textarea mbottom\" name=\"description\" id=\"ads"+curID+"\" cols=\"50\" rows=\"12\">"+valDesc+"</textarea>");
+				$(objDescID).html("<textarea class=\"edit-form-textarea mbottom\" name=\"description\" id=\"ads"+curID+"\" cols=\"50\" rows=\"5\">"+valDesc+"</textarea>");
 				$("#dl"+curID).slideUp("slow",function(){$("#c"+curID).slideDown("slow");});
 				$("#e"+curID).slideUp("slow",function(){$("#s"+curID).slideDown("slow");});
 			});

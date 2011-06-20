@@ -20,6 +20,17 @@ class Regionmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
+	function search_region($search){
+		
+		$this->db->select('reg_id AS id,reg_name AS title');
+		$this->db->like('reg_name',$search);
+		$this->db->order_by('reg_name');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
 	function read_records_by_district(){
 		
 		$this->db->order_by('reg_district','ASC');

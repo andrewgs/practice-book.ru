@@ -24,6 +24,7 @@
 		.activity,.region{font: bold normal 125% serif;margin: 0px;}
 		.activityList,.regionList{margin-top: 10px;margin-left: -20px;}
 		.btnHidden{display:none;}
+		#search-result,#region-result{margin-top:10px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -36,10 +37,37 @@
 		<div id="main">
 			<div class="container_12">
 				<div class="grid_12">
-					<div class="grid_8 prefix_2">
+					<div class="grid_4 prefix_2">
 						<img usemap="#rusmap" src="<?=$baseurl;?>images/rusmap_b.png" border="0" height="413" width="640">
 					</div>
 					<div class="clear"></div>
+				</div>
+				<div class="grid_12" style="margin:0">
+					<hr size="2"/>
+					<div class="grid_4" style="margin:0">
+						<h2>Поиск отрасли/товара/услуги:</h2>
+						от 3-х символов
+						<input class="edit265-form-input" id="ActivityName" type="text" value=""/>
+						<div class="clear"></div>
+						<div id="ASV" class="btnHidden"></div>
+						<div id="PSV" class="btnHidden"></div>
+						<div id="search-result"></div>
+					</div>
+					<div class="grid_4">
+						<h2>Поиск города:</h2>
+						от 3-х символов
+						<input class="edit265-form-input" id="RegionName" type="text" value=""/>
+						<div class="clear"></div>
+						<div id="RSV" class="btnHidden"></div>
+						<div id="region-result"></div>
+					</div>
+					<div class="grid_4">
+						<h2>&nbsp;</h2>
+						<h2>&nbsp;</h2>
+						<input class="btn-action" style="margin-top:0" id="setSearch" type="button" name="submit" value="Получить информацию"/>
+					</div>
+					<div class="clear"></div>
+					<hr size="2"/>
 				</div>
 				<div class="grid_12">
 					<h2>Укажите отрасль <span class="necessarily" title="Выбор отрасли обязателен">*</span></h2>
@@ -79,6 +107,60 @@
 			
 			$(".activity").change(function(){
 				changeActivityList(this);
+			});
+			
+			$("#ActivityName").keyup(function(){
+				var SearchVal = $(this).val();
+				if(SearchVal.length > 2){
+					$("#search-result").load("<?=$baseurl;?>users/search-activity",{'search':SearchVal},
+					function(){
+						$("#SearchAct").die();
+						$("#SearchAct").live('change',function(){
+							var valID = $(this.options[this.selectedIndex]).val();
+							var valTitle = $(this.options[this.selectedIndex]).text();
+							var valProduct = $(this.options[this.selectedIndex]).attr("PR");
+							$("#ASV").text(valID);
+							$("#PSV").text(valProduct);
+							$('#ActivityName').val(valTitle);
+						});
+					}
+				);
+				}else{
+					$("#SearchAct").die();
+					$("#search-result").text('');
+				}
+			});
+			
+			$("#RegionName").keyup(function(){
+				var SearchVal = $(this).val();
+				if(SearchVal.length > 2){
+					$("#region-result").load("<?=$baseurl;?>users/search-region",{'search':SearchVal},
+					function(){
+						$("#SearchReg").die();
+						$("#SearchReg").live('change',function(){
+							var valID = $(this.options[this.selectedIndex]).val();
+							var valTitle = $(this.options[this.selectedIndex]).text();
+							$("#RSV").text(valID);
+							$('#RegionName').val(valTitle);
+						});
+					}
+				);
+				}else{
+					$("#SearchReg").die();
+					$("#region-result").text('');
+				}
+			});
+			
+			$("#setSearch").click(function(){
+				var actID = $("#ASV").text();
+				var regID = $("#RSV").text();
+				var prID = $("#PSV").text();
+				if(actID != '' && regID != ''){
+					if(prID == 0){
+						window.setTimeout("window.location='<?=$baseurl;?>activity-information/region/"+regID+"/activity/"+actID+"'",1000);						}else{
+			window.setTimeout("window.location='<?=$baseurl;?>activity-information/region/"+regID+"/activity/"+actID+"/product/"+prID+"'",1000);
+					}
+				}
 			});
 			
 			function changeRegionList(object){
@@ -176,7 +258,7 @@
 				var actID = $("#activityValue").val();
 				var regID = $("#regionValue").val();
 				if(actID == '' || regID == ''){
-					$(this).css('float','left');
+//					$(this).css('float','left');
 					$(this).after('<div class="valid_error">Ошибка! Повторите выбор снова</div>');
 					$(".valid_error").fadeOut(3000,function(){$(this).remove();});
 				}else

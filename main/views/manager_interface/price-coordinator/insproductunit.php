@@ -26,7 +26,7 @@
 						</td>
 						<td>
 							<label class="label-input">Низкая:</label>
-<input class="edit60-form-input digital inpvalue" maxlength="8" id="lowprice" name="lowprice" type="text" value="<?=set_value('lowprice');?>">
+<input class="edit60-form-input digital inpvalue" maxlength="6" id="lowprice" name="lowprice" type="text" value="<?=set_value('lowprice');?>">
 							<select class="select-price" id="lowpricecode" name="lowpricecode">
 								<option value="1" <?=set_select('lowpricecode','1',TRUE);?>>руб.</option>
 								<option value="2" <?=set_select('lowpricecode','2');?>>тыс.руб.</option>
@@ -34,7 +34,7 @@
 								<option value="4" <?=set_select('lowpricecode','4');?>>%</option>
 							</select> 
 							<label class="label-input">Оптимальная:</label>
-<input class="edit60-form-input digital inpvalue" maxlength="8" id="optimumprice" name="optimumprice" type="text" value="<?=set_value('optimumprice');?>">
+<input class="edit60-form-input digital inpvalue" maxlength="6" id="optimumprice" name="optimumprice" type="text" value="<?=set_value('optimumprice');?>">
 							<select class="select-price" id="optimumpricecode" name="optimumpricecode">
 								<option value="1" <?=set_select('optimumpricecode','1',TRUE);?>>руб.</option>
 								<option value="2" <?=set_select('optimumpricecode','2');?>>тыс.руб.</option>
@@ -42,7 +42,7 @@
 								<option value="4" <?=set_select('optimumpricecode','4');?>>%</option>
 							</select> 
 							<label class="label-input">Высокая:</label>								
-<input class="edit60-form-input digital inpvalue" maxlength="8" id="topprice" name="topprice" type="text" value="<?=set_value('optimumprice');?>">
+<input class="edit60-form-input digital inpvalue" maxlength="6" id="topprice" name="topprice" type="text" value="<?=set_value('optimumprice');?>">
 							<select class="select-price" id="toppricecode" name="toppricecode">
 								<option value="1" <?=set_select('toppricecode','1',TRUE);?>>руб.</option>
 								<option value="2" <?=set_select('toppricecode','2');?>>тыс.руб.</option>

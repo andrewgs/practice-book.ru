@@ -172,5 +172,43 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data;
 		else return null;
 	}
+
+	function users_consultation($type){
+	
+		switch ($type):
+			//федеральные менеджеры
+			case '1' : 	$sql = "SELECT tbl_user.uid,tbl_user.uname,tbl_user.usubname,tbl_user.uthname,tbl_user.uemail,tbl_user.ustatus,tbl_user.uactive,tbl_user.usignupdate,tbl_user.udestroy,tbl_user.umanager,tbl_user.upriority,tbl_user.ucompany,tbl_user.uactivity, COUNT(tbl_consultation.cnsl_id) AS consult FROM tbl_user INNER JOIN tbl_consultation ON tbl_consultation.cnsl_uid = tbl_user.uid WHERE tbl_user.umanager=1 AND upriority=1 AND tbl_user.ucompany=0";
+						break;
+			//региональные менеджеры
+			case '2' :	$sql = "SELECT tbl_user.uid,tbl_user.uname,tbl_user.usubname,tbl_user.uthname,tbl_user.uemail,tbl_user.ustatus,tbl_user.uactive,tbl_user.usignupdate,tbl_user.udestroy,tbl_user.umanager,tbl_user.upriority,tbl_user.ucompany,tbl_user.uactivity, COUNT(tbl_consultation.cnsl_id) AS consult FROM tbl_user INNER JOIN tbl_consultation ON tbl_consultation.cnsl_uid = tbl_user.uid WHERE tbl_user.umanager=1 AND upriority=0 AND tbl_user.ucompany=0";
+						break;
+		endswitch;
+		$query = $this->db->query($sql);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+
+	function search_unit($search){
+		$query = "SELECT tbl_mra.mra_aid AS id,tbl_productionunit.pri_id AS pid,tbl_productionunit.pri_title AS title FROM tbl_productionunit INNER JOIN tbl_mra ON tbl_productionunit.pri_mraid = tbl_mra.mra_id WHERE tbl_productionunit.pri_title LIKE '%$search%' ORDER BY tbl_productionunit.pri_title";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+
+	function units_by_activity($activity){
+		$param = '';
+		$cnt = count($activity);
+		for($i=0;$i<$cnt;$i++):
+			$param .= $activity[$i];
+			if($cnt>1 && $i<$cnt-1) $param .= ',';
+		endfor;
+		$query = "SELECT pri_title AS title, pri_note AS note, pri_unitscode AS unitscode, pri_image AS image, pri_groupcode AS groupe FROM tbl_productionunit INNER JOIN tbl_productgroup ON pri_groupcode = prg_id WHERE prg_activity IN ($param)";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}	
 }
 ?>

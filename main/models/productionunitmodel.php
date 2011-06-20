@@ -52,6 +52,16 @@ class Productionunitmodel extends CI_Model {
 		if(count($data)) return $data;
 		return NULL;
 	}
+
+	function search_single_units($id){
+	
+		$this->db->select('pri_id,pri_title,pri_note,pri_lowprice,pri_lowpricecode,pri_optimumprice,pri_optimumpricecode,pri_topprice,pri_toppricecode,pri_unitscode,pri_riskslowprice,pri_advantages');
+		$this->db->where('pri_id',$id);
+		$query = $this->db->get('tbl_productionunit');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
 	
 	function read_records_title($groupcode,$mraid){
 	
@@ -123,5 +133,16 @@ class Productionunitmodel extends CI_Model {
 		$query = $this->db->get('tbl_productionunit');
 		$data = $query->result_array();
 		return $data[0]['pri_image'];
+	}
+
+	function search_unit($search){
+	
+		$this->db->select('pri_id AS id,pri_title AS title');
+		$this->db->like('pri_title',$search);
+		$this->db->order_by('pri_title');
+		$query = $this->db->get('tbl_productionunit');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
 	}
 }

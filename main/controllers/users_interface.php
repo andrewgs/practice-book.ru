@@ -371,6 +371,10 @@ class Users_interface extends CI_Controller {
 		$region = $this->uri->segment(3);
 		$activity = $this->uri->segment(5);
 		
+		if($this->uri->total_segments() == 7):
+			$spid = $this->uri->segment(7);
+		endif;
+		
 		if(!$this->regionmodel->region_exist($region)) show_404();
 		if(!$this->activitymodel->activity_exist($activity)) show_404();
 		
@@ -455,6 +459,10 @@ class Users_interface extends CI_Controller {
 		if(count($pagevar['consultlist'])):
 			$pagevar['consult'] = TRUE;
 		endif;
+		$clconsult = $this->usersmodel->read_field($uid,'ucloseconsult');
+		if($clconsult):
+			$pagevar['consult'] = FALSE;
+		endif;
 		$pagevar['product'] = $this->productsmodel->read_record($mraid);
 		$pagevar['product']['full_note'] = $pagevar['product']['pr_note'];
 		if(mb_strlen($pagevar['product']['pr_note'],'UTF-8') > 790):									
@@ -520,11 +528,11 @@ class Users_interface extends CI_Controller {
 		for($i = 0;$i < count($pagevar['specials']); $i++):
 			$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
 			$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
-			if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 250):									
-				$pagevar['specials'][$i]['spv_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,250,'UTF-8');	
-				$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],'.',0,'UTF-8');
+			if(mb_strlen($pagevar['specials'][$i]['spc_note'],'UTF-8') > 150):									
+				$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,150,'UTF-8');	
+				$pos = mb_strrpos($pagevar['specials'][$i]['spc_note'],' ',0,'UTF-8');
 				$pagevar['specials'][$i]['spc_note'] = mb_substr($pagevar['specials'][$i]['spc_note'],0,$pos,'UTF-8');
-				$pagevar['specials'][$i]['spc_note'] .= '. ... ';
+				$pagevar['specials'][$i]['spc_note'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
@@ -532,7 +540,11 @@ class Users_interface extends CI_Controller {
 		if($pagevar['unitgroups']):
 			$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
 			$unitsof = array('','','шт.','тыс.шт.','гр.','кг.','т.','м.','пог.м.','см.','кв.м.','кв.см.','куб.м.','куб.см.','л.','час.','ед.мес.','ед.год.');
-			$pagevar['units'] = $this->productionunitmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$mraid);
+			if(isset($spid) && !empty($spid)):
+				$pagevar['units'] = $this->productionunitmodel->search_single_units($spid);
+			else:
+				$pagevar['units'] = $this->productionunitmodel->read_units($pagevar['unitgroups'][0]['prg_id'],$mraid);
+			endif;
 			if($pagevar['units']):
 				$pagevar['units'][0]['full_note'] = $pagevar['units'][0]['pri_note'];
 				if(mb_strlen($pagevar['units'][0]['pri_note'],'UTF-8') > 500):									
@@ -561,9 +573,9 @@ class Users_interface extends CI_Controller {
 			$pagevar['company']['all'][$i]['full_description'] = $pagevar['company']['all'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['all'][$i]['cmp_description'],'UTF-8') > 180):
 				$pagevar['company']['all'][$i]['cmp_description'] = mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,180,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 				$pagevar['company']['all'][$i]['cmp_description'] =mb_substr($pagevar['company']['all'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['all'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['all'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['company']['trustee'] = $this->unionmodel->select_company_by_rating($activity,$region,'>=',$pagevar['top_rating'],0);
@@ -575,9 +587,9 @@ class Users_interface extends CI_Controller {
 			$pagevar['company']['trustee'][$i]['full_description'] = $pagevar['company']['trustee'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['trustee'][$i]['cmp_description'],'UTF-8') > 180):
 		$pagevar['company']['trustee'][$i]['cmp_description'] = mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,180,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 		$pagevar['company']['trustee'][$i]['cmp_description'] =mb_substr($pagevar['company']['trustee'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['trustee'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['trustee'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['company']['blacklist'] = $this->unionmodel->select_company_by_rating($activity,$region,'<=',$pagevar['low_rating'],180);
@@ -589,9 +601,9 @@ class Users_interface extends CI_Controller {
 			$pagevar['company']['blacklist'][$i]['full_description'] = $pagevar['company']['blacklist'][$i]['cmp_description'];
 			if(mb_strlen($pagevar['company']['blacklist'][$i]['cmp_description'],'UTF-8') > 180):
 	$pagevar['company']['blacklist'][$i]['cmp_description'] = mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,180,'UTF-8');
-				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['company']['all'][$i]['cmp_description'],' ',0,'UTF-8');
 	$pagevar['company']['blacklist'][$i]['cmp_description'] =mb_substr($pagevar['company']['blacklist'][$i]['cmp_description'],0,$pos,'UTF-8');
-				$pagevar['company']['blacklist'][$i]['cmp_description'] .= '. ... ';
+				$pagevar['company']['blacklist'][$i]['cmp_description'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['companynews'] = $this->unionmodel->read_cmpnews_by_activity($activity,$region);
@@ -604,9 +616,9 @@ class Users_interface extends CI_Controller {
 			$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
 			if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 250):									
 				$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
-				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],'.',0,'UTF-8');
+				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],' ',0,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
-				$pagevar['companynews'][$i]['cn_note'] .= '. ... ';
+				$pagevar['companynews'][$i]['cn_note'] .= ' ... ';
 			endif;
 		endfor;
 		$pagevar['shares'] = $this->unionmodel->read_cmpshares_by_activity($activity,$region);
@@ -617,8 +629,8 @@ class Users_interface extends CI_Controller {
 			endif;
 			$pagevar['shares'][$i]['full_note'] = $pagevar['shares'][$i]['sh_note'];
 			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
-			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 200):									
-				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,200,'UTF-8');	
+			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 150):									
+				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,150,'UTF-8');	
 				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],' ',0,'UTF-8');
 				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,$pos,'UTF-8');
 				$pagevar['shares'][$i]['sh_note'] .= ' ... ';
@@ -749,7 +761,6 @@ class Users_interface extends CI_Controller {
 	
 		$pagevar = array('baseurl'=>base_url(),'products'=>array());
 		$region = $this->uri->segment(3);
-		$this->db->insert('test',array('data'=>$region));
 		if(!$this->regionmodel->region_exist($region)) show_404();
 		
 		$monetary = array('','руб.','тыс.руб.','млн.руб.','%');
@@ -779,8 +790,103 @@ class Users_interface extends CI_Controller {
 	}
 
 	function consultation_list(){
+	
+		$manager = $this->uri->segment(3);
+		if(!$this->usersmodel->user_exist('uid',$manager)):
+			show_404();
+		else:
+			$consult = $this->consultationmodel->read_records($manager);
+			if(!count($consult)):
+				show_404();
+			endif;
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Консультирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'consult'		=> $consult,
+					'activitypath'	=> "Консультирование",
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
 		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('name','','required|strip_tags|trim');
+			$this->form_validation->set_rules('email','','required|strip_tags|valid_email|trim');
+			$this->form_validation->set_rules('phone','','required|strip_tags|trim');
+			$this->form_validation->set_rules('message','','required|strip_tags|trim');
+			$this->form_validation->set_rules('price','','required|htmlspecialchars|trim');
+			$this->form_validation->set_rules('period','','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->consultation_list();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$managerinfo = $this->usersmodel->read_single_manager_byid($manager,'AND TRUE');
+				$message = 'Контактное лицо - '.$_POST['name'].' хочет получить консультацию:'."\n";
+				$message .= 'Номер телефона - '.$_POST['phone']."\n";
+				$message .= 'Описание:'."\n\n".$_POST['message']."\n\n\n";
+				$message .= 'Стоимость консультации (руб.) - '.$_POST['price']."\n\n";
+				$message .= 'Порядковый номер периода - '.$_POST['period']."\n\n";
+				$message .= 'Форма оплаты - НЕИЗВЕСТНО'."\n\n";
+				if(!$this->sendmail($managerinfo['uemail'],strip_tags($message,'<br>'),'Консультация',$_POST['email'])):
+					$this->email->print_debugger();
+					exit;
+				endif;
+				$pagevar['uri'] = $_POST['uri'];
+				$pagevar['text'] = 'Извещение отослано менеджеру.<br/>Ожидайте с Вами свяжуться';
+				$this->load->view('users_interface/message',$pagevar);
+				return TRUE;
+			endif;
+		endif;
+		$this->load->view('users_interface/consultation',$pagevar);
 	}
+
+	function create_search_activity(){
+	
+		$search = $this->input->post('search');
+		if(!$search) show_404();
+		$pagevar = array('baseurl'=>base_url(),'result'=>array());
+		$units = $this->unionmodel->search_unit($search);
+		$activity = $this->activitymodel->search_activity($search);
+//		$pagevar['result'] = $this->activitymodel->search_activity($search);
+		for($i=0;$i<count($units);$i++):
+			$pagevar['result'][$i]['id'] = $units[$i]['id'];
+			$pagevar['result'][$i]['title'] = $units[$i]['title'];
+			$pagevar['result'][$i]['product'] = $units[$i]['pid'];
+		endfor;
+		for($i=0,$j=count($units);$i<count($activity);$i++,$j++):
+			$pagevar['result'][$j]['id'] = $activity[$i]['id'];
+			$pagevar['result'][$j]['title'] = $activity[$i]['title'];
+			$pagevar['result'][$j]['product'] = 0;
+		endfor;
+//		print_r($pagevar['result']);
+		if(count($pagevar['result'])):
+			$this->load->view('users_interface/search-result-select',$pagevar);
+		endif;
+	}
+	
+	function create_search_region(){
+	
+		$search = $this->input->post('search');
+		if(!$search) show_404();
+		$pagevar = array('baseurl'=>base_url(),'result'=>array());
+		$pagevar['result'] = $this->regionmodel->search_region($search);
+//		print_r($pagevar['result']);
+		if(count($pagevar['result'])):
+			$this->load->view('users_interface/search-region-select',$pagevar);
+		endif;
+	}
+
 	/* ------------------------------------------------	company -------------------------------------------*/
 	
 	function company_info(){
@@ -810,6 +916,7 @@ class Users_interface extends CI_Controller {
 		$pagevar['activitypath'] = $pagevar['company']['cmp_name'];
 		for($i = 0;$i < count($pagevar['news']); $i++):
 			$pagevar['news'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['news'][$i]['cn_pdatebegin']);
+			$pagevar['news'][$i]['full_note'] = $pagevar['news'][$i]['cn_note'];
 			if(mb_strlen($pagevar['news'][$i]['cn_note'],'UTF-8') > 325):									
 				$pagevar['news'][$i]['cn_note'] = mb_substr($pagevar['news'][$i]['cn_note'],0,325,'UTF-8');	
 				$pos = mb_strrpos($pagevar['news'][$i]['cn_note'],'.',0,'UTF-8');
@@ -819,6 +926,7 @@ class Users_interface extends CI_Controller {
 		endfor;
 		for($i = 0;$i < count($pagevar['shares']); $i++):
 			$pagevar['shares'][$i]['sh_pdatebegin'] = $this->operation_date($pagevar['shares'][$i]['sh_pdatebegin']);
+			$pagevar['shares'][$i]['full_note'] = $pagevar['shares'][$i]['sh_note'];
 			if(mb_strlen($pagevar['shares'][$i]['sh_note'],'UTF-8') > 325):									
 				$pagevar['shares'][$i]['sh_note'] = mb_substr($pagevar['shares'][$i]['sh_note'],0,325,'UTF-8');	
 				$pos = mb_strrpos($pagevar['shares'][$i]['sh_note'],'.',0,'UTF-8');
@@ -965,7 +1073,7 @@ class Users_interface extends CI_Controller {
 				$this->load->view('users_interface/message',$pagevar);
 				return TRUE;
 			endif;
-		endif;	
+		endif;
 		$pagevar['company'] = $this->unionmodel->select_company_by_region($activity,$region);
 		for($i=0;$i<count($pagevar['company']);$i++):
 			$pagevar['company'][$i]['cmp_graph'] = $pagevar['company'][$i]['cmp_rating'];
@@ -1083,6 +1191,12 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					redirect('script_error');
 				endif;
 				$this->cmpsrvmodel->multi_insert($_POST['servname'],$cmpid);
+				$units = $this->unionmodel->units_by_activity($_POST['servname']);
+				if(count($units)):
+					for($i=0;$i<count($units);$i++):
+						$this->cmpunitsmodel->insert_empty($cmpid,$units[$i],$units[$i]['groupe']);
+					endfor;
+				endif;
 				$this->session->set_userdata('regstatus',3);
 				redirect('registering/step-3');
 			else:
@@ -1623,7 +1737,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		$config['charset'] = 'utf-8';
 		$config['wordwrap'] = TRUE;
 		$this->email->initialize($config);
-		$this->email->from($from,'Администрация сайта');
+		$this->email->from($from,'Practice-book.ru');
 		$this->email->to($email);
 		$this->email->bcc('');
 		$this->email->subject($subject);

@@ -20,7 +20,10 @@ $route['support'] = "users_interface/support";
 $route['started'] = "users_interface/select_settings";
 $route['users/select-region'] = "users_interface/create_select_region";
 $route['users/select-activity'] = "users_interface/create_select_activity";
+$route['users/search-activity'] = "users_interface/create_search_activity";
+$route['users/search-region'] = "users_interface/create_search_region";
 $route['activity-information/region/:num/activity/:num'] = "users_interface/activity_information";
+$route['activity-information/region/:num/activity/:num/product/:num'] = "users_interface/activity_information";
 $route['announce-tender/region/:num/activity/:num'] = "users_interface/announce_tender";
 $route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list";
 $route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
@@ -124,6 +127,9 @@ $route['manager/product-unit-dalete/:any'] = "manager_interface/product_unit_dal
 $route['manager/product-unit-info/:any'] = "manager_interface/product_unit_info";
 $route['manager/offer-list/:any'] = "manager_interface/offer_list";
 $route['manager/consultation/:any'] = "manager_interface/consultation";
+$route['manager/delete-consultation/:any'] = "manager_interface/delete_consultation";
+$route['manager/save-consultation/:any'] = "manager_interface/save_consultation";
+$route['manager/close-consultation/:any'] = "manager_interface/close_consultation";
 
 /************************************	ADMIN INTRERFACE	***********************************************/
 

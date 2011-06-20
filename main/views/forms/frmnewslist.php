@@ -18,7 +18,7 @@
 				<div class="nshNote" id="ds<?=$i?>"><?=$news[$i]['an_note'];?></div>
 				<div id="src<?=$i?>">
 					<span class="text">Источник: </span>
-					<div class="nsh-title"><?=$news[$i]['an_source'];?></div>
+					<div class="nshNote"><?=$news[$i]['an_source'];?></div>
 				</div>
 				<div class="ButtonOperation">
 		<input type="image" title="Удалить" class="NewsDel" id="dl<?=$i?>" nID="<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />

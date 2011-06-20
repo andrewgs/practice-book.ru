@@ -18,7 +18,8 @@
 					<th scope="col" abbr="ЗАКРЫТЫЙ">ЗАКР.</th>
 					<th scope="col" abbr="ПРИОРИТЕТ">ПРИОР.</th>
 					<th scope="col" abbr="ID КОМПАНИИ">КОМП.</th>
-					<th scope="col" abbr="ID ОТРАСЛИ">отрасль</th>
+					<th scope="col" abbr="ID ОТРАСЛИ">ОТРАСЛЬ</th>
+					<th scope="col" abbr="КОЛИЧЕСТВО КОНСУЛЬТАЦИЯ">КОНСУЛ.</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
@@ -60,6 +61,22 @@
 					<?php else: ?>
 						<td>&mdash;</td>
 					<?php endif;?>
+					
+					<?php if($i==3):?>
+						<td>&mdash;</td>
+					<?php elseif($i>0): ?>
+						<td>
+						<?php if($list[$i][$j]['consult']): ?>
+							<?=$list[$i][$j]['consult'];?>
+						<?php else: ?>
+							&mdash;
+						<?php endif; ?>
+						</td>
+					<?php else: ?>
+						<td>&mdash;</td>
+					<?php endif;?>
+					
+					
 					<td>
 						<div class="ButtonOperation">
 						<?php if($i>0):?>

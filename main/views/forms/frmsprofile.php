@@ -63,8 +63,10 @@
 				<div class="clear"></div>
 				<h3>Организация: </h3>
 				<input class="reg-form-input jobs" id="organValue" name="organization" type="text" size="30" >
+				<div class="clear"></div>
 				<h3>Должность: </h3>
 				<input class="reg-form-input jobs" id="posValue" name="position" type="text" size="30">
+				<div class="clear"></div>
 				<h3>Период работы:</h3>  
 				<div id="period-jobs">
 					<select class="reg-form-input" id="yBegin" style="width:70px" name="start">
@@ -79,6 +81,7 @@
 					<?php endfor; ?>
 					</select>
 				</div>
+				<div class="clear"></div>
 			</div>
 			<div class="clear"></div>
 			<button id="instjob" style="height:2.5em">
@@ -87,15 +90,15 @@
 			<hr size="2">
 			<div id="menager-data">
 				<?php if($manager['upriority'] == 0): ?>
-				Ваши регионы:<br>
+				Регионы:<br>
 					<? for($i=0;$i<count($regions);$i++): ?>
 						<strong><?= $regions[$i]['reg_name']; ?> (<?= $regions[$i]['reg_area']; ?>)</strong><br/>
 					<?php endfor; ?>		
 					<br/>
 				<? else: ?>
-				Ваши регионы:<br><strong>Вы как федеральный менеджер обслуживаете все регионы.</strong><br><br>
+				Регионы:<br><strong>Вы как федеральный менеджер обслуживаете все регионы.</strong><br><br>
 				<?php endif; ?>
-				Ваша сфера услуг : <strong><?= $manager['activity']; ?></strong><br><br>
+				Отрасль (подотрасль): <strong><?= $manager['activity']; ?></strong><br><br>
 				<?php if($manager['upriority']): ?>
 					<div class="form-reqs" style="padding: 15px 10px">
 						<span title="Добавить менеджера к Вашей отрасли или подотрасли" class="box-controls ask">?</span>

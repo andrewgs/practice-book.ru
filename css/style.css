@@ -309,7 +309,8 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .reg-form-input,.edit-form-input,.date-form-input,
 .reg-form-small,.small200-form-input,.small100-form-input,
 .edit250-form-input,.edit350-form-input,.edit60-form-input,
-.edit750-form-input,.edit450-form-input,.edit285-form-input{
+.edit750-form-input,.edit450-form-input,.edit285-form-input,
+.edit265-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -323,6 +324,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .edit285-form-input{
 	 width: 285px;
+}
+.edit265-form-input{
+	width: 265px;
 }
 .edit350-form-input{
 	 width: 350px;
@@ -402,7 +406,8 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
     width: 420px;
 }
 
-.select-price,.medium-select-price{
+.select-price,.medium-select-price,
+.medium-select-period,.font140-select-period{
 	background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: bold normal 125% serif;
@@ -415,6 +420,14 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .medium-select-price{
 	width: 140px;
+}
+.medium-select-period{
+	font: bold normal 100% serif;
+	width: 100px;
+}
+.font140-select-period{
+	font: bold normal 130% serif;
+	width: 100px;
 }
 span.necessarily{
 	font: 18px arial,sans-serif;

@@ -75,20 +75,20 @@
 		<div class="clear"></div>
 		<div class="grid_10">
 			Деятельность компании: <div class="vRight" id="ddescription"></div><br/>
-		<textarea class="reg-form-textarea mbottom" name="description" cols="50" rows="5" id="vdescription"><?=$company['cmp_description'];?></textarea>
+		<textarea class="reg-form-textarea mbottom" name="description" cols="50" rows="5" id="vdescription"><?=preg_replace('/<br>/',"\n",$company['cmp_description']);?></textarea>
 			<span class="btnsave" id="svdescription">
 			<input type="image" title="Сохранить" class="ajaxsave" id="description" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
 			<div class="clear"></div>
 			Реквизиты компании: <div class="vRight" id="ddetails"></div><br>
-		<textarea class="reg-form-textarea mbottom" name="details" id="vdetails" cols="50" rows="4"><?=$company['cmp_details'];?></textarea>
+		<textarea class="reg-form-textarea mbottom" name="details" id="vdetails" cols="50" rows="4"><?=preg_replace('/<br>/',"\n",$company['cmp_details']);?></textarea>
 			<span class="btnsave" id="svskype">
 				<input type="image" title="Сохранить" class="ajaxsave" id="details" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
 			<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
-		<div class="6">
+		<div class="grid_6">
 			<div id="company-data">
 				Регион: <strong><?= $cmpregion['reg_area']; ?>, <?= $cmpregion['reg_name']; ?></strong><br><br>
 				Cферы деятельности: <br/>

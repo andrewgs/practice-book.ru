@@ -22,7 +22,7 @@
 		#info-boxes{margin-top: 25px;}
 		.company-name{margin-top: 10px;	font: normal bold 140% serif;}
 		.company-text{text-align: justify;margin: 10px 0 10px 0;}
-		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.company-data{margin-top: 0.3em;}
 		.rep-name,news-title{font: normal bold 140% serif;}
 		.w278{width: 278px;}
@@ -32,7 +32,6 @@
 		.nshDate{font: normal bold 90% serif;text-align: right;}
 		.nshNote{margin-bottom: 10px;text-align:justify;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
-		a.readNSh{font: italic normal 130% serif;text-align: right;}
 		.h20{min-height: 20px;}
 		#lists select{margin-right: 10px;font: bold normal 125% serif;}
 		#formUnit,#unitImage{margin-top:20px;}
@@ -71,7 +70,8 @@
 								<div class="company-data"><span class="text">Юридический адрес: </span><?=$company['cmp_uraddress'];?></div>
 								<div class="company-data"><span class="text">Фактический адрес: </span><?=$company['cmp_realaddress'];?></div>
 								<div class="company-text">
-									<span class="text">Реквизиты компании: </span><?=$company['cmp_details'];?>
+									<span class="text">Реквизиты компании: </span>
+									<div style="margin: 5px 20px;"><?=$company['cmp_details'];?></div>
 								</div>
 								<div class="company-data"><span class="text">Сайт компании: </span>
 									<?=anchor($company['cmp_site'],$company['cmp_site'],array('target'=>'_blank'));?>
@@ -81,11 +81,11 @@
 								</div>
 								<div class="company-data"><span class="text">Контактный телефон: </span><?=$company['cmp_phone'];?></div>
 								<div class="company-data"><span class="text">Телефон/факс: </span><?=$company['cmp_telfax'];?></div>
-								<div class="company-data"><span class="text">Ассоциация :</span>В ассоциации не стоит</div>
+								<!--<div class="company-data"><span class="text">Ассоциация :</span>В ассоциации не стоит</div>-->
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
-									<?=anchor('company/cabinet/'.$userinfo['uconfirmation'],'Изменить информацию',array('class'=>'readNSh'));?>
+									<?=anchor('company/cabinet/'.$userinfo['uconfirmation'],'Изменить информацию');?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -106,15 +106,6 @@
 									<?php endfor; ?>
 									</select>
 									<div id="pulist"></div>
-								<?php else: ?>
-									<div id="hdngroup" class="btnHidden"><?=$group;?></div>
-									<div id="pulist">
-									<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
-										<?php for($i=0;$i<count($units);$i++):?>
-											<option value="<?=$units[$i]['cu_id'];?>"><?=$units[$i]['cu_title'];?></option>
-										<?php endfor; ?>
-										</select>
-									</div>
 								<?php endif;?>
 								</div>
 							<?php endif; ?>
@@ -150,7 +141,7 @@
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
-									<?=anchor('company/price-management/'.$userinfo['uconfirmation'],'Управление прайс-листом',array('class'=>'readNSh'));?>
+									<?=anchor('company/price-management/'.$userinfo['uconfirmation'],'Управление прайс-листом');?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -159,27 +150,40 @@
 					<div class="grid_4">
 						<div class="box">
 							<div class="box-header w278">
-								<h2>Представитель компании</h2>
+								<h2>Представители компании</h2>
 								<div class="box-search"></div>	
 							</div>
 							<div class="box-content">
-								<img src="<?=$baseurl;?>cravatar/viewimage/<?=$representative['uid'];?>" class="floated" alt=""/>
-								<div class="rep-name">
-									<?=$representative['uname'].' '.$representative['usubname'].' '.$representative['uthname'];?>
+							<?php for($i=0;$i<count($representative); $i++):?>
+								<div class="content-separator" id="drep<?=$i;?>" rID="<?=$representative[$i]['uid'];?>">
+									<img src="<?=$baseurl;?>cravatar/viewimage/<?=$representative[$i]['uid'];?>" vspace="10" border="0" class="floated" alt=""/>
+									<div class="rep-name">
+										<?=$representative[$i]['uname'].' '.$representative[$i]['usubname'].' '.$representative[$i]['uthname'];?>
+									</div>
+									<div class="rep-phone"><span class="text">Тел.:</span><?= $representative[$i]['uphone']; ?></div>
+									<div class="rep-email"><span class="text">E-mail:</span><?=$representative[$i]['uemail']; ?></div>
+									<div class="rep-posiotion"><span class="text">Должность:</span><?=$representative[$i]['uposition']; ?></div>
+									<?php if($representative[$i]['uskype']): ?>
+										<div class="federal-skype-icq">
+											<img src="<?=$baseurl;?>images/skype.png" border="0" title="skype" alt=""/>
+											<span class="text"><?=$representative[$i]['uskype'];?></span>
+										</div>
+									<?php endif; ?>
+									<?php if($representative[$i]['uicq']): ?>
+										<div class="federal-skype-icq">
+											<img src="<?=$baseurl;?>images/icq.png" border="0" title="icq" alt=""/>
+											<span class="text"><?=$representative[$i]['uicq'];?></span>
+										</div>
+									<?php endif; ?>
+									<div class="clear"></div>
 								</div>
-								<div class="company-data"><span class="text">Должность: </span><?=$representative['uposition'];?></div>
-								<div class="company-data"><span class="text">Tелефон: </span><?=$representative['uphone'];?></div>
-								<div class="company-data"><span class="text">E-Mail: </span>
-									<?=safe_mailto($representative['uemail'],$representative['uemail']);?>
-								</div>
-								<div style="clear:both"></div>
-								<?php if($representative['uactive'] and $representative['uid'] != $userinfo['uid']): ?>
-									<img src="<?=$baseurl;?>images/online.gif" class="online" border="0" title="Пользователь в сети" alt=""/>
-								<?php endif; ?>
+							<?php endfor; ?>
 							</div>
-							<div class="box-bottom-links">
+							<div class="box-bottom-links h20">
 								<div class="right">
-							<?=anchor('company/representatives/'.$userinfo['uconfirmation'],'Все представители',array('class'=>'readNSh'));?>
+								<?php if($userinfo['priority']): ?>
+							<?=anchor('company/representatives/'.$userinfo['uconfirmation'],'Управление');?>
+								<?php endif; ?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -204,7 +208,7 @@
 								<?endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
-							<?=anchor('company/news-management/'.$userinfo['uconfirmation'],'Управление новостями',array('class'=>'readNSh'));?>
+								<?=anchor('company/news-management/'.$userinfo['uconfirmation'],'Управление новостями');?>
 								<div class="clear"></div>
 							</div>
 						</div>
@@ -228,7 +232,7 @@
 								<?endif; ?>
 							</div>
 							<div class="box-bottom-links h20">
-							<?=anchor('company/shares-management/'.$userinfo['uconfirmation'],'Управление акциями',array('class'=>'readNSh'));?>
+							<?=anchor('company/shares-management/'.$userinfo['uconfirmation'],'Управление акциями');?>
 								<div class="clear"></div>
 							</div>
 						</div>

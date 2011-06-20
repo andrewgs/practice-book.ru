@@ -17,7 +17,7 @@
 			</td>
 			<td>
 				<label class="label-input">Низкая:</label>
-				<input class="edit60-form-input digital" maxlength="8" name="lowprice" type="text" value="<?=$unit['pri_lowprice'];?>">
+				<input class="edit60-form-input digital" maxlength="6" name="lowprice" type="text" value="<?=$unit['pri_lowprice'];?>">
 				<select class="select-price" id="uplowpricecode" name="lowpricecode">
 					<option value="1" <?php if($unit['pri_lowpricecode']==1) echo 'selected="selected"';?>>руб.</option>
 					<option value="2" <?php if($unit['pri_lowpricecode']==2) echo 'selected="selected"';?>>тыс.руб.</option>
@@ -25,7 +25,7 @@
 					<option value="4" <?php if($unit['pri_lowpricecode']==4) echo 'selected="selected"';?>>%</option>
 				</select> 
 				<label class="label-input">Оптимальная:</label>
-				<input class="edit60-form-input digital" maxlength="8" name="optimumprice" type="text" value="<?=$unit['pri_optimumprice'];?>">
+				<input class="edit60-form-input digital" maxlength="6" name="optimumprice" type="text" value="<?=$unit['pri_optimumprice'];?>">
 				<select class="select-price" name="optimumpricecode">
 					<option value="1" <?php if($unit['pri_optimumpricecode']==1) echo 'selected="selected"';?>>руб.</option>
 					<option value="2" <?php if($unit['pri_optimumpricecode']==2) echo 'selected="selected"';?>>тыс.руб.</option>
@@ -33,7 +33,7 @@
 					<option value="4" <?php if($unit['pri_optimumpricecode']==4) echo 'selected="selected"';?>>%</option>
 				</select> 
 				<label class="label-input">Высокая:</label>								
-				<input class="edit60-form-input digital" maxlength="8" name="topprice" type="text" value="<?=$unit['pri_topprice'];?>">
+				<input class="edit60-form-input digital" maxlength="6" name="topprice" type="text" value="<?=$unit['pri_topprice'];?>">
 				<select class="select-price" name="toppricecode">
 					<option value="1" <?php if($unit['pri_toppricecode']==1) echo 'selected="selected"';?>>руб.</option>
 					<option value="2" <?php if($unit['pri_toppricecode']==2) echo 'selected="selected"';?>>тыс.руб.</option>

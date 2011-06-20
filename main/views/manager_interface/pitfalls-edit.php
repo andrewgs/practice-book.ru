@@ -28,7 +28,7 @@
 		.w918{width: 918px;}
 		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		.repData{margin: 15px 0 0 0;}
-		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;cursor:help;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 10px 10px 0;cursor:help;}
 		.nshNote{margin-bottom: 10px;text-align:justify;min-height: 100px;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
 		.btnHidden{display:none;}

@@ -30,7 +30,7 @@
 		.accordion .accordion-content {background: #f7f7f7;margin: 0px auto;padding:  10px 15px 20px;border-left: solid 1px #c4c4c4;border-right: solid 1px #c4c4c4;}
 		.loadData{margin: 10px 520px 0px 420px;}
 		.federal-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;border-top: 2px solid #D0D0D0;border-bottom: 2px solid #D0D0D0;}
-		span.text{font: normal small-caps 14px/16px fantasy;margin: 0 10px 10px 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 10px 10px 0;}
 		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
 		.manager-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		.online{position:relative;left: 25px;}

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.online{margin-left: 20px;}
 		.h150{min-height: 150px;}
 		.w918{width: 918px;}

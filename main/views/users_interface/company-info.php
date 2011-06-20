@@ -16,23 +16,25 @@
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">
+	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		#info-boxes{margin-top: 25px;}
 		.company-name{margin-top: 10px;	font: normal bold 140% serif;}
 		.company-text{text-align: justify;margin: 10px 0 10px 0;}
-		span.text{font: bold small-caps 12px/14px sans-serif;margin: 0 5px 0 0;}
+		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.company-data{	margin-top: 0.3em;}
 		.rep-name,news-title{font: normal bold 140% serif;}
 		.w278{width: 278px;}
+		.h365{height: 365px;}
+		.w575{width: 575px;}
 		.w600{width: 600px;}
 		.h150{min-height: 150px;}
 		.online{margin-left: 20px;}
 		.nshDate{font: normal bold 90% serif;text-align: right;}
 		.nshNote{margin-bottom: 10px;text-align:justify;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
-		a.readNSh{font: italic normal 130% serif;text-align: right;}
 		.h20{min-height: 20px;}
 		#lists select{margin-right: 10px;font: bold normal 125% serif;}
 		#formUnit,#unitImage{margin-top:20px;}
@@ -71,7 +73,8 @@
 								<div class="company-data"><span class="text">Юридический адрес: </span><?=$company['cmp_uraddress'];?></div>
 								<div class="company-data"><span class="text">Фактический адрес: </span><?=$company['cmp_realaddress'];?></div>
 								<div class="company-text">
-									<span class="text">Реквизиты компании: </span><?=$company['cmp_details'];?>
+									<span class="text">Реквизиты компании: </span>
+									<div style="margin: 5px 20px;"><?=$company['cmp_details'];?></div>
 								</div>
 								<div class="company-data"><span class="text">Сайт компании: </span>
 									<?=anchor($company['cmp_site'],$company['cmp_site'],array('target'=>'_blank'));?>
@@ -81,7 +84,7 @@
 								</div>
 								<div class="company-data"><span class="text">Контактный телефон: </span><?=$company['cmp_phone'];?></div>
 								<div class="company-data"><span class="text">Телефон/факс: </span><?=$company['cmp_telfax'];?></div>
-								<div class="company-data"><span class="text">Ассоциация :</span>В ассоциации не стоит</div>
+								<!--<div class="company-data"><span class="text">Ассоциация :</span>В ассоциации не стоит</div>-->
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">&nbsp;</div>
@@ -169,7 +172,7 @@
 							</div>
 							<div class="box-bottom-links">
 								<div class="right">
-							<?=anchor('representatives/company/'.$company['cmp_id'],'Все представители',array('class'=>'readNSh'));?>
+							<?=anchor('representatives/company/'.$company['cmp_id'],'Все представители');?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -180,8 +183,8 @@
 								<div class="box-search"></div>
 							</div>
 							<div class="box-content">
-								<?php if(count($news)): ?>
-								<?php for($i = 0;$i < count($news); $i++): ?>
+							<?php if(count($news)): ?>
+								<?php for($i=0;$i<count($news);$i++): ?>
 								<div class="content-separator">
 									<div class="nshDate"><?=$news[$i]['cn_pdatebegin'];?></div>
 									<img src="<?=$baseurl;?>cnavatar/viewimage/<?=$news[$i]['cn_id'];?>" class="floated" alt=""/>
@@ -189,20 +192,62 @@
 									<div class="nshNote"><?=$news[$i]['cn_note'];?></div>
 								</div> 
 								<?php endfor; ?>
-								<?php else: ?>
-									<span class="text">Новости отсутствуют</span>
-								<?endif; ?>
+							<?php else: ?>
+								<span class="text">Новости отсутствуют</span>
+							<?endif; ?>
 							</div>
-							<div class="box-bottom-links h20">&nbsp;</div>
+							<div class="box-bottom-links h20">
+								<div class="right">
+									<a href="#" id="winNews" class="window">Полный список</a>
+								</div>
+								<div class="clear"></div>
+							</div>
 						</div>
+					<?php if(count($news)): ?>
+						<div id="news-modal-content">
+							<div class="box">
+								<div class="box-header"><b>Новости компании</b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<?php for($i=0;$i<count($news);$i++): ?>
+									<div class="content-separator">
+										<div class="nshDate"><?=$news[$i]['cn_pdatebegin'];?></div>
+										<img src="<?=$baseurl;?>cnavatar/viewimage/<?=$news[$i]['cn_id'];?>" class="floated" alt=""/>
+										<div class="nsh-title"><?=$news[$i]['cn_title'];?></div>
+										<div class="nshNote"><?=$news[$i]['full_note'];?></div>
+									</div> 
+								<?php endfor; ?>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php else: ?>
+						<div id="news-modal-content">
+							<div class="box">
+								<div class="box-header"><b>Новости компании</b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+									<span class="text">Список пуст</span>
+									<div class="clear"></div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Акции компании</h2>
 								<div class="box-search"></div>
 							</div>
 							<div class="box-content">
-								<?php if(count($shares)): ?>
-								<?php for($i = 0;$i < count($shares); $i++): ?>
+							<?php if(count($shares)): ?>
+								<?php for($i=0;$i<count($shares);$i++): ?>
 								<div class="content-separator">
 									<div class="nshDate"><?=$shares[$i]['sh_pdatebegin'];?></div>
 									<img src="<?=$baseurl;?>cshavatar/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
@@ -210,12 +255,53 @@
 									<div class="nshNote"><?=$shares[$i]['sh_note'];?></div>
 								</div> 
 								<?php endfor; ?>	
-								<?php else: ?>
-									<span class="text">Акции отсутствуют</span>
-								<?endif; ?>
+							<?php else: ?>
+								<span class="text">Акции отсутствуют</span>
+							<?endif; ?>
 							</div>
-							<div class="box-bottom-links h20">&nbsp;</div>
+							<div class="box-bottom-links h20">
+								<div class="right">
+									<a href="#" id="winSpecials" class="window">Полный список</a>
+								</div>
+							</div>
 						</div>
+						<?php if(count($shares)): ?>
+						<div id="specials-modal-content">
+							<div class="box">
+								<div class="box-header"><b>Акции компании</b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+								<?php for($i=0;$i<count($shares);$i++): ?>
+									<div class="content-separator">
+										<div class="nshDate"><?=$shares[$i]['sh_pdatebegin'];?></div>
+										<img src="<?=$baseurl;?>cshavatar/viewimage/<?=$shares[$i]['sh_id'];?>" class="floated" alt=""/>
+										<div class="nsh-title"><?=$shares[$i]['sh_title'];?></div>
+										<div class="nshNote"><?=$shares[$i]['full_note'];?></div>
+									</div> 
+								<?php endfor; ?>	
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php else: ?>
+						<div id="specials-modal-content">
+							<div class="box">
+								<div class="box-header"><b>Акции компании</b>
+									<div class="box-search">&nbsp;</div>
+								</div>
+								<div class="box-content h365 w575">
+									<span class="text">Список пуст</span>
+									<div class="clear"></div>
+								</div>
+								<div class="box-bottom-links h20">&nbsp;
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
 					</div>
 				</div>
 			</section>
@@ -226,6 +312,7 @@
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 
@@ -238,6 +325,14 @@
 						{'group':$("#select-group").val(),'company':<?=$company['cmp_id'];?>},
 						function(data){$("#pulist").text('');},"json");
 				}
+			});
+			$("a#winNews").click(function(e){
+				$("#news-modal-content").modal();
+				return false;
+			});
+			$("a#winSpecials").click(function(e){
+				$("#specials-modal-content").modal();
+				return false;
 			});
 		});
 	</script>

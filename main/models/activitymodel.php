@@ -44,6 +44,18 @@ class Activitymodel extends CI_Model {
 		return NULL;
 	}
 	
+	function search_activity($search){
+	
+		$this->db->select('act_id AS id,act_title AS title');
+		$this->db->like('act_title',$search);
+		$this->db->where('act_final',1);
+		$this->db->order_by('act_title');
+		$query = $this->db->get('tbl_activity');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
 	function read_activity($aid){
 		
 		$this->db->where('act_id',$aid);

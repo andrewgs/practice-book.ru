@@ -27,8 +27,8 @@ class Consultationmodel extends CI_Model {
 	
 	function insert_record($uid,$insertdata){
 			
-		$this->act_title 	= $insertdata['title'];
-		$this->cnsl_note	= $insertdata['note'];
+		$this->cnsl_title 	= $insertdata['title'];
+		$this->cnsl_note	= strip_tags($insertdata['note'],'<br>');
 		$this->cnsl_price	= $insertdata['price'];
 		$this->cnsl_period 	= $insertdata['period'];	
 		$this->cnsl_status 	= 1;	
@@ -57,15 +57,24 @@ class Consultationmodel extends CI_Model {
 		return FALSE;
 	}
 
-	function save_record($uid,$title,$note,$period,$price,$status){
+	function save_record($cid,$uid,$title,$note,$period,$price,$status){
 	
 		$this->db->set('cnsl_title',$title);
-		$this->db->set('cnsl_note',$note);
+		$this->db->set('cnsl_note',strip_tags($note,'<br>'));
 		$this->db->set('cnsl_period',$period);
 		$this->db->set('cnsl_price',$price);
 		$this->db->set('cnsl_status',$status);
+		$this->db->where('cnsl_id',$cid);
 		$this->db->where('cnsl_uid',$uid);
 		$this->db->update('tbl_consultation');
+		return $this->db->affected_rows();
+	}
+
+	function delete_record($cid,$uid){
+	
+		$this->db->where('cnsl_id',$cid);
+		$this->db->where('cnsl_uid',$uid);
+		$this->db->delete('tbl_consultation');
 		return $this->db->affected_rows();
 	}
 }
