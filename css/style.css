@@ -1,4 +1,4 @@
-﻿html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
 small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
@@ -211,8 +211,12 @@ a.lnk-submit:hover, .box a.lnk-submit:hover {
 section#info-advert{
 	background: url("../images/bg_upper_footer.png") repeat scroll 0 0 transparent;
 	border: 1px solid #ccc;
-	height: 275px;
-	padding: 1.5em 0 0;
+	height: 300px;
+	overflow: hidden;	
+}
+.slides {
+	position: relative;
+	overflow: hidden;
 }
 
 #list-regions {
@@ -666,13 +670,14 @@ label.action-steps {
 }
 
 .btn-user-action {
-    background: url("../images/button_arrow.png") no-repeat scroll right center transparent;
-    background-color: #fff;
-    border: 1px solid #CCCCCC;
-    color: #838586;
-    font: bold 13px helvetica,arial,sans-serif;
-    padding: 7px 27px 7px 8px;
-    margin: 2em 0 0;
+	background: url("../images/button_arrow.png") no-repeat scroll right center #FFFFFF;
+	border: 1px solid #ccc;
+	color: #838586;
+	font: bold 13px helvetica,arial,sans-serif;
+	left: 10px;
+	padding: 7px 27px 7px 8px;
+	position: absolute;
+	top: 160px;
 	-webkit-border-radius: 8px;
 	   -moz-border-radius: 8px;
 	        border-radius: 8px;
@@ -681,8 +686,7 @@ label.action-steps {
 .btn-user-action.imaging {
 	background:url("../images/action_button.png") no-repeat scroll right center #FFFFFF;
 	color:#FFFFFF;
-	margin-right:5px;
-	margin-top:1em;
+	top: 205px;
 }
 
 .prelog { margin: 1em 0 0; }
@@ -705,18 +709,16 @@ label.action-steps {
 .btn-action:hover { background: #B42720; }
 
 .text-notation {
-	background:none repeat scroll 0 0 #F7F5F5;
 	font:13px/18px helvetica,arial,sans-serif;
-	margin:7px 0;
+	margin: 30px 0 50px;
 	padding:12px 15px;
 	text-indent:27px;
 	-webkit-border-radius: 5px;
 	   -moz-border-radius: 5px;
 	        border-radius: 5px;
-	-webkit-box-shadow: 0 1px 5px hsla(0,0%,0%,.3);
-	   -moz-box-shadow: 0 1px 5px hsla(0,0%,0%,.3);
-	     -o-box-shadow: 0 1px 5px hsla(0,0%,0%,.3);
-		    box-shadow: 0 1px 5px hsla(0,0%,0%,.3);
+	-webkit-box-shadow: 0 0 4px hsla(0,0%,0%,.3);
+	   -moz-box-shadow: 0 0 4px hsla(0,0%,0%,.3);
+		    box-shadow: 0 0 4px hsla(0,0%,0%,.3);
 }
 
 .text-notation h1 {
@@ -1273,34 +1275,6 @@ th.w500 { width: 500px; }
 .sliders {
 	margin: 0.5em 0 1.2em;
 	width: 165px;
-}
-
-section#info-advert{
-	height: 275px;	
-	overflow: hidden;
-}
-#slide-1 {
-	position: relative;
-	top: 0;
-	opacity: 1;
-}
-#slide-2 {
-	position: relative;
-	top: -259px;
-	opacity: 0;
-	display: none;
-}
-#slide-3 {
-	position: relative;
-	top: -481px;
-	opacity: 0;
-	display: none;
-}
-#slide-4 {
-	position: relative;
-	top: -707px;
-	opacity: 0;
-	display: none;
 }
 
 table#doc, table#doc td{
