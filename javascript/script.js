@@ -55,28 +55,4 @@ $(function(){
 		autoFill: true,
 		skin: "custom"
 	});		
-	
-	function animateSlides() {
-		setTimeout(function() {
-			$("#slide-1").animate({ opacity: '0' }, 3000, function() {});
-			$("#slide-2").animate({ opacity: '1.0' }, 3000, function() {});
-		}, 3000);
-		setTimeout(function() {
-			$("#slide-2").animate({ opacity: '0' }, 3000, function() {});
-			$("#slide-3").animate({ opacity: '1.0'}, 3000, function() {});
-		}, 11000);
-		setTimeout(function() {
-			$("#slide-3").animate({ opacity: '0' }, 3000, function() {});
-			$("#slide-4").animate({	opacity: '1.0' }, 3000, function() {});
-		}, 19000);
-		setTimeout(function() {
-			$("#slide-4").animate({ opacity: '0' }, 3000, function() {});
-			$("#slide-1").animate({ opacity: '1.0' }, 3000, function() {});
-		}, 27000);		
-	}
-	
-	$("#slide-2, #slide-3, #slide-4").css({'opacity': '0', 'display': 'block'});
-	animateSlides();
-	setInterval(function(){ animateSlides(); }, 30000);
-	
 });

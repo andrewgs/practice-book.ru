@@ -39,49 +39,22 @@
 		<?php endif; ?>
 		<div id="main">
 			<section id="info-advert">
-				<div id="slide-1" class="container_12">
-					<div class="grid_12 alpha omega">
-						<div class="slogan">
-							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan.png" />
-							<img alt="" class="right" src="<?=$baseurl;?>images/company_boxes_1.png" />
-						</div>
+				<div id="slide-browser" class="container_12 clearfix"> 
+					<div id="slide-1" class="grid_12 alpha slides">
+						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-1.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div id="slide-2" class="container_12">
-					<div class="grid_12 alpha omega">
-						<div class="slogan">
-							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-1.png" />
-							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-1.png" />
-						</div>
+					<div id="slide-2" class="grid_12 alpha slides">
+						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-2.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div id="slide-3" class="container_12">
-					<div class="grid_12 alpha omega">
-						<div class="slogan">
-							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-2.png" />
-							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-2.png" />
-						</div>
+					<div id="slide-3" class="grid_12 alpha slides">
+						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-3.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
-					<div class="clear"></div>
-				</div>
-				<div id="slide-4" class="container_12">
-					<div class="grid_12 alpha omega">
-						<div class="slogan">
-							<img alt="Бизнес-справочник Practice Book" class="left mt25" src="<?= $baseurl; ?>images/slogan-3.png" />
-							<img alt="" class="right" src="<?=$baseurl;?>images/thesis-3.png" />
-						</div>
-						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
-						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
-					</div>
-					<div class="clear"></div>
 				</div>
 			</section>
 			<div class="container_12">
@@ -104,6 +77,8 @@
 	<script src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.cycle.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.easing.js"></script>
 	<script src="<?= $baseurl; ?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
 		$(document).ready(function(){$(".btn-user-action").click(function(){location.href='<?= $baseurl; ?>registering/step-1';});$(".imaging").click(function(){location.href='<?= $baseurl; ?>started';});$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){$("#loginstatus").load("<?= $baseurl; ?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?= $baseurl; ?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?= $baseurl; ?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};
@@ -150,6 +125,18 @@
 		function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}
 		});
 	</script>
+	<script>
+	  $(function(){
+		$('#slide-browser').cycle({
+			fx: 'scrollUp',
+			speed: '2000',
+			easing: 'easeInOutExpo',
+			timeout: 7000,
+			width: 960,
+			fit: 1
+		});
+	  });    
+  </script>
 <!--[if lt IE 7 ]>
 	<script src="<?= $baseurl; ?>javascript/dd_belatedpng.js?v=1"></script>
 <![endif]-->
