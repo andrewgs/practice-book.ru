@@ -41,7 +41,7 @@
 			<section id="info-advert">
 				<div id="slide-browser" class="container_12 clearfix"> 
 					<div id="slide-1" class="grid_12 alpha slides">
-						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-1.png" />
+						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-4.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
@@ -49,8 +49,13 @@
 						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-2.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
-					</div>
+					</div>					
 					<div id="slide-3" class="grid_12 alpha slides">
+						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-1.png" />
+						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
+						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
+					</div>
+					<div id="slide-4" class="grid_12 alpha slides">
 						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-3.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
@@ -131,7 +136,7 @@
 			fx: 'scrollUp',
 			speed: '2000',
 			easing: 'easeInOutExpo',
-			timeout: 7000,
+			timeout: 15000,
 			width: 960,
 			fit: 1
 		});
