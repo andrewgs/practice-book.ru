@@ -1,17 +1,17 @@
 <div class="box">
 	<div class="box-header">
-		Список регионов:
+		Список отраслей:
 		<div class="box-search">
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>
 	</div>
 	<div class="box-content h470 w918">
-		<table summary="Список регионов">
+		<table summary="Список отраслей">
 			<thead>
 				<tr class="odd">
 					<th scope="col" abbr="ID">ID</th>
 					<th scope="col" abbr="НАЗВАНИЕ">НАЗВАНИЕ</th>	
-					<th scope="col" abbr="ID ГЛАВНОЙ ОТРАСЛИ">ГЛ.отрасль</th>
+					<th scope="col" abbr="ID ГЛАВНОЙ ОТРАСЛИ">ГЛ.ОТРАСЛЬ</th>
 					<th scope="col" abbr="ПОЛНОЕ НАЗВАНИЕ">ПОЛНОЕ НАЗВАНИЕ</th>
 					<th scope="col" abbr="ПРИЗНАК КОНЦА">КОНЕЦ(0/1)</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>

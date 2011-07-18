@@ -72,7 +72,7 @@
 								<?php endif; ?>
 							</div>
 						</div>
-					</div>отрасли
+					</div>
 				</div>
 				<div class="clear"></div>
 					<div class="grid_12">

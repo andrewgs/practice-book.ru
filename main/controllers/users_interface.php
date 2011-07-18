@@ -36,6 +36,7 @@ class Users_interface extends CI_Controller {
 		$this->load->model('cmpunitsmodel');
 		$this->load->model('jobsmodel');
 		$this->load->model('consultationmodel');
+		$this->load->model('departmentsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -858,7 +859,6 @@ class Users_interface extends CI_Controller {
 		$pagevar = array('baseurl'=>base_url(),'result'=>array());
 		$units = $this->unionmodel->search_unit($search);
 		$activity = $this->activitymodel->search_activity($search);
-//		$pagevar['result'] = $this->activitymodel->search_activity($search);
 		for($i=0;$i<count($units);$i++):
 			$pagevar['result'][$i]['id'] = $units[$i]['id'];
 			$pagevar['result'][$i]['title'] = $units[$i]['title'];
@@ -869,7 +869,6 @@ class Users_interface extends CI_Controller {
 			$pagevar['result'][$j]['title'] = $activity[$i]['title'];
 			$pagevar['result'][$j]['product'] = 0;
 		endfor;
-//		print_r($pagevar['result']);
 		if(count($pagevar['result'])):
 			$this->load->view('users_interface/search-result-select',$pagevar);
 		endif;
@@ -881,7 +880,6 @@ class Users_interface extends CI_Controller {
 		if(!$search) show_404();
 		$pagevar = array('baseurl'=>base_url(),'result'=>array());
 		$pagevar['result'] = $this->regionmodel->search_region($search);
-//		print_r($pagevar['result']);
 		if(count($pagevar['result'])):
 			$this->load->view('users_interface/search-region-select',$pagevar);
 		endif;
@@ -1231,22 +1229,25 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					'title'			=> 'Practice-Book - Регистрация новой компании | Шаг №3',
 					'baseurl' 		=> base_url(),
 					'formaction' 	=> 'registering/step-3',
-					'regions'		=> array()
+					'regions'		=> array(),
+					'departments'	=> array()
 			);
 		$pagevar['regions'] = $this->regionmodel->read_records();
+		$pagevar['departments'] = $this->departmentsmodel->read_records();
 		$this->session->set_userdata('regstatus',3);
 		if($this->input->post('submit')):
-			$this->form_validation->set_rules('login','','required|valid_email|callback_login_check|trim');
+			$this->form_validation->set_rules('login',' ','required|valid_email|callback_login_check|trim');
 			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
-			$this->form_validation->set_rules('password','','required|min_length[6]|trim');
-			$this->form_validation->set_rules('confirmpass','','required|min_length[6]|matches[password]|trim');
+			$this->form_validation->set_rules('password',' ','required|min_length[6]|trim');
+			$this->form_validation->set_rules('confirmpass',' ','required|min_length[6]|matches[password]|trim');
 			$this->form_validation->set_message('matches','Пароли не совпадают');
-			$this->form_validation->set_rules('userfile','','callback_userfile_check');
-			$this->form_validation->set_rules('fname','','required|trim');
-			$this->form_validation->set_rules('sname','','required|trim');
-			$this->form_validation->set_rules('tname','','required|trim');
-			$this->form_validation->set_rules('position','','required|trim');
-			$this->form_validation->set_rules('phones','','required|min_length[6]|integer|trim');
+			$this->form_validation->set_rules('userfile',' ','callback_userfile_check');
+			$this->form_validation->set_rules('fname',' ','required|trim');
+			$this->form_validation->set_rules('sname',' ','required|trim');
+			$this->form_validation->set_rules('tname',' ','required|trim');
+			$this->form_validation->set_rules('department',' ','required');
+			$this->form_validation->set_rules('position',' ','required|trim');
+			$this->form_validation->set_rules('phones',' ','required|min_length[6]|integer|trim');
 			$this->form_validation->set_message('min_length','Меньше 6 символов');
 			$this->form_validation->set_message('integer','Только целые числа');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -1259,7 +1260,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 				if($_FILES['userfile']['error'] != 4):
 					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],96,120);
 				else:
-					$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.jpg');
+					$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
 				endif;
 				$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
 				$_POST['cmpid'] = $this->session->userdata('companyid');

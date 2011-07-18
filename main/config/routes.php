@@ -144,6 +144,7 @@ $route['admin/shutdown/:any'] = "admin_interface/shutdown";
 
 $route['admin/save-region/:any']= "admin_interface/save_region";
 $route['admin/save-activity/:any']= "admin_interface/save_activity";
+$route['admin/save-department/:any']= "admin_interface/save_department";
 $route['admin/save-user/:any']= "admin_interface/save_user";
 $route['admin/delete-user/:any']= "admin_interface/dalete_user";
 $route['admin/save-company/:any']= "admin_interface/save_company";

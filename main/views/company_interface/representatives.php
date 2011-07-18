@@ -40,6 +40,7 @@
 				<div class="grid_12">
 					<div id="validError" style="text-align:center; margin-top:20px;"><?= validation_errors(); ?></div>
 					<?php $this->load->view('forms/frmrepresentatives'); ?>
+					<div class="clear"></div>
 					<div id="frmNewRep" style="display:none;">
 						<?php $this->load->view('forms/frmregrepsentative');?>
 					</div>
@@ -80,6 +81,11 @@
 			$("#addRep").click(function(event){
 				var err = false;
 				$(".reg-form-input").css('border-color','#D0D0D0');
+				$("#select-department").css('border-color','#D0D0D0');
+				if($("#select-department").val() == ''){
+					$("#select-department").css('border-color','#ff0000');
+					err = true;
+				}
 				$(".reg-form-input").each(
 					function(i,element){
 						if($(element).val()===''){

@@ -1,5 +1,5 @@
 <?= form_open_multipart($this->uri->uri_string(),array('id'=>'formSignup','class'=>'formular')); ?>
-	<div id="formRep" style="border-top: 2px solid #D0D0D0; border-bottom: 2px solid #D0D0D0; margin-top:15px;">
+	<div id="formRep" style="border-bottom: 2px solid #D0D0D0; margin-top:15px;">
 		<div class="grid_4">
 			<label class="label-input">E-Mail для авторизации на сайте *</label>
 			<?= form_error('login'); ?>
@@ -12,7 +12,7 @@
 			<input class="reg-form-input" type="password" name="confirmpass" id="confpassword" value="<?=set_value('confirmpass');?>"/>
 			<label class="label-input">Фото представителя</label>
 			<?= form_error('userfile'); ?>
-			<input class="reg-form-input" type="file" name="userfile" accept="image/jpeg,png,gif" size="30"/> 
+			<input class="reg-form-edit" type="file" name="userfile" accept="image/jpeg,png,gif" size="30"/> 
 			<div class="form-reqs">Поддерживаемые форматы: JPG, GIF, PNG</div>
 		</div>
 		<div class="grid_4 prefix_2">
@@ -25,6 +25,16 @@
 			<label class="label-input">Введите Отчество <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 			<?= form_error('tname'); ?>
 			<input class="reg-form-input" name="tname" type="text" value="<?=set_value('tname');?>"/>
+			<label class="label-input">Отдел, служба <span class="necessarily" title="Нужно указать">*</span></label>
+			<?= form_error('department'); ?>
+			<select name="department" id="select-department" style="width: 290px; padding: 3px;">
+				<option value="" disabled="disabled" selected="selected">Выберите отдел</option>
+			<?php for($i=0;$i<count($departments);$i++):?>
+				<option value="<?=$departments[$i]['dep_id'];?>" <?=set_select('department',$departments[$i]['dep_id']);?>>
+					<?=$departments[$i]['dep_title'];?>
+				</option>
+			<?php endfor; ?>
+			</select>
 			<label class="label-input">Должность в компании <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 			<?= form_error('position'); ?>
 			<input class="reg-form-input" name="position" type="text" value="<?=set_value('position');?>"/>

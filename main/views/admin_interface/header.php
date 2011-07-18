@@ -38,6 +38,7 @@
 				<ul>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/regions','Список регионов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/activity','Список отраслей');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/department','Список отделов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users','Список пользователей');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/company','Список компаний');?></li>
 				</ul>

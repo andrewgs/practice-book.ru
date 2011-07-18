@@ -82,8 +82,8 @@
 						<?php if($i>0):?>
 							<input type="image" title="Сохранить" class="btnSave" btnHidden" id="s<?=$k?>" rID="<?=$k?>" src="<?=$baseurl;?>images/save.png" />
 						<?php endif;?>
+						<br/><input type="image" title="Удалить" class="btnDel" id="dl<?=$k?>" rID="<?=$k;?>" src="<?=$baseurl;?>images/delete.png" />
 						<?php if($list[$i][$j]['ustatus'] == "disabled"):?>
-				<br/><input type="image" title="Удалить" class="btnDel" id="dl<?=$k?>" rID="<?=$k;?>" src="<?=$baseurl;?>images/delete.png" />
 				<br/><input type="image" title="Не активирован" src="<?= $baseurl; ?>images/exclamation.png" />
 						<?php endif; ?>
 						</div>

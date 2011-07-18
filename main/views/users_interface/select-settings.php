@@ -20,6 +20,7 @@
 	<style type="text/css">
 		.w575{width: 575px;}
 		.h20{min-height: 20px;}
+		.h190{height: 190px;}
 		#dregion {padding: 10px 0 20px 10px;}
 		.activity,.region{font: bold normal 125% serif;margin: 0px;}
 		.activityList,.regionList{margin-top: 10px;margin-left: -20px;}

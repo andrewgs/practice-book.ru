@@ -32,6 +32,8 @@ class Admin_interface extends CI_Controller {
 		$this->load->model('othertextmodel');
 		$this->load->model('supportmodel');
 		$this->load->model('productgroupmodel');
+		$this->load->model('consultationmodel');
+		$this->load->model('departmentsmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -286,11 +288,38 @@ class Admin_interface extends CI_Controller {
 									$pagevar['list'] = $this->activitymodel->read_records_order_by_pid();
 									$this->load->view("admin_interface/activity-list",$pagevar);
 									break;
+			case 'department'	: 	if($this->input->post('submit')):
+										$this->form_validation->set_rules('name',' "название" ','required|trim');
+										$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+										if(!$this->form_validation->run()):
+											$_POST['submit'] = NULL;
+											$this->information_list();
+											return FALSE;
+										else:
+											$exist = $this->departmentsmodel->dep_exist('dep_title',$_POST['name']);
+											if(!$exist):
+												$this->departmentsmodel->insert_record($_POST['name']);
+											endif;
+											redirect('admin/information-list/'.$this->user['uconfirmation'].'/department');
+										endif;
+									endif;
+									$pagevar['list'] = $this->departmentsmodel->read_records();
+									$this->load->view("admin_interface/department-list",$pagevar);
+									break;
+			
 			case 'users'		: 	$pagevar['list'][0] = $this->usersmodel->read_records(0);
 									$pagevar['list'][0]['caption'] = "Администраторы";
-									$pagevar['list'][1] = $this->unionmodel->users_consultation(1);
+									$pagevar['list'][1] = $this->usersmodel->read_records(1);
+									for($i=0;$i<count($pagevar['list'][1]);$i++):
+										$pagevar['list'][1][$i]['consult'] = $this->consultationmodel->count_records($pagevar['list'][1][$i]['uid']);
+									endfor;
+//									$pagevar['list'][1] = $this->unionmodel->users_consultation(1);
 									$pagevar['list'][1]['caption'] = "Федеральные менеджеры";
-									$pagevar['list'][2] = $this->unionmodel->users_consultation(2);
+									$pagevar['list'][2] = $this->usersmodel->read_records(2);
+									for($i=0;$i<count($pagevar['list'][2]);$i++):
+										$pagevar['list'][2][$i]['consult'] = $this->consultationmodel->count_records($pagevar['list'][2][$i]['uid']);
+									endfor;
+//									$pagevar['list'][2] = $this->unionmodel->users_consultation(2);
 									$pagevar['list'][2]['caption'] = "Региональные менеджеры";
 									$pagevar['list'][3] = $this->usersmodel->read_records(3);
 									$pagevar['list'][3]['caption'] = "Представители компаний";
@@ -334,7 +363,7 @@ class Admin_interface extends CI_Controller {
 					else:
 						$_POST['submit'] = NULL;
 						$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
-						$_POST['cmpid'] = 0;
+						$_POST['cmpid'] = $_POST['department'] = 0;
 						$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
 						$_POST['priority'] = $_POST['manager'] = 1;
 						$_POST['position'] = $_POST['icq'] = $_POST['skype'] = '';$_POST['birthday'] = "0000-00-00";
@@ -485,6 +514,21 @@ class Admin_interface extends CI_Controller {
 		}
 		echo json_encode($statusval);
 	}
+
+	function save_department(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','name'=>'');
+		$did = $this->input->post('id');
+		$name = trim($this->input->post('name'));
+		if(!isset($did) or empty($did)) show_404();
+		if(!isset($name) or empty($name)) show_404();
+		$success = $this->departmentsmodel->save_department($did,$name);
+		if($success):
+			$statusval['status'] = TRUE;
+			$statusval['name'] = $name;
+		endif;
+		echo json_encode($statusval);
+	}
 	
 	function save_activity(){
 	
@@ -552,8 +596,15 @@ class Admin_interface extends CI_Controller {
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
 		$uid = trim($this->input->post('id'));
 		if(!isset($uid) or empty($uid)) show_404();
-		$success = $this->usersmodel->delete_record($uid);
-		if($success) $statusval['status'] = TRUE;
+		$mra_rec = $this->manregactmodel->mra_exist('mra_uid',$uid);
+		if(!$mra_rec):
+			$success = $this->usersmodel->delete_record($uid);
+			if($success):
+				$statusval['status'] = TRUE;
+			endif;
+		else:
+			$statusval['message'] = "За пользователем закреплены записи. Удалить не возможно.";
+		endif;
 		echo json_encode($statusval);
 	}
 

@@ -62,4 +62,21 @@ class Manregactmodel extends CI_Model {
 		$this->db->where('mra_aid',$activity);
 		$this->db->update('tbl_mra');
 	}
+
+	function update_managers($uid,$rid,$aid){
+		
+		$this->db->set('mra_uid',$uid);
+		$this->db->where('mra_aid',$aid);
+		$this->db->where('mra_rid',$rid);
+		$this->db->update('tbl_mra');
+	}
+
+	function mra_exist($field,$parameter){
+			
+		$this->db->where($field,$parameter);
+		$query = $this->db->get('tbl_mra');
+		$data = $query->result_array();
+		if(count($data) > 0) return TRUE;
+		return FALSE;
+	}
 }

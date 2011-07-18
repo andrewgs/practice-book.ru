@@ -22,6 +22,7 @@ class Company_interface extends CI_Controller {
 		$this->load->model('cmpsharesmodel');
 		$this->load->model('productgroupmodel');
 		$this->load->model('cmpunitsmodel');
+		$this->load->model('departmentsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -283,7 +284,8 @@ class Company_interface extends CI_Controller {
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'representative' => $this->usersmodel->read_representatives($this->user['cid'])
+					'representative' => $this->usersmodel->read_representatives($this->user['cid']),
+					'departments'	=> array()
 			);
 		
 		if($this->input->post('submit')):
@@ -295,6 +297,7 @@ class Company_interface extends CI_Controller {
 			$this->form_validation->set_rules('fname','','required|trim');
 			$this->form_validation->set_rules('sname','','required|trim');
 			$this->form_validation->set_rules('tname','','required|trim');
+			$this->form_validation->set_rules('department',' ','required');
 			$this->form_validation->set_rules('position','','required|trim');
 			$this->form_validation->set_rules('phones','','required|min_length[6]|integer|trim');
 			$this->form_validation->set_message('min_length','Меньше 6 символов');
@@ -327,6 +330,7 @@ class Company_interface extends CI_Controller {
 				redirect('company/representatives/'.$this->user['uconfirmation']);
 			endif;
 		endif;
+		$pagevar['departments'] = $this->departmentsmodel->read_records();
 		$this->load->view('company_interface/representatives',$pagevar);
 	}
 	

@@ -3,7 +3,7 @@ class Usersmodel extends CI_Model {
 
 	var $uid 			= 0;	/* идентификатор пользователя*/
 	var $ucompany		= 1;	/* идентификатор компании*/
-	var $udepartment	= 0;	/* идентификатор отдела*/
+	var $department	= 0;	/* идентификатор отдела*/
 	var $uemail 		= '';	/* логин пользователя*/
 	var $upassword 		= '';	/* пароль пользователя*/
 	var $uname 			= '';	/* имя пользователя*/
@@ -36,7 +36,7 @@ class Usersmodel extends CI_Model {
 	function insert_record($insertdata){
 			
 		$this->ucompany 		= $insertdata['cmpid'];
-		$this->udepartment		= $insertdata['department'];
+		$this->department		= $insertdata['department'];
 		$this->uemail 			= $insertdata['login'];
 		$this->upassword 		= md5($insertdata['password']);
 		$this->uname 			= $insertdata['fname'];
@@ -117,14 +117,14 @@ class Usersmodel extends CI_Model {
 			case '2' :	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,uactivity FROM tbl_user WHERE umanager=1 AND upriority=0 AND ucompany=0";
 						break;
 			//представители компании
-			case '3' :	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,udepartment,uactivity FROM tbl_user WHERE umanager=0 AND ucompany>0";
+			case '3' :	$sql = "SELECT uid,uname,usubname,uthname,uemail,ustatus,uactive,usignupdate,udestroy,umanager,upriority,ucompany,udepartament,uactivity FROM tbl_user WHERE umanager=0 AND ucompany>0";
 						break;
 		endswitch;
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		return NULL;
-	}
+	}department
 	
 	function read_managers($activity){
 			
@@ -178,7 +178,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_representatives($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartament,upriority,uskype,uicq');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->order_by('upriority','DESC');
@@ -186,11 +186,11 @@ class Usersmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data)) return $data;
 		return null;
-	}
+	}department
 	
 	function read_representative($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartament,upriority,uskype,uicq');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->where('upriority',1);
@@ -198,18 +198,18 @@ class Usersmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return null;
-	}
+	}department
 	
 	function read_info($id){
 		
-		$this->db->select('uid,ucompany,udepartment,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity,uskype,uicq');
+		$this->db->select('uid,ucompany,udepartament,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity,uskype,uicq');
 		$this->db->where('uid',$id);
 		$this->db->where('udestroy','3000-01-01');
 		$query = $this->db->get('tbl_user');
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return FALSE;
-	}
+	}department
 	
 	function save_single_data($uid,$field,$data){
 		

@@ -98,7 +98,7 @@ class Manager_interface extends CI_Controller{
 				else:
 					$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
 				endif;
-				$_POST['cmpid'] = 0;
+				$_POST['cmpid'] = $_POST['department'] = 0;
 				$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
 				$_POST['priority'] = 0;
 				$_POST['position'] = '';$_POST['birthday'] = "0000-00-00"; $_POST['manager'] = 1;
@@ -123,6 +123,8 @@ class Manager_interface extends CI_Controller{
 						$mraid = $this->manregactmodel->insert_record($newmanager,$_POST['region'][$i],$_POST['activity']);
 						$this->productsmodel->insert_empty($mraid);
 						$this->personamodel->insert_empty($mraid,$_POST['activity']);
+					else:
+						$this->manregactmodel->update_managers($newmanager,$_POST['region'][$i],$_POST['activity']);
 					endif;
 				endfor;
 				$this->session->set_userdata('newman_id',$newmanager);

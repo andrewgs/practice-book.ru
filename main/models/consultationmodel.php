@@ -77,5 +77,14 @@ class Consultationmodel extends CI_Model {
 		$this->db->delete('tbl_consultation');
 		return $this->db->affected_rows();
 	}
+
+	function count_records($uid){
+	
+		$query = "SELECT COUNT(*) AS cnt FROM tbl_consultation WHERE tbl_consultation.cnsl_uid = $uid";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0]['cnt'];
+		else return null;
+	}
 }
 ?>

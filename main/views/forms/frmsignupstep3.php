@@ -27,6 +27,16 @@
 			<label class="label-input">Введите Отчество <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 			<?= form_error('tname'); ?>
 			<input class="validate[required,custom[onlyLetter],length[0,50]] reg-form-input" name="tname" type="text" value="<?=set_value('tname');?>"/>
+			<label class="label-input">Отдел, служба <span class="necessarily" title="Нужно указать">*</span></label>
+			<?= form_error('department'); ?>
+			<select name="department" id="select-department" class="validate[required]" style="width: 290px; padding: 3px;">
+				<option value="" disabled="disabled" selected="selected">Выберите отдел</option>
+			<?php for($i=0;$i<count($departments);$i++):?>
+				<option value="<?=$departments[$i]['dep_id'];?>" <?=set_select('department',$departments[$i]['dep_id']);?>>
+					<?=$departments[$i]['dep_title'];?>
+				</option>
+			<?php endfor; ?>
+			</select>
 			<label class="label-input">Должность в компании <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 			<?= form_error('position'); ?>
 			<input class="validate[required,length[0,30]] reg-form-input" name="position" type="text" value="<?=set_value('position');?>"/>
