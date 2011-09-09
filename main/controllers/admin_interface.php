@@ -88,11 +88,13 @@ class Admin_interface extends CI_Controller {
 		$case = $this->uri->segment(4);
 		switch ($case):
 			case 'main'						: $record_id = 50; break;
-			case 'ideas'					: $record_id = 51; break;
+//			case 'ideas'					: $record_id = 51; break;
 			case 'jobs'						: $record_id = 52; break;
 			case 'about'					: $record_id = 53; break;
 			case 'conditions-cooperation'	: $record_id = 54; break;
 			case 'no-activity'				: $record_id = 55; break;
+			case 'information'				: $record_id = 56; break;
+			case 'dilers'					: $record_id = 57; break;
 			default : show_404();
 		endswitch;
 		if($this->input->post('submit')):

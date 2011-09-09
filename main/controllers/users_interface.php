@@ -315,6 +315,86 @@ class Users_interface extends CI_Controller {
 		$this->load->view('users_interface/cooperation',$pagevar);
 	}
 
+	function information(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(56)
+			);
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		if($this->user['manager']):
+			if($this->user['priority']):
+				$pagevar['regions'] = $this->regionmodel->read_records();
+			else:
+				$pagevar['regions'] = $this->unionmodel->mra_region($this->user['uid']);	
+			endif;
+			$final = $this->activitymodel->read_field($this->user['activity'],'act_final');
+			if(!$final):
+				$activity = $this->activitymodel->read_records();
+				if(count($activity) > 0):
+					for($i = 0; $i < count($activity); $i++):
+						$activitylist[$activity[$i]['act_parentid']][] = $activity[$i];
+					endfor;
+				endif;
+				$mas = array();
+				$mas = $this->activity_select($activitylist,$this->user['activity'],$mas);
+				$pagevar['activity'] = $mas;
+			else:
+				$pagevar['activity'] = $this->activitymodel->read_activity($this->user['activity']);
+			endif;
+		else:
+			$pagevar['regions'] = $this->regionmodel->read_records();
+		endif;
+		$this->session->unset_userdata('regstatus');
+		$this->load->view('users_interface/information',$pagevar);
+	}
+
+	function dilers(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(57)
+			);
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		if($this->user['manager']):
+			if($this->user['priority']):
+				$pagevar['regions'] = $this->regionmodel->read_records();
+			else:
+				$pagevar['regions'] = $this->unionmodel->mra_region($this->user['uid']);	
+			endif;
+			$final = $this->activitymodel->read_field($this->user['activity'],'act_final');
+			if(!$final):
+				$activity = $this->activitymodel->read_records();
+				if(count($activity) > 0):
+					for($i = 0; $i < count($activity); $i++):
+						$activitylist[$activity[$i]['act_parentid']][] = $activity[$i];
+					endfor;
+				endif;
+				$mas = array();
+				$mas = $this->activity_select($activitylist,$this->user['activity'],$mas);
+				$pagevar['activity'] = $mas;
+			else:
+				$pagevar['activity'] = $this->activitymodel->read_activity($this->user['activity']);
+			endif;
+		else:
+			$pagevar['regions'] = $this->regionmodel->read_records();
+		endif;
+		$this->session->unset_userdata('regstatus');
+		$this->load->view('users_interface/dilers',$pagevar);
+	}
+
 	/* --------------------------------------------- started work ---------------------------------------------*/
 	
 	function select_settings(){

@@ -9,12 +9,14 @@ $route['404_override'] = '';
 
 /* ----------------------------------------	users menu	--------------------------------------------------*/
 $route[''] = "users_interface/index";
-$route['ideas'] = "users_interface/ideas";
+//$route['ideas'] = "users_interface/ideas";
 $route['job'] = "users_interface/job";
 $route['about'] = "users_interface/about_project";
 $route['contacts'] = "users_interface/contacts";
 $route['conditions-cooperation'] = "users_interface/cooperation";
 $route['support'] = "users_interface/support";
+$route['information'] = "users_interface/information";
+$route['dilers'] = "users_interface/dilers";
 
 /* --------------------------------------------- started work ---------------------------------------------*/
 $route['started'] = "users_interface/select_settings";

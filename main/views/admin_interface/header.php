@@ -13,7 +13,8 @@
 				<a href="javascript:void(0);">Содержание страниц</a>
 				<ul>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/main','Страница "Главная"');?></li>
-					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/ideas','Страница "Идеи"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/information','Страница "Партнерам"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/dilers','Страница "Дилерам"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/jobs','Страница "Работа"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/about','Страница "О проекте"');?></li>
 			<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/conditions-cooperation','Страница "Условия сотрудничества"');?></li>
