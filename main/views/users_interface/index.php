@@ -41,7 +41,7 @@
 			<section id="info-advert">
 				<div id="slide-browser" class="container_12 clearfix"> 
 					<div id="slide-1" class="grid_12 alpha slides">
-						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-1.png" />
+						<img alt="Три системы Practice Book" src="<?= $baseurl; ?>images/slide-1.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
@@ -51,7 +51,12 @@
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>
 					<div id="slide-3" class="grid_12 alpha slides">
-						<img alt="Бизнес-справочник Practice Book" src="<?= $baseurl; ?>images/slide-3.png" />
+						<img alt="Бизнес-среда Practice Book" src="<?= $baseurl; ?>images/slide-3.png" />
+						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
+						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
+					</div>
+					<div id="slide-4" class="grid_12 alpha slides">
+						<img alt="B2B Practice Book" src="<?= $baseurl; ?>images/slide-4.png" />
 						<button id="btn-sign-in" class="btn-user-action">Добавить свою компанию в наш каталог</button><br/>
 						<button id="btn-sign-in" class="btn-user-action imaging">Начать работу</button>
 					</div>

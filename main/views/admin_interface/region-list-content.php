@@ -5,7 +5,7 @@
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>
 	</div>
-	<div class="box-content h470 w918">
+	<div class="box-content h960 w918">
 		<table summary="Список регионов">
 			<thead>
 				<tr class="odd">
@@ -35,7 +35,7 @@
 			<input type="image" title="Сохранить" class="NewsSave btnHidden" id="s<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/save.png" />
 						</div>
 					</td> 
-				</tr	>
+				</tr>
 				<?php endfor; ?>	
 			</tbody>
 		</table>

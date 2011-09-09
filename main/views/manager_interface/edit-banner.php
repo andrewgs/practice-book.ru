@@ -41,7 +41,7 @@
 							<div class="box">
 								<div class="box-header"><h2 class="special">Баннер:</h2>
 									<div class="box-search">
-								<?=anchor('manager/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
+										<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 									</div>
 								</div>
 								<div class="box-content h150 w918">

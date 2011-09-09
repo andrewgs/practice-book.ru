@@ -61,6 +61,21 @@ class Productgroupmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	function save_name($id,$title){
+	
+		$this->db->set('prg_title',$title);
+		$this->db->where('prg_id',$id);
+		$this->db->update('tbl_productgroup');
+		return $this->db->affected_rows();
+	}
+	
+	function delete_record($id){
+	
+		$this->db->where('prg_id',$id);
+		$this->db->delete('tbl_productgroup');
+		return $this->db->affected_rows();
+	}
+	
 	function group_exist($field,$parameter,$activity){
 			
 		$this->db->where('prg_activity',$activity);

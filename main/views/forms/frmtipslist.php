@@ -5,7 +5,7 @@
 			&nbsp;
 			<div class="box-search">
 				<?php if($i == 0):?>
-					<?=anchor('manager/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
+					<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 		<div class="box-header">
 			&nbsp;
 			<div class="box-search">
-				<?=anchor('manager/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
+				<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 			</div>
 		</div>
 		<div class="box-content h150 w918">

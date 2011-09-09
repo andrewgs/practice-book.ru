@@ -4,7 +4,13 @@
 		<div class="clear"></div>
 		<ul id="admin-navigation">
 			<li>
-				<a href="#">Содержание страниц</a>
+				<a href="javascript:void(0);">Управление</a>
+				<ul>
+					<li><?=anchor('admin/edit-activity/'.$userinfo['uconfirmation'],'Управление отраслью');?></li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:void(0);">Содержание страниц</a>
 				<ul>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/main','Страница "Главная"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/ideas','Страница "Идеи"');?></li>
@@ -15,7 +21,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">Страница отрасли</a>
+				<a href="javascript:void(0);">Страница отрасли</a>
 				<ul>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/product','Продукт отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/pitfalls','Подводные камни');?></li>
@@ -34,17 +40,21 @@
 				</ul>
 			</li>
 			<li>
-				<a href="#">Информационные списки</a>
+				<a href="javascript:void(0);">Информационные списки</a>
 				<ul>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/regions','Список регионов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/activity','Список отраслей');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/department','Список отделов');?></li>
-					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users','Список пользователей');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/company','Список компаний');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/groups','Список групп продуктов');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/admins','Список администраторов');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/federals','Список фед.менеджеров');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/regionals','Список рег.менеджеров');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/representatives','Список предc.компаний');?></li>
 				</ul>
 			</li>
 			<li>
-				<a href="#">Администрирование</a>
+				<a href="javascript:void(0);">Администрирование</a>
 				<ul>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/manager','Добавление федерального менеджера');?></li>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/administrator','Добавление администратора');?></li>

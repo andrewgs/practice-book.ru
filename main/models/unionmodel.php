@@ -145,6 +145,26 @@ class Unionmodel extends CI_Model {
 		return NULL;
 	}
 	
+	function read_activity_group(){
+		
+		$query = "SELECT prg_id,prg_title,act_title FROM tbl_productgroup INNER JOIN tbl_activity WHERE prg_activity = act_id ORDER BY prg_activity,prg_title";
+		
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+
+	function exist_product_group($group){
+		
+		$query = "SELECT COUNT(pri_id)+COUNT(cu_id) AS CNT FROM tbl_productgroup LEFT JOIN tbl_productionunit ON prg_id = pri_groupcode LEFT JOIN tbl_companyunits ON prg_id = cu_groupcode WHERE prg_id = $group";
+		
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if($data[0]['CNT']>0) return TRUE;
+		return FALSE;
+	}
+	
 	function read_cmpproduct_group($cmpid){
 		
 		$query = "SELECT prg_id,prg_title FROM tbl_productgroup INNER JOIN tbl_companyunits WHERE prg_id = cu_groupcode AND cu_cmpid = $cmpid AND prg_activity IN (SELECT cs_srvid FROM tbl_companyservices WHERE cs_cmpid = $cmpid) GROUP BY prg_id";

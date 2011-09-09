@@ -411,6 +411,7 @@ class Users_interface extends CI_Controller {
 					'consultlist'	=> array(),
 					'consult'		=> FALSE,
 					'group'			=> 0,
+					'groupname'		=> '',
 					'banner'		=> "",
 					'top_rating'	=> 50,
 					'low_rating'	=> 20,
@@ -561,6 +562,7 @@ class Users_interface extends CI_Controller {
 				$pagevar['units'][0]['pri_unitscode'] = $unitsof[$pagevar['units'][0]['pri_unitscode']];
 				if(count($pagevar['unitgroups']) == 1):
 					$pagevar['group'] = $pagevar['unitgroups'][0]['prg_id'];
+					$pagevar['groupname'] = $pagevar['unitgroups'][0]['prg_title'];
 					$pagevar['unitgroups'] = NULL;
 				endif;
 			endif;

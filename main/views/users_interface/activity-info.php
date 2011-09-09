@@ -35,6 +35,7 @@
 		.h150{min-height: 150px;}
 		.h365{height: 365px;}
 		.nshNote{margin-bottom: 10px;}
+		.nshNote ul{list-style: disc outside; padding-left: 20px; margin-bottom: 5px;}
 		.nshDate{font: normal bold 90% serif;text-align: right;}
 		.nsh-title{font: normal bold 120% normal;margin: 5px 0 15px 3px;}
 		.existAnswer{font: normal bold 90% serif;text-align: right;}
@@ -385,6 +386,7 @@
 										<div id="pulist"></div>
 									<?php else: ?>
 										<div id="hdngroup" class="btnHidden"><?=$group;?></div>
+										<h2>Группа: <?=$groupname;?></h2>
 										<div id="pulist">
 											<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
 											<?php for($i=0;$i<count($units);$i++):?>

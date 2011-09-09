@@ -135,12 +135,55 @@ $route['manager/close-consultation/:any'] = "manager_interface/close_consultatio
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";
 
+$route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
+$route['admin/edit-activity/:any'] = "admin_interface/edit_activity";
+$route['admin/search-activity/:any'] = "admin_interface/create_search_activity";
+$route['admin/search-region/:any'] = "admin_interface/create_search_region";
+
 $route['admin/page-content/:any/:any'] = "admin_interface/page_content";
 $route['admin/activity-content/:any/:any'] = "admin_interface/activity_content";
+
+$route['admin/edit-product/:any'] = "admin_interface/edit_product";
+$route['admin/edit-pitfalls/:any'] = "admin_interface/edit_pitfalls";
+$route['admin/delete-pitfalls/:any'] = "admin_interface/delete_pitfalls";
+$route['admin/save-pitfalls/:any'] = "admin_interface/save_pitfalls";
+$route['admin/edit-questions/:any'] = "admin_interface/edit_questions";
+$route['admin/delete-question/:any'] = "admin_interface/delete_question";
+$route['admin/save-question/:any'] = "admin_interface/save_question";
+$route['admin/edit-news/:any'] = "admin_interface/edit_news";
+$route['admin/delete-news/:any'] = "admin_interface/delete_news";
+$route['admin/save-news/:any'] = "admin_interface/save_news";
+$route['admin/edit-persona/:any'] = "admin_interface/edit_persona";
+$route['admin/edit-documents/:any'] = "admin_interface/edit_documents";
+$route['admin/delete-document/:any'] = "admin_interface/delete_document";
+$route['admin/save-document/:any'] = "admin_interface/save_document";
+$route['admin/edit-specials/:any'] = "admin_interface/edit_specials";
+$route['admin/delete-specials/:any'] = "admin_interface/delete_specials";
+$route['admin/save-specials/:any'] = "admin_interface/save_specials";
+$route['admin/edit-tips/:any'] = "admin_interface/edit_tips";
+$route['admin/delete-tips/:any'] = "admin_interface/delete_tips";
+$route['admin/save-tips/:any'] = "admin_interface/save_tips";
+$route['admin/edit-whomain/:any'] = "admin_interface/edit_whomain";
+$route['admin/edit-coordinator/:any'] = "admin_interface/edit_coordinator";
+$route['admin/product-unit-dalete/:any'] = "admin_interface/product_unit_dalete";
+$route['admin/product-unit-info/:any'] = "admin_interface/product_unit_info";
+$route['admin/offer-list/:any'] = "admin_interface/offer_list";
+
+$route['admin-listbox/product-unit-list/:any'] = "admin_interface/product_unit_load";
+$route['admin-listbox/product-unit-form/:any'] = "admin_interface/product_form_load";
+
+$route['admin/information-list/:any/users/admins'] = "admin_interface/information_list";
+$route['admin/information-list/:any/users/federals'] = "admin_interface/information_list";
+$route['admin/information-list/:any/users/regionals'] = "admin_interface/information_list";
+$route['admin/information-list/:any/users/representatives'] = "admin_interface/information_list";
 $route['admin/information-list/:any/:any'] = "admin_interface/information_list";
+
 $route['admin/registration/:any/:any'] = "admin_interface/registration_users";
 $route['admin/cabinet/:any'] = "admin_interface/cabinet";
 $route['admin/shutdown/:any'] = "admin_interface/shutdown";
+
+$route['admin/save-group/:any']= "admin_interface/save_group";
+$route['admin/delete-group/:any']= "admin_interface/dalete_group";
 
 $route['admin/save-region/:any']= "admin_interface/save_region";
 $route['admin/save-activity/:any']= "admin_interface/save_activity";

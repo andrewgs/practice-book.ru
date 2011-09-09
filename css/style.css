@@ -253,6 +253,7 @@ footer[role="contentinfo"] {
 }
 
 .w520 { width: 520px; }
+.w460 { width: 460px; }
 .w300 { width: 300px; }
 .w805 { width: 805px; }
 .w70  { width: 70px; }
@@ -314,7 +315,7 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .reg-form-small,.small200-form-input,.small100-form-input,
 .edit250-form-input,.edit350-form-input,.edit60-form-input,
 .edit750-form-input,.edit450-form-input,.edit285-form-input,
-.edit265-form-input{
+.edit265-form-input,.small150-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -355,6 +356,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .small100-form-input{
 	width: 100px;
+}
+.small150-form-input{
+	width: 150px;
 }
 .small200-form-input{
 	width: 200px;

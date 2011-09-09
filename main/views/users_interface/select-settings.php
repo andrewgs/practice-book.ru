@@ -22,7 +22,7 @@
 		.h20{min-height: 20px;}
 		.h190{height: 190px;}
 		#dregion {padding: 10px 0 20px 10px;}
-		.activity,.region{font: bold normal 125% serif;margin: 0px;}
+		.activity,.region{font: bold normal 110% serif;margin: 0px;}
 		.activityList,.regionList{margin-top: 10px;margin-left: -20px;}
 		.btnHidden{display:none;}
 		#search-result,#region-result{margin-top:10px;}
@@ -45,10 +45,10 @@
 				</div>
 				<div class="grid_12" style="margin:0">
 					<hr size="2"/>
-					<div class="grid_4" style="margin:0">
+					<div class="grid_6" style="margin:0">
 						<h2>Поиск отрасли/товара/услуги:</h2>
 						от 3-х символов
-						<input class="edit265-form-input" id="ActivityName" type="text" value=""/>
+						<input class="edit450-form-input" id="ActivityName" type="text" value=""/>
 						<div class="clear"></div>
 						<div id="ASV" class="btnHidden"></div>
 						<div id="PSV" class="btnHidden"></div>
@@ -62,7 +62,7 @@
 						<div id="RSV" class="btnHidden"></div>
 						<div id="region-result"></div>
 					</div>
-					<div class="grid_4">
+					<div class="grid_2">
 						<h2>&nbsp;</h2>
 						<h2>&nbsp;</h2>
 						<input class="btn-action" style="margin-top:0" id="setSearch" type="button" name="submit" value="Получить информацию"/>

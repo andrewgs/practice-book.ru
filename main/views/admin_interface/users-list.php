@@ -20,8 +20,8 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h470{min-height: 470px;}
-		.w918{width: 918px;}
+		.h960{max-height: 960px; min-height: 470px;}
+		.w960{width: 960px;}
 		div.ButtonOperation{min-height:30px;}
 	</style>
 </head>

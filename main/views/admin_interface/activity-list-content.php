@@ -5,7 +5,7 @@
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>
 	</div>
-	<div class="box-content h470 w918">
+	<div class="box-content h960 w918">
 		<table summary="Список отраслей">
 			<thead>
 				<tr class="odd">
