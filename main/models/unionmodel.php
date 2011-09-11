@@ -18,7 +18,7 @@ class Unionmodel extends CI_Model {
 	
 	function company_activity($cmp_id){
 		
-		$query = "SELECT tbl_activity.act_id,tbl_activity.act_fulltitle from tbl_companyservices inner join tbl_activity on tbl_companyservices.cs_srvid = tbl_activity.act_id inner join tbl_company on tbl_companyservices.cs_cmpid = tbl_company.cmp_id where tbl_company.cmp_id = $cmp_id and tbl_activity.act_final = 1 ";
+		$query = "SELECT tbl_activity.act_id,tbl_activity.act_fulltitle,tbl_activity.act_title from tbl_companyservices inner join tbl_activity on tbl_companyservices.cs_srvid = tbl_activity.act_id inner join tbl_company on tbl_companyservices.cs_cmpid = tbl_company.cmp_id where tbl_company.cmp_id = $cmp_id and tbl_activity.act_final = 1 ORDER BY tbl_activity.act_title,tbl_activity.act_fulltitle";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

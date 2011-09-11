@@ -1,5 +1,9 @@
 <header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
+		<div class="other-nav">
+			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
+			<?= anchor($link,'Бизнес среда',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
+		</div>
 		<section id="auth">
 			<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
 			<?= anchor('representative/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
@@ -12,9 +16,10 @@
 		<nav role="main">
 			<ul class="header-nav">
 				<li><?= anchor('','Главная'); ?></li>
-				<li><?= anchor('ideas','Идеи'); ?></li>
-				<li><?= anchor('job','Работа'); ?></li>
 				<li><?= anchor('about','О проекте'); ?></li>
+				<li><?= anchor('information','Партнерам'); ?></li>
+				<li><?= anchor('job','Работа'); ?></li>
+				<li><?= anchor('dilers','Дилерам'); ?></li>
 				<li><?= anchor('contacts','Контакты'); ?></li>
 			</ul>
 		</nav>

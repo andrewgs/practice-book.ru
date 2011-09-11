@@ -59,6 +59,7 @@
 	<script src="<?= $baseurl; ?>javascript/jquery.bgiframe.min.js?v=1"></script>
 	<script src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script src="<?= $baseurl; ?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">

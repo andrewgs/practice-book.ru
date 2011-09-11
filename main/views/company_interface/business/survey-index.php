@@ -1,0 +1,207 @@
+<!DOCTYPE html> 
+<html lang="en" class="no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/jquery-ui.css?v=1.8.5">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
+	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
+</head>
+<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
+	<div id="container">
+	<?php $this->load->view('company_interface/business/header'); ?>
+		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="content-top">
+					<span class="category">ОПРОС</span>
+					<h1>Business Environment (Бизнес-Среда)</h1>
+				</div>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>Темы</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+									<li><a href="#">Новости отрасли</a></li>
+									<li><a href="#">Новости компании</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3>Новости отрасли</h3>
+							</div>
+							<div class="right-text">
+								<div class="add_events">
+									<a href="#" title="создать опрос"><img src="<?=$baseurl;?>images/add_vote.png" alt="создать опрос" /></a>
+									<span class="sort">
+										Сортировать: <a href="#">по дате</a> / <a href="#">по городу</a>
+									</span>
+								</div>
+								<div class="right-post">
+									<h2>Apple: дизайнеры показали необычный концепт iPhone 5</h2>
+									<div class="votebox">
+										<table cellspacing="0" cellpadding="0" class="votetable">
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Не могут догнать</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote1.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Пингвины хорошо маскируются</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote2.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Не знаю</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote3.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они живут на разных полюсах</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote4.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они невкусные</td>
+												<td class="tdre"><img src="images/vote5.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они боятся, как-бы пингвины не съели их</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote6.png" alt="" /> (65%)</td>
+											</tr>
+										</table>
+									</div>
+									<span class="date">30.08.2011</span>
+									<span class="view">проголосовало : 156 чел.</span>
+									<span class="green"><a href="#"><img src="<?=$baseurl;?>images/vote.png" alt="" /></a> <a href="#">комментарии (56)</a></span>
+									<div class="clear">&nbsp;</div>
+									<div class="right-post-option">
+										<table cellspacing="0" class="post-option">
+											<tr>
+												<td class="right-option">
+													<div class="opt-bg"><div class="opt-bgg">
+														<a class="first" href="#" title="Обсудить">Обсудить</a>
+														<a href="#" title="Отслеживать">Отслеживать</a>
+														<a href="#" title="Поделиться">Поделиться</a>
+														<a href="#" title="Удалить">Удалить</a>
+													</div></div>
+												</td>
+												<td class="right-avtor">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
+															<td>Алексей Иванов директор ООО «Дело»</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="right-post">
+									<h2>Apple: дизайнеры показали необычный концепт iPhone 5</h2>
+									<div class="votebox">
+										<table cellspacing="0" cellpadding="0" class="votetable">
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Не могут догнать</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote1.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Пингвины хорошо маскируются</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote2.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Не знаю</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote3.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они живут на разных полюсах</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote4.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они невкусные</td>
+												<td class="tdre"><img src="images/vote5.png" alt="" /> (65%)</td>
+											</tr>
+											<tr>
+												<td class="tdin"><input type="radio" name="" /> Они боятся, как-бы пингвины не съели их</td>
+												<td class="tdre"><img src="<?=$baseurl;?>images/vote6.png" alt="" /> (65%)</td>
+											</tr>
+										</table>
+									</div>
+									<span class="date">30.08.2011</span>
+									<span class="view">проголосовало : 156 чел.</span>
+									<span class="green"><a href="#">
+										<img src="<?=$baseurl;?>images/vote.png" alt="" /></a> <a href="#">комментарии (56)</a>
+									</span>
+									<div class="clear">&nbsp;</div>
+									<div class="right-post-option">
+										<table cellspacing="0" class="post-option">
+											<tr>
+												<td class="right-option">
+													<div class="opt-bg"><div class="opt-bgg">
+														<a class="first" href="#" title="Обсудить">Обсудить</a>
+														<a href="#" title="Отслеживать">Отслеживать</a>
+														<a href="#" title="Поделиться">Поделиться</a>
+														<a href="#" title="Удалить">Удалить</a>
+													</div></div>
+												</td>
+												<td class="right-avtor">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
+															<td>Алексей Иванов директор ООО «Дело»</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<?php $this->load->view('company_interface/footer'); ?>
+	</div> <!-- end of #container -->
+	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script src="<?=$baseurl;?>javascript/plugins.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
+	<script src="<?=$baseurl;?>javascript/myriad-pro.cufonfonts.js"></script>
+	<script src="<?=$baseurl;?>javascript/jquery.easing.js"></script>
+	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>
+	<!--[if lt IE 7 ]>
+	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
+	<![endif]-->
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+		});
+</script>
+</body>
+</html>

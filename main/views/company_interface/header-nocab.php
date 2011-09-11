@@ -2,7 +2,9 @@
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
 			<?php $link = 'company/control-panel/'.$userinfo['uconfirmation'];?>
-			<?= anchor($link,'Управление',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
+			<?= anchor($link,'Управление',array('class'=>'lnk-submit','type'=>'button'));?>
+			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
+			<?= anchor($link,'Общая бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
 		</div>
 		<section id="auth">
 			<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
@@ -15,9 +17,10 @@
 		<nav role="main">
 			<ul class="header-nav">
 				<li><?= anchor('','Главная'); ?></li>
-				<li><?= anchor('ideas','Идеи'); ?></li>
-				<li><?= anchor('job','Работа'); ?></li>
 				<li><?= anchor('about','О проекте'); ?></li>
+				<li><?= anchor('information','Партнерам'); ?></li>
+				<li><?= anchor('job','Работа'); ?></li>
+				<li><?= anchor('dilers','Дилерам'); ?></li>
 				<li><?= anchor('contacts','Контакты'); ?></li>
 			</ul>
 		</nav>

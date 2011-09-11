@@ -245,17 +245,11 @@
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
-			$("#select-region").change(function(){
-				$("#change-region").remove();
-				if($(this).val() > 0){
-					$(this).css('float','left');
-					$(this).after('<input type="button" class="lnk-submit" id="change-region" value="Продолжить"/>');
-					$("#change-region").live('click',function(){$("#regionview").submit();});};});
-					
+							
 			$("#select-group").change(function(){
 				$("#pulist").text('');
 				if($("#select-group").val()>0){

@@ -30,19 +30,21 @@
 	<section id="auth">
 		<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
 		<?php $cablink = 'manager/cabinet/'.$userinfo['uconfirmation']; ?>
-		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
+		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','type'=>'button'));?>&nbsp;
 		<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 	</section>
 	<div class="clear"></div>
 <?php else: ?>
 	<div class="other-nav">
 		<?php $link = 'company/control-panel/'.$userinfo['uconfirmation']; ?>
-		<?= anchor($link,'Управление',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
+		<?= anchor($link,'Управление',array('class'=>'lnk-submit','type'=>'button'));?>
+		<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
+		<?= anchor($link,'Бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
 	</div>
 	<section id="auth">
 		<span class="welcome-message">Здравствуйте, <?= $userinfo['ufullname']; ?></span>
 		<?php $cablink = 'representative/cabinet/'.$userinfo['uconfirmation']; ?>
-		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
+		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','type'=>'button'));?>&nbsp;
 		<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 	</section>
 	<div class="clear"></div>	

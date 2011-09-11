@@ -91,7 +91,8 @@ h1 {
 
 header[role="contentinfo"] {
 	background: #f5f5f5;
-	/*padding: 0.5em 2em;*/
+	border-bottom: 1px solid #E0E0E0;
+	border-top: 1px solid #E0E0E0;
 }
 
 .highlight {
@@ -119,7 +120,7 @@ ul.header-nav { float: right; list-style: none; }
 	ul.header-nav li a { font: 14px/28px "Trebuchet MS",Arial,Helvetica,sans-serif; color: #666666; text-decoration: none; }
 	ul.header-nav li a.active { color: #295e76; border-bottom: solid 3px #666666; }
 
-ul.header-nav2 { font-weight:bold; float: right; list-style: none; }
+ul.header-nav2 { font-weight:bold; float: right; list-style: none; text-align:right;}
 	ul.header-nav2 li   { font-weight:bold ;float: left; margin-left: 0.75em; }
 	ul.header-nav2 li a { font-weight:bold; font: 14px/28px "Trebuchet MS",Arial,Helvetica,sans-serif; color: #666666; text-decoration: none; }
 	ul.header-nav2 li a.active { font-weight:bold; color: #295e76; border-bottom: solid 3px #666666; }
@@ -1435,4 +1436,58 @@ div.regLabel{
 	margin: 20px 0 0 180px;
 	color: #d1221f;
 	font-size: 14px;
+}
+
+.business-nav-box {
+	height: 150px;
+	padding: 10px;
+	margin-bottom: 20px;
+	position: relative;
+	text-shadow: 1px 1px #EEE;
+}
+.business-nav-box h2 { 
+	color: #555555;
+	font: 21px/170px helvetica,arial,sans-serif;
+	margin: 0 0 4px;
+	text-align: center;
+}
+.business-nav-box h3 { 
+	color: #555555;
+	font: 18px/21px helvetica,arial,sans-serif;
+	margin: 0 0 4px;
+}
+.business-nav-box h4 { 
+	color: #555555;
+	font: 24px/27px helvetica,arial,sans-serif;
+	margin: 0 0 4px;
+}
+.business-nav-box p { font: 12px/17px arial;  }
+.business-nav-box a { 
+	color: #255E6B;
+	display: block;
+	font: bold 12px arial;
+	margin: 5px 0 2px;
+	text-decoration: none;
+}
+.business-nav-box a:hover { text-decoration: underline; }
+
+.business-nav-box .new-bg {
+	background: url("../images/bbg.png") repeat scroll 0 0 transparent;
+	/*border: 1px solid rgba(0, 0, 0, 0.4);*/
+	border-radius: 3px 3px 3px 3px;
+	height: 173px;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 300px;
+	z-index: 11;
+}
+
+.sprite {
+	background: url("../images/sprite-rule.png") no-repeat scroll 0 0 transparent;
+	display: inline-block;
+	float: left;
+	height: 60px;
+	width: 60px;
 }

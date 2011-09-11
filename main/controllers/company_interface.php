@@ -216,33 +216,6 @@ class Company_interface extends CI_Controller {
 		echo json_encode($statusval);
 	}
 	
-	function operation_date($field){
-			
-		$list = preg_split("/-/",$field);
-		$nmonth = $this->months[$list[1]];
-		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
-		$replacement = "\$5 $nmonth \$1 г."; 
-		return preg_replace($pattern, $replacement,$field);
-	}
-
-	function operation_date_slash($field){
-		
-		$list = preg_split("/-/",$field);
-		$nmonth = $this->months[$list[1]];
-		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
-		$replacement = "\$5/\$3/\$1"; 
-		return preg_replace($pattern, $replacement,$field);
-	}
-
-	function operation_date_minus($field){
-		
-		$list = preg_split("/-/",$field);
-		$nmonth = $this->months[$list[1]];
-		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
-		$replacement = "\$5-\$3-\$1"; 
-		return preg_replace($pattern, $replacement,$field);
-	}
-	
 	function profile(){
 	
 		$pagevar = array(
@@ -334,23 +307,6 @@ class Company_interface extends CI_Controller {
 		$this->load->view('company_interface/representatives',$pagevar);
 	}
 	
-	function sendmail($email,$msg,$subject,$from){
-		
-		$config['smtp_host'] = 'localhost';
-		$config['charset'] = 'utf-8';
-		$config['wordwrap'] = TRUE;
-		$this->email->initialize($config);
-		$this->email->from($from,'Администрация сайта');
-		$this->email->to($email);
-		$this->email->bcc('');
-		$this->email->subject($subject);
-		$this->email->message(strip_tags($msg));
-		if (!$this->email->send()):
-			return FALSE;
-		endif;
-		return TRUE;
-	}
-	
 	function save_profile(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при сохранении','retvalue'=>'');
@@ -440,119 +396,6 @@ class Company_interface extends CI_Controller {
 		echo json_encode($statusval);
 		
 		
-	}
-
-	function userfile_check($file){
-		
-		$tmpName = $_FILES['userfile']['tmp_name'];
-		
-		if($_FILES['userfile']['error'] != 4):
-			if(!$this->case_image($tmpName)):
-				$this->form_validation->set_message('userfile_check','Формат не поддерживается');
-				return FALSE;
-			endif;
-		endif;
-		if($_FILES['userfile']['error'] == 1):
-			$this->form_validation->set_message('userfile_check','Размер более 5 Мб!');
-			return FALSE;
-		endif;
-		return TRUE;
-	}
-
-	function resize_img($tmpName,$wgt,$hgt){
-			
-		chmod($tmpName,0777);
-		$img = getimagesize($tmpName);		
-		$size_x = $img[0];
-		$size_y = $img[1];
-		$wight = $wgt;
-		$height = $hgt; 
-		if(($size_x < $wgt) or ($size_y < $hgt)):
-			$this->resize_image($tmpName,$wgt,$hgt,FALSE);
-			$image = file_get_contents($tmpName);
-			return $image;
-		endif;
-		if($size_x > $size_y):
-			$this->resize_image($tmpName,$size_x,$hgt,TRUE);
-		else:
-			$this->resize_image($tmpName,$wgt,$size_y,TRUE);
-		endif;
-		$img = getimagesize($tmpName);		
-		$size_x = $img[0];
-		$size_y = $img[1];
-		switch ($img[2]){
-			case 1: $image_src = imagecreatefromgif($tmpName); break;
-			case 2: $image_src = imagecreatefromjpeg($tmpName); break;
-			case 3:	$image_src = imagecreatefrompng($tmpName); break;
-		}
-		$x = round(($size_x/2)-($wgt/2));
-		$y = round(($size_y/2)-($hgt/2));
-		if($x < 0):
-			$x = 0;	$wight = $size_x;
-		endif;
-		if($y < 0):
-			$y = 0; $height = $size_y;
-		endif;
-		$image_dst = ImageCreateTrueColor($wight,$height);
-		imageCopy($image_dst,$image_src,0,0,$x,$y,$wight,$height);
-		imagePNG($image_dst,$tmpName);
-		imagedestroy($image_dst);
-		imagedestroy($image_src);
-		$image = file_get_contents($tmpName);
-		return $image;
-	}
-	
-	function resize_image($image,$wgt,$hgt,$ratio){
-	
-		$this->load->library('image_lib');
-		$this->image_lib->clear();
-		$config['image_library'] 	= 'gd2';
-		$config['source_image']		= $image; 
-		$config['create_thumb'] 	= FALSE;
-		$config['maintain_ratio'] 	= $ratio;
-		$config['width'] 			= $wgt;
-		$config['height'] 			= $hgt;
-				
-		$this->image_lib->initialize($config);
-		$this->image_lib->resize();
-	}
-	
-	function resize_avatar($tmpName,$wgt,$hgt,$ratio){
-		
-		chmod($tmpName,0777);
-		$this->load->library('image_lib');
-		$this->image_lib->clear();
-		$config['image_library'] 	= 'gd2';
-		$config['source_image']		= $tmpName; 
-		$config['create_thumb'] 	= FALSE;
-		$config['maintain_ratio'] 	= $ratio;
-		$config['width'] 			= $wgt;
-		$config['height'] 			= $hgt;
-				
-		$this->image_lib->initialize($config);
-		$this->image_lib->resize();
-		
-		return file_get_contents($tmpName);
-	}
-	
-	function case_image($file){
-			
-		$info = getimagesize($file);
-		switch ($info[2]):
-			case 1	: return TRUE;
-			case 2	: return TRUE;
-			case 3	: return TRUE;
-			default	: return FALSE;	
-		endswitch;
-	}
-
-	function login_check($login){
-		
-		if($this->usersmodel->user_exist('uemail',$login)):
-			$this->form_validation->set_message('login_check','Логин уже занят');
-			return FALSE;
-		endif;
-		return TRUE;
 	}
 
 	function delele_representatives(){
@@ -930,6 +773,498 @@ class Company_interface extends CI_Controller {
 		$success = $this->cmpunitsmodel->delete_record($puid,$pgid);
 		if($success) $statusval['status'] = TRUE;
 		echo json_encode($statusval);
+	}
+	
+	/* --------------------------------------------- business environment ------------------------------------------------------*/
+	
+	function business(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'activity'		=> $this->unionmodel->company_activity($this->user['cid'])
+			);
+		
+		if($this->input->post('activity')):
+			$this->session->set_userdata('activity',$this->input->post('activity'));
+			redirect($this->uri->uri_string());
+		endif;
+		$segm = $this->uri->segment(2);
+		$activity = $this->session->userdata('activity');
+		if(!$activity && count($pagevar['activity']) > 0):
+			$this->session->set_userdata('activity',$pagevar['activity'][0]['act_id']);
+			$activity = $pagevar['activity'][0]['act_id'];
+		endif;
+		if($segm == 'full-business-environment'):
+			$pagevar['title'] .= 'Общая бизнес среда';
+			$this->session->set_userdata('envirenment','full');
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда';
+			$this->session->set_userdata('envirenment','overall');
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/index',$pagevar);
+	}
+	
+	function discussions(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/discussions-index',$pagevar);
+	}
+
+	function question_answer(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Вопрос-ответ';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Вопрос-ответ';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/question-answer-index',$pagevar);
+	}
+	
+	function rating(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Рейтинг';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Рейтинг';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/rating-index',$pagevar);
+	}
+	
+	function articles(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Статьи';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Статьи';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/articles-index',$pagevar);
+	}
+	
+	function documentation(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Обмен документами';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Обмен документами';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/documentation-index',$pagevar);
+	}
+	
+	function survey(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/survey-index',$pagevar);
+	}
+	
+	function association(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/association-index',$pagevar);
+	}
+	
+	function offers(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Предложения контрагентов';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Предложения контрагентов';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/offers-index',$pagevar);
+	}
+	
+	function news(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/news-index',$pagevar);
+	}
+	
+	function discounts(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/discounts-index',$pagevar);
+	}
+	
+	function who_main(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'envirenment'	=> $envirenment
+			);
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Кто главный?';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Кто главный?';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/who-main-index',$pagevar);
+	}
+	
+	/* ------------------------------------------ end business environment -----------------------------------------------------*/
+	
+	function sendmail($email,$msg,$subject,$from){
+		
+		$config['smtp_host'] = 'localhost';
+		$config['charset'] = 'utf-8';
+		$config['wordwrap'] = TRUE;
+		$this->email->initialize($config);
+		$this->email->from($from,'Администрация сайта');
+		$this->email->to($email);
+		$this->email->bcc('');
+		$this->email->subject($subject);
+		$this->email->message(strip_tags($msg));
+		if (!$this->email->send()):
+			return FALSE;
+		endif;
+		return TRUE;
+	}
+
+	function userfile_check($file){
+		
+		$tmpName = $_FILES['userfile']['tmp_name'];
+		
+		if($_FILES['userfile']['error'] != 4):
+			if(!$this->case_image($tmpName)):
+				$this->form_validation->set_message('userfile_check','Формат не поддерживается');
+				return FALSE;
+			endif;
+		endif;
+		if($_FILES['userfile']['error'] == 1):
+			$this->form_validation->set_message('userfile_check','Размер более 5 Мб!');
+			return FALSE;
+		endif;
+		return TRUE;
+	}
+
+	function resize_img($tmpName,$wgt,$hgt){
+			
+		chmod($tmpName,0777);
+		$img = getimagesize($tmpName);		
+		$size_x = $img[0];
+		$size_y = $img[1];
+		$wight = $wgt;
+		$height = $hgt; 
+		if(($size_x < $wgt) or ($size_y < $hgt)):
+			$this->resize_image($tmpName,$wgt,$hgt,FALSE);
+			$image = file_get_contents($tmpName);
+			return $image;
+		endif;
+		if($size_x > $size_y):
+			$this->resize_image($tmpName,$size_x,$hgt,TRUE);
+		else:
+			$this->resize_image($tmpName,$wgt,$size_y,TRUE);
+		endif;
+		$img = getimagesize($tmpName);		
+		$size_x = $img[0];
+		$size_y = $img[1];
+		switch ($img[2]){
+			case 1: $image_src = imagecreatefromgif($tmpName); break;
+			case 2: $image_src = imagecreatefromjpeg($tmpName); break;
+			case 3:	$image_src = imagecreatefrompng($tmpName); break;
+		}
+		$x = round(($size_x/2)-($wgt/2));
+		$y = round(($size_y/2)-($hgt/2));
+		if($x < 0):
+			$x = 0;	$wight = $size_x;
+		endif;
+		if($y < 0):
+			$y = 0; $height = $size_y;
+		endif;
+		$image_dst = ImageCreateTrueColor($wight,$height);
+		imageCopy($image_dst,$image_src,0,0,$x,$y,$wight,$height);
+		imagePNG($image_dst,$tmpName);
+		imagedestroy($image_dst);
+		imagedestroy($image_src);
+		$image = file_get_contents($tmpName);
+		return $image;
+	}
+	
+	function resize_image($image,$wgt,$hgt,$ratio){
+	
+		$this->load->library('image_lib');
+		$this->image_lib->clear();
+		$config['image_library'] 	= 'gd2';
+		$config['source_image']		= $image; 
+		$config['create_thumb'] 	= FALSE;
+		$config['maintain_ratio'] 	= $ratio;
+		$config['width'] 			= $wgt;
+		$config['height'] 			= $hgt;
+				
+		$this->image_lib->initialize($config);
+		$this->image_lib->resize();
+	}
+	
+	function resize_avatar($tmpName,$wgt,$hgt,$ratio){
+		
+		chmod($tmpName,0777);
+		$this->load->library('image_lib');
+		$this->image_lib->clear();
+		$config['image_library'] 	= 'gd2';
+		$config['source_image']		= $tmpName; 
+		$config['create_thumb'] 	= FALSE;
+		$config['maintain_ratio'] 	= $ratio;
+		$config['width'] 			= $wgt;
+		$config['height'] 			= $hgt;
+				
+		$this->image_lib->initialize($config);
+		$this->image_lib->resize();
+		
+		return file_get_contents($tmpName);
+	}
+	
+	function case_image($file){
+			
+		$info = getimagesize($file);
+		switch ($info[2]):
+			case 1	: return TRUE;
+			case 2	: return TRUE;
+			case 3	: return TRUE;
+			default	: return FALSE;	
+		endswitch;
+	}
+
+	function login_check($login){
+		
+		if($this->usersmodel->user_exist('uemail',$login)):
+			$this->form_validation->set_message('login_check','Логин уже занят');
+			return FALSE;
+		endif;
+		return TRUE;
+	}
+
+	function operation_date($field){
+			
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5 $nmonth \$1 г."; 
+		return preg_replace($pattern, $replacement,$field);
+	}
+
+	function operation_date_slash($field){
+		
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5/\$3/\$1"; 
+		return preg_replace($pattern, $replacement,$field);
+	}
+
+	function operation_date_minus($field){
+		
+		$list = preg_split("/-/",$field);
+		$nmonth = $this->months[$list[1]];
+		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
+		$replacement = "\$5-\$3-\$1"; 
+		return preg_replace($pattern, $replacement,$field);
 	}
 }
 ?>

@@ -205,6 +205,24 @@ $route['company/delete-representatives/:any'] = "company_interface/delele_repres
 
 $route['representative/cabinet/:any'] = "company_interface/representative_cabinet";
 $route['representative/save-profile/:any'] = "company_interface/representative_save_profile";
+
+/* ------------------------------------------ business-environment --------------------------------------------*/
+
+$route['company/full-business-environment/:any'] = "company_interface/business";
+$route['company/overall-business-environment/:any'] = "company_interface/business";
+
+$route['business-environment/discussions/:any'] = "company_interface/discussions";
+$route['business-environment/question-answer/:any'] = "company_interface/question_answer";
+$route['business-environment/rating/:any'] = "company_interface/rating";
+$route['business-environment/articles/:any'] = "company_interface/articles";
+$route['business-environment/documentation/:any'] = "company_interface/documentation";
+$route['business-environment/survey/:any'] = "company_interface/survey";
+$route['business-environment/association/:any'] = "company_interface/association";
+$route['business-environment/offers/:any'] = "company_interface/offers";
+$route['business-environment/news/:any'] = "company_interface/news";
+$route['business-environment/discounts/:any'] = "company_interface/discounts";
+$route['business-environment/who-main/:any'] = "company_interface/who_main";
+
 /* ------------------------------------------ view/add/edit ----------------------------------------------------*/
 $route['company/news-management/:any'] = "company_interface/news_management";
 $route['company/news-save/:any'] = "company_interface/news_save";
