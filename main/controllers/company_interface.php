@@ -23,6 +23,9 @@ class Company_interface extends CI_Controller {
 		$this->load->model('productgroupmodel');
 		$this->load->model('cmpunitsmodel');
 		$this->load->model('departmentsmodel');
+		$this->load->model('discussionsmodel');
+		$this->load->model('dsctopicsmodel');
+		$this->load->model('commentsmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -818,6 +821,20 @@ class Company_interface extends CI_Controller {
 		if(!$envirenment) $envirenment = 'full';
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
+		if($this->uri->total_segments() == 3):
+			$discussion = $this->discussionsmodel->read_record($activity,$envirenment);
+			if(count($discussion)):
+				redirect('business-environment/discussions/'.$this->user['uconfirmation'].'/theme/'.$discussion['dsc_id']);
+			endif;
+			$theme = 0;
+		else:
+			$theme = $this->uri->segment(5);
+			if($this->discussionsmodel->owner($theme,$activity,$envirenment)):
+				$this->session->set_userdata('disc_theme',$theme);
+			else:
+				show_404();
+			endif;
+		endif;
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -826,8 +843,43 @@ class Company_interface extends CI_Controller {
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'envirenment'	=> $envirenment
+					'envirenment'	=> $envirenment,
+					'discussion'	=> $this->discussionsmodel->read_records($activity,$envirenment),
+					'theme_name'	=> $this->discussionsmodel->read_field($theme,'dsc_title'),
+					'topics'		=> array(),
+					'count'			=> 0,
+					'pages'			=> ''
+					
 			);
+		
+		$pagevar['count'] = $this->dsctopicsmodel->count_records($theme);
+
+		$config['base_url'] = $pagevar['baseurl'].'business-environment/discussions/'.$this->user['uconfirmation'].'/theme/'.$theme.'/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 7;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(7));
+		$pagevar['topics'] = $this->unionmodel->dsc_topics_limit_records(5,$from,$theme);
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['topics']);$i++):
+			$pagevar['topics'][$i]['top_date'] = $this->operation_date($pagevar['topics'][$i]['top_date']);
+			if(mb_strlen($pagevar['topics'][$i]['top_note'],'UTF-8') > 750):									
+				$pagevar['topics'][$i]['top_note'] = mb_substr($pagevar['topics'][$i]['top_note'],0,750,'UTF-8');	
+				$pos = mb_strrpos($pagevar['topics'][$i]['top_note'],'.',0,'UTF-8');
+				$pagevar['topics'][$i]['top_note'] = mb_substr($pagevar['topics'][$i]['top_note'],0,$pos,'UTF-8');
+				$pagevar['topics'][$i]['top_note'] .= '.';
+			endif;
+		endfor;
+		
 		if($envirenment == 'full'):
 			$pagevar['title'] .= 'Общая бизнес среда | Обсуждения';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
@@ -835,9 +887,113 @@ class Company_interface extends CI_Controller {
 			$pagevar['title'] .= 'Полноценная бизнес среда | Обсуждения';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
+		$this->session->set_userdata('backpath',$this->uri->uri_string());
 		$this->load->view('company_interface/business/discussions-index',$pagevar);
 	}
 
+	function discussions_create_theme(){
+		
+	}
+
+	function discussions_create_discussion(){
+		
+	}
+
+	function read_discussion(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 'full';
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$theme = $this->session->userdata('disc_theme');
+		if(!$this->discussionsmodel->owner($theme,$activity,$envirenment)):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->dsctopicsmodel->topic_exist($topic,$theme)):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Редактирование обсуждения',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'envirenment'	=> $envirenment,
+					'discussion'	=> $this->discussionsmodel->read_records($activity,$envirenment),
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'theme_name'	=> $this->discussionsmodel->read_field($theme,'dsc_title'),
+					'topic'			=> $this->unionmodel->dsc_topic_records($topic),
+					'backpath'		=> $this->session->userdata('backpath'),
+					'comments'		=> array(),
+					'count'			=> 0,
+					'pages'			=> ''
+			);
+		$pagevar['topic']['top_date'] = $this->operation_date($pagevar['topic']['top_date']);
+		
+		$pagevar['count'] = $this->commentsmodel->count_records($topic,'discussions');
+		
+		$config['base_url'] = $pagevar['baseurl'].'business-environment/discussions/'.$this->user['uconfirmation'].'/discussion/'.$this->uri->segment(5).'/comments/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 8;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(8));
+		$pagevar['comments'] = $this->unionmodel->dsc_topic_comments_limit_records(5,$from,$topic,'"discussions"');
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['comments']);$i++):
+			$pagevar['comments'][$i]['cmn_date'] = $this->operation_date($pagevar['comments'][$i]['cmn_date']);
+		endfor;
+		
+		if($envirenment == 'full'):
+			$pagevar['title'] .= 'Общая бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Полноценная бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/read-discussion',$pagevar);
+	}
+	
+	function edit_discussion(){
+		
+	}
+
+	function track_discussion(){
+		
+	}
+	
+	function share_discussion(){
+		
+	}
+	
+	function delete_discussion(){
+		
+	}
+	
+	function add_discussion(){
+		
+	}
+	
+	function edit_comment(){
+		
+	}
+	
+	function delete_comment(){
+		
+	}
+	
+	
+	
 	function question_answer(){
 		
 		$envirenment = $this->session->userdata('envirenment');

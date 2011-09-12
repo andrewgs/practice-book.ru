@@ -16,4 +16,5 @@ span[frown] { transform: rotate(90deg); display:inline-block; color: #bbb; }
 <details>
   <summary><h1>Запрашиваемая страница не найдена</h1></summary>
   <p><span frown><a href="/">Переход на главную страницу</a></span></p>
+  <p><span frown><a href="javascript:history.back();">Вернутся назад</a></span></p>
 </details>

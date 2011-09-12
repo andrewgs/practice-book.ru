@@ -229,6 +229,33 @@ class Unionmodel extends CI_Model {
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		else return null;
-	}	
+	}
+
+	function dsc_topics_limit_records($count,$from,$dsc){
+		
+		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_dscid = $dsc ORDER BY top_date DESC, top_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	function dsc_topic_records($topic){
+		
+		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic ORDER BY top_date DESC, top_id DESC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function dsc_topic_comments_limit_records($count,$from,$topic,$group){
+	
+		$query = "SELECT cmn_id,cmn_note,cmn_date,cmn_usrid,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_comments,tbl_user,tbl_company WHERE tbl_comments.cmn_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_comments.cmn_topid = $topic AND tbl_comments.cmn_group = $group ORDER BY cmn_date DESC, cmn_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
 }
 ?>
