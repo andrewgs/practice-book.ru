@@ -16,6 +16,13 @@
 		<?= form_error('final'); ?>
 		<input class="reg-form-small inpvalue final" id="final" name="final" type="text" value="<?=set_value('final');?>"/>
 		<div class="clear"></div>
+		<label class="label-input">Бизнес среда<span class="necessarily" title="Поле не может быть пустым">*</span></label>
+		<?= form_error('environment'); ?>
+		<select name="environment" id="environment" class="mixed-combo" size="1" style="width: 200px;">
+			<option value="0" <?=set_select('environment','0',TRUE);?>>Общая среда</option>
+			<option value="1" <?=set_select('environment','1');?>>Полноценная среда</option>
+		</select>
+		<div class="clear"></div>
 		<input class="btn-action margin-1em" id="addItem" type="submit" name="submit" value="Добавить"/>
 	</div>
 	<div class="clear"></div>

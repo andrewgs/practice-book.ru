@@ -1397,6 +1397,7 @@ class Admin_interface extends CI_Controller {
 										$this->form_validation->set_rules('parentid',' "id гл.отрасли" ','required|integer|trim');
 										$this->form_validation->set_rules('full',' "полное название" ','required|trim');
 										$this->form_validation->set_rules('final',' "признак конца" ','required|integer|trim');
+										$this->form_validation->set_rules('environment',' "среда" ','required');
 										$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 										if(!$this->form_validation->run()):
 											$_POST['submit'] = NULL;
@@ -1688,24 +1689,27 @@ class Admin_interface extends CI_Controller {
 	
 	function save_activity(){
 	
-		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','title'=>'','parent'=>'','full'=>'','final'=>'');
+		$statusval= array('status'=>FALSE,'message'=>'Данные не изменились','title'=>'','parent'=>'','full'=>'','final'=>'','environment'=>'');
 		$rid = $this->input->post('id');
 		$title = trim($this->input->post('title'));
 		$parent = trim($this->input->post('parent'));
 		$full = trim($this->input->post('full'));
 		$final = trim($this->input->post('final'));
+		$environment = trim($this->input->post('environment'));
 		if(!isset($rid) or empty($rid)) show_404();
 		if(!isset($title) or empty($title)) show_404();
 		if(!isset($parent) or empty($parent)) $parent = 0;
 		if(!isset($full) or empty($full)) show_404();
 		if(!isset($final) or empty($final)) $final = 0;
-		$success = $this->activitymodel->save_activity($rid,$title,$parent,$full,$final);
+		if(!isset($environment) or empty($environment)) $environment = 0;
+		$success = $this->activitymodel->save_activity($rid,$title,$parent,$full,$final,$environment);
 		if($success){
 			$statusval['status'] = TRUE;
 			$statusval['title'] = $title;
 			$statusval['parent'] = $parent;
 			$statusval['full'] = $full;
 			$statusval['final'] = $final;
+			$statusval['environment'] = $environment;
 		}
 		echo json_encode($statusval);
 	}

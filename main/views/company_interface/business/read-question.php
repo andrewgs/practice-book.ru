@@ -30,7 +30,7 @@
 		<div id="main" class="whitebg">
 			<div class="contentblock">
 				<div class="content-top">
-					<span class="category">Обсуждения</span>
+					<span class="category">ВОПРОС-ОТВЕТ</span>
 					<h1>Business Environment (Бизнес-Среда)</h1>
 				</div>
 				<div class="content-left">
@@ -40,16 +40,15 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-									<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
+									<li><?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['qa_id'],$sections[$i]['qa_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
@@ -57,18 +56,12 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-									<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-discussion','<img src="'.$baseurl.'images/add_events2.png" alt="Создать обсуждение"/>',array('title'=>'Создать обсуждение'));?>
-								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
+							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<div class="right-post">
-									<h2><?=$topics[$i]['top_title'];?></h2>
-									<span class="date"><?=$topics[$i]['top_date'];?></span>
-									<p><?=$topics[$i]['top_note'];?></p>
+									<h2><?=$question['qat_title'];?></h2>
+									<span class="date"><?=$question['qat_date'];?></span>
 									<span class="green">
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'],'читать полностью');?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'/comment','ответить');?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'#comments','комментарии ('.$topics[$i]['top_comments'].')');?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question['qat_id'].'/answer','ответить');?>
 									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
@@ -76,12 +69,12 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-												<?php if($topics[$i]['top_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/edit-discussion/'.$topics[$i]['top_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/track-discussion/'.$topics[$i]['top_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/share-discussion/'.$topics[$i]['top_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/delete-discussion/'.$topics[$i]['top_id'],'Удалить',array('title'=>'Удалить'));?>
+													<?php if($question['qat_usrid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/edit-question/'.$question['qat_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/track-question/'.$question['qat_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/share-question/'.$question['qat_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/delete-question/'.$question['qat_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 													<?php endif; ?>
 													</div>
@@ -89,8 +82,8 @@
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['top_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$question['qat_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$question['usubname'].' '.$question['uname'].' '.$question['uposition'].' '.$question['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -98,7 +91,39 @@
 										</table>
 									</div>
 								</div>
-							<?php endfor; ?>
+								<div class="right-comment">
+									<a name="answers"></a>
+									<div class="right-comment-title">ответы (<?=$question['qat_comments'];?>):</div>
+								<?php for($i=0;$i<count($comments);$i++): ?>
+									<div class="commentblock">
+										<div class="right-post-option">
+											<table cellspacing="0" class="post-option">
+												<tr>
+													<td class="right-avtor">
+														<table cellspacing="0" cellpadding="0">
+															<tr>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$comments[$i]['cmn_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$comments[$i]['usubname'].' '.$comments[$i]['uname'].' '.$comments[$i]['uposition'].' '.$comments[$i]['cmp_name']?></td>
+															</tr>
+														</table>
+													</td>
+													<td class="date-comment"><?=$comments[$i]['cmn_date'];?></td>
+												</tr>
+											</table>
+										</div>
+										<div class="commentbox">
+											<p><?=$comments[$i]['cmn_note'];?></p>
+											
+										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
+											<div class="commentbox-option">
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$this->uri->segment(5).'/edit-answer/'.$comments[$i]['cmn_id'],'Редактировать');?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$this->uri->segment(5).'/edit-answer/'.$comments[$i]['cmn_id'],'Удалить');?>
+											</div>
+										<?php endif;?>
+										</div>
+									</div>
+								<?php endfor; ?>
+								</div>
 							<?php if($pages): ?>
 								<?=$pages;?>
 							<?php endif;?>
@@ -106,7 +131,6 @@
 						</div>
 					</div>
 				</div>
-			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>

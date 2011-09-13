@@ -67,9 +67,9 @@ class Discussionsmodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	function owner($theme,$dsc_activity,$environment){
+	function owner($section,$dsc_activity,$environment){
 		
-		$this->db->where('dsc_id',$theme);
+		$this->db->where('dsc_id',$section);
 		$this->db->where('dsc_activity',$dsc_activity);
 		$this->db->where('dsc_environment',$environment);
 		$query = $this->db->get('tbl_discussions',1);
@@ -78,9 +78,9 @@ class Discussionsmodel extends CI_Model {
 		return FALSE;
 	}
 
-	function read_field($theme,$field){
+	function read_field($section,$field){
 			
-		$this->db->where('dsc_id',$theme);
+		$this->db->where('dsc_id',$section);
 		$query = $this->db->get('tbl_discussions',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];

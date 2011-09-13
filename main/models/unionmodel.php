@@ -249,12 +249,30 @@ class Unionmodel extends CI_Model {
 		else return null;
 	}
 
-	function dsc_topic_comments_limit_records($count,$from,$topic,$group){
+	function topic_comments_limit_records($count,$from,$topic,$group){
 	
 		$query = "SELECT cmn_id,cmn_note,cmn_date,cmn_usrid,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_comments,tbl_user,tbl_company WHERE tbl_comments.cmn_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_comments.cmn_topid = $topic AND tbl_comments.cmn_group = $group ORDER BY cmn_date DESC, cmn_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
+		else return null;
+	}
+
+	function qa_topics_limit_records($count,$from,$qa){
+		
+		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_qaid = $qa ORDER BY qat_date DESC, qat_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function qa_topic_records($topic){
+		
+		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_id = $topic ORDER BY qat_date DESC, qat_id DESC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
 		else return null;
 	}
 }

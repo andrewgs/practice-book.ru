@@ -52,6 +52,7 @@
 		<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
 					</div>
 				</div>
+			<?php if(!$envirenment):?>
 				<div class="grid_4">
 					<div class="business-nav-box">
 						<div class="new-bg"><h2 class="font-replace">Рейтинг</h2></div>
@@ -64,6 +65,7 @@
 				<?=anchor('business-environment/rating/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
 					</div>
 				</div>
+			<?php endif; ?>
 				<div class="grid_4">
 					<div class="business-nav-box">
 						<div class="new-bg"><h2 class="font-replace">Статьи</h2></div>
@@ -99,7 +101,8 @@
 						</p>
 				<?=anchor('business-environment/survey/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
 					</div>
-				</div>			
+				</div>
+			<?php if(!$envirenment):?>
 				<div class="grid_4">
 					<div class="business-nav-box">
 						<div class="new-bg"><h2 class="font-replace">Объединения для закупок</h2></div>
@@ -160,6 +163,7 @@
 			<?=anchor('business-environment/who-main/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
 					</div>
 				</div>
+			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>

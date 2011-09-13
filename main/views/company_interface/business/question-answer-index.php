@@ -35,50 +35,60 @@
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Темы</h3>
+						<h3>Разделы</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<li><a href="#">Продажи</a></li>
-									<li><a href="#">Начальство</a></li>
-									<li><a href="#">УСНО</a></li>
-									<li><a href="#">Клиенты</a></li>
-									<li><a href="#">Зарплата</a></li>
-									<li><a href="#">Отпуск</a></li>
-									<li><a href="#">Конфликты</a></li>
+								<?php for($i=0;$i<count($sections);$i++): ?>		
+									<li><?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['qa_id'],$sections[$i]['qa_title']);?></li>
+								<?php endfor; ?>
 								</ul>
 								<br />
-								<a href="#" title="Создать тему"><img src="<?=$baseurl;?>images/add_events.png" alt="Создать тему" /></a>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
 							<div class="right-title">
-								<h3>ВОПРОС-ОТВЕТ</h3>
+								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
+							<div class="add_events">
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/create-question','<img src="'.$baseurl.'images/add_events2.png" alt="Задать вопрос"/>',array('title'=>'Задать вопрос'));?>
+								</div>
+						<?php for($i=0;$i<count($question);$i++):?>
 								<div class="right-post">
-									<h2>Как лучше вывести рентабельность продукта?</h2>
+									<h2><?=($i+1).'. '.$question[$i]['qat_title'];?></h2>
+									<span class="date"><?=$question[$i]['qat_date'];?></span>
+									<span class="green">
+	<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question[$i]['qat_id'].'/answer','ответить');?>
+	<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question[$i]['qat_id'].'/answers#answers','ответы ('.$question[$i]['qat_comments'].')');?>
+									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
-													<div class="opt-bg"><div class="opt-bgg">
-														<a class="first" href="#" title="Ответить">Ответить</a>
-														<a href="#" title="Отслеживать">Отслеживать</a>
-														<a href="#" title="Поделиться">Поделиться</a>
-														<a href="#" title="Удалить">Удалить</a>
-													</div></div>
+													<div class="opt-bg">
+														<?php if($question[$i]['qat_usrid'] == $userinfo['uid']):?>
+													<div class="opt-bgg">
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/edit-question/'.$question[$i]['qat_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/track-question/'.$question[$i]['qat_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/share-question/'.$question[$i]['qat_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/delete-question/'.$question[$i]['qat_id'],'Удалить',array('title'=>'Удалить'));?>
+														</div>
+													<?php endif; ?>
+													</div>
 												</td>
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-															<td>Алексей Иванов директор ООО «Дело»</td>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$question[$i]['qat_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$question[$i]['usubname'].' '.$question[$i]['uname'].' '.$question[$i]['uposition'].' '.$question[$i]['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -86,84 +96,15 @@
 										</table>
 									</div>
 								</div>
-								<div class="right-comment">
-									<div class="right-comment-title right-comment-titlenone">
-										ответы(28):
-									</div>
-									<div class="commentblock">
-										<div class="right-post-option">
-											<table cellspacing="0" class="post-option">
-												<tr>
-													<td class="right-avtor">
-														<table cellspacing="0" cellpadding="0">
-															<tr>
-																<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-																<td>Алексей Иванов директор ООО «Дело»</td>
-															</tr>
-														</table>
-													</td>
-													<td class="date-comment">
-														30.08.2011, 18:15
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div class="commentbox">
-											<p>Юридические лица РФ имеют сложную организационно-правовую структуру (директор назначается и может быть сменен собранием учредителей компании, кроме того, не всегда может осуществлять те или иные действия в системе WebMoney и вынужден делегировать их другим лицам). По правилам системы WebMoney обычная регистрация в системе WebMoney осуществляется на конкретное физическое лицо и передача WMID другому лицу запрещена.</p>
-											<div class="commentbox-option">
-												<a href="#">Ответить</a> <a href="#">Удалить</a>
-											</div>
-										</div>
-									</div>
-									<div class="commentblock">
-										<div class="right-post-option">
-											<table cellspacing="0" class="post-option">
-												<tr>
-													<td class="right-avtor">
-														<table cellspacing="0" cellpadding="0">
-															<tr>
-																<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-																<td>Алексей Иванов директор ООО «Дело»</td>
-															</tr>
-														</table>
-													</td>
-													<td class="date-comment">
-														30.08.2011, 18:15
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div class="commentbox">
-											<p>Юридические лица РФ имеют сложную организационно-правовую структуру (директор назначается и может быть сменен собранием учредителей компании, кроме того, не всегда может осуществлять те или иные действия в системе WebMoney и вынужден делегировать их другим лицам). По правилам системы WebMoney обычная регистрация в системе WebMoney осуществляется на конкретное физическое лицо и передача WMID другому лицу запрещена.</p>
-										</div>
-									</div>
-									<div class="commentblock">
-										<div class="right-post-option">
-											<table cellspacing="0" class="post-option">
-												<tr>
-													<td class="right-avtor">
-														<table cellspacing="0" cellpadding="0">
-															<tr>
-																<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-																<td>Алексей Иванов директор ООО «Дело»</td>
-															</tr>
-														</table>
-													</td>
-													<td class="date-comment">
-														30.08.2011, 18:15
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div class="commentbox">
-											<p>Юридические лица РФ имеют сложную организационно-правовую структуру (директор назначается и может быть сменен собранием учредителей компании, кроме того, не всегда может осуществлять те или иные действия в системе WebMoney и вынужден делегировать их другим лицам). По правилам системы WebMoney обычная регистрация в системе WebMoney осуществляется на конкретное физическое лицо и передача WMID другому лицу запрещена.</p>
-										</div>
-									</div>
-								</div>
+						<?php endfor; ?>
+						<?php if($pages): ?>
+							<?=$pages;?>
+						<?php endif;?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>

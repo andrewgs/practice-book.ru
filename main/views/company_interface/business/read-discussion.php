@@ -35,16 +35,16 @@
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Темы</h3>
+						<h3>Разделы</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($discussion);$i++): ?>		
-									<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/theme/'.$discussion[$i]['dsc_id'],$discussion[$i]['dsc_title']);?></li>
+									<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/section/'.$discussion[$i]['dsc_id'],$discussion[$i]['dsc_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-theme','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 					<div class="content-right-top">
 						<div class="content-right-bot">
 							<div class="right-title">
-								<h3><?=$theme_name;?></h3>
+								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>

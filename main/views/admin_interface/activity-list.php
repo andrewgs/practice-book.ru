@@ -57,7 +57,7 @@
 			if($("#frmInsert").is(":hidden")){
 				$("#btnInsert").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
 				$("#frmInsert").slideDown("slow");
-				var height = $(window).height();
+				var height = $(window).height()+200;
 				$("html, body").animate({scrollTop:height+'px'},"slow");
 			}else{
 				$("#frmInsert").slideUp("slow",function(){
@@ -112,14 +112,17 @@
 			var objParent = $("#vParent"+curID);
 			var objFull = $("#vFullTitle"+curID);
 			var objFinal = $("#vFinall"+curID);
+			var objEnvironment = $("#vEnvironment"+curID);
 			var valTitle = $(objTitle).val();
 			var valParent = $(objParent).val();
 			var valFull = $(objFull).val();
 			var valFinal = $(objFinal).val();
+			var valEnvironment = $(objEnvironment).val();
 			$(objTitle).css('border-color','#D0D0D0');
 			$(objParent).css('border-color','#D0D0D0');
 			$(objFull).css('border-color','#D0D0D0');
 			$(objFinal).css('border-color','#D0D0D0');
+			$(objEnvironment).css('border-color','#D0D0D0');
 			if(valTitle == ""){
 				$(objTitle).css('border-color','#ff0000');
 				err = true;
@@ -136,22 +139,28 @@
 				$(objFinall).css('border-color','#ff0000');
 				err = true;
 			}
+			if(valEnvironment == ""){
+				$(objEnvironment).css('border-color','#ff0000');
+				err = true;
+			}
 			if(err){
 				msgerror('Пропущены обязательные поля');
 				return false;
 			}else{
 				$.post("<?=$baseurl;?>admin/save-activity/<?=$userinfo['uconfirmation'];?>",
-				{'id':actID,'title':valTitle,'parent':valParent,'full':valFull,'final':valFinal},
+				{'id':actID,'title':valTitle,'parent':valParent,'full':valFull,'final':valFinal,'environment':valEnvironment},
 				function(data){
 					if(data.status){
 						$(objTitle).val(data.title);
 						$(objParent).val(data.parent);
 						$(objFull).val(data.full);
 						$(objFinal).val(data.final);
+						$(objEnvironment).val(data.environment);
 						$(objTitle).css('border-color','#00ff00');
 						$(objParent).css('border-color','#00ff00');
 						$(objFull).css('border-color','#00ff00');
 						$(objFinal).css('border-color','#00ff00');
+						$(objEnvironment).css('border-color','#00ff00');
 					}else{
 						msgerror(data.message);
 					}

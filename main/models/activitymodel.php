@@ -7,6 +7,7 @@ class Activitymodel extends CI_Model {
 	var $act_parentid 	= 0;
 	var $act_fulltitle 	= "";
 	var $act_final		= 0;
+	var $act_environment= 0;
 	
 	function __construct(){
         
@@ -29,6 +30,7 @@ class Activitymodel extends CI_Model {
 		$this->act_parentid		= $insertdata['parentid'];
 		$this->act_fulltitle	= $insertdata['full'];
 		$this->act_final 		= $insertdata['final'];	
+		$this->act_environment	= $insertdata['environment'];	
 		
 		$this->db->insert('tbl_activity',$this);
 		return $this->db->insert_id();
@@ -142,12 +144,13 @@ class Activitymodel extends CI_Model {
 		return $query->result_array();
 	}
 
-	function save_activity($id,$title,$parent,$full,$final){
+	function save_activity($id,$title,$parent,$full,$final,$environment){
 	
 		$this->db->set('act_title',$title);
 		$this->db->set('act_parentid',$parent);
 		$this->db->set('act_fulltitle',$full);
 		$this->db->set('act_final',$final);
+		$this->db->set('act_environment',$environment);
 		$this->db->where('act_id',$id);
 		$this->db->update('tbl_activity');
 		return $this->db->affected_rows();

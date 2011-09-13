@@ -93,10 +93,10 @@ class Dsctopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$theme,$usr){
+	function owner($id,$section,$usr){
 		
 		$this->db->where('top_id',$id);
-		$this->db->where('top_dscid',$theme);
+		$this->db->where('top_dscid',$section);
 		$this->db->where('top_usrid',$usr);
 		$query = $this->db->get('tbl_dsc_topics',1);
 		$data = $query->result_array();
@@ -104,10 +104,10 @@ class Dsctopicsmodel extends CI_Model {
 		return FALSE;
 	}
 
-	function topic_exist($id,$theme){
+	function topic_exist($id,$section){
 		
 		$this->db->where('top_id',$id);
-		$this->db->where('top_dscid',$theme);
+		$this->db->where('top_dscid',$section);
 		$query = $this->db->get('tbl_dsc_topics',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;

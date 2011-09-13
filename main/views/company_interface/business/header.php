@@ -5,8 +5,8 @@
 			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
 			<?= anchor($link,'К разделам общей среды',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
 		<?php else: ?>
-			<?php $link = 'company/overall-business-environment/'.$userinfo['uconfirmation']; ?>
-			<?= anchor($link,'К разделам полноценной среды',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
+			<?php $link = 'company/private-business-environment/'.$userinfo['uconfirmation']; ?>
+			<?= anchor($link,'К разделам частной среды',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
 		<?php endif; ?>
 		</div>
 		<section id="auth">

@@ -209,32 +209,54 @@ $route['representative/save-profile/:any'] = "company_interface/representative_s
 /* ------------------------------------------ business-environment --------------------------------------------*/
 
 $route['company/full-business-environment/:any'] = "company_interface/business";
-$route['company/overall-business-environment/:any'] = "company_interface/business";
+$route['company/private-business-environment/:any'] = "company_interface/business";
 
-$route['business-environment/discussions/:any/theme/:num'] = "company_interface/discussions";
-$route['business-environment/discussions/:any/theme/:num/count/:num'] = "company_interface/discussions";
-$route['business-environment/discussions/:any/create-theme'] = "company_interface/discussions_create_theme";
+$route['business-environment/discussions/:any/section/:num'] = "company_interface/discussions";
+$route['business-environment/discussions/:any/section/:num/count/:num'] = "company_interface/discussions";
+$route['business-environment/discussions/:any/create-section'] = "company_interface/discussions_create_section";
 $route['business-environment/discussions/:any/create-discussion'] = "company_interface/discussions_create_discussion";
 $route['business-environment/discussions/:any/discussion/:num'] = "company_interface/read_discussion";
 
-$route['business-environment/discussions/:any/discussion/:num/comment'] = "company_interface/add_discussion";
-
+$route['business-environment/discussions/:any/discussion/:num/comment'] = "company_interface/add_comment";
 $route['business-environment/discussions/:any/discussion/:num/comments/count'] = "company_interface/read_discussion";
 $route['business-environment/discussions/:any/discussion/:num/comments/count/:num'] = "company_interface/read_discussion";
+
 $route['business-environment/discussions/:any/discussion/:num/edit-comment/:num'] = "company_interface/edit_comment";
 $route['business-environment/discussions/:any/discussion/:num/delete-comment/:num'] = "company_interface/delete_comment";
-
 
 $route['business-environment/discussions/:any/edit-discussion/:num'] = "company_interface/edit_discussion";
 $route['business-environment/discussions/:any/track-discussion/:num'] = "company_interface/track_discussion";
 $route['business-environment/discussions/:any/share-discussion/:num'] = "company_interface/share_discussion";
 $route['business-environment/discussions/:any/delete-discussion/:num'] = "company_interface/delete_discussion";
 
-
 $route['business-environment/discussions/:any'] = "company_interface/discussions";
 
 
+$route['business-environment/question-answer/:any/section/:num'] = "company_interface/question_answer";
+$route['business-environment/question-answer/:any/section/:num/count/:num'] = "company_interface/question_answer";
+
+$route['business-environment/question-answer/:any/create-section'] = "company_interface/question_create_section";
+$route['business-environment/question-answer/:any/create-question'] = "company_interface/question_create_question";
+
+$route['business-environment/question-answer/:any/question/:num/answer'] = "company_interface/add_answer";
+
+$route['business-environment/question-answer/:any/edit-question/:num'] = "company_interface/edit_question";
+$route['business-environment/question-answer/:any/track-question/:num'] = "company_interface/track_question";
+$route['business-environment/question-answer/:any/share-question/:num'] = "company_interface/share_question";
+$route['business-environment/question-answer/:any/delete-question/:num'] = "company_interface/delete_question";
+
+$route['business-environment/question-answer/:any/question/:num/answer'] = "company_interface/add_comment";
+
+$route['business-environment/question-answer/:any/question/:num/answers'] = "company_interface/read_question";
+$route['business-environment/question-answer/:any/question/:num/answers/count'] = "company_interface/read_question";
+$route['business-environment/question-answer/:any/question/:num/answers/count/:num'] = "company_interface/read_question";
+
+$route['business-environment/question-answer/:any/question/:num/edit-answer/:num'] = "company_interface/edit_answer";
+$route['business-environment/question-answer/:any/question/:num/delete-answer/:num'] = "company_interface/delete_answer";
+
 $route['business-environment/question-answer/:any'] = "company_interface/question_answer";
+
+
 $route['business-environment/rating/:any'] = "company_interface/rating";
 $route['business-environment/articles/:any'] = "company_interface/articles";
 $route['business-environment/documentation/:any'] = "company_interface/documentation";

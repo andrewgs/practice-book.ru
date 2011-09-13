@@ -4,7 +4,7 @@
 			<?php $link = 'company/control-panel/'.$userinfo['uconfirmation'];?>
 			<?= anchor($link,'Управление',array('class'=>'lnk-submit','type'=>'button'));?>
 			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
-			<?= anchor($link,'Общая бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
+			<?= anchor($link,'Бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
 		</div>
 		<section id="auth">
 			<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>

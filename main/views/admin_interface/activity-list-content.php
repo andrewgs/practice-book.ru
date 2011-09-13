@@ -14,6 +14,7 @@
 					<th scope="col" abbr="ID ГЛАВНОЙ ОТРАСЛИ">ГЛ.ОТРАСЛЬ</th>
 					<th scope="col" abbr="ПОЛНОЕ НАЗВАНИЕ">ПОЛНОЕ НАЗВАНИЕ</th>
 					<th scope="col" abbr="ПРИЗНАК КОНЦА">КОНЕЦ(0/1)</th>
+					<th scope="col" abbr="СРЕДА">СРЕДА(0/1)</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
@@ -31,13 +32,13 @@
 <td><input class="small200-form-input" id="vTitle<?=$i?>" rID="<?=$i?> name="title" type="text" value="<?=$list[$i]['act_title'];?>"></td>
 <td><input class="reg-form-small parentid" id="vParent<?=$i?>" rID="<?=$i?> name="parentid" type="text" value="<?=$list[$i]['act_parentid'];?>"></td>
 <td><input class="small200-form-input" id="vFullTitle<?=$i?>" rID="<?=$i?> name="full" type="text" value="<?=$list[$i]['act_fulltitle'];?>"></td>
-<td><input class="reg-form-small final" id="vFinall<?=$i?>" rID="<?=$i?> name="final" type="text" value="<?=$list[$i]['act_final'];?>"></td>
+<td><input class="reg-form-small final" id="vFinall<?=$i?>" rID="<?=$i?> name="final" type="text" value="<?=$list[$i]['act_final'];?>"></td><td><input class="reg-form-small final" id="vEnvironment<?=$i?>" rID="<?=$i?> name="environment" type="text" value="<?=$list[$i]['act_environment'];?>"></td>
 					<td>
 						<div class="ButtonOperation">
 			<input type="image" title="Сохранить" class="NewsSave" id="s<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/save.png" />
 						</div>
 					</td> 
-				</tr	>
+				</tr>
 				<?php endfor; ?>	
 			</tbody>
 		</table>

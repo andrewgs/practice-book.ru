@@ -1,16 +1,22 @@
 <header role="contentinfo" style="margin-bottom:10px;">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
+	<?php if($actenvironment): ?>
 		<?php $segm = $this->uri->segment(2);?>
 		<?php if($segm == 'full-business-environment'):?>	
-			<?php $link = 'company/overall-business-environment/'.$userinfo['uconfirmation']; ?>
-			<?= anchor($link,'Полноценная бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
+			<?php $link = 'company/private-business-environment/'.$userinfo['uconfirmation']; ?>
+			<?= anchor($link,'Частная бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
 		<?php else: ?>
 			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
 			<?= anchor($link,'Общая бизнес среда',array('class'=>'lnk-submit','type'=>'button'));?>
 		<?php endif; ?>
-	<?php if(count($activity)):?>
+	<?php endif; ?>
+	<?php if(count($activity) > 1):?>
+		<?php if($actenvironment): ?>
 		<form id="ManActData" method="post" action="<?=$baseurl;?><?=$this->uri->uri_string();?>" style="float:right; margin-left:10px;">
+		<?php else: ?>
+		<form id="ManActData" method="post" action="<?=$baseurl;?><?=$this->uri->uri_string();?>">
+		<?php endif; ?>
 			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="width:250px;padding:3px;">
 				<option value="0">Выберите отрасль</option>
 			<?php for($i=0;$i<count($activity);$i++): ?>
