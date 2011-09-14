@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Обсуждения</h1>
+					<h1>Business Environment (Бизнес-Среда): Статьи</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -40,16 +40,15 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
+<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
@@ -57,18 +56,14 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-									<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-discussion','<img src="'.$baseurl.'images/add_events2.png" alt="Создать обсуждение"/>',array('title'=>'Создать обсуждение'));?>
-								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
+							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<div class="right-post">
-									<h2><?=$topics[$i]['top_title'];?></h2>
-									<span class="date"><?=$topics[$i]['top_date'];?></span>
-									<p><?=$topics[$i]['top_note'];?></p>
+									<h2><?=$article['atp_title'];?></h2>
+									<span class="date"><?=$article['atp_date'];?></span>
+									<p><?=$article['atp_note'];?></p>
+									<span class="view">просмотров: <?=$article['atp_views'];?></span>
 									<span class="green">
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'],'читать полностью');?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'/comment','ответить');?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'#comments','комментарии ('.$topics[$i]['top_comments'].')');?>
+				<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$article['atp_id'].'/comment','ответить');?>
 									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
@@ -76,12 +71,12 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-												<?php if($topics[$i]['top_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/edit-discussion/'.$topics[$i]['top_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/track-discussion/'.$topics[$i]['top_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/share-discussion/'.$topics[$i]['top_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/delete-discussion/'.$topics[$i]['top_id'],'Удалить',array('title'=>'Удалить'));?>
+													<?php if($article['atp_usrid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/edit-article/'.$article['atp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/track-article/'.$article['atp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/share-article/'.$article['atp_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/delete-article/'.$article['atp_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 													<?php endif; ?>
 													</div>
@@ -89,8 +84,8 @@
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['top_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$article['atp_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$article['usubname'].' '.$article['uname'].' '.$article['uposition'].' '.$article['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -98,7 +93,39 @@
 										</table>
 									</div>
 								</div>
-							<?php endfor; ?>
+								<div class="right-comment">
+									<a name="comments"></a>
+									<div class="right-comment-title">комментарии (<?=$article['atp_comments'];?>):</div>
+								<?php for($i=0;$i<count($comments);$i++): ?>
+									<div class="commentblock">
+										<div class="right-post-option">
+											<table cellspacing="0" class="post-option">
+												<tr>
+													<td class="right-avtor">
+														<table cellspacing="0" cellpadding="0">
+															<tr>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$comments[$i]['cmn_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$comments[$i]['usubname'].' '.$comments[$i]['uname'].' '.$comments[$i]['uposition'].' '.$comments[$i]['cmp_name']?></td>
+															</tr>
+														</table>
+													</td>
+													<td class="date-comment"><?=$comments[$i]['cmn_date'];?></td>
+												</tr>
+											</table>
+										</div>
+										<div class="commentbox">
+											<p><?=$comments[$i]['cmn_note'];?></p>
+											
+										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
+											<div class="commentbox-option">
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
+											</div>
+										<?php endif;?>
+										</div>
+									</div>
+								<?php endfor; ?>
+								</div>
 							<?php if($pages): ?>
 								<?=$pages;?>
 							<?php endif;?>
@@ -106,7 +133,6 @@
 						</div>
 					</div>
 				</div>
-			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -128,7 +154,7 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});

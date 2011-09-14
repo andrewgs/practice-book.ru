@@ -30,12 +30,12 @@
 		<div id="main" class="whitebg">
 			<div class="contentblock">
 				<div class="content-top">
-					<span class="category">Обсуждения</span>
-					<h1>Business Environment (Бизнес-Среда)</h1>
+					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
+					<h1>Business Environment (Бизнес-Среда): Обсуждения</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Разделы</h3>
+						<h3>ТЕМЫ</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
@@ -154,6 +154,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#select-category").change(function(){change_category($(this));});
+			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>
 </body>

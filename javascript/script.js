@@ -10,5 +10,5 @@ $(function(){
 		$('div.new-bg', $(this)).slideUp(600, 'easeInOutExpo');
 	}, function() {
 		$('div.new-bg', $(this)).slideDown(600, 'easeInOutExpo');
-	}); 
+	});
 });

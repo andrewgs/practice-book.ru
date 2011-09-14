@@ -2,10 +2,11 @@
 
 class Questionanswermodel extends CI_Model {
 	
-	var $qa_id 		= 0;
+	var $qa_id 			= 0;
 	var $qa_title 		= "";
 	var $qa_activity 	= 0;
-	var $qa_environment= 'full';
+	var $qa_environment = 0;
+	var $qa_department	= 0;
 	
 	function __construct(){
         
@@ -21,11 +22,13 @@ class Questionanswermodel extends CI_Model {
 		return NULL;
 	}
 
-	function read_record($qa_activity,$environment){
+	function read_record($qa_activity,$environment,$department){
 		
+		if(!$environment) $department = 0;
 		$this->db->select('qa_id,qa_title');
 		$this->db->where('qa_activity',$qa_activity);
 		$this->db->where('qa_environment',$environment);
+		$this->db->where('qa_department',$department);
 		$this->db->order_by('qa_title');
 		$query = $this->db->get('tbl_question_answer',1);
 		$data = $query->result_array();
@@ -33,21 +36,24 @@ class Questionanswermodel extends CI_Model {
 		return NULL;
 	}
 	
-	function read_records($qa_activity,$environment){
-	
+	function read_records($qa_activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
 		$this->db->select('qa_id,qa_title');
 		$this->db->where('qa_activity',$qa_activity);
 		$this->db->where('qa_environment',$environment);
+		$this->db->where('qa_department',$department);
 		$this->db->order_by('qa_title');
 		$query = $this->db->get('tbl_question_answer');
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$qa_activity,$environment){
-	
+	function insert_records($data,$qa_activity,$environment,$department){
+		
 		$this->qa_title = $data['title'];
 		$this->qa_activity = $qa_activity;
 		$this->qa_environment = $environment;
+		$this->qa_department = $department;
 		$this->db->insert('tbl_question_answer',$this);
 		return $this->db->insert_id();
 	}
@@ -67,11 +73,13 @@ class Questionanswermodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	function owner($section,$qa_activity,$environment){
+	function owner($section,$qa_activity,$environment,$department){
 		
+		if(!$environment) $department = 0;
 		$this->db->where('qa_id',$section);
 		$this->db->where('qa_activity',$qa_activity);
 		$this->db->where('qa_environment',$environment);
+		$this->db->where('qa_department',$department);
 		$query = $this->db->get('tbl_question_answer',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;

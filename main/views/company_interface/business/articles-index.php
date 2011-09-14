@@ -30,8 +30,8 @@
 		<div id="main" class="whitebg">
 			<div class="contentblock">
 				<div class="content-top">
-					<span class="category">статьи</span>
-					<h1>Business Environment (Бизнес-Среда)</h1>
+					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
+					<h1>Business Environment (Бизнес-Среда): Cтатьи</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -39,57 +39,70 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<li><a href="#">Продажи</a></li>
-									<li><a href="#">Начальство</a></li>
-									<li><a href="#">УСНО</a></li>
-									<li><a href="#">Клиенты</a></li>
-									<li><a href="#">Зарплата</a></li>
-									<li><a href="#">Отпуск</a></li>
-									<li><a href="#">Конфликты</a></li>
+									<?php for($i=0;$i<count($sections);$i++): ?>		
+<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+								<?php endfor; ?>
 								</ul>
 								<br />
-								<a href="#" title="Создать тему"><img src="<?=$baseurl;?>images/add_events.png" alt="Создать тему" /></a>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
 							<div class="right-title">
-								<h3>продажи</h3>
+								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
 								<div class="add_events">
-									<a href="#" title="добавить статью"><img src="<?=$baseurl;?>images/add_article.png" alt="добавить статью" /></a>
+								<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-articles','<img src="'.$baseurl.'images/add_events2.png" alt="Добавить статью"/>',array('title'=>'Добавить статью'));?>
+							<?php if(count($articles)):?>
 									<span class="sort">
-										Сортировать: <a href="#">по дате</a> / <a href="#">по количеству просмотров</a>
+										Сортировать:
+								<?php if($bysort == 'atp_date'):?><strong><?php endif;?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$this->uri->segment(5).'/sort-date','по дате');?> / 
+								<?php if($bysort == 'atp_date'):?></strong><?php endif;?>
+								<?php if($bysort == 'atp_views'):?><strong><?php endif;?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$this->uri->segment(5).'/sort-views','по количеству просмотров');?>
+								<?php if($bysort == 'atp_views'):?></strong><?php endif;?>
 									</span>
+							<?php endif; ?>
 								</div>
+							<?php for($i=0;$i<count($articles);$i++):?>
 								<div class="right-post">
-									<h2>"Топ-книга" избавится от непопулярных изданий</h2>
-									<span class="date">30.08.2011</span>
-									<p>Книготорговая сеть "Топ-книга" 26 сентября закроет все свои магазины, а в начале октября откроет их в новом формате и под другим названием. Количество магазинов сократится с 450 до 350, а сеть будет работать под названием "КнигоМир". Компания оставит только популярную художественную литературу.</p>
-									<span class="view">просмотров: 32</span>
-									<span class="green"><a href="#">читать полностью</a> <a href="#">комментарии (251)</a></span>
+									<h2><?=$articles[$i]['atp_title'];?></h2>
+									<span class="date"><?=$articles[$i]['atp_date'];?></span>
+									<p><?=$articles[$i]['atp_note'];?></p>
+									<span class="view">просмотров: <?=$articles[$i]['atp_views'];?></span>
+									<span class="green">
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'],'читать полностью');?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'].'/comment','ответить');?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'].'#comments','комментарии ('.$articles[$i]['atp_comments'].')');?>
+									</span>
 									<div class="clear">&nbsp;</div>
-									
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-										<a href="#" title="Редактировать"><img src="<?=$baseurl;?>images/edit2.png" alt="Редактировать" /></a>
-										<a href="#" title="Отслеживать"><img src="<?=$baseurl;?>images/otsl.png" alt="Отслеживать" /></a>
-										<a href="#" title="Поделиться"><img src="<?=$baseurl;?>images/podel.png" alt="Поделиться" /></a>
-										<a href="#" title="Удалить"><img src="<?=$baseurl;?>images/delete.png" alt="Удалить" /></a>
+												<?php if($articles[$i]['atp_usrid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/edit-article/'.$articles[$i]['atp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/track-article/'.$articles[$i]['atp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/share-article/'.$articles[$i]['atp_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/delete-article/'.$articles[$i]['atp_id'],'Удалить',array('title'=>'Удалить'));?>
+														</div>
+													<?php endif; ?>
 													</div>
 												</td>
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-															<td><img src="<?=$baseurl;?>images/avatar4.png" alt="" align="left" /></td>
-															<td>Олег Литвинов юрисконсульт ООО «Лесторг»</td>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$articles[$i]['atp_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$articles[$i]['usubname'].' '.$articles[$i]['uname'].' '.$articles[$i]['uposition'].' '.$articles[$i]['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -97,41 +110,15 @@
 										</table>
 									</div>
 								</div>
-								<div class="right-post">
-									<h2>"Евросеть" отказалась открывать новые магазины на Украине</h2>
-									<span class="date">30.08.2011</span>
-									<p>В отличие от оптовой торговли, товар, купленный в системе розничной торговли, не подлежит дальнейшей перепродаже (согласно действующему законодательству, пункту 1 статьи 492 Гражданского кодекса Российской Федерации), а предназначен для непосредственного использования.<br /> 
-			В отличие от оптовой торговли, товар, купленный в системе розничной торговли, не подлежит дальнейшей перепродаже (согласно действующему законодательству, пункту 1 статьи 492 Гражданского кодекса Российской Федерации), а предназначен для непосредственного использования. </p>
-									<span class="view">просмотров: 32</span>
-									<span class="green"><a href="#">читать полностью</a> <a href="#">комментарии (251)</a></span>
-									<div class="clear">&nbsp;</div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg">
-										<a href="#" title="Комментировать"><img src="<?=$baseurl;?>images/comm.png" alt="Комментировать" /></a>
-										<a href="#" title="Отслеживать"><img src="<?=$baseurl;?>images/otsl.png" alt="Отслеживать" /></a>
-										<a href="#" title="Поделиться"><img src="<?=$baseurl;?>images/podel.png" alt="Поделиться" /></a>
-										<a href="#" title="Удалить"><img src="<?=$baseurl;?>images/delete.png" alt="Удалить" /></a>
-													</div>
-												</td>
-												<td class="right-avtor">
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-															<td>Алексей Иванов директор ООО «Дело»</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -154,6 +141,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#select-category").change(function(){change_category($(this));});
+			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>
 </body>

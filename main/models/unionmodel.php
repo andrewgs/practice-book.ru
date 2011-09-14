@@ -242,7 +242,7 @@ class Unionmodel extends CI_Model {
 	
 	function dsc_topic_records($topic){
 		
-		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic ORDER BY top_date DESC, top_id DESC";
+		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -269,7 +269,26 @@ class Unionmodel extends CI_Model {
 
 	function qa_topic_records($topic){
 		
-		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_id = $topic ORDER BY qat_date DESC, qat_id DESC";
+		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+	
+	function articles_limit_records($count,$from,$section,$field){
+		
+		$query = "SELECT atp_id,atp_title,atp_note,atp_date,atp_usrid,atp_comments,atp_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_art_topics,tbl_user,tbl_company WHERE tbl_art_topics.atp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_art_topics.atp_artid = $section ORDER BY $field DESC, atp_id DESC LIMIT $from,$count";
+//		die($query);
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	function article_topic_records($article){
+		
+		$query = "SELECT atp_id,atp_title,atp_note,atp_date,atp_usrid,atp_comments,atp_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_art_topics,tbl_user,tbl_company WHERE tbl_art_topics.atp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_art_topics.atp_id = $article";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
