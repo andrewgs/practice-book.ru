@@ -1,4 +1,5 @@
 .whitebg {background:#fff;margin:0;padding:0 0 18px 0;}
+.silverbg {background:#f5f5f5;margin:0; padding:30px 0 18px 0;}
 
 .contentblock {width:958px;margin:0 auto;text-align:left;position:relative;overflow:hidden;font:normal 12px/15px Myriad Pro, Trebuchet MS, Arial;}
 
@@ -200,3 +201,41 @@
 .title_marg {overflow:hidden;margin:10px 0 10px -60px;}
 .title_marg h3 {padding:0 10px 0 60px;float:left;height:24px;background:#e3e3e3;color:#000;font:normal 16px/24px Myriad Pro, Arial;}
 .textblock {padding:0 0 20px 37px;}
+
+
+
+/* search */
+
+.margblock {margin:60px 0 0 0;}
+.search-slaider-top {margin:50px 0 0 0;}
+.search-slaider-top ul {list-style:none;}
+..search-slaider-top h2 {color:#787878;font:normal 11px/14px Myriad Pro, Arial;}
+
+
+.search-content {padding:50px 16px 0 0;}
+.searchtitle {padding:0 0 10px 0;}
+.searhcblock {overflow:hidden;font:normal 14px/19px Arial, Tahoma;}
+.searhcblock .searhcbox {float:left;padding:0 30px 0 0;}
+.searhcblock .searhcbox p {padding:4px 0;}
+.searhcblock .searhcbox .searhcinput {padding:8px 10px;float:left;width:261px;height:16px;background:#fafafa url(../images/searchtext2.png) no-repeat;}
+.searhcblock .searhcbox .searhcinput input {float:left;width:261px;height:16px;background:none;border:none;}
+
+.searchselect {border-top:1px solid #ccc; padding:20px 0 10px 0; margin:24px 0 0 0;}
+.selectbox {margin:17px 0 0 0;width:304px;background:#efefef url(../images/box-bg.png) repeat-y;}
+.selectboxbg {width:304px;background:url(../images/box-top.png) no-repeat top left;}
+.selectboxbg2 {width:280px;background:url(../images/box-bot.png) no-repeat bottom left;padding:45px 12px;}
+.selecttext {width:280px;overflow:hidden;}
+.selecttext select {width:280px;overflow:hidden;}
+
+
+.silvercontent {width:961px;margin:0 auto; overflow:hidden;background:url(../images/biznesbg.png) repeat-y;}
+.biznesblock {width:879px; padding:0 0 0 81px; margin:0 auto; overflow:hidden;}
+.biznesbox {padding:0; overflow:hidden;background:url(../images/biznes-list.png) no-repeat left;}
+.biznesboxbg {width:844px; margin:0 0 0 1px;padding:20px 0 20px 34px; overflow:hidden;background:url(../images/biznesbg2.png) repeat-x bottom;}
+.biznesphoto {float:left;width:117px;}
+.biznestext {margin:0 0 0 140px;font:normal 14px/16px Myriad Pro, Arial;}
+.biznestext h2 {color:#f68b1f; font:normal 24px/29px Myriad Pro, Arial;text-transform:uppercase;}
+.biznestext p {color:#000000; padding:10px 0;width:450px;}
+.biznesmore {float:right;}
+.lastbiznesbox {background:url(../images/lastlist.png) no-repeat left;}
+.lastbiznesbox .biznesboxbg {background:none;}

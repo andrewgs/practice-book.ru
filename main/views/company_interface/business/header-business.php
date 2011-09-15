@@ -1,4 +1,4 @@
-<header role="contentinfo" style="margin-bottom:10px;">
+<header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
 	<?php if($actenvironment): ?>

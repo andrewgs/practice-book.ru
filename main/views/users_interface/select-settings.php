@@ -3,24 +3,31 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style2.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/jquery-ui.css?v=1.8.5">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/skin.css">
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
 	<![endif]-->
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		.w575{width: 575px;}
 		.h20{min-height: 20px;}
-		.h190{height: 190px;}
+		.h245{height: 245px;}
 		#dregion {padding: 10px 0 20px 10px;}
 		.activity,.region{font: bold normal 110% serif;margin: 0px;}
 		.activityList,.regionList{margin-top: 10px;margin-left: -20px;}
@@ -35,62 +42,106 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
 		<?php $this->load->view('users_interface/header/header-noauth'); ?>
-		<div id="main">
-			<div class="container_12">
-				<div class="grid_12">
-					<div class="grid_4 prefix_2">
-						<img usemap="#rusmap" src="<?=$baseurl;?>images/rusmap_b.png" border="0" height="413" width="640">
-					</div>
-					<div class="clear"></div>
+		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="search-slaider-top">
+					<ul id="mycarousel" class="jcarousel-skin-tango">
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+					</ul>
 				</div>
-				<div class="grid_12" style="margin:0">
-					<hr size="2"/>
-					<div class="grid_6" style="margin:0">
-						<h2>Поиск отрасли/товара/услуги:</h2>
-						от 3-х символов
-						<input class="edit450-form-input" id="ActivityName" type="text" value=""/>
-						<div class="clear"></div>
-						<div id="ASV" class="btnHidden"></div>
-						<div id="PSV" class="btnHidden"></div>
-						<div id="search-result"></div>
+				
+				<div class="search-content">
+					<div class="searchtitle">
+						<img src="<?=$baseurl;?>images/searchtitle.png" alt="" />
 					</div>
-					<div class="grid_4">
-						<h2>Поиск города:</h2>
-						от 3-х символов
-						<input class="edit265-form-input" id="RegionName" type="text" value=""/>
-						<div class="clear"></div>
-						<div id="RSV" class="btnHidden"></div>
-						<div id="region-result"></div>
-					</div>
-					<div class="grid_2">
+					<div class="searhcblock">
+						<div class="searhcbox">
+							<b>Поиск отрасли/товаров/услуг</b>
+							<p>от 3-х символов</p>
+							<div class="">
+								<input class="edit450-form-input" id="ActivityName" type="text" value=""/>
+								<div class="clear"></div>
+								<div id="ASV" class="btnHidden"></div>
+								<div id="PSV" class="btnHidden"></div>
+								<div id="search-result"></div>
+							</div>
+						</div>
+						<div class="searhcbox">
+							<b>Поиск отрасли/товаров/услуг</b>
+							<p>от 3-х символов</p>
+							<div class="">
+								<input class="edit265-form-input" id="RegionName" type="text" value=""/>
+								<div class="clear"></div>
+								<div id="RSV" class="btnHidden"></div>
+								<div id="region-result"></div>
+							</div>
+						</div>
 						<h2>&nbsp;</h2>
 						<h2>&nbsp;</h2>
-						<input class="btn-action" style="margin-top:0" id="setSearch" type="button" name="submit" value="Получить информацию"/>
-					</div>
-					<div class="clear"></div>
-					<hr size="2"/>
-				</div>
-				<div class="grid_12">
-					<h2>Укажите отрасль <span class="necessarily" title="Выбор отрасли обязателен">*</span></h2>
-					<div class="clear"></div>
-					<input type="hidden" name="activity" value="" id="activityValue" />
-					<div class="activityList" aSelect="1">
-						<?php $this->load->view('users_interface/activity-box-select'); ?>
-					</div>
-				</div>
-				<div class="clear"></div>
-				<div class="grid_12">
-					<div id="divHidden" style="display:none">
-						<h2>Укажите регион <span class="necessarily" title="Выбор региона обязателен">*</span></h2>
-						<div class="clear"></div>
-						<input type="hidden" name="region" value="" id="regionValue" />
-						<div class="regionList" lSelect="1">
-							<?php $this->load->view('users_interface/region-box-select'); ?>
+						<input class="btn-action"  id="setSearch" type="button" name="submit" value="Продолжить"/>
+						<div class="clear">&nbsp;</div>
+						
+						<div class="container_12">
+							<hr size="2"/>
+							<div class="grid_12">
+								<h2>Укажите отрасль <span class="necessarily" title="Выбор отрасли обязателен">*</span></h2>
+								<div class="clear"></div>
+								<input type="hidden" name="activity" value="" id="activityValue" />
+								<div class="activityList" aSelect="1">
+									<?php $this->load->view('users_interface/activity-box-select'); ?>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div class="grid_12">
+								<div id="divHidden" style="display:none">
+									<h2>Укажите регион <span class="necessarily" title="Выбор региона обязателен">*</span></h2>
+									<div class="clear"></div>
+									<input type="hidden" name="region" value="" id="regionValue" />
+									<div class="regionList" lSelect="1">
+										<?php $this->load->view('users_interface/region-box-select'); ?>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						<input class="btn-action margin-1em btnHidden" id="setParam" type="button" name="submit" value="Продолжить"/>
 						</div>
 					</div>
 				</div>
-				<div class="clear"></div>
-				<input class="btn-action margin-1em btnHidden" id="setParam" type="button" name="submit" value="Получить информацию"/>
+				
+				
+				<div class="search-slaider-top search-slaider-bot">
+				<ul id="mycarousel2" class="jcarousel-skin-tango">
+					<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
+			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+				</ul>
+				</div>	
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -99,8 +150,12 @@
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			
+			$('#mycarousel').jcarousel();
+			$('#mycarousel2').jcarousel();
 			
 			$(".region").change(function(){
 				changeRegionList(this);

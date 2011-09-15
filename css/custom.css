@@ -27,7 +27,7 @@ div.custom input {
 	left: 0px;
 	padding-bottom: 0px;
 	margin: 0px;
-	font: 11px/ 20px tahoma, arial, helvetica, sans-serif;
+	font: 11px/ 19px tahoma, arial, helvetica, sans-serif;
 	vertical-align: middle;
 	border-left: #3a3c6c 1px solid;
 	width: 187px;
@@ -35,9 +35,6 @@ div.custom input {
 	border-bottom: #3a3c6c 1px solid;
 	top: 0px;
 	height: 19px;
-}
-input.city__sexyCombo{
-	height: 24px;
 }
 
 div.custom div.icon {

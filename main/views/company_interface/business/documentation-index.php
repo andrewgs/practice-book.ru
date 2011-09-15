@@ -35,56 +35,62 @@
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Темы</h3>
+						<h3>ТЕМЫ</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<li><a href="#">Продажи</a></li>
-									<li><a href="#">Начальство</a></li>
-									<li><a href="#">УСНО</a></li>
-									<li><a href="#">Клиенты</a></li>
-									<li><a href="#">Зарплата</a></li>
-									<li><a href="#">Отпуск</a></li>
-									<li><a href="#">Конфликты</a></li>
+							<?php for($i=0;$i<count($sections);$i++): ?>		
+<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
+							<?php endfor; ?>
 								</ul>
 								<br />
-								<a href="#" title="Создать тему"><img src="<?=$baseurl;?>images/add_events.png" alt="Создать тему" /></a>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
 							<div class="right-title">
-								<h3>продажи</h3>
+								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
 								<div class="add_events">
-								<a href="#" title="добавить документ">
-									<img src="<?=$baseurl;?>images/add_document.png" alt="добавить документ" />
-								</a>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-query','<img src="'.$baseurl.'images/add_zapros.png" alt="создать запрос"/>',array('title'=>'создать запрос'));?>
 								</div>
+							<?php for($i=0;$i<count($topics);$i++):?>
 								<div class="right-post">
-									<h2>Подскажите пожалуйста оптимальный договор для поставки пиломатериалов?</h2>
-									<span class="date">30.08.2011</span>
+									<h2><?=$topics[$i]['dtt_title'];?></h2>
+									<span class="date"><?=$topics[$i]['dtt_date'];?></span>
+									<span class="green">
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/documents-list','документов ('.$topics[$i]['dtt_documents'].')');?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/comment','ответить');?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/comments','комментарии ('.$topics[$i]['dtt_comments'].')');?>
+									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
-													<div class="opt-bg"><div class="opt-bgg">
-														<a class="first" href="#" title="Редактировать">Редактировать</a>
-														<a href="#" title="Отслеживать">Отслеживать</a>
-														<a href="#" title="Документов">Документов (257)</a>
-														<a href="#" title="Удалить">Удалить</a>
-													</div></div>
+													<div class="opt-bg">
+														<?php if($topics[$i]['dtt_usrid'] == $userinfo['uid']):?>
+													<div class="opt-bgg">
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/edit-query/'.$topics[$i]['dtt_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/track-query/'.$topics[$i]['dtt_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+														<?php if(!$topics[$i]['dtt_documents']):?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/delete-query/'.$topics[$i]['dtt_id'],'Удалить',array('title'=>'Удалить'));?>
+														<?php endif; ?>
+														</div>
+													<?php endif; ?>
+													</div>
 												</td>
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-															<td>Алексей Иванов директор ООО «Дело»</td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['dtt_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -92,41 +98,15 @@
 										</table>
 									</div>
 								</div>
-								<div class="right-post">
-									<h2>договор поставки пиломатериалов</h2>
-									<span class="date">30.08.2011</span>
-									<p>В отличие от оптовой торговли, товар, купленный в системе розничной торговли, не подлежит дальнейшей перепродаже (согласно действующему законодательству, пункту 1 статьи 492 Гражданского кодекса Российской Федерации), а предназначен для непосредственного использования.<br /> 
-			В отличие от оптовой торговли, товар, купленный в системе розничной торговли, не подлежит дальнейшей перепродаже (согласно действующему законодательству, пункту 1 статьи 492 Гражданского кодекса Российской Федерации), а предназначен для непосредственного использования. </p>
-									<span class="view">просмотров: 32</span>
-									<span class="green"><a href="#">скачать</a> <a href="#">комментарии (251)</a></span>
-									<div class="clear">&nbsp;</div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg"><div class="opt-bgg">
-														<a class="first" href="#" title="Редактировать">Редактировать</a>
-														<a href="#" title="Отслеживать">Отслеживать</a>
-														<a href="#" title="Документов">Документов (257)</a>
-														<a href="#" title="Удалить">Удалить</a>
-													</div></div>
-												</td>
-												<td class="right-avtor">
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-															<td><img src="<?=$baseurl;?>images/avatar3.png" alt="" align="left" /></td>
-															<td>Алексей Иванов директор ООО «Дело»</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
 							</div>
 						</div>
 					</div>
 				</div>
+			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>

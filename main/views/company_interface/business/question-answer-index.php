@@ -35,7 +35,7 @@
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Разделы</h3>
+						<h3>Темы</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>

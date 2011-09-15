@@ -37,6 +37,7 @@ class Users_interface extends CI_Controller {
 		$this->load->model('jobsmodel');
 		$this->load->model('consultationmodel');
 		$this->load->model('departmentsmodel');
+		$this->load->model('doclistmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -1572,6 +1573,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'companynews'	: 	$image = $this->cmpnewsmodel->get_image($id); break;
 			case 'prsavatar'	: 	$image = $this->personamodel->get_image($id); break;
 			case 'docavatar'	: 	$image = $this->documentsmodel->get_image($id); break;
+			case 'bedocavatar'	: 	$image = $this->doclistmodel->get_image($id); break;
 			case 'specials'		: 	$image = $this->specialsmodel->get_image($id); break;
 			case 'puravatar'	: 	$image = $this->productionunitmodel->get_image($id); break;
 			case 'curavatar'	: 	$image = $this->cmpunitsmodel->get_image($id); break;

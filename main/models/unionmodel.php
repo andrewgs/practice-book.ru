@@ -294,5 +294,50 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data[0];
 		else return null;
 	}
+
+	function int_topics_limit_records($count,$from,$int){
+		
+		$query = "SELECT itp_id,itp_title,itp_note,itp_date,itp_usrid,itp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_inttopics,tbl_user,tbl_company WHERE tbl_inttopics.itp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_inttopics.itp_intid = $int ORDER BY itp_date DESC, itp_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function int_topic_records($topic){
+		
+		$query = "SELECT itp_id,itp_title,itp_note,itp_date,itp_usrid,itp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_inttopics,tbl_user,tbl_company WHERE tbl_inttopics.itp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_inttopics.itp_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+	
+	function dtn_topics_limit_records($count,$from,$dtn){
+		
+		$query = "SELECT dtt_id,dtt_title,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_dtnid = $dtn ORDER BY dtt_date DESC, dtt_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function dtn_topic_records($topic){
+		
+		$query = "SELECT dtt_id,dtt_title,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function documents_limit_records($count,$from,$topic){
+
+		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_dtnid = $topic ORDER BY dls_date DESC, dls_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
 }
 ?>

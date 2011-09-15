@@ -1,8 +1,8 @@
 <div class="grid_4">
 	<div class="box">
 		<div class="box-header">&nbsp;</div>
-		<div class="box-content w280 h190">
-			<select name="activity" class="activity w280" size="10">
+		<div class="box-content w280 h245">
+			<select name="activity" class="activity w280" size="15">
 				<option value="0" selected="selected" disabled="disabled">Выберите отрасль</option>
 			<?php for($i=0;$i<count($activity);$i++): ?>
 				<?php if($activity[$i]['act_final']): ?>

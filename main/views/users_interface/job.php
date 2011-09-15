@@ -35,12 +35,97 @@
 		<?php else: ?>
 			<?php $this->load->view('users_interface/header/header-logout'); ?>
 		<?php endif; ?>
-		<div id="main">
+		<div id="main" class="whitebg">
 			<div class="contentblock">
 				<div class="work">
 					<div class="work-title"><h3>Работа</h3></div>
 					<div class="work-text">
 						<?=$text;?>
+						<div class="accordion">
+							<ul class="acc" id="acc">
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work01.png" alt="" />как стать консультантом PB?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<ul class="listbg">
+											<li><table><tr><td class="td"><span>1</span></td><td>Вы регистрируетесь за направлением бизнеса, в котором у Вас есть опыт продаж или  его ведения.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>2</span></td><td>Вы проходите проверку на компетентность,ответив на некоторые  вопросы, касающиеся данной отрасли. Тем самым подтверждая свои профессиональные качества и необходимые знания.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>3</span></td><td>Все Ваши ответы проверяются специалистами проекта и федеральным руководителем данного направления, по следующим критериям: колличество и  качество информации, необходимое оформление раздела.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>4</span></td><td>После проверки Вашей квалификации мы переводим Вас на рабочую версию PB и закрепляем вас на проекте в должности специалиста-консультанта.</td></tr></table></li>
+										</ul>
+									</div></div></div>
+								</li>
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work02.png" alt="" />В чем заключается работа?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<ul class="listbg">
+											<li><table><tr><td class="td"><span>1</span></td><td>Наши дилеры со всех регионов РФ привлекают компании и рекламу в Вашу отрасль. Так же идет привлечение потенциальных клиентов на оказание консультаций по данной тематике.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>2</span></td><td>Вы оказываете консультации по поступившим заявкам и получаете пассивный доход от размещенных компаний и рекламы по оговоренным усолвиям. Продолжаете дальше вести профессиональный блог данного направления бизнеса.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>3</span></td><td>И все это в свободное от основной работы время. Мы просто конвертируем Ваш накопленный опыт в бизнесе в реальные деньги.</td></tr></table></li>
+										</ul>
+									</div></div></div>
+								</li>
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work03.png" alt="" />ЧТО ПРЕДЛАГАЕМ?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<div class="title_marg">
+											<h3>Теория</h3>
+										</div>
+										<ul class="listbg">
+											<li><table><tr><td class="td"><span>1</span></td><td>Платное консультирование – 40 % (если консультируете Вы)</td></tr></table></li>
+											<li><table><tr><td class="td"><span>2</span></td><td>Платное размещение рекламных материалов в вашей подотрасли <br />(если рекламодателя находите Вы) – 30 %</td></tr></table></li>
+											<li><table><tr><td class="td"><span>3</span></td><td>Платное размещение рекламных материалов в вашей подотрасли <br />(рекламодатели привлекаются нашими менеджерами) – 10 %</td></tr></table></li>
+											<li><table><tr><td class="td"><span>4</span></td><td>Платное размещение компаний в каталоге вашей подотрасли <br />(компании привлекаются нашими менеджерами) – 5 %</td></tr></table></li>
+										</ul>
+										
+										<div class="title_marg">
+											<h3>Практика</h3>
+										</div>
+										<div class="textblock">
+											<p>Регион - Россия<br />
+											За месяц Вами было обработано минимум 100 заявок <br />
+											100 заявок * 300 руб. = 30000 руб. * 0,4 = 12000 руб.<br />
+											За месяц (в вашей подотрасли) Вами было размещено минимум 5 рекламных баннеров 240*120 в разных регионах.<br />
+											5*10000 руб. = 50000 руб. 0,3 (30%) = 15000<br />
+											За месяц (в вашей подотрасли) Нашими менеджерами было размещено минимум 10 рекламных баннеров 240*120 в разных регионах.<br />
+											10*10000 руб. = 100000 руб. 0,1 (10%) = 10000<br />
+											За месяц в каталоге Вашей подотрасли нашими менеджерами было размещено 20 компаний*<br />
+											20 * 2000 руб. = 40000  руб. * 0.05(5%) = 2000 руб.</p>
+											<p>Общий ежемесячный доход может составить:<br />
+											12000 руб. + 15000 руб. + 10000 руб. + 2000 руб. = 39000 руб.</p>
+										</div>
+									</div></div></div>
+								</li>
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work04.png" alt="" />Какие перспективы развития?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<ul class="listbg">
+											<li><table><tr><td class="td"><span>1</span></td><td>Получение аттестата аккредитации для нашего ресурса позволит выдавать сертификаты соответствия для наших специалистов.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>2</span></td><td>Выдача сертификата соответствия всем зарекомендовавшим себя  специалистам, подтверждающим их высокий уровень профессионального развития</td></tr></table></li>
+											<li><table><tr><td class="td"><span>3</span></td><td>Создание территориально-распределенной автоматизированной экспертной системы для экспертизы и оценки эффективности различных проектов (экология, энергетика, социальная сфера, лесные пожары… и т.д.). Региональные администрации нуждаются в  такой экспертной системы для обоснования своих проектов</td></tr></table></li>
+											<li><table><tr><td class="td"><span>4</span></td><td>Активное участие наших проверенных специалистов в территориально-распределенной автоматизированной экспертной системе.</td></tr></table></li>
+										</ul>
+									</div></div></div>
+								</li>
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work05.png" alt="" />когда требуется?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<div class="textblock">
+											<p>Данная работа не имеет территориальной привязки, заполнение блоков может происходить в любое время, как  свободное, так и  рабочее. Консультирование осуществляется посредством специальной формы сайта, если Вам поступила заявка на консультирование,  Вы тут же будете получать уведомление на свой телефон. Единственное, что от Вас требуется быть профессионалом в своем деле.</p>
+										</div>
+									</div></div></div>
+								</li>
+								<li class="accordionblock">
+									<h2><img src="<?=$baseurl;?>images/work06.png" alt="" />Что не требуется?</h2>
+									<div class="acc-section"><div class="accordionopen"><div class="accordionopenbg">
+										<ul class="listbg">
+											<li><table><tr><td class="td"><span>1</span></td><td>Делать денежные взносы для участия в проекте.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>2</span></td><td>Привлекать знакомых, родственников, друзей, людей и т.д.</td></tr></table></li>
+											<li><table><tr><td class="td"><span>3</span></td><td>Что либо покупать или продавать.</td></tr></table></li>
+										</ul>
+									</div></div></div>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>

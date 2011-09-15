@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 </head>
@@ -26,144 +27,135 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
 	<?php $this->load->view('company_interface/business/header-business'); ?>
-		<div id="main">
-			<div class="container_12 boxes-bg clearfix">
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Обсуждения</h2></div>
-						<h3 class="font-replace">Обсуждения</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-			<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
+		<div id="main" class="silverbg">
+			<div class="silvercontent">
+				<div class="biznesbanner">
+					<a href="#"><img src="<?=$baseurl;?>images/biznesbaner.png" alt="" /></a>
 				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Вопрос-ответ</h2></div>
-						<h3 class="font-replace">Вопрос-ответ</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-		<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
+				<div class="biznesblock">
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz01.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Обсуждения</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz02.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Вопрос-ответ</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+		<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz03.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>взаимодеЙствие с Госструктурами</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz04.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Статьи</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+				<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz05.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Обмен документами</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz06.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>опрос</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/survey/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+				<?php if(!$envirenment):?>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz07.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Объединения для закупок</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/association/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz08.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Предложения контрагентов</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz09.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Новости</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/news/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz10.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Новинки и скидки</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/discounts/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz11.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Кто главный?</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/who-main/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+					<div class="biznesbox lastbiznesbox"><div class="biznesboxbg">
+						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz12.png" alt="" /></a></div>
+						<div class="biznestext">
+							<h2>Рейтинг</h2>
+							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
+							<div class="biznesmore">
+			<?=anchor('business-environment/rating/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+							</div>
+						</div>
+					</div></div>
+				<?php endif;?>
 				</div>
-			<?php if(!$envirenment):?>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Рейтинг</h2></div>
-						<h3 class="font-replace">Рейтинг</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-				<?=anchor('business-environment/rating/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-			<?php endif; ?>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Статьи</h2></div>
-						<h3 class="font-replace">Статьи</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-			<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Обмен документами</h2></div>
-						<h3 class="font-replace">Обмен документами</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-		<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Опрос</h2></div>
-						<h3 class="font-replace">Опрос</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-				<?=anchor('business-environment/survey/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-			<?php if(!$envirenment):?>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Объединения для закупок</h2></div>
-						<h3 class="font-replace">Объединения для закупок</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-			<?=anchor('business-environment/association/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Предложения контрагентов</h2></div>
-						<h3 class="font-replace">Предложения контрагентов</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-				<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Новости</h2></div>
-						<h3 class="font-replace">Новости</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-				<?=anchor('business-environment/news/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Новинки и скидки</h2></div>
-						<h3 class="font-replace">Новинки и скидки</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-			<?=anchor('business-environment/discounts/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-				<div class="grid_4">
-					<div class="business-nav-box">
-						<div class="new-bg"><h2 class="font-replace">Кто главный?</h2></div>
-						<h3 class="font-replace">Кто главный?</h3>
-						<p class="bnb-description">
-							В постсоветское время стали рассматривать и другие версии события. 
-							Этому способствовало недоверие к советской пропаганде, наличие 
-							альтернативных средств борьбы.
-						</p>
-			<?=anchor('business-environment/who-main/'.$userinfo['uconfirmation'],'Перейти в раздел &raquo;',array('class'=>'bnb-action'));?>
-					</div>
-				</div>
-			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>

@@ -68,6 +68,7 @@ $route['activitynews/viewimage/:num'] = "users_interface/viewimage";
 $route['companynews/viewimage/:num'] = "users_interface/viewimage";
 $route['prsavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['docavatar/viewimage/:num'] = "users_interface/viewimage";
+$route['bedocavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['specials/viewimage/:num'] = "users_interface/viewimage";
 $route['puravatar/viewimage/:num'] = "users_interface/viewimage";
 $route['curavatar/viewimage/:num'] = "users_interface/viewimage";
@@ -256,7 +257,29 @@ $route['business-environment/question-answer/:any/question/:num/delete-answer/:n
 
 $route['business-environment/question-answer/:any'] = "company_interface/question_answer";
 
-	/*============================================= rating ============================================*/
+	/*============================================= interaction ============================================*/
+
+$route['business-environment/interactions/:any/section/:num'] = "company_interface/interactions";
+$route['business-environment/interactions/:any/section/:num/count/:num'] = "company_interface/interactions";
+$route['business-environment/interactions/:any/create-section'] = "company_interface/interactions_create_section";
+$route['business-environment/interactions/:any/create-interaction'] = "company_interface/interactions_create_interaction";
+
+$route['business-environment/interactions/:any/interaction/:num'] = "company_interface/read_interaction";
+$route['business-environment/interactions/:any/interaction/:num/comment'] = "company_interface/interaction_add_comment";
+$route['business-environment/interactions/:any/interaction/:num/comments/count'] = "company_interface/read_interaction";
+$route['business-environment/interactions/:any/interaction/:num/comments/count/:num'] = "company_interface/read_interaction";
+
+$route['business-environment/interactions/:any/interaction/:num/edit-comment/:num'] = "company_interface/interaction_edit_comment";
+$route['business-environment/interactions/:any/interaction/:num/delete-comment/:num'] = "company_interface/interaction_delete_comment";
+
+$route['business-environment/interactions/:any/edit-interaction/:num'] = "company_interface/edit_interaction";
+$route['business-environment/interactions/:any/track-interaction/:num'] = "company_interface/track_interaction";
+$route['business-environment/interactions/:any/share-interaction/:num'] = "company_interface/share_interaction";
+$route['business-environment/interactions/:any/delete-interaction/:num'] = "company_interface/delete_interaction";
+
+$route['business-environment/interactions/:any'] = "company_interface/interactions";
+ 
+ /*============================================= rating ============================================*/
 
 $route['business-environment/rating/:any'] = "company_interface/rating";
 
@@ -291,7 +314,35 @@ $route['business-environment/articles/:any/article/:num/delete-comment/:num'] = 
 $route['business-environment/articles/:any'] = "company_interface/articles";
 
 	/*============================================= documentation ============================================*/
+
+$route['business-environment/documentation/:any/section/:num'] = "company_interface/documentation";
+$route['business-environment/documentation/:any/section/:num/count/:num'] = "company_interface/documentation";
+$route['business-environment/documentation/:any/create-section'] = "company_interface/documentation_create_section";
+$route['business-environment/documentation/:any/create-query'] = "company_interface/documentation_create_query";
+
+$route['business-environment/documentation/:any/upload-document'] = "company_interface/documentation_upload_document";
+
+$route['business-environment/documentation/:any/document-query/:num/documents-list'] = "company_interface/read_documents_list";
+$route['business-environment/documentation/:any/document-query/:num/documents-list/count'] = "company_interface/read_documents_list";
+$route['business-environment/documentation/:any/document-query/:num/documents-list/count/:num'] = "company_interface/read_documents_list";
+
+$route['business-environment/documentation/:any/document-query/:num/comment'] = "company_interface/query_add_comment";
+$route['business-environment/documentation/:any/document-query/:num/comments'] = "company_interface/read_query";
+$route['business-environment/documentation/:any/document-query/:num/comments/count'] = "company_interface/read_query";
+$route['business-environment/documentation/:any/document-query/:num/comments/count/:num'] = "company_interface/read_query";
+
+$route['business-environment/documentation/:any/document-query/:num/edit-comment/:num'] = "company_interface/query_edit_comment";
+$route['business-environment/documentation/:any/document-query/:num/delete-comment/:num'] = "company_interface/query_delete_comment";
+
+$route['business-environment/documentation/:any/edit-query/:num'] = "company_interface/edit_query";
+$route['business-environment/documentation/:any/track-query/:num'] = "company_interface/track_query";
+$route['business-environment/documentation/:any/share-query/:num'] = "company_interface/share_query";
+$route['business-environment/documentation/:any/delete-query/:num'] = "company_interface/delete_query";
+
 $route['business-environment/documentation/:any'] = "company_interface/documentation";
+
+/*============================================= survey ============================================*/
+
 $route['business-environment/survey/:any'] = "company_interface/survey";
 $route['business-environment/association/:any'] = "company_interface/association";
 $route['business-environment/offers/:any'] = "company_interface/offers";
