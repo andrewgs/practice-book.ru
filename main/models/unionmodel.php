@@ -333,10 +333,19 @@ class Unionmodel extends CI_Model {
 
 	function documents_limit_records($count,$from,$topic){
 
-		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_dtnid = $topic ORDER BY dls_date DESC, dls_id DESC LIMIT $from,$count";
+		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,dls_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_dtnid = $topic ORDER BY dls_date DESC, dls_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
+		else return null;
+	}
+
+	function dls_document_record($id){
+
+		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,dls_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_id = $id";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
 		else return null;
 	}
 }

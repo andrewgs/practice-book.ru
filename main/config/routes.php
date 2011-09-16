@@ -331,8 +331,20 @@ $route['business-environment/documentation/:any/document-query/:num/comments'] =
 $route['business-environment/documentation/:any/document-query/:num/comments/count'] = "company_interface/read_query";
 $route['business-environment/documentation/:any/document-query/:num/comments/count/:num'] = "company_interface/read_query";
 
+$route['business-environment/documentation/:any/document-query/:num/document/:num/comments'] = "company_interface/read_doc_comments";
+$route['business-environment/documentation/:any/document-query/:num/document/:num/comments/count'] = "company_interface/read_doc_comments";
+$route['business-environment/documentation/:any/document-query/:num/document/:num/comments/count/:num'] = "company_interface/read_doc_comments";
+
+$route['business-environment/documentation/:any/document-query/:num/document/:num/edit-comment/:num'] = "company_interface/doc_edit_comments";
+$route['business-environment/documentation/:any/document-query/:num/document/:num/delete-comment/:num'] = "company_interface/doc_del_comments";
+
+$route['business-environment/documentation/:any/document-query/:num/document/:num/comment'] = "company_interface/doc_add_comments";
+
 $route['business-environment/documentation/:any/document-query/:num/edit-comment/:num'] = "company_interface/query_edit_comment";
 $route['business-environment/documentation/:any/document-query/:num/delete-comment/:num'] = "company_interface/query_delete_comment";
+ 
+$route['business-environment/documentation/:any/document-query/:num/edit-doc-info/:num'] = "company_interface/edit_doc_info";
+$route['business-environment/documentation/:any/document-query/:num/delete-doc-info/:num'] = "company_interface/delete_doc_info";
 
 $route['business-environment/documentation/:any/edit-query/:num'] = "company_interface/edit_query";
 $route['business-environment/documentation/:any/track-query/:num'] = "company_interface/track_query";

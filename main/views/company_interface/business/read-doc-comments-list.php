@@ -56,16 +56,13 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<?=anchor($backpath,'Вернутся назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
-								<div class="add_events">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/upload-document','<img src="'.$baseurl.'images/add_document.png" alt="добавить документ"/>',array('title'=>'добавить документ'));?>
-								</div>
 								<div class="right-post">
-									<h2><?=$topic['dtt_title'];?></h2>
-									<span class="date"><?=$topic['dtt_date'];?></span>
+									<h2><?=$document['dls_title'];?></h2>
+									<span class="date"><?=$document['dls_date'];?></span>
 									<span class="green">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comment','ответить');?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$document['dls_id'].'/comment','ответить');?>
 									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
@@ -73,13 +70,10 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-													<?php if($topic['dtt_usrid'] == $userinfo['uid']):?>
+													<?php if($document['dls_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/edit-query/'.$topic['dtt_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/track-query/'.$topic['dtt_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-														<?php if(!$topic['dtt_documents']):?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/delete-query/'.$topic['dtt_id'],'Удалить',array('title'=>'Удалить'));?>
-														<?php endif; ?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/edit-doc-info/'.$document['dls_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/delete-doc-info/'.$document['dls_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 													<?php endif; ?>
 													</div>
@@ -87,8 +81,8 @@
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topic['dtt_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topic['usubname'].' '.$topic['uname'].' '.$topic['uposition'].' '.$topic['cmp_name']?></td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$document['dls_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$document['usubname'].' '.$document['uname'].' '.$document['uposition'].' '.$document['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -98,8 +92,8 @@
 								</div>
 								<div class="right-comment">
 									<a name="comments"></a>
-									<div class="right-comment-title">документов (<?=$topic['dtt_documents'];?>):</div>
-								<?php for($i=0;$i<count($documents);$i++): ?>
+									<div class="right-comment-title">комментарии (<?=$document['dls_comments'];?>):</div>
+								<?php for($i=0;$i<count($comments);$i++): ?>
 									<div class="commentblock">
 										<div class="right-post-option">
 											<table cellspacing="0" class="post-option">
@@ -107,30 +101,24 @@
 													<td class="right-avtor">
 														<table cellspacing="0" cellpadding="0">
 															<tr>
-			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$documents[$i]['dls_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-			<td><?=$documents[$i]['usubname'].' '.$documents[$i]['uname'].' '.$documents[$i]['uposition'].' '.$documents[$i]['cmp_name']?></td>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$comments[$i]['cmn_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$comments[$i]['usubname'].' '.$comments[$i]['uname'].' '.$comments[$i]['uposition'].' '.$comments[$i]['cmp_name']?></td>
 															</tr>
 														</table>
 													</td>
-													<td class="date-comment"><?=$documents[$i]['dls_date'];?></td>
+													<td class="date-comment"><?=$comments[$i]['cmn_date'];?></td>
 												</tr>
 											</table>
 										</div>
 										<div class="commentbox">
-											<h2><?=$documents[$i]['dls_title'];?></h2>
-											<div style="margin:15px 0px;">
-										<img src="<?=$baseurl;?>bedocavatar/viewimage/<?=$documents[$i]['dls_id'];?>" class="floated" alt=""/>
-												<?=anchor($baseurl.$documents[$i]['dls_link'],'ссылка на документ')?>
-											</div>
-											<p><?=$documents[$i]['dls_note'];?></p>
+											<p><?=$comments[$i]['cmn_note'];?></p>
+											
+										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
 											<div class="commentbox-option">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$documents[$i]['dls_id'].'/comment','ответить');?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$documents[$i]['dls_id'].'/comments','комментарии ('.$documents[$i]['dls_comments'].')');?>
-										<?php if($documents[$i]['dls_usrid'] == $userinfo['uid']):?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/edit-doc-info/'.$documents[$i]['dls_id'],'Редактировать');?><?=anchor
-('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/delete-doc-info/'.$documents[$i]['dls_id'],'Удалить');?>
-										<?php endif;?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$document['dls_id'].'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$document['dls_id'].'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
 											</div>
+										<?php endif;?>
 										</div>
 									</div>
 								<?php endfor; ?>

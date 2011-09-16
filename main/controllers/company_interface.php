@@ -1662,6 +1662,7 @@ class Company_interface extends CI_Controller {
 		endif;
 		
 		$this->session->set_userdata('backpath',$this->uri->uri_string());
+		$this->session->unset_userdata('backpathdoc');
 		$this->load->view('company_interface/business/documentation-index',$pagevar);
 	}
 
@@ -1739,7 +1740,78 @@ class Company_interface extends CI_Controller {
 			$pagevar['title'] .= 'Частная бизнес среда | Список документов';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
+		$this->session->set_userdata('backpathdoc',$this->uri->uri_string());
 		$this->load->view('company_interface/business/read-doc-list',$pagevar);
+	}
+	
+	function read_doc_comments(){
+		
+		$envirenment = $this->session->userdata('envirenment');
+		if(!$envirenment) $envirenment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->documentationmodel->owner($section,$activity,$envirenment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->dtntopicsmodel->topic_exist($topic,$section)):
+			show_404();
+		endif;
+		$docid = $this->uri->segment(7);
+		if(!$this->doclistmodel->doc_exist($docid,$topic)):
+			show_404();
+		endif;
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'envirenment'	=> $envirenment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->documentationmodel->read_records($activity,$envirenment,$this->user['department']),
+					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title'),
+					'document'		=> $this->unionmodel->dls_document_record($docid),
+					'backpath'		=> $this->session->userdata('backpathdoc'),
+					'comments'		=> array(),
+					'count'			=> 0,
+					'pages'			=> ''
+			);
+		$pagevar['document']['dls_date'] = $this->operation_date($pagevar['document']['dls_date']);
+		
+		$pagevar['count'] = $this->commentsmodel->count_records($docid,'documentlist');
+		
+		$config['base_url'] = $pagevar['baseurl'].'business-environment/documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/document/'.$docid.'/comments/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 10;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(10));
+		$pagevar['comments'] = $this->unionmodel->topic_comments_limit_records(5,$from,$docid,'"documentlist"');
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['comments']);$i++):
+			$pagevar['comments'][$i]['cmn_date'] = $this->operation_date($pagevar['comments'][$i]['cmn_date']);
+		endfor;
+		
+		if(!$envirenment):
+			$pagevar['title'] .= 'Общая бизнес среда | Список документов';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Список документов';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/read-doc-comments-list',$pagevar);
 	}
 	
 	function read_query(){
@@ -1805,6 +1877,26 @@ class Company_interface extends CI_Controller {
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
 		$this->load->view('company_interface/business/read-doc-query',$pagevar);
+	}
+	
+	function doc_add_comments(){
+		
+	}
+	
+	function doc_edit_comments(){
+		
+	}
+	
+	function doc_del_comments(){
+		
+	}
+	
+	function edit_doc_info(){
+		
+	}
+	
+	function delete_doc_info(){
+		
 	}
 	
 	function edit_query(){
