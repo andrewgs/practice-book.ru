@@ -57,6 +57,7 @@
 							</div>
 							<div class="right-text">
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<hr size="2"/>
 								<div class="right-post">
 									<h2><?=$question['qat_title'];?></h2>
 									<span class="date"><?=$question['qat_date'];?></span>

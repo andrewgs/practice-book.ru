@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Статьи</h1>
+					<h1>Business Environment (Бизнес-Среда): Опрос</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -40,11 +40,11 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+<li><?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['sur_id'],$sections[$i]['sur_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
@@ -58,35 +58,46 @@
 							<div class="right-text">
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
-								<div class="right-post">
-									<h2><?=$article['atp_title'];?></h2>
-									<span class="date"><?=$article['atp_date'];?></span>
-									<p><?=$article['atp_note'];?></p>
-									<span class="view">просмотров: <?=$article['atp_views'];?></span>
-									<span class="green">
-				<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$article['atp_id'].'/comment','ответить');?>
-									</span>
+ 								<div class="right-post">
+									<h2><?=$topic['stp_title'];?></h2>
+									<div class="votebox">
+										<table cellspacing="0" cellpadding="0" class="votetable">
+									<?php for($y=0;$y<count($topic['vote']);$y++):?>
+											<tr>
+												<td class="tdin">
+													<?=$topic['vote'][$y]['vt_title'];?>
+													<Br/>
+												</td>
+												<td class="tdre">
+												<img src="<?=$baseurl;?>images/vote-line.png" width="<?=$topic['vote'][$y]['vt_percent']*2.9;?>" height="10" alt="" /> (<?=$topic['vote'][$y]['vt_percent'];?>%)
+												</td>
+											</tr>
+									<?php endfor; ?>
+										</table>
+									</div>
+									<span class="date"><?=$topic['stp_date'];?></span>
+									<span class="view">проголосовало : <?=$topic['stp_clicks'];?> чел.</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-													<?php if($article['atp_usrid'] == $userinfo['uid']):?>
+											<?php if($topic['stp_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/edit-article/'.$article['atp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/track-article/'.$article['atp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/share-article/'.$article['atp_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/delete-article/'.$article['atp_id'],'Удалить',array('title'=>'Удалить'));?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/edit-survey/'.$topic['stp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/track-survey/'.$topic['stp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/share-survey/'.$topic['stp_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/delete-survey/'.$topic['stp_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
-													<?php endif; ?>
+											<?php endif; ?>
 													</div>
 												</td>
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$article['atp_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$article['usubname'].' '.$article['uname'].' '.$article['uposition'].' '.$article['cmp_name']?></td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topic['stp_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$topic['usubname'].' '.$topic['uname'].' '.$topic['uposition'].' '.$topic['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -96,7 +107,7 @@
 								</div>
 								<div class="right-comment">
 									<a name="comments"></a>
-									<div class="right-comment-title">комментарии (<?=$article['atp_comments'];?>):</div>
+									<div class="right-comment-title">комментарии (<?=$topic['stp_comments'];?>):</div>
 								<?php for($i=0;$i<count($comments);$i++): ?>
 									<div class="commentblock">
 										<div class="right-post-option">
@@ -119,8 +130,8 @@
 											
 										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
 											<div class="commentbox-option">
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/survey/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
+<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/survey/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
 											</div>
 										<?php endif;?>
 										</div>

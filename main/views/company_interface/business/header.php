@@ -1,7 +1,7 @@
 <header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
-		<?php if($envirenment == 'full'):?>	
+		<?php if($environment == 'full'):?>	
 			<?php $link = 'company/full-business-environment/'.$userinfo['uconfirmation']; ?>
 			<?= anchor($link,'К разделам общей среды',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
 		<?php else: ?>

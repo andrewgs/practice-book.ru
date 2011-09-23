@@ -40,11 +40,11 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
+<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
@@ -77,13 +77,13 @@
 												<td class="right-option">
 													<div class="opt-bg">
 												<?php if($topics[$i]['top_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
+														<div class="opt-bgg">
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/edit-discussion/'.$topics[$i]['top_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/track-discussion/'.$topics[$i]['top_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/share-discussion/'.$topics[$i]['top_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/delete-discussion/'.$topics[$i]['top_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
-													<?php endif; ?>
+												<?php endif; ?>
 													</div>
 												</td>
 												<td class="right-avtor">

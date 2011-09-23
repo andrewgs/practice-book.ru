@@ -1,7 +1,7 @@
 <header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
-	<?php if($actenvironment): ?>
+	<?php if($environment): ?>
 		<?php $segm = $this->uri->segment(2);?>
 		<?php if($segm == 'full-business-environment'):?>	
 			<?php $link = 'company/private-business-environment/'.$userinfo['uconfirmation']; ?>
@@ -12,7 +12,7 @@
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php if(count($activity) > 1):?>
-		<?php if($actenvironment): ?>
+		<?php if($environment): ?>
 		<form id="ManActData" method="post" action="<?=$baseurl;?><?=$this->uri->uri_string();?>" style="float:right; margin-left:10px;">
 		<?php else: ?>
 		<form id="ManActData" method="post" action="<?=$baseurl;?><?=$this->uri->uri_string();?>">

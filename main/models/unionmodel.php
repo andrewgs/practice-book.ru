@@ -239,7 +239,7 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data;
 		else return null;
 	}
-	
+
 	function dsc_topic_records($topic){
 		
 		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic";
@@ -343,6 +343,62 @@ class Unionmodel extends CI_Model {
 	function dls_document_record($id){
 
 		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,dls_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_id = $id";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function sur_topics_limit_records($count,$from,$sur){
+		
+		$query = "SELECT stp_id,stp_title,stp_clicks,stp_date,stp_usrid,stp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_surtopics,tbl_user,tbl_company WHERE tbl_surtopics.stp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_surtopics.stp_surid = $sur ORDER BY stp_date DESC, stp_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function sur_topic_records($topic){
+		
+		$query = "SELECT stp_id,stp_title,stp_clicks,stp_date,stp_usrid,stp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_surtopics,tbl_user,tbl_company WHERE tbl_surtopics.stp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_surtopics.stp_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function asp_topics_limit_records($count,$from,$asp){
+		
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_aspid = $asp ORDER BY ast_date DESC, ast_id DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function asp_topic_records($topic){
+		
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function ofr_topics_limit_records($count,$from,$environment,$department,$activity,$field){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND tbl_offertopic.oft_activity = $activity ORDER BY $field LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function oft_topic_record($topic,$environment,$department,$activity){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND tbl_offertopic.oft_activity = $activity";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];

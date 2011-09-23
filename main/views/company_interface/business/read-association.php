@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Статьи</h1>
+					<h1>Business Environment (Бизнес-Среда): Обсуждения</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -40,11 +40,11 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
@@ -58,35 +58,55 @@
 							<div class="right-text">
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
-								<div class="right-post">
-									<h2><?=$article['atp_title'];?></h2>
-									<span class="date"><?=$article['atp_date'];?></span>
-									<p><?=$article['atp_note'];?></p>
-									<span class="view">просмотров: <?=$article['atp_views'];?></span>
-									<span class="green">
-				<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$article['atp_id'].'/comment','ответить');?>
+								<div class="right-post zakup">
+									<span class="news-pic">
+										<img src="<?=$baseurl;?>associations/viewimage/<?=$topic['ast_id'];?>"class="floated" alt=""/>
 									</span>
-									<div class="clear">&nbsp;</div>
+									<div class="zakup-box">
+										<h2><?=$topic['ast_title'];?></h2>
+										<span class="date"><?=$topic['ast_date'];?></span>
+										<p><?=$topic['ast_note'];?></p>
+										<div class="tablebg"><div class="tablebgbg"><div class="tablebgbg2">
+											<table cellspacing="0" cellpadding="0" class="table">
+											<tr>
+												<th class="top-first">цена</th>
+												<th class="top-center">собрано</th>
+												<th class="top-last" colspan="3">нужно</th>
+											</tr>
+											<tr>
+												<td class="first"><?=$topic['ast_price'];?></td>
+												<td class="td2"><?=$topic['ast_collected'];?></td>
+												<td class="td3"><?=$topic['ast_must1'];?></td>
+												<td class="td4"><?=$topic['ast_must2'];?></td>
+												<td class="last"><?=$topic['ast_must3'];?></td>
+											</tr>
+										</table>
+										</div></div></div>
+										<span class="green">
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'].'/comment','ответить');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'].'/company#company','компаний ('.$topic['ast_collected'].')');?>
+									</span>
+										<div class="clear">&nbsp;</div>
+									</div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-													<?php if($article['atp_usrid'] == $userinfo['uid']):?>
+													<?php if($topic['ast_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/edit-article/'.$article['atp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/track-article/'.$article['atp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/share-article/'.$article['atp_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/delete-article/'.$article['atp_id'],'Удалить',array('title'=>'Удалить'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/edit-association/'.$topic['ast_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/track-association/'.$topic['ast_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/delete-association/'.$topic['ast_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
-													<?php endif; ?>
+												<?php endif; ?>
 													</div>
 												</td>
 												<td class="right-avtor">
 													<table cellspacing="0" cellpadding="0">
 														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$article['atp_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$article['usubname'].' '.$article['uname'].' '.$article['uposition'].' '.$article['cmp_name']?></td>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topic['ast_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$topic['usubname'].' '.$topic['uname'].' '.$topic['uposition'].' '.$topic['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -96,7 +116,7 @@
 								</div>
 								<div class="right-comment">
 									<a name="comments"></a>
-									<div class="right-comment-title">комментарии (<?=$article['atp_comments'];?>):</div>
+									<div class="right-comment-title">комментарии (<?=$topic['ast_comments'];?>):</div>
 								<?php for($i=0;$i<count($comments);$i++): ?>
 									<div class="commentblock">
 										<div class="right-post-option">
@@ -119,8 +139,8 @@
 											
 										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
 											<div class="commentbox-option">
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
 											</div>
 										<?php endif;?>
 										</div>

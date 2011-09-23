@@ -73,6 +73,8 @@ $route['specials/viewimage/:num'] = "users_interface/viewimage";
 $route['puravatar/viewimage/:num'] = "users_interface/viewimage";
 $route['curavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['shares/viewimage/:num'] = "users_interface/viewimage";
+$route['associations/viewimage/:num'] = "users_interface/viewimage";
+$route['offers/viewimage/:num'] = "users_interface/viewimage";
 
 $route['show/contact'] = "users_interface/show_contact";
 
@@ -353,13 +355,92 @@ $route['business-environment/documentation/:any/delete-query/:num'] = "company_i
 
 $route['business-environment/documentation/:any'] = "company_interface/documentation";
 
-/*============================================= survey ============================================*/
+/*============================================= surveys ============================================*/
 
-$route['business-environment/survey/:any'] = "company_interface/survey";
-$route['business-environment/association/:any'] = "company_interface/association";
+$route['business-environment/surveys/:any/section/:num'] = "company_interface/surveys";
+$route['business-environment/surveys/:any/section/:num/count/:num'] = "company_interface/surveys";
+$route['business-environment/surveys/:any/create-section'] = "company_interface/surveys_create_section";
+$route['business-environment/surveys/:any/create-survey'] = "company_interface/surveys_create_survey";
+
+$route['business-environment/surveys/:any/survey/:num'] = "company_interface/read_survey";
+$route['business-environment/surveys/:any/survey/:num/vote'] = "company_interface/vote";
+$route['business-environment/surveys/:any/survey/:num/comment'] = "company_interface/survey_add_comment";
+$route['business-environment/surveys/:any/survey/:num/comments/count'] = "company_interface/read_survey";
+$route['business-environment/surveys/:any/survey/:num/comments/count/:num'] = "company_interface/read_survey";
+
+$route['business-environment/surveys/:any/survey/:num/edit-comment/:num'] = "company_interface/survey_edit_comment";
+$route['business-environment/surveys/:any/survey/:num/delete-comment/:num'] = "company_interface/survey_delete_comment";
+
+$route['business-environment/surveys/:any/edit-survey/:num'] = "company_interface/edit_survey";
+$route['business-environment/surveys/:any/track-survey/:num'] = "company_interface/track_survey";
+$route['business-environment/surveys/:any/share-survey/:num'] = "company_interface/share_survey";
+$route['business-environment/surveys/:any/delete-survey/:num'] = "company_interface/delete_survey";
+
+$route['business-environment/surveys/:any'] = "company_interface/surveys";
+
+	/*============================================= association ============================================*/
+
+$route['business-environment/associations/:any/section/:num'] = "company_interface/association";
+$route['business-environment/associations/:any/section/:num/count/:num'] = "company_interface/association";
+$route['business-environment/associations/:any/create-section'] = "company_interface/associations_create_section";
+$route['business-environment/associations/:any/create-association'] = "company_interface/associations_create_association";
+
+$route['business-environment/associations/:any/association/:num'] = "company_interface/read_association";
+
+$route['business-environment/associations/:any/association/:num/company'] = "company_interface/collected_company";
+$route['business-environment/associations/:any/association/:num/company/count'] = "company_interface/collected_company";
+$route['business-environment/associations/:any/association/:num/company/count/:num'] = "company_interface/collected_company";
+$route['business-environment/associations/:any/association/:num/delete-company/:num'] = "company_interface/collected_delete_company";
+
+$route['business-environment/associations/:any/association/:num/comment'] = "company_interface/association_add_comment";
+$route['business-environment/associations/:any/association/:num/comments'] = "company_interface/read_association";
+$route['business-environment/associations/:any/association/:num/comments/count'] = "company_interface/read_association";
+$route['business-environment/associations/:any/association/:num/comments/count/:num'] = "company_interface/read_association";
+
+$route['business-environment/associations/:any/association/:num/edit-comment/:num'] = "company_interface/association_edit_comment";
+$route['business-environment/associations/:any/association/:num/delete-comment/:num'] = "company_interface/association_delete_comment";
+
+$route['business-environment/associations/:any/edit-association/:num'] = "company_interface/edit_association";
+$route['business-environment/associations/:any/track-association/:num'] = "company_interface/track_association";
+$route['business-environment/associations/:any/share-association/:num'] = "company_interface/share_association";
+$route['business-environment/associations/:any/delete-association/:num'] = "company_interface/delete_association";
+
+$route['business-environment/associations/:any'] = "company_interface/association";
+
+	/*=============================================== offers ==============================================*/
+
+$route['business-environment/offers/:any/create-offer'] = "company_interface/create_offer";
+
+$route['business-environment/offers/:any/offer/:num'] = "company_interface/read_offer";
+$route['business-environment/offers/:any/offer/:num/comments'] = "company_interface/read_offer";
+$route['business-environment/offers/:any/offer/:num/comments/count'] = "company_interface/read_offer";
+$route['business-environment/offers/:any/offer/:num/comments/count/:num'] = "company_interface/read_offer";
+
+$route['business-environment/offers/:any/count'] = "company_interface/offers";
+$route['business-environment/offers/:any/count/:num'] = "company_interface/offers";
+
+$route['business-environment/offers/:any/offer/:num/comment'] = "company_interface/offer_add_comment";
+
+$route['business-environment/offers/:any/edit-offer/:num'] = "company_interface/edit_offer";
+$route['business-environment/offers/:any/track-offer/:num'] = "company_interface/track_offer";
+$route['business-environment/offers/:any/share-offer/:num'] = "company_interface/share_offer";
+$route['business-environment/offers/:any/delete-offer/:num'] = "company_interface/delete_offer";
+
+$route['business-environment/offers/:any/association/:num/edit-offer/:num'] = "company_interface/offer_edit_comment";
+$route['business-environment/offers/:any/association/:num/delete-offer/:num'] = "company_interface/offer_delete_comment";
+
 $route['business-environment/offers/:any'] = "company_interface/offers";
+
+	/*================================================= news ==============================================*/
+	
 $route['business-environment/news/:any'] = "company_interface/news";
+
+	/*============================================== discounts ==============================================*/
+
 $route['business-environment/discounts/:any'] = "company_interface/discounts";
+
+	/*============================================== who-main ==============================================*/
+	
 $route['business-environment/who-main/:any'] = "company_interface/who_main";
 
 /* ------------------------------------------ view/add/edit ----------------------------------------------------*/

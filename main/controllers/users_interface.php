@@ -38,6 +38,8 @@ class Users_interface extends CI_Controller {
 		$this->load->model('consultationmodel');
 		$this->load->model('departmentsmodel');
 		$this->load->model('doclistmodel');
+		$this->load->model('asptopicsmodel');
+		$this->load->model('offerstopicmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -1578,6 +1580,8 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'puravatar'	: 	$image = $this->productionunitmodel->get_image($id); break;
 			case 'curavatar'	: 	$image = $this->cmpunitsmodel->get_image($id); break;
 			case 'shares'		: 	$image = $this->cmpsharesmodel->get_image($id); break;
+			case 'associations'	: 	$image = $this->asptopicsmodel->get_image($id); break;
+			case 'offers'		: 	$image = $this->offerstopicmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;

@@ -28,7 +28,107 @@
 	<div id="container">
 	<?php $this->load->view('company_interface/business/header'); ?>
 		<div id="main" class="whitebg">
-
+			<div class="contentblock">
+				<div class="content-top">
+					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
+					<h1>Business Environment (Бизнес-Среда): Объединения для закупок</h1>
+				</div>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>ТЕМЫ</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+							<?php for($i=0;$i<count($sections);$i++): ?>		
+<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title']);?></li>
+							<?php endfor; ?>
+								</ul>
+								<br />
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php if(count($sections)):?>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3><?=$section_name;?></h3>
+							</div>
+							<div class="right-text">
+								<div class="add_events">
+								<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-association','<img src="'.$baseurl.'images/add_zapros.png" alt="добавить запрос"/>',array('title'=>'добавить запрос'));?>
+								</div>
+							<?php for($i=0;$i<count($topics);$i++):?>
+								<div class="right-post zakup">
+									<span class="news-pic">
+										<img src="<?=$baseurl;?>associations/viewimage/<?=$topics[$i]['ast_id'];?>"class="floated" alt=""/>
+									</span>
+									<div class="zakup-box">
+										<h2><?=$topics[$i]['ast_title'];?></h2>
+										<span class="date"><?=$topics[$i]['ast_date'];?></span>
+										<p><?=$topics[$i]['ast_note'];?></p>
+										<div class="tablebg"><div class="tablebgbg"><div class="tablebgbg2">
+											<table cellspacing="0" cellpadding="0" class="table">
+											<tr>
+												<th class="top-first">цена</th>
+												<th class="top-center">собрано</th>
+												<th class="top-last" colspan="3">нужно</th>
+											</tr>
+											<tr>
+												<td class="first"><?=$topics[$i]['ast_price'];?></td>
+												<td class="td2"><?=$topics[$i]['ast_collected'];?></td>
+												<td class="td3"><?=$topics[$i]['ast_must1'];?></td>
+												<td class="td4"><?=$topics[$i]['ast_must2'];?></td>
+												<td class="last"><?=$topics[$i]['ast_must3'];?></td>
+											</tr>
+										</table>
+										</div></div></div>
+										<span class="green">
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'],'читать полностью');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'/comment','ответить');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'#comments','комментарии ('.$topics[$i]['ast_comments'].')');?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'/company#company','компаний ('.$topics[$i]['ast_collected'].')');?>
+									</span>
+										<div class="clear">&nbsp;</div>
+									</div>
+									<div class="right-post-option">
+										<table cellspacing="0" class="post-option">
+											<tr>
+												<td class="right-option">
+													<div class="opt-bg">
+													<?php if($topics[$i]['ast_usrid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/edit-association/'.$topics[$i]['ast_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/track-association/'.$topics[$i]['ast_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/delete-association/'.$topics[$i]['ast_id'],'Удалить',array('title'=>'Удалить'));?>
+														</div>
+												<?php endif; ?>
+													</div>
+												</td>
+												<td class="right-avtor">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['ast_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
+			</div>
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('company_interface/footer'); ?>
@@ -50,6 +150,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#select-category").change(function(){change_category($(this));});
+			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>
 </body>

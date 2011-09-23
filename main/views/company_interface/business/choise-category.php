@@ -4,10 +4,10 @@
 	<option value="question-answer">Вопрос-ответ</option>
 	<option value="interactions">Взаимодействие с Госструктурами</option>
 	<option value="documentation">Обмен документами</option>
-	<option value="survey">Опрос</option>
+	<option value="surveys">Опрос</option>
 	<option value="articles">Статьи</option>
-<?php if(!$envirenment):?>
-	<option value="association">Объединения для закупок</option>
+<?php if(!$environment):?>
+	<option value="associations">Объединения для закупок</option>
 	<option value="offers">Предложения для контрагентов</option>
 	<option value="news">Новости</option>
 	<option value="discounts">Новинки и скидки</option>

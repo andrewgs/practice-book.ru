@@ -57,6 +57,7 @@
 							</div>
 							<div class="right-text">
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<hr size="2"/>
 								<div class="right-post">
 									<h2><?=$topic['itp_title'];?></h2>
 									<span class="date"><?=$topic['itp_date'];?></span>

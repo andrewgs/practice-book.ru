@@ -89,18 +89,18 @@
 							<h2>опрос</h2>
 							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
 							<div class="biznesmore">
-			<?=anchor('business-environment/survey/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+			<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
 							</div>
 						</div>
 					</div></div>
-				<?php if(!$envirenment):?>
+				<?php if(!$environment):?>
 					<div class="biznesbox"><div class="biznesboxbg">
 						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz07.png" alt="" /></a></div>
 						<div class="biznestext">
 							<h2>Объединения для закупок</h2>
 							<p>В постсоветское время стали рассматривать и другие версии события. Этому способствовало недоверие к советской пропаганде, наличие альтернативных средств борьбы.</p>
 							<div class="biznesmore">
-			<?=anchor('business-environment/association/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
+			<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>
 							</div>
 						</div>
 					</div></div>

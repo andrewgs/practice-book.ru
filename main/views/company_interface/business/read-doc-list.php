@@ -66,6 +66,7 @@
 									<span class="date"><?=$topic['dtt_date'];?></span>
 									<span class="green">
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comment','ответить');?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comments','комментарии ('.$topic['dtt_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
