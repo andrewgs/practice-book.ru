@@ -55,6 +55,12 @@
 				<input type="image" title="Сохранить SKYPE" class="ajaxsave" id="skype" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
 			<div class="clear"></div>
+			Достижения: <div class="vRight" id="dachi"></div><br>
+			<span class="btnsave" id="svdachi">
+				<input type="image" title="Сохранить" class="ajaxsave" id="achi" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
+			</span>
+			<textarea class="edit270-form-textarea" name="achi" id="vachi" cols="20" rows="5"><?=$representative['uachievement'];?></textarea>
+			<div class="clear"></div>
 		</div>
 	</div>
 	<div class="clear"></div>

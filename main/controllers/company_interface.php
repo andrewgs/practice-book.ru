@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Company_interface extends CI_Controller {
 
@@ -42,6 +42,8 @@ class Company_interface extends CI_Controller {
 		$this->load->model('asptopicsmodel');
 		$this->load->model('collectedmodel');
 		$this->load->model('offerstopicmodel');
+		$this->load->model('benewsmodel');
+		$this->load->model('bediscountmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -231,6 +233,11 @@ class Company_interface extends CI_Controller {
 		case 'vposition': 	$this->usersmodel->save_single_data($this->user['uid'],'uposition',strip_tags($fdata));
 							$statusval['status'] 	= TRUE;
 							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+		case 'vachi'	: 	$fdata = preg_replace('/\n{2}/','<br>',trim($fdata));
+							$this->usersmodel->save_single_data($this->user['uid'],'uachievement',strip_tags($fdata,'<br>'));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= 'Сохранено';
 							break;
 		endswitch;
 		echo json_encode($statusval);
@@ -455,8 +462,10 @@ class Company_interface extends CI_Controller {
 			else:
 				$_POST['submit'] = NULL;
 				if($_FILES['userfile']['error'] != 4):
-					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
+					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],74,74,TRUE);
+					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
@@ -467,7 +476,11 @@ class Company_interface extends CI_Controller {
 				else:
 					$_POST['pdateend'] = "3000-01-01";
 				endif;
+				$_POST['source'] = '';
+//				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
+				$_POST['description'] = nl2b($_POST['description']);
 				$this->cmpnewsmodel->insert_record($this->user['cid'],$_POST);
+				$this->benewsmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				redirect('company/news-management/'.$this->user['uconfirmation']);
 			endif;
 		endif;
@@ -546,6 +559,7 @@ class Company_interface extends CI_Controller {
 			$this->form_validation->set_rules('title',' "Оглавление" ','required|trim');
 			$this->form_validation->set_rules('description',' "Содержание" ','required|trim');
 			$this->form_validation->set_rules('pdatebegin',' "Начальная дата" ','required');
+			$this->form_validation->set_rules('activity',' "Отрасль" ','required');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
@@ -556,7 +570,7 @@ class Company_interface extends CI_Controller {
 				if($_FILES['userfile']['error'] != 4):
 					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');;
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
 				$replacement = "\$3-\$2-\$1";
@@ -566,7 +580,10 @@ class Company_interface extends CI_Controller {
 				else:
 					$_POST['pdateend'] = "3000-01-01";
 				endif;
+//				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
+				$_POST['description'] = nl2b($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
+				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				redirect('company/shares-management/'.$this->user['uconfirmation']);
 			endif;
 		endif;
@@ -841,7 +858,7 @@ class Company_interface extends CI_Controller {
 		$this->load->view('company_interface/business/index',$pagevar);
 	}
 	
-		/*============================================= discussion ============================================*/
+		/*============================================= discussion-full ============================================*/
 	
 	function discussions(){
 		
@@ -1020,7 +1037,7 @@ class Company_interface extends CI_Controller {
 		
 	}
 	
-		/*============================================= question_answer ============================================*/
+		/*============================================= question_answer-full ============================================*/
 	
 	function question_answer(){
 		
@@ -1190,40 +1207,6 @@ class Company_interface extends CI_Controller {
 	
 	function delete_answer(){
 		
-	}
-	
-		/*============================================= rating ============================================*/
-	
-	function rating(){
-		
-		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
-		$activity = $this->session->userdata('activity');
-		if(!$activity) show_404();
-		if($this->uri->total_segments() == 3):
-			$section = 0;
-		else:
-			$section = $this->uri->segment(5);
-		endif;
-		
-		$pagevar = array(
-					'description'	=> '',
-					'keywords'		=> '',
-					'author'		=> '',
-					'title'			=> 'Practice-Book - ',
-					'baseurl' 		=> base_url(),
-					'userinfo'		=> $this->user,
-					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'environment'	=> $environment
-			);
-		if($environment == 'full'):
-			$pagevar['title'] .= 'Общая бизнес среда | Рейтинг';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		else:
-			$pagevar['title'] .= 'Полноценная бизнес среда | Рейтинг';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		endif;
-		$this->load->view('company_interface/business/rating-index',$pagevar);
 	}
 	
 		/*============================================= articles ============================================*/
@@ -2115,12 +2098,12 @@ class Company_interface extends CI_Controller {
 		
 	}
 
-		/*================================================ association ================================================*/
+		/*================================================ association-full ================================================*/
 	
 	function association(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		if($this->uri->total_segments() == 3):
@@ -2206,7 +2189,7 @@ class Company_interface extends CI_Controller {
 	function read_association(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		$section = $this->session->userdata('section');
@@ -2271,7 +2254,7 @@ class Company_interface extends CI_Controller {
 	function collected_company(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		$section = $this->session->userdata('section');
@@ -2365,12 +2348,12 @@ class Company_interface extends CI_Controller {
 		
 	}
 
-		/*================================================ offers ================================================*/
+		/*================================================ offers-full ================================================*/
 		
 	function offers(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		$pagevar = array(
@@ -2440,7 +2423,7 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 	function read_offer(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0;
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		$topic = $this->uri->segment(5);
@@ -2528,15 +2511,17 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		
 	}
 
-		/*================================================ news ================================================*/
+		/*================================================ news-full ================================================*/
 	
 	function news(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 'full';
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
-		
+		if($this->uri->segment(2) == 'news'):
+			redirect('business-environment/activity-news/'.$this->user['uconfirmation']);
+		endif;
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -2545,27 +2530,187 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'environment'	=> $environment
+					'environment'	=> $environment,
+					'topics'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Новости отрасли',
+					'type_news'		=> $this->uri->segment(2),
+					'bysort'		=> ''
 			);
-		if($environment == 'full'):
+			
+		switch ($pagevar['type_news']):
+			case 'activity-news': $group = 1; break;
+			case 'company-news': $group = 2; $pagevar['section_name'] = 'Новости компании'; break;
+		endswitch;
+		
+		if($this->uri->segment(4) == 'sort-views'): 
+			$this->session->set_userdata('news_sort','ben_views');
+		elseif($this->uri->segment(4) == 'sort-date'):
+			$this->session->set_userdata('news_sort','ben_date');
+		endif;
+		$pagevar['bysort'] = $this->session->userdata('news_sort');
+		if(!$pagevar['bysort']) $pagevar['bysort'] = 'ben_date';
+		
+		$pagevar['count'] = $this->benewsmodel->count_records($activity,$environment,$this->user['department'],$group);
+		
+		$config['base_url'] 	= $pagevar['baseurl'].'business-environment/'.$pagevar['type_news'].'/'.$this->user['uconfirmation'].'/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 5;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(5));
+		$pagevar['topics'] = $this->unionmodel->ben_topics_limit_records(5,$from,$environment,$this->user['department'],$activity,$group,$pagevar['bysort']);
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['topics']);$i++):
+			$pagevar['topics'][$i]['ben_date'] = $this->operation_date($pagevar['topics'][$i]['ben_date']);
+			if(mb_strlen($pagevar['topics'][$i]['ben_note'],'UTF-8') > 750):									
+				$pagevar['topics'][$i]['ben_note'] = mb_substr($pagevar['topics'][$i]['ben_note'],0,750,'UTF-8');	
+				$pos = mb_strrpos($pagevar['topics'][$i]['ben_note'],'.',0,'UTF-8');
+				$pagevar['topics'][$i]['ben_note'] = mb_substr($pagevar['topics'][$i]['ben_note'],0,$pos,'UTF-8');
+				$pagevar['topics'][$i]['ben_note'] .= '.';
+			endif;
+		endfor;
+	
+		if(!$environment):
 			$pagevar['title'] .= 'Общая бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Полноценная бизнес среда | Новости';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+			$pagevar['title'] .= 'Частная бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
+		
+		$this->session->set_userdata('backpath',$this->uri->uri_string());
+		$this->session->unset_userdata('backpathdoc');
 		$this->load->view('company_interface/business/news-index',$pagevar);
 	}
 	
-		/*================================================ discounts ================================================*/
+	function add_news(){
+		
+	}
+
+	function read_news(){
+		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-news': $group = 1; $type = 'activitynews'; break;
+			case 'company-news': $group = 2; $type = 'companynews'; break;
+		endswitch;
+		$topic = $this->uri->segment(5);
+		if(!$this->benewsmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$group)):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,$group),
+					'backpath'		=> $this->session->userdata('backpath'),
+					'comments'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Новости отрасли',
+					'type_news'		=> $this->uri->segment(2),
+			);
+		$pagevar['topic']['ben_date'] = $this->operation_date($pagevar['topic']['ben_date']);
+		
+		if($group == 2) $pagevar['section_name'] = 'Новости компании';
+		
+		$pagevar['count'] = $this->commentsmodel->count_records($topic,$type);
+		
+	$config['base_url'] = $pagevar['baseurl'].'business-environment/'.$pagevar['type_news'].'/'.$this->user['uconfirmation'].'/news/'.$topic.'/comments/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 8;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(8));
+		$pagevar['comments'] = $this->unionmodel->topic_comments_limit_records(5,$from,$topic,'"'.$type.'"');
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['comments']);$i++):
+			$pagevar['comments'][$i]['cmn_date'] = $this->operation_date($pagevar['comments'][$i]['cmn_date']);
+		endfor;
+		
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Чтение новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Чтение новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/read-news',$pagevar);
+	}
+	
+	function activity_news_add_comment(){
+		
+	}
+	
+	function company_news_add_comment(){
+		
+	}
+
+	function edit_news(){
+		
+	}
+
+	function track_news(){
+		
+	}
+	
+	function share_news(){
+		
+	}
+	
+	function delete_news(){
+		
+	}
+	
+	function news_add_comment(){
+		
+	}
+	
+	function news_edit_comment(){
+		echo 'news_edit_comment';
+	}
+	
+	function news_delete_comment(){
+		echo 'news_delete_comment';
+	}
+	
+		/*================================================ discounts-full ================================================*/
 	
 	function discounts(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 'full';
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
-		
+		if($this->uri->segment(2) == 'discounts'):
+			redirect('business-environment/activity-discounts/'.$this->user['uconfirmation']);
+		endif;
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -2574,19 +2719,177 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'environment'	=> $environment
+					'environment'	=> $environment,
+					'topics'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Новинки отрасли',
+					'type_discounts'=> $this->uri->segment(2),
+					'bysort'		=> ''
 			);
-		if($environment == 'full'):
-			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
+			
+		switch ($pagevar['type_discounts']):
+			case 'activity-discounts': $group = 1; break;
+			case 'company-discounts': $group = 2; $pagevar['section_name'] = 'Скидки компаний'; break;
+		endswitch;
+		
+		if($this->uri->segment(4) == 'sort-views'): 
+			$this->session->set_userdata('discounts_sort','bed_views');
+		elseif($this->uri->segment(4) == 'sort-date'):
+			$this->session->set_userdata('discounts_sort','bed_date');
+		endif;
+		$pagevar['bysort'] = $this->session->userdata('discounts_sort');
+		if(!$pagevar['bysort']) $pagevar['bysort'] = 'bed_date';
+		
+		$pagevar['count'] = $this->bediscountmodel->count_records($activity,$environment,$this->user['department'],$group);
+		
+		$config['base_url'] 	= $pagevar['baseurl'].'business-environment/'.$pagevar['type_discounts'].'/'.$this->user['uconfirmation'].'/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 5;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(5));
+		$pagevar['topics'] = $this->unionmodel->bed_topics_limit_records(5,$from,$environment,$this->user['department'],$activity,$group,$pagevar['bysort']);
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['topics']);$i++):
+			$pagevar['topics'][$i]['bed_date'] = $this->operation_date($pagevar['topics'][$i]['bed_date']);
+			if(mb_strlen($pagevar['topics'][$i]['bed_note'],'UTF-8') > 750):									
+				$pagevar['topics'][$i]['bed_note'] = mb_substr($pagevar['topics'][$i]['bed_note'],0,750,'UTF-8');	
+				$pos = mb_strrpos($pagevar['topics'][$i]['bed_note'],'.',0,'UTF-8');
+				$pagevar['topics'][$i]['bed_note'] = mb_substr($pagevar['topics'][$i]['bed_note'],0,$pos,'UTF-8');
+				$pagevar['topics'][$i]['bed_note'] .= '.';
+			endif;
+		endfor;
+	
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Полноценная бизнес среда | Новинки и скидки';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Полноценная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+			$pagevar['title'] .= 'Частная бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
+		
+		$this->session->set_userdata('backpath',$this->uri->uri_string());
+		$this->session->unset_userdata('backpathdoc');
 		$this->load->view('company_interface/business/discounts-index',$pagevar);
 	}
 	
-		/*================================================ who_main ================================================*/
+	function add_discount(){
+		
+	}
+
+	function read_discount(){
+		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-discounts': $group = 1; $type = 'activitydiscount'; break;
+			case 'company-discounts': $group = 2; $type = 'companydiscount'; break;
+		endswitch;
+		$topic = $this->uri->segment(5);
+		if(!$this->bediscountmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$group)):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'topic'			=> $this->unionmodel->bed_topic_record($topic,$environment,$this->user['department'],$activity,$group),
+					'backpath'		=> $this->session->userdata('backpath'),
+					'comments'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Новинки отрасли',
+					'type_discounts'=> $this->uri->segment(2),
+			);
+		$pagevar['topic']['bed_date'] = $this->operation_date($pagevar['topic']['bed_date']);
+		
+		if($group == 2) $pagevar['section_name'] = 'Скидки компаний';
+		
+		$pagevar['count'] = $this->commentsmodel->count_records($topic,$type);
+		
+	$config['base_url'] = $pagevar['baseurl'].'business-environment/'.$pagevar['type_discounts'].'/'.$this->user['uconfirmation'].'/discount/'.$topic.'/comments/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 8;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(8));
+		$pagevar['comments'] = $this->unionmodel->topic_comments_limit_records(5,$from,$topic,'"'.$type.'"');
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['comments']);$i++):
+			$pagevar['comments'][$i]['cmn_date'] = $this->operation_date($pagevar['comments'][$i]['cmn_date']);
+		endfor;
+		
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Чтение новинки/скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Чтение новинки/скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/read-discount',$pagevar);
+	}
+	
+	function activity_discount_add_comment(){
+		
+	}
+	
+	function company_discount_add_comment(){
+		
+	}
+
+	function edit_discount(){
+		
+	}
+
+	function track_discount(){
+		
+	}
+	
+	function share_discount(){
+		
+	}
+	
+	function delete_discount(){
+		
+	}
+	
+	function discount_add_comment(){
+		
+	}
+	
+	function discount_edit_comment(){
+		
+	}
+	
+	function discount_delete_comment(){
+		
+	}
+	
+		/*================================================ who_main-full ================================================*/
 	
 	function who_main(){
 		
@@ -2615,6 +2918,92 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		$this->load->view('company_interface/business/who-main-index',$pagevar);
 	}
 	
+		/*================================================= rating-full ================================================*/
+	
+	function rating(){
+		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		if($this->uri->segment(2) == 'rating'):
+			redirect('business-environment/rating-representatives/'.$this->user['uconfirmation']);
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'environment'	=> $environment,
+					'topics'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Сотрудники',
+					'type_rating'	=> $this->uri->segment(2),
+					'bysort'		=> ''
+			);
+		
+		if($this->uri->segment(4) == 'sort-rating'): 
+			$this->session->set_userdata('rating_sort','rating');
+		elseif($this->uri->segment(4) == 'sort-cmpname'):
+			$this->session->set_userdata('rating_sort','cmp_name');
+		endif;
+		$pagevar['bysort'] = $this->session->userdata('rating_sort');
+		if(!$pagevar['bysort']) $pagevar['bysort'] = 'rating';
+		
+		$from = intval($this->uri->segment(5));
+		switch ($pagevar['type_rating']):
+			case 'rating-representatives':
+							if($pagevar['bysort'] == 'rating') $bysort = 'urating';
+							else $bysort = 'cmp_name';
+							$pagevar['count'] = $this->unionmodel->count_repsentatives($activity);
+							$pagevar['topics'] = $this->unionmodel->rating_repsentatives(5,$from,$activity,$bysort);
+							break;
+			case 'rating-company':
+							if($pagevar['bysort'] == 'rating') $bysort = 'cmp_rating';
+							else $bysort = 'cmp_name';
+							$pagevar['count'] = $this->unionmodel->count_company($activity);
+							$pagevar['topics'] = $this->unionmodel->rating_company(5,$from,$activity,$bysort);
+							$pagevar['section_name'] = 'Компании';
+							break;
+		endswitch;
+		
+		$config['base_url'] = $pagevar['baseurl'].'business-environment/'.$pagevar['type_rating'].'/'.$this->user['uconfirmation'].'/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 5;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Рейтинг';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Рейтинг';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		
+		$this->session->unset_userdata('backpathdoc');
+		switch ($pagevar['type_rating']):
+			case 'rating-representatives':
+							$this->load->view('company_interface/business/rating-representatives',$pagevar);
+							break;
+			case 'rating-company':
+							$this->load->view('company_interface/business/rating-company',$pagevar);
+							break;
+		endswitch;
+	}
+
 	/* ------------------------------------------ end business environment -----------------------------------------------------*/
 	
 	function sendmail($email,$msg,$subject,$from){

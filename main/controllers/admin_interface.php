@@ -666,7 +666,7 @@ class Admin_interface extends CI_Controller {
 				if($_FILES['userfile']['error'] != 4):
 					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['image'] = NULL;
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
 				$replacement = "\$3-\$2-\$1";
@@ -898,7 +898,7 @@ class Admin_interface extends CI_Controller {
 				if($_FILES['userfile']['error'] != 4):
 					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['image'] = NULL;
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
 				$replacement = "\$3-\$2-\$1";

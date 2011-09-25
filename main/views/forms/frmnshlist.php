@@ -44,6 +44,15 @@
 	<div class="clear"></div>
 </div>
 <?php else: ?>
-	<span class="text">Данные отсутствуют</span>
-	<div class="clear"></div>
+	<div class="box wide">
+		<div class="box-header"><?=$name;?>
+			<div class="box-search">
+				<?=anchor('company/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
+			</div>
+		</div>
+		<div class="box-content">
+			<span class="text">Данные отсутствуют</span>
+		</div>
+		<div class="clear"></div>
+	</div>
 <?endif; ?>

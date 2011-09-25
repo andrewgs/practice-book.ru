@@ -40,11 +40,11 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
+<li><?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dsc_id'],$sections[$i]['dsc_title']);?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>

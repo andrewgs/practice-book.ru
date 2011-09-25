@@ -34,7 +34,6 @@
 		.box-controls {display:block;float:right;height:16px;margin:10px 130px 0 5px;text-indent:-9999px;width:16px;}
 		.messageBox{margin: 10px 0 0px 0px;font: bold normal 125% serif;color: #808080;}
 		.box-controls.ask { background: url("<?= $baseurl; ?>/images/ask_transparent.png") no-repeat scroll 0 0 transparent; }
-		}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->

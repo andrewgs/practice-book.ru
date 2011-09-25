@@ -31,6 +31,8 @@ class Manager_interface extends CI_Controller{
 		$this->load->model('productionunitmodel');
 		$this->load->model('cmpunitsmodel');
 		$this->load->model('consultationmodel');
+		$this->load->model('benewsmodel');
+		$this->load->model('bediscountmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -793,15 +795,18 @@ class Manager_interface extends CI_Controller{
 			else:
 				$_POST['submit'] = NULL;
 				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],74,74,TRUE);
 					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['image'] = NULL;
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
 				$replacement = "\$3-\$2-\$1";
 				$_POST['date'] = preg_replace($pattern,$replacement,$_POST['date']);
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->activitynewsmodel->insert_record($mraid,$_POST);
+				$this->benewsmodel->insert_record($_POST,$activity,0,0,0,1);
 				redirect('manager/edit-news/'.$this->user['uconfirmation']);
 			endif;
 		endif;
@@ -1029,15 +1034,18 @@ class Manager_interface extends CI_Controller{
 			else:
 				$_POST['submit'] = NULL;
 				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],74,74,TRUE);
 					$_POST['image'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['image'] = NULL;
+					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
 				$replacement = "\$3-\$2-\$1";
 				$_POST['date'] = preg_replace($pattern,$replacement,$_POST['date']);
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->specialsmodel->insert_record($mraid,$_POST);
+				$this->bediscountmodel->insert_record($_POST,$activity,0,0,0,1);
 				redirect('manager/edit-specials/'.$this->user['uconfirmation']);
 			endif;
 		endif;

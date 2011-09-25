@@ -28,7 +28,100 @@
 	<div id="container">
 	<?php $this->load->view('company_interface/business/header'); ?>
 		<div id="main" class="whitebg">
-
+			<div class="contentblock">
+				<div class="content-top">
+					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
+					<h1>Business Environment (Бизнес-Среда): Новости</h1>
+				</div>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>Темы</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+									<li><?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'],'Новости отрасли');?></li>
+									<li><?=anchor('business-environment/company-news/'.$userinfo['uconfirmation'],'Новости компаний');?></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3><?=$section_name;?></h3>
+							</div>
+							<div class="right-text">
+								<div class="add_events">
+							<?php if($type_news == 'activity-news'):?>
+<?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'].'/add-news','<img src="'.$baseurl.'images/add_news.png" alt="добавить новость"/>',array('title'=>'добавить новость'));?>
+							<?php endif; ?>
+								<?php if(count($topics)):?>
+									<span class="sort">
+										Сортировать:
+								<?php if($bysort == 'ben_date'):?><strong><?php endif;?>
+						<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/sort-date','по дате');?> / 
+								<?php if($bysort == 'ben_date'):?></strong><?php endif;?>
+								<?php if($bysort == 'ben_views'):?><strong><?php endif;?>
+						<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/sort-views','по количеству просмотров');?>
+								<?php if($bysort == 'ben_views'):?></strong><?php endif;?>
+									</span>
+							<?php endif; ?>
+								</div>
+							<?php for($i=0;$i<count($topics);$i++):?>
+								<div class="right-post">
+									<span class="news-pic">
+					<img src="<?=$baseurl.$type_news;?>/viewimage/<?=$topics[$i]['ben_id'];?>"class="floated" width="74" height="74" alt=""/>
+									</span>
+									<h2><?=$topics[$i]['ben_title'];?></h2>
+									<p><?=$topics[$i]['ben_note'];?></p>
+									<span class="date"><?=$topics[$i]['ben_date'];?></span>
+									<span class="view">просмотров: <?=$topics[$i]['ben_views'];?></span>
+									<span class="green">
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/news/'.$topics[$i]['ben_id'],'читать полностью');?>
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/news/'.$topics[$i]['ben_id'].'/comment','ответить');?>
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/news/'.$topics[$i]['ben_id'].'#comments','комментарии ('.$topics[$i]['ben_comments'].')');?>
+									</span>
+									<div class="clear">&nbsp;</div>
+									<div class="right-post-option">
+										<table cellspacing="0" class="post-option">
+											<tr>
+												<td class="right-option">
+													<div class="opt-bg">
+												<?php if($topics[$i]['ben_userid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/edit-news/'.$topics[$i]['ben_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/track-news/'.$topics[$i]['ben_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/share-news/'.$topics[$i]['ben_id'],'Поделиться',array('title'=>'Поделиться'));?>
+<?=anchor('business-environment/'.$type_news.'/'.$userinfo['uconfirmation'].'/delete-news/'.$topics[$i]['ben_id'],'Удалить',array('title'=>'Удалить'));?>
+														</div>
+												<?php endif; ?>
+													</div>
+												</td>
+												<td class="right-avtor">
+												<?php if($topics[$i]['ben_userid']):?>
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['ben_userid'];?>" alt="" align="left" width="42" height="42"/></td>
+			<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
+														</tr>
+													</table>
+												<?php endif;?>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('company_interface/footer'); ?>
@@ -50,6 +143,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#select-category").change(function(){change_category($(this));});
+			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>
 </body>

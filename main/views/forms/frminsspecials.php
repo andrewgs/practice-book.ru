@@ -14,7 +14,7 @@
 		</div>
 		<div class="grid_3">
 			<label class="date-label-input" title="Новость будет опубликована с указанной даты">Дата публикации: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
-		<?= form_error('date'); ?>
+		<?= form_error('date'); ?><div class="clear"></div>
 		<input class="date-form-input inpvalue" id="nDate" name="date" type="text" readonly="readonly" value="<?=set_value('date');?>"/>
 		</div>
 		<div class="clear"></div>

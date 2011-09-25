@@ -40,6 +40,8 @@ class Users_interface extends CI_Controller {
 		$this->load->model('doclistmodel');
 		$this->load->model('asptopicsmodel');
 		$this->load->model('offerstopicmodel');
+		$this->load->model('benewsmodel');
+		$this->load->model('bediscountmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -1233,8 +1235,8 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					$_POST['logo'] = $this->resize_img($_FILES['userfile']['tmp_name'],128,128);
 					$_POST['thumb'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
 				else:
-					$_POST['logo'] = file_get_contents(base_url().'images/no_photo.jpg');;
-					$_POST['thumb'] = file_get_contents(base_url().'images/no_photo.jpg');;
+					$_POST['logo'] = file_get_contents(base_url().'images/no_photo.jpg');
+					$_POST['thumb'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$company_id = $this->companymodel->insert_record($_POST);
 				$this->session->set_userdata('companyid',$company_id);
@@ -1582,6 +1584,10 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'shares'		: 	$image = $this->cmpsharesmodel->get_image($id); break;
 			case 'associations'	: 	$image = $this->asptopicsmodel->get_image($id); break;
 			case 'offers'		: 	$image = $this->offerstopicmodel->get_image($id); break;
+			case 'activity-news': 	$image = $this->benewsmodel->get_image($id); break;
+			case 'company-news'	: 	$image = $this->benewsmodel->get_image($id); break;
+			case 'activity-discounts'	: 	$image = $this->bediscountmodel->get_image($id); break;
+			case 'company-discounts'	: 	$image = $this->bediscountmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;

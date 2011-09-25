@@ -20,7 +20,7 @@ class Cmpsharesmodel extends CI_Model {
 			
 		$this->sh_cmpid			= $sid;
 		$this->sh_title			= strip_tags($insertdata['title']);
-		$this->sh_note			= strip_tags($insertdata['description']);
+		$this->sh_note			= strip_tags($insertdata['description'],'<br>');
 		$this->sh_logo			= $insertdata['photo'];
 		$this->sh_pdatebegin	= $insertdata['pdatebegin'];
 		$this->sh_pdateend		= $insertdata['pdateend'];

@@ -25,7 +25,7 @@
 		<div class="clear"></div>
 		<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('description'); ?>
-	<textarea class="edit-form-textarea mbottom inpvalue" name="description" id="description" cols="50" rows="5"><?=set_value('description');?></textarea>
+	<textarea class="edit-form-textarea mbottom inpvalue" name="description" id="description" cols="50" rows="8"><?=set_value('description');?></textarea>
 		<label class="label-input"">Новость отрасли:<span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<select name="activity" id="activity" class="mixed-combo inpvalue" size="1" title="Укажите к какой отрасли относиться новость" style="width: 400px;">
 			<option value="0">Выберите отрасль</option>

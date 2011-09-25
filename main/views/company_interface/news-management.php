@@ -48,6 +48,7 @@
 				<div class="grid_12">
 					<div id="validError" style="text-align:center; margin-top:20px;"><?= validation_errors(); ?></div>
 					<?php $this->load->view('forms/frmnshlist'); ?>
+					<div class="clear"></div>
 					<div id="frmInsNews" style="display:none;">
 						<?php $this->load->view('forms/frminsnsh');?>
 					</div>
@@ -81,7 +82,7 @@
 				if($("#frmInsNews").is(":hidden")){
 					$("#insNews").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
 					$("#frmInsNews").slideDown("slow");
-					var height = ($(window).height()*$(".content-separator").size())/30;
+					var height = $(window).height()+50;
 					$('html, body').animate({scrollTop:height+'px'},"slow");
 				}else{
 					$("#frmInsNews").slideUp("slow",function(){

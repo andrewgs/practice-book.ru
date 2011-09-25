@@ -31,16 +31,16 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Новинки и скидки</h1>
+					<h1>Business Environment (Бизнес-Среда): Рейтинг</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Темы</h3>
+						<h3>Разделы</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-								<li><?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'],'Новинки отрасли');?></li>
-								<li><?=anchor('business-environment/company-discounts/'.$userinfo['uconfirmation'],'Скидки компаний');?></li>
+								<li><?=anchor('business-environment/rating-representatives/'.$userinfo['uconfirmation'],'Сотрудники');?></li>
+								<li><?=anchor('business-environment/rating-company/'.$userinfo['uconfirmation'],'Компании');?></li>
 								</ul>
 							</div>
 						</div>
@@ -53,64 +53,56 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-							<?php if($type_discounts == 'activity-discounts'):?>
-<?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'].'/add-discount','<img src="'.$baseurl.'images/add_news.png" alt="добавить новинку"/>',array('title'=>'добавить новинку'));?>
-							<?php endif; ?>
-								<?php if(count($topics)):?>
-									<span class="sort">
+								<div class="add_events add_marg">
+										<?php if(count($topics)):?>
+									<span class="sort sortleft">
 										Сортировать:
-								<?php if($bysort == 'bed_date'):?><strong><?php endif;?>
-				<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/sort-date','по дате');?> / 
-								<?php if($bysort == 'bed_date'):?></strong><?php endif;?>
-								<?php if($bysort == 'bed_views'):?><strong><?php endif;?>
-				<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/sort-views','по количеству просмотров');?>
-								<?php if($bysort == 'bed_views'):?></strong><?php endif;?>
+								<?php if($bysort == 'rating'):?><strong><?php endif;?>
+				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-rating','по рейтингу');?> / 
+								<?php if($bysort == 'rating'):?></strong><?php endif;?>
+								<?php if($bysort == 'cmp_name'):?><strong><?php endif;?>
+				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-cmpname','по компании');?>
+								<?php if($bysort == 'cmp_name'):?></strong><?php endif;?>
 									</span>
 							<?php endif; ?>
+									<div class="searchblock">
+										<div class="searchtext">
+											<input type="text" name="" />
+										</div>
+										<div class="searchsubmit">
+											<input type="image" src="<?=$baseurl;?>images/searchsubmit.png" name="" />
+										</div>
+									</div>
 								</div>
 							<?php for($i=0;$i<count($topics);$i++):?>
-								<div class="right-post">
-									<span class="news-pic">
-				<img src="<?=$baseurl.$type_discounts;?>/viewimage/<?=$topics[$i]['bed_id'];?>"class="floated" width="74" height="74" alt=""/>
-									</span>
-									<h2><?=$topics[$i]['bed_title'];?></h2>
-									<p><?=$topics[$i]['bed_note'];?></p>
-									<span class="date"><?=$topics[$i]['bed_date'];?></span>
-									<span class="view">просмотров: <?=$topics[$i]['bed_views'];?></span>
-									<span class="green">
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topics[$i]['bed_id'],'читать полностью');?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topics[$i]['bed_id'].'/comment','ответить');?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topics[$i]['bed_id'].'#comments','комментарии ('.$topics[$i]['bed_comments'].')');?>
-									</span>
-									<div class="clear">&nbsp;</div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg">
-												<?php if($topics[$i]['bed_userid'] == $userinfo['uid']):?>
-														<div class="opt-bgg">
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/edit-discount/'.$topics[$i]['bed_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/track-discount/'.$topics[$i]['bed_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/share-discount/'.$topics[$i]['bed_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/delete-discount/'.$topics[$i]['bed_id'],'Удалить',array('title'=>'Удалить'));?>
-														</div>
-												<?php endif; ?>
-													</div>
-												</td>
-												<td class="right-avtor">
-												<?php if($topics[$i]['bed_userid']):?>
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['bed_userid'];?>" alt="" align="left" width="42" height="42"/></td>
-			<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
-														</tr>
-													</table>
-												<?php endif;?>
-												</td>
-											</tr>
-										</table>
+								<div class="rtdblock">
+									<div class="rtblockbg">
+										<div class="rtdblockwrap">
+											<span class="rtd-num"><?=$this->uri->segment(5)+$i+1;?></span>
+											<span class="news-pic">
+						<img src="<?=$baseurl;?>companythumb/viewimage/<?=$topics[$i]['cmp_id'];?>" alt="" align="left" width="74" height="74"/>
+											</span>
+											<div class="rtd-autor-info">
+												<h3><?=$topics[$i]['cmp_name'];?></h3>
+												<span>Юридический адрес: <?=$topics[$i]['cmp_uraddress'];?><br/>
+													Фактический адрес: <?=$topics[$i]['cmp_realaddress'];?><br/>
+												</span>
+											</div>
+											<div class="rtd-info">
+												<div class="green">Рейтинг: <span><?=$topics[$i]['cmp_rating'];?></span></div>
+												<div class="silver">Месяцев на сайте: <span><?=$topics[$i]['months'];?></span></div>
+											</div>
+											<div class="clear">&nbsp;</div>
+											<div class="rtd-text">
+												<p><?=$topics[$i]['cmp_description'];?></p>
+											</div>
+											<div class="clear">&nbsp;</div>
+											<div class="rtd-contact">
+							<span class="site"><?=anchor($topics[$i]['cmp_site'],$topics[$i]['cmp_site'],array('target'=>'_blank'));?></span>
+												<span class="mail"><?=$topics[$i]['cmp_email'];?></span>
+												<span class="phone"><?=$topics[$i]['cmp_phone'];?></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							<?php endfor; ?>

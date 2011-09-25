@@ -20,8 +20,8 @@ class Cmpnewsmodel extends CI_Model {
 			
 		$this->cn_cmpid			= $cid;
 		$this->cn_title			= htmlspecialchars($insertdata['title']);
-		$this->cn_note			= strip_tags($insertdata['description']);
-		$this->cn_logo			= $insertdata['photo'];
+		$this->cn_note			= strip_tags($insertdata['description'],'<br>');
+		$this->cn_logo			= $insertdata['image'];
 		$this->cn_pdatebegin	= $insertdata['pdatebegin'];
 		$this->cn_pdateend		= $insertdata['pdateend'];
 		$this->cn_activity		= $insertdata['activity'];

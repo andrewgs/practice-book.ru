@@ -50,6 +50,7 @@
 					<?= validation_errors(); ?>
 					</div>
 					<?php $this->load->view('forms/frmnshlist'); ?>
+					<div class="clear"></div>
 					<div id="frmInsNews" style="display:none;">
 						<?php $this->load->view('forms/frminsnsh');?>
 					</div>
@@ -83,7 +84,7 @@
 				if($("#frmInsNews").is(":hidden")){
 					$("#insNews").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
 					$("#frmInsNews").slideDown("slow");
-					var height = $(window).height()+100;
+					var height = $(window).height()+50;
 					$('html, body').animate({scrollTop:height+'px'},"slow");
 				}else{
 					$("#frmInsNews").slideUp("slow",function(){
@@ -243,6 +244,10 @@
 				if($("#description").val() == ''){
 					err = true;
 					$("#description").css('border-color','#ff0000');
+				}
+				if($("#activity").val() == 0){
+					err = true;
+					$("#activity").css('border-color','#ff0000');
 				}
 				if(err){
 					event.preventDefault();

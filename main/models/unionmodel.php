@@ -404,5 +404,79 @@ class Unionmodel extends CI_Model {
 		if(count($data)) return $data[0];
 		else return null;
 	}
+
+	function ben_topics_limit_records($count,$from,$environment,$department,$activity,$group,$field){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group GROUP BY tbl_be_news.ben_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function ben_topic_record($topic,$environment,$department,$activity,$group){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group AND tbl_be_news.ben_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+																				  
+	function bed_topics_limit_records($count,$from,$environment,$department,$activity,$group,$field){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group GROUP BY tbl_be_discount.bed_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+
+	function bed_topic_record($topic,$environment,$department,$activity,$group){
+		
+		if(!$environment) $department = 0;
+		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group AND tbl_be_discount.bed_id = $topic";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		else return null;
+	}
+
+	function rating_repsentatives($count,$from,$activity,$field){
+		
+		$query = "SELECT uid,ucompany,uemail,uname,usubname,uthname,uicq,uphone,ustatus,usignupdate,ulastlogindate,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(usignupdate,'%Y%m')) AS months,uskype,uposition,uachievement,urating,cmp_id,cmp_name FROM tbl_user,tbl_company,tbl_companyservices WHERE tbl_user.ucompany = tbl_company.cmp_id AND tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY tbl_user.uid ORDER BY $field DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	function count_repsentatives($activity){
+		
+		$query = "SELECT uid AS cnt FROM tbl_user,tbl_company,tbl_companyservices WHERE tbl_user.ucompany = tbl_company.cmp_id AND tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY tbl_user.uid";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		return count($data);
+	}
+	
+	function count_company($activity){
+		
+		$query = "SELECT cmp_id FROM tbl_company,tbl_companyservices WHERE tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY cmp_id";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		return count($data);
+	}
+	
+	function rating_company($count,$from,$activity,$field){
+		
+		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_site,cmp_email,cmp_phone,cmp_uraddress,cmp_realaddress,cmp_rating,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(cmp_date,'%Y%m')) AS months FROM tbl_company,tbl_companyservices WHERE tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY cmp_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
 }
 ?>

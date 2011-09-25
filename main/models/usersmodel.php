@@ -27,6 +27,7 @@ class Usersmodel extends CI_Model {
 	var $uactivity		= 1;	/* Отрасль пользователя*/
 	var $uachievement	= "";	/* Достижения пользователя*/
 	var $ucloseconsult	= 0;	/* Закрыто консультирование*/
+	var $urating		= 0;	/* Рейтинг*/
 	
 	function __construct(){
         
@@ -60,6 +61,7 @@ class Usersmodel extends CI_Model {
 		$this->uactivity 		= $insertdata['activity'];
 		$this->uachievement 	= "";
 		$this->ucloseconsult 	= 0;
+		$this->urating 			= 0;
 		
 		$this->db->insert('tbl_user',$this);
 		return $this->db->insert_id();
@@ -178,7 +180,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_representatives($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq,urating');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->order_by('upriority','DESC');
@@ -190,7 +192,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_representative($cid){
 	
-		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq');
+		$this->db->select('uid,uemail,uname,usubname,uthname,uposition,uphone,uactive,ustatus,udepartment,upriority,uskype,uicq,urating');
 		$this->db->where('ucompany',$cid);
 		$this->db->where('udestroy','3000-01-01');
 		$this->db->where('upriority',1);
@@ -202,7 +204,7 @@ class Usersmodel extends CI_Model {
 	
 	function read_info($id){
 		
-		$this->db->select('uid,ucompany,udepartment,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity,uskype,uicq');
+	$this->db->select('uid,ucompany,udepartment,uemail,uname,usubname,uthname,uconfirmation,umanager,upriority,uactivity,uskype,uicq,urating');
 		$this->db->where('uid',$id);
 		$this->db->where('udestroy','3000-01-01');
 		$query = $this->db->get('tbl_user');

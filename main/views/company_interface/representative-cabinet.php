@@ -24,11 +24,11 @@
 		.job-sections h3{margin: 5px 10px 15px 0;float: left;}
 		.jobs{margin: 5px 10px 5px 0;float: right;}
 		.vRight{font: bold normal 120% serif;float: right;margin-right: 95px;}
-		#loading{margin: 0px 0px -7px 0px;}
+		#loading{float: right; margin-right: 55px;}
 		.jodData{margin: 0px;}
 		.jobPosiotion{margin: 0px 0px 15px 10px;}
 		.divDelJob{float: right;margin-right: 10px;}
-		.btn-delete{-moz-border-radius: 3px 3px 3px 3px;background: none repeat scroll 0 0 #879042;border: 0 none;color: #FFFFFF;cursor: pointer;font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-decoration: none;}
+		.btn-delete{-moz-border-radius: 3px 3px 3px 3px;background: none repeat scroll 0 0 #879042;border: 0 none;color: #FFFFFF;cursor: pointer;				font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-decoration: none;}
 		#del-load{float: right;margin-right: 55px;}
 		.box-controls {display:block;float:right;height:16px;margin:10px 130px 0 5px;text-indent:-9999px;width:16px;}
 		.messageBox{margin: 10px 0 0px 0px;font: bold normal 125% serif;color: #808080;}
@@ -51,11 +51,12 @@
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.maxlength-min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
-			$("#savatar").click(function(){var vObj = $("#vavatar").val();if(vObj === ''){msgerror('Поле не может быть пустым');$("#vavatar").css('border-color','#ff0000');$("#vavatar").focus();}else $("#formAvatar").submit();});
-			$(".ajaxsave").click(function(){var btnID = this.id;saveSingleData(btnID);});function saveSingleData(btnID){var txtObj = $("#v"+btnID);var objValue = txtObj.val();var objID = txtObj.attr('id');if(objValue === ''){msgerror('Поле не может быть пустым');txtObj.css('border-color','#ff0000');txtObj.focus();if(btnID === 'pass') $("#d"+btnID).text('');}else{$.ajax({url:"<?=$baseurl;?>representative/save-profile/<?=$userinfo['uconfirmation'];?>",type: "POST",data: ({id:objID,value:objValue}),dataType: "JSON",beforeSend: function(){$("#"+btnID).hide();$("#"+btnID).after('<img id="loading" src="<?=$baseurl;?>images/progress.gif"/>');},success: function(data){if(data.status){txtObj.css('border-color','#00ff00');$('#d'+btnID).text(data.retvalue);txtObj.val('');}else{msgerror(data.message);txtObj.css('border-color','#ff0000');if(btnID === 'pass')$("#d"+btnID).text('');}$("#"+btnID).show();$("#loading").remove();},error: function(){$("#"+btnID).show();$("#loading").remove();txtObj.css('border-color','#ff0000');msgerror("Ошибка при сохранении!");}});}return true;};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}});
+			$('#vachi').maxlength({maxCharacters:400,status:true,statusClass:"lenghtstatus",statusText:" символов осталось.",notificationClass:"lenghtnotifi",slider:true});
+			$("#savatar").click(function(){var vObj = $("#vavatar").val();if(vObj === ''){msgerror('Поле не может быть пустым');$("#vavatar").css('border-color','#ff0000');$("#vavatar").focus();}else $("#formAvatar").submit();});$(".ajaxsave").click(function(){var btnID = this.id;saveSingleData(btnID);});function saveSingleData(btnID){var txtObj = $("#v"+btnID);var objValue = txtObj.val();var objID = txtObj.attr('id');if(objValue === ''){msgerror('Поле не может быть пустым');txtObj.css('border-color','#ff0000');txtObj.focus();if(btnID === 'pass') $("#d"+btnID).text('');}else{$.ajax({url:"<?=$baseurl;?>representative/save-profile/<?=$userinfo['uconfirmation'];?>",type: "POST",data:({id:objID,value:objValue}),dataType: "JSON",beforeSend: function(){$("#"+btnID).hide();$("#"+btnID).after('<img id="loading" src="<?=$baseurl;?>images/progress.gif"/>');},success: function(data){if(data.status){txtObj.css('border-color','#00ff00');$('#d'+btnID).text(data.retvalue);if($(txtObj).attr("id")!='vachi') txtObj.val('');}else{msgerror(data.message);txtObj.css('border-color','#ff0000');if(btnID === 'pass')$("#d"+btnID).text('');}$("#"+btnID).show();$("#loading").remove();},error: function(){$("#"+btnID).show();$("#loading").remove();txtObj.css('border-color','#ff0000');msgerror("Ошибка при сохранении!");}});}return true;};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}});
 	</script>
 </body>
 </html>
