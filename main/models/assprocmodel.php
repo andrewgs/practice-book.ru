@@ -36,11 +36,11 @@ class Assprocmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function read_records($asp_activity,$environment,$department){
+	function read_records($activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->select('asp_id,asp_title');
-		$this->db->where('asp_activity',$asp_activity);
+		$this->db->where('asp_activity',$activity);
 		$this->db->where('asp_environment',$environment);
 		$this->db->where('asp_department',$department);
 		$this->db->order_by('asp_title');
@@ -48,12 +48,13 @@ class Assprocmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$asp_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->asp_title = $data['title'];
-		$this->asp_activity = $asp_activity;
-		$this->asp_environment = $environment;
-		$this->asp_department = $department;
+		if(!$environment) $department = 0;
+		$this->asp_title 		= $title;
+		$this->asp_activity 	= $activity;
+		$this->asp_environment 	= $environment;
+		$this->asp_department 	= $department;
 		$this->db->insert('tbl_assproc',$this);
 		return $this->db->insert_id();
 	}
@@ -93,6 +94,19 @@ class Assprocmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('asp_title',$title);
+		$this->db->where('asp_activity',$activity);
+		$this->db->where('asp_environment',$environment);
+		$this->db->where('asp_department',$department);
+		$query = $this->db->get('tbl_assproc',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

@@ -47,12 +47,13 @@ class Interactionmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$int_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->int_title = $data['title'];
-		$this->int_activity = $int_activity;
-		$this->int_environment = $environment;
-		$this->int_department = $department;
+		if(!$environment) $department = 0;
+		$this->int_title 		= $title;
+		$this->int_activity 	= $activity;
+		$this->int_environment 	= $environment;
+		$this->int_department 	= $department;
 		$this->db->insert('tbl_interaction',$this);
 		return $this->db->insert_id();
 	}
@@ -92,6 +93,19 @@ class Interactionmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('int_title',$title);
+		$this->db->where('int_activity',$activity);
+		$this->db->where('int_environment',$environment);
+		$this->db->where('int_department',$department);
+		$query = $this->db->get('tbl_interaction',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

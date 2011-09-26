@@ -46,21 +46,26 @@
 			<div class="contentblock">
 				<div class="search-slaider-top">
 					<ul id="mycarousel" class="jcarousel-skin-tango">
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Moscow.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Moscow-ch.jpg')"><img src="images/city/Moscow-ch.jpg" alt="" /></a><h2>Москва<br />и Московская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Rostov.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Rostov-ch.jpg')"><img src="images/city/Rostov-ch.jpg" alt="" /></a><h2>Ростов<br />и Ростовская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Piter.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Piter-ch.jpg')"><img src="images/city/Piter-ch.jpg" alt="" /></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Volgograd.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Volgograd-ch.jpg')"><img src="images/city/Volgograd-ch.jpg" alt="" /></a><h2>Волгоград<br />и Волгоргадская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Kazan.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Kazan-ch.jpg')"><img src="images/city/Kazan-ch.jpg" alt="" /></a><h2>Казань<br />и Казанская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Voroneg.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Voroneg-ch.jpg')"><img src="images/city/Voroneg-ch.jpg" alt="" /></a><h2>Воронеж <br />и 	Воронежская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Nigniy.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Nigniy-ch.jpg')"><img src="images/city/Nigniy-ch.jpg" alt="" /></a><h2>Нижний новгород<br />и Нижегородская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Krasnoyarsk.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Krasnoyarsk-ch.jpg')"><img src="images/city/Krasnoyarsk-ch.jpg" alt="" /></a><h2>Красноярск<br />и Красноярский край</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Novosib.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Novosib-ch.jpg')"><img src="images/city/Novosib-ch.jpg" alt="" /></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Omsk.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Omsk-ch.jpg')"><img src="images/city/Omsk-ch.jpg" alt="" /></a><h2>Омск<br />и Омская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Perm.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Perm-ch.jpg')"><img src="images/city/Perm-ch.jpg" alt="" /></a><h2>Пермь<br />и Пермский край</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Togliatti.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Togliatti-ch.jpg')"><img src="images/city/Togliatti-ch.jpg" alt="" /></a><h2>Самара 	<br />и Самарская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Saratov.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Saratov-ch.jpg')"><img src="images/city/Saratov-ch.jpg" alt="" /></a><h2>Саратов 	<br />и Саратовская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Ufa.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Ufa-ch.jpg')"><img src="images/city/Ufa-ch.jpg" alt="" /></a><h2>Уфа 	<br />и Башкортостан</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Arhangelsk.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Arhangelsk-ch.jpg')"><img src="images/city/Arhangelsk-ch.jpg" alt="" /></a><h2>Архангельск<br />и Архангельская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Krasnodar.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Krasnodar-ch.jpg')"><img src="images/city/Krasnodar-ch.jpg" alt="" /></a><h2>Краснодар<br />и Краснодарский край</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/vladivostok.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/vladivostok-ch.jpg')"><img src="images/city/vladivostok-ch.jpg" alt="" /></a><h2>Владивосток <br />и Приморский край</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Astrahan.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Astrahan-ch.jpg')"><img src="images/city/Astrahan-ch.jpg" alt="" /></a><h2>Астрахань<br />и Астраханская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/Yekaterinburg.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/Yekaterinburg-ch.jpg')"><img src="images/city/Yekaterinburg-ch.jpg" alt="" /></a><h2>Екатеринбург <br />и Свердловская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/city/murmansk.jpg')" onmouseout="changePic(this,'<?=$baseurl;?>images/city/murmansk-ch.jpg')"><img src="images/city/murmansk-ch.jpg" alt="" /></a><h2>Мурманск <br />и Мурманская область</h2></li>
 					</ul>
 				</div>
 				
@@ -125,21 +130,25 @@
 				
 				<div class="search-slaider-top search-slaider-bot">
 				<ul id="mycarousel2" class="jcarousel-skin-tango">
-					<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Москва<br />и Московская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Санкт-Петербург<br />и Ленинградская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Екатеринбург<br />и Свердловская область</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Ханты-Мансийск<br />и Ханты-Мансийский АО</h2></li>
-			<li><a href="#"><img src="<?=$baseurl;?>images/slimg.png" alt=""/></a><h2>Новосибирск<br />и Новосибирская область</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/stroy.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/stroy-ch.png')"><img src="images/search/stroy-ch.png" alt="" /></a><h2>Проектирование <br /> и строительство </h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/rekl.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/rekl-ch.png')"><img src="images/search/rekl-ch.png" alt="" /></a><h2>Реклама</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/fin.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/fin-ch.png')"><img src="images/search/fin-ch.png" alt="" /></a><h2>Финансовые услуги</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/nedv.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/nedv-ch.png')"><img src="images/search/nedv-ch.png" alt="" /></a><h2>Недвижимость</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/klin.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/klin-ch.png')"><img src="images/search/klin-ch.png" alt="" /></a><h2> Клининговый бизнес</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/buhgalter.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/buhgalter-ch.png')"><img src="images/search/buhgalter-ch.png" alt="" /></a><h2>Бухгалтерские<br />и аудиторские услуги</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/gruz.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/gruz-ch.png')"><img src="images/search/gruz-ch.png" alt="" /></a><h2>Грузоперевозки</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/it.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/it-ch.png')"><img src="images/search/it-ch.png" alt="" /></a><h2>IT-Услуги</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/izdat.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/izdat-ch.png')"><img src="images/search/izdat-ch.png" alt="" /></a><h2>Издательское дело</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/meb.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/meb-ch.png')"><img src="images/search/meb-ch.png" alt="" /></a><h2>Мебель</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/oborud.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/oborud-ch.png')"><img src="images/search/oborud-ch.png" alt="" /></a><h2>Оборудование<br />для бизнеса</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/office.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/office-ch.png')"><img src="images/search/office-ch.png" alt="" /></a><h2>Товары для офиса</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/ohrana.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/ohrana-ch.png')"><img src="images/search/ohrana-ch.png" alt="" /></a><h2>Базопасность<br />и охранные услуги</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/podbor.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/podbor-ch.png')"><img src="images/search/podbor-ch.png" alt="" /></a><h2>Подбор персонала</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/poly.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/poly-ch.png')"><img src="images/search/poly-ch.png" alt="" /></a><h2>Полиграфия</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/strah.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/strah-ch.png')"><img src="images/search/strah-ch.png" alt="" /></a><h2>Страховые услуги</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/sviaz.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/sviaz-ch.png')"><img src="images/search/sviaz-ch.png" alt="" /></a><h2>Корпоративная связь</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/trening.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/trening-ch.png')"><img src="images/search/trening-ch.png" alt="" /></a><h2>Тренинги и семинары</h2></li>
+<li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/ur.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/ur-ch.png')"><img src="images/search/ur-ch.png" alt="" /></a><h2>Юридические услуги</h2></li>
 				</ul>
 				</div>	
 			</div>
@@ -152,8 +161,10 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript">
+		
+		function changePic(element,src){var img = element.getElementsByTagName("IMG")[0];img.src = src;return;}
+		
 		$(document).ready(function(){
-			
 			$('#mycarousel').jcarousel();
 			$('#mycarousel2').jcarousel();
 			

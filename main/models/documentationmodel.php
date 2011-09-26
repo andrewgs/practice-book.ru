@@ -47,12 +47,13 @@ class Documentationmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$dtn_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->dtn_title = $data['title'];
-		$this->dtn_activity = $dtn_activity;
-		$this->dtn_environment = $environment;
-		$this->dtn_department = $department;
+		if(!$environment) $department = 0;
+		$this->dtn_title 		= $title;
+		$this->dtn_activity 	= $activity;
+		$this->dtn_environment 	= $environment;
+		$this->dtn_department	= $department;
 		$this->db->insert('tbl_documentation',$this);
 		return $this->db->insert_id();
 	}
@@ -92,6 +93,19 @@ class Documentationmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('dtn_title',$title);
+		$this->db->where('dtn_activity',$activity);
+		$this->db->where('dtn_environment',$environment);
+		$this->db->where('dtn_department',$department);
+		$query = $this->db->get('tbl_documentation',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

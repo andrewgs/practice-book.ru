@@ -48,12 +48,13 @@ class Surveymodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$sur_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->sur_title = $data['title'];
-		$this->sur_activity = $sur_activity;
-		$this->sur_environment = $environment;
-		$this->sur_department = $department;
+		if(!$environment) $department = 0;
+		$this->sur_title 		= $title;
+		$this->sur_activity 	= $activity;
+		$this->sur_environment 	= $environment;
+		$this->sur_department 	= $department;
 		$this->db->insert('tlb_survey',$this);
 		return $this->db->insert_id();
 	}
@@ -93,6 +94,19 @@ class Surveymodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('sur_title',$title);
+		$this->db->where('sur_activity',$activity);
+		$this->db->where('sur_environment',$environment);
+		$this->db->where('sur_department',$department);
+		$query = $this->db->get('tlb_survey',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

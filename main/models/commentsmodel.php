@@ -32,29 +32,37 @@ class Commentsmodel extends CI_Model {
 		return $this->db->get('tbl_comments');
 	}
 	
-	function insert_records($data,$usr,$group,$topic){
+	function insert_record($note,$usr,$group,$topic){
 	
-		$this->cmn_note = $data['note'];
+		$this->cmn_note = strip_tags($note,'<br>');
 		$this->cmn_date = date("Y-m-d");
 		$this->cmn_usrid = $usr;
-		$this->cmn_group = $usr;
+		$this->cmn_group = $group;
 		$this->cmn_topid = $topic;
 		$this->db->insert('tbl_comments',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$note){
 	
-		$this->db->set('cmn_note',$data['note']);
+		$this->db->set('cmn_note',strip_tags($note,'<br>'));
 		$this->db->set('cmn_date',date("Y-m-d"));
 		$this->db->where('cmn_id',$id);
 		$this->db->update('tbl_comments');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id){
 	
 		$this->db->where('cmn_id',$id);
+		$this->db->delete('tbl_comments');
+		return $this->db->affected_rows();
+	}
+	
+	function delete_records($group,$topic){
+	
+		$this->db->where('cmn_group',$group);
+		$this->db->where('cmn_topid',$topic);
 		$this->db->delete('tbl_comments');
 		return $this->db->affected_rows();
 	}
@@ -67,6 +75,16 @@ class Commentsmodel extends CI_Model {
 		$query = $this->db->get('tbl_comments');
 		$data = $query->result_array();
 		return $data[0]['cnt'];
+	}
+	
+	function comment_owner($id,$user){
+	
+		$this->db->where('cmn_id',$id);
+		$this->db->where('cmn_usrid',$user);
+		$query = $this->db->get('tbl_comments');
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

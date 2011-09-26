@@ -28,7 +28,82 @@
 	<div id="container">
 	<?php $this->load->view('company_interface/business/header'); ?>
 		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="content-top">
+					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
+					<h1>Business Environment (Бизнес-Среда): Кто главный?</h1>
+				</div>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>Разделы</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+								<li>1</li>
+								<li>2</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3><?=$section_name;?></h3>
+							</div>
+							<div class="right-text">
+								<div class="add_events add_marg">
 
+								</div>
+							<?php for($i=0;$i<count($topics);$i++):?>
+								<div class="rtdblock">
+									<div class="rtblockbg">
+										<div class="rtdblockwrap">
+											<span class="rtd-num"><?=$this->uri->segment(5)+$i+1;?></span>
+											<span class="news-pic">
+						<img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['uid'];?>" alt="" align="left" width="74" height="74"/>
+											</span>
+											<div class="rtd-autor-info">
+												<h3><?=$topics[$i]['uname'].' '.$topics[$i]['usubname'].' '.$topics[$i]['uthname'];?></h3>
+												<span>
+													<?=$topics[$i]['uposition'];?><br />
+													<?=$topics[$i]['cmp_name'];?><br />
+												</span>
+											</div>
+											<div class="rtd-info">
+												<div class="green">Рейтинг: <span><?=$topics[$i]['urating'];?></span></div>
+												<div class="silver">Месяцев на сайте: <span><?=$topics[$i]['months'];?></span></div>
+											</div>
+											<div class="clear">&nbsp;</div>
+											<div class="rtd-text">
+												<p><?=$topics[$i]['uachievement'];?></p>
+											</div>
+											<div class="clear">&nbsp;</div>
+											<div class="rtd-contact">
+											<?php if($topics[$i]['uskype']):?>
+												<span class="skype"><?=$topics[$i]['uskype'];?></span>
+											<?php endif; ?>
+											<?php if($topics[$i]['uicq']):?>
+												<span class="icq"><?=$topics[$i]['uicq'];?></span>
+											<?php endif; ?>
+												<span class="mail"><?=$topics[$i]['uemail'];?></span>
+											<?php if($topics[$i]['uphone']):?>
+												<span class="phone"><?=$topics[$i]['uphone'];?></span>
+											<?php endif; ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('company_interface/footer'); ?>
@@ -50,6 +125,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#select-category").change(function(){change_category($(this));});
+			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>
 </body>

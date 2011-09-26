@@ -222,19 +222,17 @@ $route['company/private-business-environment/:any'] = "company_interface/busines
 
 $route['business-environment/discussions/:any/section/:num'] = "company_interface/discussions";
 $route['business-environment/discussions/:any/section/:num/count/:num'] = "company_interface/discussions";
-$route['business-environment/discussions/:any/create-section'] = "company_interface/discussions_create_section";
-$route['business-environment/discussions/:any/create-discussion'] = "company_interface/discussions_create_discussion";
+$route['business-environment/discussions/:any/create-discussion'] = "company_interface/create_discussion";
+
+$route['business-environment/discussions/:any/create-section'] = "company_interface/create_section";
 
 $route['business-environment/discussions/:any/discussion/:num'] = "company_interface/read_discussion";
-$route['business-environment/discussions/:any/discussion/:num/comment'] = "company_interface/add_comment";
 $route['business-environment/discussions/:any/discussion/:num/comments/count'] = "company_interface/read_discussion";
 $route['business-environment/discussions/:any/discussion/:num/comments/count/:num'] = "company_interface/read_discussion";
 
-$route['business-environment/discussions/:any/discussion/:num/edit-comment/:num'] = "company_interface/edit_comment";
 $route['business-environment/discussions/:any/discussion/:num/delete-comment/:num'] = "company_interface/delete_comment";
 
 $route['business-environment/discussions/:any/edit-discussion/:num'] = "company_interface/edit_discussion";
-$route['business-environment/discussions/:any/track-discussion/:num'] = "company_interface/track_discussion";
 $route['business-environment/discussions/:any/share-discussion/:num'] = "company_interface/share_discussion";
 $route['business-environment/discussions/:any/delete-discussion/:num'] = "company_interface/delete_discussion";
 
@@ -244,7 +242,7 @@ $route['business-environment/discussions/:any'] = "company_interface/discussions
 $route['business-environment/question-answer/:any/section/:num'] = "company_interface/question_answer";
 $route['business-environment/question-answer/:any/section/:num/count/:num'] = "company_interface/question_answer";
 
-$route['business-environment/question-answer/:any/create-section'] = "company_interface/question_create_section";
+$route['business-environment/question-answer/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/question-answer/:any/create-question'] = "company_interface/question_create_question";
 
 $route['business-environment/question-answer/:any/question/:num/answer'] = "company_interface/add_answer";
@@ -267,7 +265,7 @@ $route['business-environment/question-answer/:any'] = "company_interface/questio
 
 $route['business-environment/interactions/:any/section/:num'] = "company_interface/interactions";
 $route['business-environment/interactions/:any/section/:num/count/:num'] = "company_interface/interactions";
-$route['business-environment/interactions/:any/create-section'] = "company_interface/interactions_create_section";
+$route['business-environment/interactions/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/interactions/:any/create-interaction'] = "company_interface/interactions_create_interaction";
 
 $route['business-environment/interactions/:any/interaction/:num'] = "company_interface/read_interaction";
@@ -296,7 +294,7 @@ $route['business-environment/articles/:any/section/:num/count/:num/sort-views'] 
 
 $route['business-environment/articles/:any/article/:num'] = "company_interface/read_article";
 
-$route['business-environment/articles/:any/create-section'] = "company_interface/articles_create_section";
+$route['business-environment/articles/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/articles/:any/create-articles'] = "company_interface/articles_create_articles";
 
 $route['business-environment/articles/:any/article/:num/comment'] = "company_interface/article_add_comment";
@@ -319,7 +317,7 @@ $route['business-environment/articles/:any'] = "company_interface/articles";
 
 $route['business-environment/documentation/:any/section/:num'] = "company_interface/documentation";
 $route['business-environment/documentation/:any/section/:num/count/:num'] = "company_interface/documentation";
-$route['business-environment/documentation/:any/create-section'] = "company_interface/documentation_create_section";
+$route['business-environment/documentation/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/documentation/:any/create-query'] = "company_interface/documentation_create_query";
 
 $route['business-environment/documentation/:any/upload-document'] = "company_interface/documentation_upload_document";
@@ -359,7 +357,7 @@ $route['business-environment/documentation/:any'] = "company_interface/documenta
 
 $route['business-environment/surveys/:any/section/:num'] = "company_interface/surveys";
 $route['business-environment/surveys/:any/section/:num/count/:num'] = "company_interface/surveys";
-$route['business-environment/surveys/:any/create-section'] = "company_interface/surveys_create_section";
+$route['business-environment/surveys/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/surveys/:any/create-survey'] = "company_interface/surveys_create_survey";
 
 $route['business-environment/surveys/:any/survey/:num'] = "company_interface/read_survey";
@@ -382,7 +380,7 @@ $route['business-environment/surveys/:any'] = "company_interface/surveys";
 
 $route['business-environment/associations/:any/section/:num'] = "company_interface/association";
 $route['business-environment/associations/:any/section/:num/count/:num'] = "company_interface/association";
-$route['business-environment/associations/:any/create-section'] = "company_interface/associations_create_section";
+$route['business-environment/associations/:any/create-section'] = "company_interface/create_section";
 $route['business-environment/associations/:any/create-association'] = "company_interface/associations_create_association";
 
 $route['business-environment/associations/:any/association/:num'] = "company_interface/read_association";

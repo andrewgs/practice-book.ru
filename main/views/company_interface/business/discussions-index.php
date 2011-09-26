@@ -67,7 +67,6 @@
 									<p><?=$topics[$i]['top_note'];?></p>
 									<span class="green">
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'],'читать полностью');?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'/comment','ответить');?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$topics[$i]['top_id'].'#comments','комментарии ('.$topics[$i]['top_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
@@ -79,7 +78,6 @@
 												<?php if($topics[$i]['top_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/edit-discussion/'.$topics[$i]['top_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/track-discussion/'.$topics[$i]['top_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/share-discussion/'.$topics[$i]['top_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/delete-discussion/'.$topics[$i]['top_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>

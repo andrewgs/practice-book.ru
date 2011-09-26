@@ -38,8 +38,6 @@
 						<div class="center-title"></div>
 						<div class="content-text">
 							<div class="add_events add_marg">
-							<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/create-offer','<img src="'.$baseurl.'images/add_zapros.png" alt="Добавить предложение"/>',array('title'=>'Добавить предложение'));?>
-								<hr size="2"/>
 							<?php if(count($topics)):?>
 									<span class="sort sortleft">
 										Сортировать:

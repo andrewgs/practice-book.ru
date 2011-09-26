@@ -36,11 +36,11 @@ class Articlesmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function read_records($art_activity,$environment,$department){
+	function read_records($activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->select('art_id,art_title');
-		$this->db->where('art_activity',$art_activity);
+		$this->db->where('art_activity',$activity);
 		$this->db->where('art_environment',$environment);
 		$this->db->where('art_department',$department);
 		$this->db->order_by('art_title');
@@ -48,12 +48,13 @@ class Articlesmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$art_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->art_title = $data['title'];
-		$this->art_activity = $art_activity;
-		$this->art_environment = $environment;
-		$this->art_department = $department;
+		if(!$environment) $department = 0;
+		$this->art_title 		= $title;
+		$this->art_activity 	= $activity;
+		$this->art_environment 	= $environment;
+		$this->art_department 	= $department;
 		$this->db->insert('tbl_articles',$this);
 		return $this->db->insert_id();
 	}
@@ -93,6 +94,19 @@ class Articlesmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('art_title',$title);
+		$this->db->where('art_activity',$activity);
+		$this->db->where('art_environment',$environment);
+		$this->db->where('art_department',$department);
+		$query = $this->db->get('tbl_articles',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

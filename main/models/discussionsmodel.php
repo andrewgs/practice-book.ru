@@ -36,11 +36,11 @@ class Discussionsmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function read_records($dsc_activity,$environment,$department){
+	function read_records($activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->select('dsc_id,dsc_title');
-		$this->db->where('dsc_activity',$dsc_activity);
+		$this->db->where('dsc_activity',$activity);
 		$this->db->where('dsc_environment',$environment);
 		$this->db->where('dsc_department',$department);
 		$this->db->order_by('dsc_title');
@@ -48,12 +48,13 @@ class Discussionsmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$dsc_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->dsc_title = $data['title'];
-		$this->dsc_activity = $dsc_activity;
-		$this->dsc_environment = $environment;
-		$this->dsc_department = $department;
+		if(!$environment) $department = 0;
+		$this->dsc_title 		= $title;
+		$this->dsc_activity 	= $activity;
+		$this->dsc_environment 	= $environment;
+		$this->dsc_department 	= $department;
 		$this->db->insert('tbl_discussions',$this);
 		return $this->db->insert_id();
 	}
@@ -73,11 +74,11 @@ class Discussionsmodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	function owner($section,$dsc_activity,$environment,$department){
+	function owner($section,$activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('dsc_id',$section);
-		$this->db->where('dsc_activity',$dsc_activity);
+		$this->db->where('dsc_activity',$activity);
 		$this->db->where('dsc_environment',$environment);
 		$this->db->where('dsc_department',$department);
 		$query = $this->db->get('tbl_discussions',1);
@@ -93,6 +94,19 @@ class Discussionsmodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('dsc_title',$title);
+		$this->db->where('dsc_activity',$activity);
+		$this->db->where('dsc_environment',$environment);
+		$this->db->where('dsc_department',$department);
+		$query = $this->db->get('tbl_discussions',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

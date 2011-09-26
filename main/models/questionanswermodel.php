@@ -48,12 +48,13 @@ class Questionanswermodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$qa_activity,$environment,$department){
+	function insert_records($title,$activity,$environment,$department){
 		
-		$this->qa_title = $data['title'];
-		$this->qa_activity = $qa_activity;
-		$this->qa_environment = $environment;
-		$this->qa_department = $department;
+		if(!$environment) $department = 0;
+		$this->qa_title 		= $title;
+		$this->qa_activity 		= $activity;
+		$this->qa_environment 	= $environment;
+		$this->qa_department	= $department;
 		$this->db->insert('tbl_question_answer',$this);
 		return $this->db->insert_id();
 	}
@@ -93,6 +94,19 @@ class Questionanswermodel extends CI_Model {
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
+	}
+	
+	function title_exist($title,$activity,$environment,$department){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('qa_title',$title);
+		$this->db->where('qa_activity',$activity);
+		$this->db->where('qa_environment',$environment);
+		$this->db->where('qa_department',$department);
+		$query = $this->db->get('tbl_question_answer',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

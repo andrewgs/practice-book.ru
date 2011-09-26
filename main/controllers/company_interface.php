@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Company_interface extends CI_Controller {
+class Company_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','region'=>1,'priority'=>0,'department'=>0);
 	var $months = array("01"=>"января","02"=>"февраля","03"=>"марта","04"=>"апреля",
@@ -478,7 +478,7 @@ class Company_interface extends CI_Controller {
 				endif;
 				$_POST['source'] = '';
 //				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
-				$_POST['description'] = nl2b($_POST['description']);
+				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpnewsmodel->insert_record($this->user['cid'],$_POST);
 				$this->benewsmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				redirect('company/news-management/'.$this->user['uconfirmation']);
@@ -581,7 +581,7 @@ class Company_interface extends CI_Controller {
 					$_POST['pdateend'] = "3000-01-01";
 				endif;
 //				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
-				$_POST['description'] = nl2b($_POST['description']);
+				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
 				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				redirect('company/shares-management/'.$this->user['uconfirmation']);
@@ -858,6 +858,146 @@ class Company_interface extends CI_Controller {
 		$this->load->view('company_interface/business/index',$pagevar);
 	}
 	
+	function create_section(){
+		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$segment = $this->uri->segment(2);
+		switch ($segment):
+			case 'discussions':		$model = 'discussionsmodel';
+									$field = 'dsc_';
+									$name  = 'Обсуждения';
+ 									break;
+			case 'question-answer': $model = 'questionanswermodel';
+									$field = 'qa_';
+									$name  = 'Вопрос-ответ';
+									break;
+			case 'interactions': 	$model = 'interactionmodel';
+									$field = 'int_';
+									$name  = 'Взаимодействие с Госструктурами';
+									break;
+			case 'documentation': 	$model = 'documentationmodel';
+									$field = 'dtn_';
+									$name  = 'Обмен документами';
+									break;
+			case 'surveys': 		$model = 'surveymodel';
+									$field = 'sur_';
+									$name  = 'Опрос';
+									break;
+			case 'articles': 		$model = 'articlesmodel';
+									$field = 'art_';
+									$name  = 'Cтатьи';
+									break;
+			case 'associations': 	$model = 'assprocmodel';
+									$field = 'asp_';
+									$name  = 'Объединения для закупок';
+									break;
+			default:	redirect($this->session->userdata('backpath'));
+		endswitch;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->$model->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> 'Создание темы',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'type'			=> $segment,
+					'field'			=> $field,
+					'envname'		=> $name
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название темы','required|trim|max_length[50]|htmlspecialchars|callback_section_check');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_section();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$this->$model->insert_records($_POST['title'],$activity,$environment,$this->user['department']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		$this->load->view('company_interface/business/manage/create-section',$pagevar);
+	}
+	
+	function section_check($title){
+		
+		$segment = $this->uri->segment(2);
+		switch ($segment):
+			case 'discussions': 	$model = 'discussionsmodel';
+									break;
+			case 'question-answer': $model = 'questionanswermodel';
+									break;
+			case 'interactions': 	$model = 'interactionmodel';
+									break;
+			case 'documentation': 	$model = 'documentationmodel'; 
+									break;
+			case 'surveys': 		$model = 'surveymodel';
+									break;
+			case 'articles': 		$model = 'articlesmodel';
+									break;
+			case 'associations': 	$model = 'assprocmodel';
+									break;
+			default:	redirect($this->session->userdata('backpath'));
+		endswitch;
+if($this->$model->title_exist($title,$this->session->userdata('activity'),$this->session->userdata('environment'),$this->user['department'])):
+			$this->form_validation->set_message('section_check','Тема уже существует!');
+			return FALSE;
+		endif;
+		return TRUE;
+	}
+	
+	function delete_comment(){
+		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$topic = $this->uri->segment(5);
+		$segment = $this->uri->segment(2);
+		switch ($segment):
+			case 'discussions':		$link = 'discussions/'.$this->user['uconfirmation'].'/discussion/'.$topic;
+									$table = 'dsctopicsmodel';
+ 									break;
+			case 'question-answer': $model = 'questionanswermodel';
+									$field = 'qa_';
+									$name  = 'Вопрос-ответ';
+									break;
+			case 'interactions': 	$model = 'interactionmodel';
+									$field = 'int_';
+									$name  = 'Взаимодействие с Госструктурами';
+									break;
+			case 'documentation': 	$model = 'documentationmodel';
+									$field = 'dtn_';
+									$name  = 'Обмен документами';
+									break;
+			case 'surveys': 		$model = 'surveymodel';
+									$field = 'sur_';
+									$name  = 'Опрос';
+									break;
+			case 'articles': 		$model = 'articlesmodel';
+									$field = 'art_';
+									$name  = 'Cтатьи';
+									break;
+			case 'associations': 	$model = 'assprocmodel';
+									$field = 'asp_';
+									$name  = 'Объединения для закупок';
+									break;
+			default:	redirect($this->session->userdata('backpath'));
+		endswitch;
+		$comment = $this->uri->segment(7);
+		$this->commentsmodel->delete_record($comment,$this->user['uid']);
+		$this->$table->delete_comment($topic);
+		redirect('business-environment/'.$link);
+	}
 		/*============================================= discussion-full ============================================*/
 	
 	function discussions(){
@@ -936,12 +1076,46 @@ class Company_interface extends CI_Controller {
 		$this->load->view('company_interface/business/discussions-index',$pagevar);
 	}
 
-	function discussions_create_section(){
+	function create_discussion(){
 		
-	}
-
-	function discussions_create_discussion(){
-		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->discussionsmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->discussionsmodel->read_field($section,'dsc_title').' - Создание обсуждения',
+					'backpath'		=> $this->session->userdata('backpath')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_section();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+//				$_POST['note'] = nl2br($_POST['note']);
+				$this->dsctopicsmodel->insert_records($_POST,$section,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		$this->load->view('company_interface/business/manage/create-discussion',$pagevar);
 	}
 
 	function read_discussion(){
@@ -977,6 +1151,36 @@ class Company_interface extends CI_Controller {
 			);
 		$pagevar['topic']['top_date'] = $this->operation_date($pagevar['topic']['top_date']);
 		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_discussion();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'discussions',$topic);
+				$this->dsctopicsmodel->insert_comment($topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		if($this->input->post('ssubmit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_discussion();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
 		$pagevar['count'] = $this->commentsmodel->count_records($topic,'discussions');
 		
 		$config['base_url'] = $pagevar['baseurl'].'business-environment/discussions/'.$this->user['uconfirmation'].'/discussion/'.$topic.'/comments/count/';
@@ -1011,30 +1215,74 @@ class Company_interface extends CI_Controller {
 	
 	function edit_discussion(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->discussionsmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->dsctopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->discussionsmodel->read_field($section,'dsc_title').' - Редактирование обсуждения',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'topic'			=> $this->unionmodel->dsc_topic_records($topic),
+			);
+		$pagevar['topic']['top_note'] = preg_replace('/<br>/','',$pagevar['topic']['top_note']);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_section();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+//				$_POST['note'] = nl2br($_POST['note']);
+				$this->dsctopicsmodel->update_records($topic,$_POST,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		$this->load->view('company_interface/business/manage/edit-discussion',$pagevar);
 	}
 
-	function track_discussion(){
-		
-	}
-	
 	function share_discussion(){
 		
 	}
 	
 	function delete_discussion(){
 		
-	}
-	
-	function add_comment(){
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->discussionsmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->dsctopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
 		
-	}
-	
-	function edit_comment(){
-		
-	}
-	
-	function delete_comment(){
-		
+		$this->commentsmodel->delete_records('discussions',$topic);
+		$this->dsctopicsmodel->delete_record($topic,$this->user['uid']);
+		redirect($this->session->userdata('backpath'));
 	}
 	
 		/*============================================= question_answer-full ============================================*/
@@ -2894,7 +3142,7 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 	function who_main(){
 		
 		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 'full';
+		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
 		
@@ -2906,9 +3154,15 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'environment'	=> $environment
+					'environment'	=> $environment,
+					'topics'		=> array(),
+					'count'			=> 0,
+					'pages'			=> '',
+					'section_name'	=> 'Кто главный?',
+					'type_rating'	=> $this->uri->segment(2),
+					'bysort'		=> ''
 			);
-		if($environment == 'full'):
+		if(!$environment):
 			$pagevar['title'] .= 'Общая бизнес среда | Кто главный?';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:

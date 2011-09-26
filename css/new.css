@@ -38,7 +38,7 @@
 .right-post span.green a {color:#656c30;margin:0 10px 0 0;}
 .right-post span.date {position:absolute;top:16px;right:0;color:#737373;font-size:14px;}
 .right-post span.news-pic {margin:12px 0 0 0;float:left;width:85px;height:84px;background:url(../images/picbg.png) no-repeat;padding:3px 7px 7px 4px;}
-.right-post span.news-pic img {margin:0;padding:0;border:none;width:px;}
+.right-post span.news-pic img {margin:0;padding:0;border:none;width:px;height:85px;height:84px;}
 .zakup span.news-pic {margin:12px 0 0 0;float:left;width:126px;height:125px;background:url(../images/picbg3.png) no-repeat;padding:2px 0 0 1px;}
 .zakup span.news-pic img {width:122px; height:122px;margin:0;padding:0;border:none;}
 .zakup2 span.news-pic {float:left;margin:12px 8px 0 0;display:inline;}
@@ -207,12 +207,12 @@
 /* search */
 
 .margblock {margin:60px 0 0 0;}
-.search-slaider-top {margin:50px 0 0 0;}
+.search-slaider-top {margin:30px 0 0 0;}
 .search-slaider-top ul {list-style:none;}
 ..search-slaider-top h2 {color:#787878;font:normal 11px/14px Myriad Pro, Arial;}
 
 
-.search-content {padding:50px 16px 0 0;}
+.search-content {padding:30px 16px 0 0;}
 .searchtitle {padding:0 0 10px 0;}
 .searhcblock {overflow:hidden;font:normal 14px/19px Arial, Tahoma;}
 .searhcblock .searhcbox {float:left;padding:0 30px 0 0;}

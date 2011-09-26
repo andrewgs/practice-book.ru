@@ -34,7 +34,7 @@ class Dsctopicsmodel extends CI_Model {
 	function insert_records($data,$dsc,$usr){
 	
 		$this->top_title = $data['title'];
-		$this->top_note = $data['note'];
+		$this->top_note = strip_tags($data['note'],'<br>');
 		$this->top_date = date("Y-m-d");
 		$this->top_dscid = $dsc;
 		$this->top_usrid = $usr;
@@ -43,30 +43,31 @@ class Dsctopicsmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_records($id,$data,$usrid){
 	
 		$this->db->set('top_title',$data['title']);
-		$this->db->set('top_note',$data['note']);
-		$this->db->set('top_date',date("Y-m-d"));
+		$this->db->set('top_note',strip_tags($data['note'],'<br>'));
 		$this->db->where('top_id',$id);
+		$this->db->where('top_usrid',$usrid);
 		$this->db->update('tbl_dsc_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$usrid){
 	
 		$this->db->where('top_id',$id);
+		$this->db->where('top_usrid',$usrid);
 		$this->db->delete('tbl_dsc_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('top_comments','top_comments+1',FALSE);
 		$this->db->where('top_id',$id);
 		$this->db->update('tbl_dsc_topics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('top_comments','top_comments-1',FALSE);
 		$this->db->where('top_id',$id);
@@ -93,7 +94,7 @@ class Dsctopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$section,$usr){
+	function topic_owner($id,$section,$usr){
 		
 		$this->db->where('top_id',$id);
 		$this->db->where('top_dscid',$section);
