@@ -73,11 +73,11 @@ class Interactionmodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	function owner($section,$int_activity,$environment,$department){
+	function owner($section,$activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('int_id',$section);
-		$this->db->where('int_activity',$int_activity);
+		$this->db->where('int_activity',$activity);
 		$this->db->where('int_environment',$environment);
 		$this->db->where('int_department',$department);
 		$query = $this->db->get('tbl_interaction',1);

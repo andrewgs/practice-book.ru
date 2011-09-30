@@ -58,7 +58,7 @@
 							</div>
 							<div class="right-text">
 								<div class="add_events">
-								<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-articles','<img src="'.$baseurl.'images/add_events2.png" alt="Добавить статью"/>',array('title'=>'Добавить статью'));?>
+								<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-article','<img src="'.$baseurl.'images/add_events2.png" alt="Добавить статью"/>',array('title'=>'Добавить статью'));?>
 							<?php if(count($articles)):?>
 									<span class="sort">
 										Сортировать:
@@ -79,7 +79,6 @@
 									<span class="view">просмотров: <?=$articles[$i]['atp_views'];?></span>
 									<span class="green">
 <?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'],'читать полностью');?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'].'/comment','ответить');?>
 <?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/article/'.$articles[$i]['atp_id'].'#comments','комментарии ('.$articles[$i]['atp_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
@@ -91,7 +90,6 @@
 												<?php if($articles[$i]['atp_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/edit-article/'.$articles[$i]['atp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/track-article/'.$articles[$i]['atp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/share-article/'.$articles[$i]['atp_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/delete-article/'.$articles[$i]['atp_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>

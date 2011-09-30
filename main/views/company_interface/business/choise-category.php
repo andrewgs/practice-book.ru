@@ -3,9 +3,9 @@
 	<option value="discussions">Обсуждения</option>
 	<option value="question-answer">Вопрос-ответ</option>
 	<option value="interactions">Взаимодействие с Госструктурами</option>
+	<option value="articles">Статьи</option>
 	<option value="documentation">Обмен документами</option>
 	<option value="surveys">Опрос</option>
-	<option value="articles">Статьи</option>
 <?php if(!$environment):?>
 	<option value="associations">Объединения для закупок</option>
 	<option value="offers">Предложения для контрагентов</option>

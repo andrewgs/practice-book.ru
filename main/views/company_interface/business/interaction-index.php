@@ -67,7 +67,6 @@
 									<p><?=$topics[$i]['itp_note'];?></p>
 									<span class="green">
 <?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/interaction/'.$topics[$i]['itp_id'],'читать полностью');?>
-<?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/interaction/'.$topics[$i]['itp_id'].'/comment','ответить');?>
 <?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/interaction/'.$topics[$i]['itp_id'].'#comments','комментарии ('.$topics[$i]['itp_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
@@ -79,7 +78,6 @@
 												<?php if($topics[$i]['itp_usrid'] == $userinfo['uid']):?>
 													<div class="opt-bgg">
 <?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/edit-interaction/'.$topics[$i]['itp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/track-interaction/'.$topics[$i]['itp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/share-interaction/'.$topics[$i]['itp_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/interactions/'.$userinfo['uconfirmation'].'/delete-interaction/'.$topics[$i]['itp_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>

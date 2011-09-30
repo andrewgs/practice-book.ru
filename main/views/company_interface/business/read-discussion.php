@@ -63,7 +63,7 @@
 									<span class="date"><?=$topic['top_date'];?></span>
 									<p><?=$topic['top_note'];?></p>
 									<span class="green"><a href="" id="SetComment">комментировать</a></span>
-									<div class="clear">&nbsp;</div>
+									<div class="clear"></div>
 									<div id="FormComment" style="display:none;">
 										<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
 					<label class="label-input">Текст комментария: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
@@ -73,8 +73,8 @@
 						<input class="btn-action margin-1em" id="addComment" type="submit" name="submit" value="Добавить"/>
 						<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
 										<?= form_close(); ?>
-										</div>
-									<div class="clear">&nbsp;</div>
+									</div>
+									<div class="clear"></div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
@@ -138,7 +138,7 @@
 				<input class="btn-action margin-1em CEC" FC="<?=$i;?>" id="EditCancel<?=$i;?>" type="button" value="Отменить"/>
 										<?= form_close(); ?>
 												</div>
-												<div class="clear">&nbsp;</div>
+												<div class="clear"></div>
 											</div>
 										<?php endif;?>
 										</div>
@@ -181,19 +181,8 @@
 			$("#Cancel").click(function(){$('#FormComment').fadeToggle('slow',function(){$("#note").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
 			$("#addComment").click(function(event){$("#note").css('border-color','#D0D0D0');if($("#note").val() == ''){$("#note").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
 			$(".EditComment").click(function(){var fc = $(this).attr('FC');var text = $('#p'+fc).text();$(".FormEditComment").hide();$(".txtinput").val('');$("#FEC"+fc).fadeIn('slow',function(){$("#note"+fc).val(text);});return false;});
-			
 			$(".CEC").click(function(){var fc=$(this).attr('FC');$("#note"+fc).css('border-color','#D0D0D0');$("#FEC"+fc).fadeOut('slow',function(){$("#note"+fc).val('');});return false;});
-			
-			$(".SEC").click(function(event){
-				var fc=$(this).attr('FC');
-				$("#note"+fc).css('border-color','#D0D0D0');
-				if($("#note"+fc).val() == ''){
-					$("#note"+fc).css('border-color','#ff0000');
-					msgerror("Пропущены обязательные поля!");
-					event.preventDefault();
-				}else $("#form"+fc).submit();
-			});
-			
+			$(".SEC").click(function(event){var fc=$(this).attr('FC');$("#note"+fc).css('border-color','#D0D0D0');if($("#note"+fc).val() == ''){$("#note"+fc).css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}else $("#form"+fc).submit();});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>

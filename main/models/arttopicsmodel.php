@@ -32,54 +32,54 @@ class Arttopicsmodel extends CI_Model {
 		return $this->db->get('tbl_art_topics');
 	}
 	
-	function insert_records($data,$artid,$usr){
+	function insert_record($data,$artid,$usr){
 	
-		$this->atp_title = $data['title'];
-		$this->atp_note = $data['note'];
-		$this->atp_date = date("Y-m-d");
-		$this->atp_artid = $artid;
-		$this->atp_usrid = $usr;
+		$this->atp_title 	= $data['title'];
+		$this->atp_note 	= strip_tags($data['note'],'<br>');
+		$this->atp_date 	= date("Y-m-d");
+		$this->atp_artid 	= $artid;
+		$this->atp_usrid 	= $usr;
 		$this->atp_comments = 0;
 		$this->db->insert('tbl_art_topics',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$data){
 	
 		$this->db->set('atp_title',$data['title']);
-		$this->db->set('atp_note',$data['note']);
+		$this->db->set('atp_note',strip_tags($data['note'],'<br>'));
 		$this->db->set('atp_date',date("Y-m-d"));
 		$this->db->where('atp_id',$id);
 		$this->db->update('tbl_art_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id){
 	
 		$this->db->where('atp_id',$id);
 		$this->db->delete('tbl_art_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('atp_comments','atp_comments+1',FALSE);
 		$this->db->where('atp_id',$id);
 		$this->db->update('tbl_art_topics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('atp_comments','atp_comments-1',FALSE);
 		$this->db->where('atp_id',$id);
 		$this->db->update('tbl_art_topics');
 	}
-	function insert_views($id){
+	function insert_view($id){
 		$this->db->set('atp_views','atp_views+1',FALSE);
 		$this->db->where('atp_id',$id);
 		$this->db->update('tbl_art_topics');
 	}
 	
-	function clear_views($id){
+	function clear_view($id){
 	
 		$this->db->set('atp_comments',0,FALSE);
 		$this->db->where('atp_id',$id);
@@ -106,7 +106,7 @@ class Arttopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$artid,$usr){
+	function topic_owner($id,$artid,$usr){
 		
 		$this->db->where('atp_id',$id);
 		$this->db->where('atp_artid',$artid);

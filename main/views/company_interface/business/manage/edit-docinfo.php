@@ -19,6 +19,9 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
+	<style type="text/css">
+		.DocType{font: normal small-caps 14px/16px fantasy;border: 1px solid #D8D8D8;padding: 5px; width:130px;}
+	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -39,17 +42,14 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-							<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
-							<?php endfor; ?>
+								<?php for($i=0;$i<count($sections);$i++): ?>		
+									<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
+								<?php endfor; ?>
 								</ul>
-								<br />
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
@@ -57,55 +57,34 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-query','<img src="'.$baseurl.'images/add_zapros.png" alt="создать запрос"/>',array('title'=>'создать запрос'));?>
-								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
+							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<hr size="2"/>
 								<div class="right-post">
-									<h2><?=$topics[$i]['dtt_title'];?></h2>
-									<span class="date"><?=$topics[$i]['dtt_date'];?></span>
-									<span class="green">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/documents-list','документов ('.$topics[$i]['dtt_documents'].')');?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/comments','комментарии ('.$topics[$i]['dtt_comments'].')');?>
-									</span>
-									<div class="clear">&nbsp;</div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg">
-														<?php if($topics[$i]['dtt_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/edit-query/'.$topics[$i]['dtt_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/track-query/'.$topics[$i]['dtt_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-														<?php if(!$topics[$i]['dtt_documents']):?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/delete-query/'.$topics[$i]['dtt_id'],'Удалить',array('title'=>'Удалить'));?>
-														<?php endif; ?>
-														</div>
-													<?php endif; ?>
-													</div>
-												</td>
-												<td class="right-avtor">
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['dtt_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
+								<?= form_open_multipart($this->uri->uri_string(),array('id'=>'formAddDocument','class'=>'formular')); ?>
+							<label class="label-input">Название: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('title'); ?>
+							<input class="edit-form-input inpvalue" id="title" name="title" type="text" value="<?=$document['dls_title'];?>"/>
+							<label class="label-input">Новый документ:</label>
+							<input class="reg-form-input" type="file" id="userfile" name="userfile" size="30"/>
+							<label class="label-input">Тип документа: </label>
+							<div class="DocType">
+								<input type="radio" id="radio1" name="doctype" value="1">MS Word<Br/>
+								<input type="radio" id="radio2" name="doctype" value="2">MS Excel<Br/>
+								<input type="radio" id="radio3" name="doctype" value="3">TXT-документ<Br/>
+								<input type="radio" id="radio4" name="doctype" value="4">PDF-документ<Br/>
+							</div>
+							<div class="clear"></div>
+							<label class="label-input">Описание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+								<?= form_error('note'); ?>
+				<textarea class="edit700-form-textarea inpvalue" name="note" id="note" cols="50" rows="5"><?=$document['dls_note'];?></textarea>
+							<input class="btn-action margin-1em" id="addDocument" type="submit" name="submit" value="Добавить"/>
 									</div>
-								</div>
-							<?php endfor; ?>
-							<?php if($pages): ?>
-								<?=$pages;?>
-							<?php endif;?>
+									<div class="clear"></div>
+								<?= form_close(); ?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -125,11 +104,22 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.maxlength-min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$("#addDocument").click(function(event){
+				var err = false;
+				 $(".inpvalue").css('border-color','#D0D0D0');
+				if($("#title").val() == ''){err = true;$("#title").css('border-color','#ff0000');}
+				if($("#note").val() == ''){err = true;$("#note").css('border-color','#ff0000');}
+				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
+			});
+			$('#note').maxlength({maxCharacters:600,status:true,statusClass:"lenghtstatus",statusText:" символов осталось.",notificationClass:"lenghtnotifi",slider:true});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

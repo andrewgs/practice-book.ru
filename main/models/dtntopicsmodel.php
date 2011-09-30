@@ -31,41 +31,44 @@ class Dtntopicsmodel extends CI_Model {
 		return $this->db->get('tbl_dtn_topics');
 	}
 	
-	function insert_records($data,$dsc,$usr){
+	function insert_record($title,$dsc,$usr){
 	
-		$this->dtt_title = htmlspecialchars($data['title']);
-		$this->dtt_date = date("Y-m-d");
-		$this->dtt_dtnid = $dsc;
-		$this->dtt_usrid = $usr;
+		$this->dtt_title 	= strip_tags($title,'<br>');
+		$this->dtt_date 	= date("Y-m-d");
+		$this->dtt_dtnid 	= $dsc;
+		$this->dtt_usrid 	= $usr;
 		$this->dtt_comments = 0;
 		$this->dtt_documents = 0;
 		$this->db->insert('tbl_dtn_topics',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$title,$userid){
 	
-		$this->db->set('dtt_title',htmlspecialchars($data['title']));
-		$this->db->set('dtt_date',date("Y-m-d"));
+		$this->db->set('dtt_title',strip_tags($title,'<br>'));
 		$this->db->where('dtt_id',$id);
+		$this->db->where('dtt_usrid',$userid);
 		$this->db->update('tbl_dtn_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$userid){
 	
 		$this->db->where('dtt_id',$id);
+		$this->db->where('dtt_documents',0);
+		$this->db->where('dtt_usrid',$userid);
 		$this->db->delete('tbl_dtn_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
+		
 		$this->db->set('dtt_comments','dtt_comments+1',FALSE);
 		$this->db->where('dtt_id',$id);
 		$this->db->update('tbl_dtn_topics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('dtt_comments','dtt_comments-1',FALSE);
 		$this->db->where('dtt_id',$id);
@@ -73,6 +76,7 @@ class Dtntopicsmodel extends CI_Model {
 	}
 	
 	function insert_document($id){
+	
 		$this->db->set('dtt_documents','dtt_documents+1',FALSE);
 		$this->db->where('dtt_id',$id);
 		$this->db->update('tbl_dtn_topics');
@@ -105,7 +109,7 @@ class Dtntopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$section,$usr){
+	function topic_owner($id,$section,$usr){
 		
 		$this->db->where('dtt_id',$id);
 		$this->db->where('dtt_dtnid',$section);

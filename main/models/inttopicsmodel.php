@@ -31,42 +31,43 @@ class Inttopicsmodel extends CI_Model {
 		return $this->db->get('tbl_inttopics');
 	}
 	
-	function insert_records($data,$dsc,$usr){
+	function insert_record($data,$int,$usr){
 	
-		$this->itp_title = $data['title'];
-		$this->itp_note = $data['note'];
-		$this->itp_date = date("Y-m-d");
-		$this->itp_intid = $dsc;
-		$this->itp_usrid = $usr;
+		$this->itp_title 	= $data['title'];
+		$this->itp_note 	= strip_tags($data['note'],'<br>');
+		$this->itp_date 	= date("Y-m-d");
+		$this->itp_intid 	= $int;
+		$this->itp_usrid 	= $usr;
 		$this->itp_comments = 0;
 		$this->db->insert('tbl_inttopics',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$data,$userid){
 	
 		$this->db->set('itp_title',$data['title']);
-		$this->db->set('itp_note',$data['note']);
-		$this->db->set('itp_date',date("Y-m-d"));
+		$this->db->set('itp_note',strip_tags($data['note'],'<br>'));
 		$this->db->where('itp_id',$id);
+		$this->db->where('itp_usrid',$userid);
 		$this->db->update('tbl_inttopics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$usrid){
 	
 		$this->db->where('itp_id',$id);
+		$this->db->where('itp_usrid',$usrid);
 		$this->db->delete('tbl_inttopics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('itp_comments','itp_comments+1',FALSE);
 		$this->db->where('itp_id',$id);
 		$this->db->update('tbl_inttopics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('itp_comments','itp_comments-1',FALSE);
 		$this->db->where('itp_id',$id);
@@ -93,7 +94,7 @@ class Inttopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$section,$usr){
+	function topic_owner($id,$section,$usr){
 		
 		$this->db->where('itp_id',$id);
 		$this->db->where('itp_intid',$section);

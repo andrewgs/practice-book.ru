@@ -39,17 +39,14 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-							<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
-							<?php endfor; ?>
+								<?php for($i=0;$i<count($sections);$i++): ?>		
+									<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
+								<?php endfor; ?>
 								</ul>
-								<br />
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php if(count($sections)):?>
 				<div class="content-right">
 					<div class="content-right-top">
 						<div class="content-right-bot">
@@ -57,55 +54,21 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-query','<img src="'.$baseurl.'images/add_zapros.png" alt="создать запрос"/>',array('title'=>'создать запрос'));?>
-								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
+							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<hr size="2"/>
 								<div class="right-post">
-									<h2><?=$topics[$i]['dtt_title'];?></h2>
-									<span class="date"><?=$topics[$i]['dtt_date'];?></span>
-									<span class="green">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/documents-list','документов ('.$topics[$i]['dtt_documents'].')');?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/comments','комментарии ('.$topics[$i]['dtt_comments'].')');?>
-									</span>
-									<div class="clear">&nbsp;</div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg">
-														<?php if($topics[$i]['dtt_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/edit-query/'.$topics[$i]['dtt_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/track-query/'.$topics[$i]['dtt_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-														<?php if(!$topics[$i]['dtt_documents']):?>
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/delete-query/'.$topics[$i]['dtt_id'],'Удалить',array('title'=>'Удалить'));?>
-														<?php endif; ?>
-														</div>
-													<?php endif; ?>
-													</div>
-												</td>
-												<td class="right-avtor">
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['dtt_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</table>
-									</div>
+								<?=form_open($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
+						<label class="label-input">Текст вопроса: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('title');?>
+					<textarea class="edit700-form-textarea" name="title" id="title" cols="50" rows="10"><?=$topic['dtt_title'];?></textarea>
+									<div class="clear"></div>
+						<input class="btn-action margin-1em" id="addQuestion" type="submit" name="submit" value="Сохранить"/>
+								<?= form_close(); ?>
 								</div>
-							<?php endfor; ?>
-							<?php if($pages): ?>
-								<?=$pages;?>
-							<?php endif;?>
 							</div>
 						</div>
 					</div>
 				</div>
-			<?php endif; ?>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -125,11 +88,21 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$("#addQuestion").click(function(event){
+				$("#title").css('border-color','#D0D0D0');
+				if($("#title").val() == ''){
+					$("#title").css('border-color','#ff0000');
+					msgerror("Пропущены обязательные поля!");
+					event.preventDefault();
+				}
+			});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

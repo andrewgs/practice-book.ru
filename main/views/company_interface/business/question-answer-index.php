@@ -62,11 +62,10 @@
 								</div>
 						<?php for($i=0;$i<count($question);$i++):?>
 								<div class="right-post">
-									<h2><?=($i+1).'. '.$question[$i]['qat_title'];?></h2>
+									<h2><?=$question[$i]['qat_title'];?></h2>
 									<span class="date"><?=$question[$i]['qat_date'];?></span>
 									<span class="green">
-	<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question[$i]['qat_id'].'/answer','ответить');?>
-	<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question[$i]['qat_id'].'/answers#answers','ответы ('.$question[$i]['qat_comments'].')');?>
+<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/question/'.$question[$i]['qat_id'].'/answers#answers','ответы ('.$question[$i]['qat_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
 									<div class="right-post-option">
@@ -74,10 +73,9 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-														<?php if($question[$i]['qat_usrid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
+													<?php if($question[$i]['qat_usrid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
 <?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/edit-question/'.$question[$i]['qat_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/track-question/'.$question[$i]['qat_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/share-question/'.$question[$i]['qat_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/question-answer/'.$userinfo['uconfirmation'].'/delete-question/'.$question[$i]['qat_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>

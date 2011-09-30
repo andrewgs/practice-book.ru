@@ -59,13 +59,12 @@
 								<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
 								<div class="add_events">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/upload-document','<img src="'.$baseurl.'images/add_document.png" alt="добавить документ"/>',array('title'=>'добавить документ'));?>
+<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/upload-document','<img src="'.$baseurl.'images/add_document.png" alt="добавить документ"/>',array('title'=>'добавить документ'));?>
 								</div>
 								<div class="right-post">
 									<h2><?=$topic['dtt_title'];?></h2>
 									<span class="date"><?=$topic['dtt_date'];?></span>
 									<span class="green">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comment','ответить');?>
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comments','комментарии ('.$topic['dtt_comments'].')');?>
 									</span>
 									<div class="clear">&nbsp;</div>
@@ -125,7 +124,6 @@
 											</div>
 											<p><?=$documents[$i]['dls_note'];?></p>
 											<div class="commentbox-option">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$documents[$i]['dls_id'].'/comment','ответить');?>
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/document/'.$documents[$i]['dls_id'].'/comments','комментарии ('.$documents[$i]['dls_comments'].')');?>
 										<?php if($documents[$i]['dls_usrid'] == $userinfo['uid']):?>
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/edit-doc-info/'.$documents[$i]['dls_id'],'Редактировать');?><?=anchor

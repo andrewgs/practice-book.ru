@@ -4,7 +4,7 @@ class Qatopicsmodel extends CI_Model {
 	var $qat_id 		= 0;
 	var $qat_title 		= "";
 	var $qat_date 		= "";
-	var $qat_dscid		= 0;
+	var $qat_qaid		= 0;
 	var $qat_usrid		= 0;
 	var $qat_comments	= 0;
 	
@@ -30,40 +30,41 @@ class Qatopicsmodel extends CI_Model {
 		return $this->db->get('tbl_qa_topics');
 	}
 	
-	function insert_records($data,$qaid,$usr){
+	function insert_records($title,$qaid,$usr){
 	
-		$this->qat_title = $data['title'];
-		$this->qat_date = date("Y-m-d");
-		$this->qat_qaid = $qaid;
-		$this->qat_usrid = $usr;
+		$this->qat_title 	= strip_tags($title,'<br>');
+		$this->qat_date 	= date("Y-m-d");
+		$this->qat_qaid 	= $qaid;
+		$this->qat_usrid	= $usr;
 		$this->qat_comments = 0;
 		$this->db->insert('tbl_qa_topics',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$title,$userid){
 	
-		$this->db->set('qat_title',$data['title']);
-		$this->db->set('qat_date',date("Y-m-d"));
+		$this->db->set('qat_title',strip_tags($title,'<br>'));
 		$this->db->where('qat_id',$id);
+		$this->db->where('qat_usrid',$userid);
 		$this->db->update('tbl_qa_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$userid){
 	
 		$this->db->where('qat_id',$id);
+		$this->db->where('qat_usrid',$userid);
 		$this->db->delete('tbl_qa_topics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('qat_comments','qat_comments+1',FALSE);
 		$this->db->where('qat_id',$id);
 		$this->db->update('tbl_qa_topics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('qat_comments','qat_comments-1',FALSE);
 		$this->db->where('qat_id',$id);
@@ -90,7 +91,7 @@ class Qatopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$qaid,$usr){
+	function topic_owner($id,$qaid,$usr){
 		
 		$this->db->where('qat_id',$id);
 		$this->db->where('qat_qaid',$qaid);
@@ -100,7 +101,7 @@ class Qatopicsmodel extends CI_Model {
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
-
+	
 	function topic_exist($id,$qaid){
 		
 		$this->db->where('qat_id',$id);

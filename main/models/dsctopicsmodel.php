@@ -31,7 +31,7 @@ class Dsctopicsmodel extends CI_Model {
 		return $this->db->get('tbl_dsc_topics');
 	}
 	
-	function insert_records($data,$dsc,$usr){
+	function insert_record($data,$dsc,$usr){
 	
 		$this->top_title = $data['title'];
 		$this->top_note = strip_tags($data['note'],'<br>');
@@ -43,7 +43,7 @@ class Dsctopicsmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data,$usrid){
+	function update_record($id,$data,$usrid){
 	
 		$this->db->set('top_title',$data['title']);
 		$this->db->set('top_note',strip_tags($data['note'],'<br>'));

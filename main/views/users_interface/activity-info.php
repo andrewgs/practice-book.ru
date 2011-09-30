@@ -985,7 +985,7 @@
 								</div>
 							</div>
 						</div>
-						<?php if(!$banner): ?>
+					<?php if($banner): ?>
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[19]['otxt_note'];?></h2>
@@ -1000,7 +1000,22 @@
 								<?=$banner;?>
 							</div>
 						</div>
-						<?php endif; ?>
+					<?php else:?>
+						<div class="box">
+							<div class="box-header w220">
+								<h2><?= $othertext[19]['otxt_note'];?></h2>
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[19]['otxt_help'];?></span>
+									</a>
+								</div>
+							</div>
+							<div class="box-content">
+								<img src="<?=$baseurl;?>images/who-main.jpg" alt="" title="<?=$othertext[19]['otxt_note'];?>" width="220" height="185" align="middle">
+							</div>
+						</div>
+					<?php endif; ?>
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[14]['otxt_note'];?></h2>

@@ -1,5 +1,5 @@
 <?php
-class Documentationmodel extends CI_Model {
+class Documentationmodel extends CI_Model{
 	
 	var $dtn_id 		= 0;
 	var $dtn_title 		= "";
@@ -73,11 +73,11 @@ class Documentationmodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	function owner($section,$dtn_activity,$environment,$department){
+	function owner($section,$activity,$environment,$department){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('dtn_id',$section);
-		$this->db->where('dtn_activity',$dtn_activity);
+		$this->db->where('dtn_activity',$activity);
 		$this->db->where('dtn_environment',$environment);
 		$this->db->where('dtn_department',$department);
 		$query = $this->db->get('tbl_documentation',1);

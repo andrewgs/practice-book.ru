@@ -1,6 +1,6 @@
 <?php
 
-class Users_interface extends CI_Controller {
+class Users_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','manager'=>FALSE,'priority'=>0,'activity'=>0);
 	var $loginstatus = array('company'=>FALSE,'status'=>FALSE);
