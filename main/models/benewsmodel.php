@@ -22,7 +22,8 @@ class Benewsmodel extends CI_Model {
 	}
 	
 	function insert_record($insertdata,$activity,$environment,$department,$userid,$group){
-			
+		
+		if(!$environment) $department = 0;
 		$this->ben_title		= htmlspecialchars($insertdata['title']);
 		$this->ben_note			= strip_tags($insertdata['description'],'<br>');
 		$this->ben_photo		= $insertdata['photo'];
@@ -38,6 +39,20 @@ class Benewsmodel extends CI_Model {
 		
 		$this->db->insert('tbl_be_news',$this);
 		return $this->db->insert_id();
+	}
+	
+	function update_record($id,$data,$user){
+		
+		$this->db->set('ben_title',htmlspecialchars($data['title']));
+		$this->db->set('ben_note',strip_tags($data['note'],'<br>'));
+		$this->db->set('ben_source',htmlspecialchars($data['source']));
+		if($data['photo']):
+			$this->db->set('ben_photo',$data['photo']);
+		endif;
+		$this->db->where('ben_id',$id);
+		$this->db->where('ben_userid',$user);
+		$this->db->update('tbl_be_news');
+		return $this->db->affected_rows();
 	}
 	
 	function read_record($nid,$mraid){
@@ -95,35 +110,36 @@ class Benewsmodel extends CI_Model {
 		return $data[0]['cnt'];
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('ben_comments','ben_comments+1',FALSE);
 		$this->db->where('ben_id',$id);
 		$this->db->update('tbl_be_news');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('ben_comments','ben_comments-1',FALSE);
 		$this->db->where('ben_id',$id);
 		$this->db->update('tbl_be_news');
 	}
 
-	function insert_views($id){
+	function insert_view($id){
 		$this->db->set('ben_views','ben_views+1',FALSE);
 		$this->db->where('ben_id',$id);
 		$this->db->update('tbl_be_news');
 	}
 	
-	function clear_views($id){
+	function clear_view($id){
 	
 		$this->db->set('ben_comments',0,FALSE);
 		$this->db->where('ben_id',$id);
 		$this->db->update('tbl_be_news');
 	}
 	
-	function delete_record($aid){
+	function delete_record($id,$userid){
 	
-		$this->db->where('ben_id',$aid);
+		$this->db->where('ben_id',$id);
+		$this->db->where('ben_userid',$userid);
 		$this->db->delete('tbl_be_news');
 		return $this->db->affected_rows();
 	}
@@ -137,7 +153,22 @@ class Benewsmodel extends CI_Model {
 		if(isset($data[0])) return $data[0][$field];
 		return FALSE;
 	}
-
+	
+	function topic_owner($id,$environment,$department,$activity,$group,$usr){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('ben_id',$id);
+		$this->db->where('ben_environment',$environment);
+		$this->db->where('ben_department',$department);
+		$this->db->where('ben_activity',$activity);
+		$this->db->where('ben_userid',$usr);
+		$this->db->where('ben_group',$group);
+		$query = $this->db->get('tbl_be_news',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
+	
 	function topic_exist($id,$environment,$department,$activity,$group){
 		
 		if(!$environment) $department = 0;

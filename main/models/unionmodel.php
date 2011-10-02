@@ -408,7 +408,7 @@ class Unionmodel extends CI_Model{
 	function ben_topics_limit_records($count,$from,$environment,$department,$activity,$group,$field){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group GROUP BY tbl_be_news.ben_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group GROUP BY tbl_be_news.ben_id ORDER BY $field DESC, ben_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

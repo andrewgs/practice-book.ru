@@ -31,10 +31,9 @@ class Surtopicsmodel extends CI_Model {
 		return $this->db->get('tbl_surtopics');
 	}
 	
-	function insert_records($data,$sur,$usr){
+	function insert_record($title,$sur,$usr){
 	
-		$this->stp_title = $data['title'];
-		$this->stp_note = $data['note'];
+		$this->stp_title = strip_tags($title,'<br>');
 		$this->stp_date = date("Y-m-d");
 		$this->stp_surid = $sur;
 		$this->stp_usrid = $usr;
@@ -43,29 +42,30 @@ class Surtopicsmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$title,$userid){
 	
-		$this->db->set('stp_title',$data['title']);
-		$this->db->set('stp_date',date("Y-m-d"));
+		$this->db->set('stp_title',strip_tags($title,'<br>'));
 		$this->db->where('stp_id',$id);
+		$this->db->where('stp_usrid',$userid);
 		$this->db->update('tbl_surtopics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$userid){
 	
 		$this->db->where('stp_id',$id);
+		$this->db->where('stp_usrid',$userid);
 		$this->db->delete('tbl_surtopics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('stp_comments','stp_comments+1',FALSE);
 		$this->db->where('stp_id',$id);
 		$this->db->update('tbl_surtopics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('stp_comments','stp_comments-1',FALSE);
 		$this->db->where('stp_id',$id);
@@ -104,7 +104,7 @@ class Surtopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$section,$usr){
+	function topic_owner($id,$section,$usr){
 		
 		$this->db->where('stp_id',$id);
 		$this->db->where('stp_surid',$section);

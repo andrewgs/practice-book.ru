@@ -986,6 +986,15 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			case 'documentation': 	$link = 'documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/comments';
 									$table = 'dtntopicsmodel';
 									break;
+			case 'surveys': 		$link = 'surveys/'.$this->user['uconfirmation'].'/survey/'.$topic;
+									$table = 'surtopicsmodel';
+									break;
+			case 'activity-news':	$link = 'activity-news/'.$this->user['uconfirmation'].'/news/'.$topic;
+									$table = 'benewsmodel';
+									break;
+			case 'company-news':	$link = 'company-news/'.$this->user['uconfirmation'].'/news/'.$topic;
+									$table = 'benewsmodel';
+									break;
 			
 			default:	redirect($this->session->userdata('backpath'));
 		endswitch;
@@ -1102,7 +1111,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
-				$this->create_section();
+				$this->create_discussion();
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
@@ -1252,7 +1261,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
-				$this->create_section();
+				$this->edit_discussion();
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
@@ -1544,7 +1553,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
-				$this->create_section();
+				$this->edit_question();
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
@@ -2850,23 +2859,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		redirect('business-environment/documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/document/'.$docid.'/comments');
 	}
 	
-	function track_query(){
-		
-	}
-	
 	function share_query(){
-		
-	}
-	
-	function query_add_comment(){
-		
-	}
-	
-	function query_edit_comment(){
-		
-	}
-	
-	function query_delete_comment(){
 		
 	}
 	
@@ -2893,6 +2886,18 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			endif;
 		endif;
 		
+		if($this->input->post('vote')):
+			$topic = $this->input->post('survay');
+			if(!$this->surtopicsmodel->topic_exist($topic,$section)):
+				show_error('Ошибка! Отсутствует необходимый параметр. Сообщите об ошибке администраторам сайта.');
+			endif;
+			$this->surtopicsmodel->insert_click($topic);
+			$this->votemodel->insert_click($_POST['vote']);
+			$cntfullclick = $this->surtopicsmodel->read_field($topic,'stp_clicks');
+			$this->votemodel->update_percents($topic,$cntfullclick);
+			redirect($this->uri->uri_string());
+		endif;
+		
 		$pagevar = array(
 					'description'	=> '',
 					'keywords'		=> '',
@@ -2907,7 +2912,6 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'topics'		=> array(),
 					'count'			=> 0,
 					'pages'			=> ''
-					
 			);
 		
 		$pagevar['count'] = $this->surtopicsmodel->count_records($section);
@@ -2945,16 +2949,80 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		$this->load->view('company_interface/business/surveys-index',$pagevar);
 	}
 	
-	function vote(){
+	function save_vote(){
 		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при сохранении','retvalue'=>'');
+		$id = trim($this->input->post('id'));
+		$stpid = trim($this->input->post('stp'));
+		$data = trim($this->input->post('value'));
+		if(!$id || !$data || !$stpid) show_404();
+		if($this->votemodel->save_vote($id,$stpid,$data)):
+			$statusval['status'] 	= TRUE;
+			$statusval['retvalue'] 	= htmlspecialchars($data);
+		else:
+			$statusval['status'] 	= FALSE;
+			$statusval['message'] 	= 'Данные не изменились';
+		endif;
+		echo json_encode($statusval);
 	}
 	
-	function surveys_create_section(){
+	function create_survey(){
 		
-	}
-
-	function surveys_create_survey(){
-		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->surveymodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->surveymodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->surveymodel->read_field($section,'sur_title').' - Создание опроса',
+					'backpath'		=> $this->session->userdata('backpath')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_docquery();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['title'] = preg_replace('/\n{2}/','<br>',$_POST['title']);
+//				$_POST['note'] = nl2br($_POST['note']);
+				$surtopic = $this->surtopicsmodel->insert_record($_POST['title'],$section,$this->user['uid']);
+				$countsur = count($_POST['sur']);
+				if($countsur > 10) $countsur = 10;
+				$surlist = array();
+				if($countsur > 0):
+					for($i=0;$i<$countsur;$i++):
+						if(empty($_POST['sur'][$i])) continue;
+						$surlist[$i]['sname'] = $_POST['sur'][$i];
+					endfor;
+				endif;
+//				print_r($surlist);exit;
+				$this->votemodel->group_insert($surtopic,$surlist);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/create-survey',$pagevar);
 	}
 
 	function read_survey(){
@@ -2991,6 +3059,36 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		$pagevar['topic']['stp_date'] = $this->operation_date($pagevar['topic']['stp_date']);
 		$pagevar['topic']['vote'] = $this->votemodel->read_records($pagevar['topic']['stp_id']);
 		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_survey();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'surveys',$topic);
+				$this->surtopicsmodel->insert_comment($topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		if($this->input->post('ssubmit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_survey();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
 		$pagevar['count'] = $this->commentsmodel->count_records($topic,'surveys');
 		
 		$config['base_url'] = $pagevar['baseurl'].'business-environment/surveys/'.$this->user['uconfirmation'].'/survey/'.$topic.'/comments/count/';
@@ -3025,32 +3123,89 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 	
 	function edit_survey(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->surveymodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->surtopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->surveymodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->surveymodel->read_field($section,'sur_title').' - Редактирование опроса',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'topic'			=> $this->unionmodel->sur_topic_records($topic),
+					'vote'			=> $this->votemodel->read_records($topic),
+			);
+		$pagevar['topic']['stp_title'] = preg_replace('/<br>/','',$pagevar['topic']['stp_title']);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_query();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['title'] = preg_replace('/\n{2}/','<br>',$_POST['title']);
+//				$_POST['note'] = nl2br($_POST['note']);
+				$this->surtopicsmodel->update_record($topic,$_POST['title'],$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Опрос';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/edit-survay',$pagevar);
 	}
 
-	function track_survey(){
-		
-	}
-	
 	function share_survey(){
 		
 	}
 	
 	function delete_survey(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->surveymodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->surtopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
+		
+		$this->commentsmodel->delete_records('surveys',$topic);
+		$this->votemodel->delete_records($topic);
+		$this->surtopicsmodel->delete_record($topic,$this->user['uid']);
+		redirect($this->session->userdata('backpath'));
 	}
 	
-	function survey_add_comment(){
-		
+	function survey_list(){
+	
+		$this->load->view('company_interface/business/manage/frmnewsurvay');
 	}
 	
-	function survey_edit_comment(){
-		
-	}
-	
-	function survey_delete_comment(){
-		
-	}
-
 		/*================================================ association-full ================================================*/
 	
 	function association(){
@@ -3546,8 +3701,56 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		$this->load->view('company_interface/business/news-index',$pagevar);
 	}
 	
-	function add_news(){
+	function create_news(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'section_name'	=> 'Новости отрасли - Создание новости',
+					'backpath'		=> $this->session->userdata('backpath')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('source','Название','prep_url|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('description','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
+				else:
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
+				$_POST['pdatebegin'] = date("Y-m-d");
+//				$_POST['note'] = nl2br($_POST['note']);
+				$this->benewsmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Новости';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/create-news',$pagevar);
 	}
 
 	function read_news(){
@@ -3585,6 +3788,36 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		
 		if($group == 2) $pagevar['section_name'] = 'Новости компании';
 		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
+				$this->benewsmodel->insert_comment($topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		if($this->input->post('ssubmit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
 		$pagevar['count'] = $this->commentsmodel->count_records($topic,$type);
 		
 	$config['base_url'] = $pagevar['baseurl'].'business-environment/'.$pagevar['type_news'].'/'.$this->user['uconfirmation'].'/news/'.$topic.'/comments/count/';
@@ -3614,43 +3847,87 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 			$pagevar['title'] .= 'Частная бизнес среда | Чтение новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
+		if($pagevar['topic']['ben_userid'] != $this->user['uid']):
+			$this->benewsmodel->insert_view($topic);
+		endif;
 		$this->load->view('company_interface/business/read-news',$pagevar);
 	}
 	
-	function activity_news_add_comment(){
-		
-	}
-	
-	function company_news_add_comment(){
-		
-	}
-
 	function edit_news(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$topic = $this->uri->segment(5);
+		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,1,$this->user['uid'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> 'Новости отрасли - Редактирование новости',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,1),
+			);
+		$pagevar['topic']['ben_note'] = preg_replace('/<br>/','',$pagevar['topic']['ben_note']);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('source','Название','prep_url|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
+				else:
+					$_POST['photo'] = '';
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->benewsmodel->update_record($topic,$_POST,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Обсуждения';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/edit-news',$pagevar);
 	}
 
-	function track_news(){
-		
-	}
-	
 	function share_news(){
 		
 	}
 	
 	function delete_news(){
 		
-	}
-	
-	function news_add_comment(){
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$topic = $this->uri->segment(5);
+		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,1,$this->user['uid'])):
+			show_404();
+		endif;
 		
-	}
-	
-	function news_edit_comment(){
-		echo 'news_edit_comment';
-	}
-	
-	function news_delete_comment(){
-		echo 'news_delete_comment';
+		$this->commentsmodel->delete_records('activitynews',$topic);
+		$this->benewsmodel->delete_record($topic,$this->user['uid']);
+		redirect($this->session->userdata('backpath'));
 	}
 	
 		/*================================================ discounts-full ================================================*/

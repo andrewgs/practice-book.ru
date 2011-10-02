@@ -333,7 +333,6 @@ $route['business-environment/documentation/:any/document-query/:num/edit-doc-inf
 $route['business-environment/documentation/:any/document-query/:num/delete-doc-info/:num'] = "company_interface/delete_doc_info";
 
 $route['business-environment/documentation/:any/edit-query/:num'] = "company_interface/edit_query";
-$route['business-environment/documentation/:any/track-query/:num'] = "company_interface/track_query";
 $route['business-environment/documentation/:any/share-query/:num'] = "company_interface/share_query";
 $route['business-environment/documentation/:any/delete-query/:num'] = "company_interface/delete_query";
 
@@ -341,22 +340,21 @@ $route['business-environment/documentation/:any'] = "company_interface/documenta
 	
 	/*============================================= surveys ============================================*/
 
+$route['views/survey-list/:any'] = "company_interface/survey_list";
+$route['business-environment/surveys/:any/save-vote'] = "company_interface/save_vote";
+
 $route['business-environment/surveys/:any/section/:num'] = "company_interface/surveys";
 $route['business-environment/surveys/:any/section/:num/count/:num'] = "company_interface/surveys";
 $route['business-environment/surveys/:any/create-section'] = "company_interface/create_section";
-$route['business-environment/surveys/:any/create-survey'] = "company_interface/surveys_create_survey";
+$route['business-environment/surveys/:any/create-survey'] = "company_interface/create_survey";
 
 $route['business-environment/surveys/:any/survey/:num'] = "company_interface/read_survey";
-$route['business-environment/surveys/:any/survey/:num/vote'] = "company_interface/vote";
-$route['business-environment/surveys/:any/survey/:num/comment'] = "company_interface/survey_add_comment";
 $route['business-environment/surveys/:any/survey/:num/comments/count'] = "company_interface/read_survey";
 $route['business-environment/surveys/:any/survey/:num/comments/count/:num'] = "company_interface/read_survey";
 
-$route['business-environment/surveys/:any/survey/:num/edit-comment/:num'] = "company_interface/survey_edit_comment";
-$route['business-environment/surveys/:any/survey/:num/delete-comment/:num'] = "company_interface/survey_delete_comment";
+$route['business-environment/surveys/:any/survey/:num/delete-comment/:num'] = "company_interface/delete_comment";
 
 $route['business-environment/surveys/:any/edit-survey/:num'] = "company_interface/edit_survey";
-$route['business-environment/surveys/:any/track-survey/:num'] = "company_interface/track_survey";
 $route['business-environment/surveys/:any/share-survey/:num'] = "company_interface/share_survey";
 $route['business-environment/surveys/:any/delete-survey/:num'] = "company_interface/delete_survey";
 
@@ -417,17 +415,14 @@ $route['business-environment/offers/:any'] = "company_interface/offers";
 
 	/*================================================= news ==============================================*/
 
-$route['business-environment/activity-news/:any/news/:num/edit-comment/:num'] = "company_interface/news_edit_comment";
-$route['business-environment/activity-news/:any/news/:num/delete-comment/:num'] = "company_interface/news_delete_comment";
-
-$route['business-environment/company-news/:any/news/:num/edit-comment/:num'] = "company_interface/news_edit_comment";
-$route['business-environment/company-news/:any/news/:num/delete-comment/:num'] = "company_interface/news_delete_comment";
+$route['business-environment/activity-news/:any/news/:num/delete-comment/:num'] = "company_interface/delete_comment";
+$route['business-environment/company-news/:any/news/:num/delete-comment/:num'] = "company_interface/delete_comment";
 
 $route['business-environment/company-news/:any/count/:num'] = "company_interface/news";
 $route['business-environment/company-news/:any/sort-date'] = "company_interface/news";
 $route['business-environment/company-news/:any/sort-views'] = "company_interface/news";
 
-$route['business-environment/activity-news/:any/add-news'] = "company_interface/add_news";	
+$route['business-environment/activity-news/:any/add-news'] = "company_interface/create_news";	
 
 $route['business-environment/activity-news/:any/news/:num'] = "company_interface/read_news";
 $route['business-environment/company-news/:any/news/:num'] = "company_interface/read_news";
@@ -441,7 +436,6 @@ $route['business-environment/company-news/:any/news/:num/comments/count'] = "com
 $route['business-environment/company-news/:any/news/:num/comments/count/:num'] = "company_interface/read_news";
 
 $route['business-environment/activity-news/:any/edit-news/:num'] = "company_interface/edit_news";
-$route['business-environment/activity-news/:any/track-news/:num'] = "company_interface/track_news";
 $route['business-environment/activity-news/:any/share-news/:num'] = "company_interface/share_news";
 $route['business-environment/activity-news/:any/delete-news/:num'] = "company_interface/delete_news";
 
@@ -449,9 +443,6 @@ $route['business-environment/company-news/:any/edit-news/:num'] = "company_inter
 $route['business-environment/company-news/:any/track-news/:num'] = "company_interface/track_news";
 $route['business-environment/company-news/:any/share-news/:num'] = "company_interface/share_news";
 $route['business-environment/company-news/:any/delete-news/:num'] = "company_interface/delete_news";
-
-$route['business-environment/activity-news/:any/news/:num/comment'] = "company_interface/activity_news_add_comment";
-$route['business-environment/company-news/:any/news/:num/comment'] = "company_interface/company_news_add_comment";
 
 $route['business-environment/activity-news/:any/count/:num'] = "company_interface/news";
 $route['business-environment/activity-news/:any/sort-date'] = "company_interface/news";

@@ -19,6 +19,9 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
+	<style>
+		.linkSubmit{cursor: pointer;}
+	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -65,12 +68,14 @@
 									<h2><?=$topics[$i]['stp_title'];?></h2>
 									<div class="votebox">
 								<?= form_open($this->uri->uri_string(),array('id'=>'formSV'.$i,'class'=>'formular')); ?>
+									<?=form_hidden('survay',$topics[$i]['stp_id']);?>
 										<table cellspacing="0" cellpadding="0" class="votetable">
 									<?php for($y=0;$y<count($topics[$i]['vote']);$y++):?>
 											<tr>
 												<td class="tdin">
-												<input type="radio" id="vote1" name="vote" value="1"> <?=$topics[$i]['vote'][$y]['vt_title'];?>
-													<Br/>
+												<input type="radio" class="rvote" name="vote" value="<?=$topics[$i]['vote'][$y]['vt_id'];?>">
+													<?=$topics[$i]['vote'][$y]['vt_title'];?>
+													<br/>
 												</td>
 												<td class="tdre">
 												<img src="<?=$baseurl;?>images/vote-line.png" width="<?=$topics[$i]['vote'][$y]['vt_percent']*2.9;?>" height="10" alt=""/> (<?=$topics[$i]['vote'][$y]['vt_percent'];?>%)
@@ -82,7 +87,7 @@
 									<span class="date"><?=$topics[$i]['stp_date'];?></span>
 									<span class="view">проголосовало : <?=$topics[$i]['stp_clicks'];?> чел.</span>
 									<span class="green">
-<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/survey/'.$topics[$i]['stp_id'].'/vote','<img src="'.$baseurl.'images/vote.png" alt="голосовать"/>',array('title'=>'голосовать','vt'=>$i));?>
+								<img src="<?=$baseurl;?>images/vote.png" alt="голосовать" class="linkSubmit" id="img<?=$i;?>" vt="<?=$i;?>"/>
 <?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/survey/'.$topics[$i]['stp_id'].'#comments','комментарии ('.$topics[$i]['stp_comments'].')');?>
 									</span>
 								<?= form_close(); ?>
@@ -95,7 +100,6 @@
 											<?php if($topics[$i]['stp_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/edit-survey/'.$topics[$i]['stp_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/track-survey/'.$topics[$i]['stp_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/share-survey/'.$topics[$i]['stp_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/delete-survey/'.$topics[$i]['stp_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
@@ -142,11 +146,21 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$(".linkSubmit").click(function(){
+				var imgVT = $(this).attr('vt');
+				var FormSV = $("#formSV"+imgVT);
+				var radioVal = $("#formSV"+imgVT+" :radio").filter(":checked").val();
+				if(!radioVal) msgerror("Сделайте Ваш выбор!");
+				else $(FormSV).submit();
+				return false;
+			});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>
