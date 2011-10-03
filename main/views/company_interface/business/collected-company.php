@@ -75,7 +75,7 @@
 											</tr>
 											<tr>
 												<td class="first"><?=$topic['ast_price'];?></td>
-												<td class="td2"><?=$topic['ast_collected'];?></td>
+												<td class="td2"><?=$topic['ast_apply'];?></td>
 												<td class="td3"><?=$topic['ast_must1'];?></td>
 												<td class="td4"><?=$topic['ast_must2'];?></td>
 												<td class="last"><?=$topic['ast_must3'];?></td>
@@ -83,21 +83,34 @@
 										</table>
 										</div></div></div>
 										<span class="green">
+									<?php if(!$cmpexist):?>
+										<a href="" id="SetPurchase">подать заявку</a>
+									<?php endif;?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'],'читать полностью');?>
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'].'/comment','ответить');?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'].'#comments','комментарии ('.$topic['ast_comments'].')');?>
-									</span>
-										<div class="clear">&nbsp;</div>
+										</span>
+										<div class="clear"></div>
+									<?php if(!$cmpexist):?>
+										<div id="FormPurchase" style="display:none;">
+										<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
+							<label class="label-input">Количество: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('count'); ?>
+							<input class="edit60-form-input" id="count" maxlength="5" name="count" type="text" value="<?=set_value('count');?>">
+							<input class="btn-action margin-1em" id="addPurchase" type="submit" name="submit" value="Добавить"/>
+							<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
+										<?= form_close(); ?>
+										</div>
+										<div class="clear"></div>
+									<?php endif;?>
 									</div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-													<?php if($topic['ast_usrid'] == $userinfo['uid']):?>
+													<?php if($topic['ast_usrid'] == $userinfo['uid'] && $topic['ast_collected'] == 0):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/edit-association/'.$topic['ast_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/track-association/'.$topic['ast_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/delete-association/'.$topic['ast_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 												<?php endif; ?>
@@ -127,7 +140,7 @@
 														<table cellspacing="0" cellpadding="0">
 															<tr>
 	<td><img src="<?=$baseurl;?>companythumb/viewimage/<?=$companylist[$i]['cll_cmpid'];?>" alt="" align="left" height="42"/></td>
-	<td><?=anchor('company-info/'.$companylist[$i]['cll_cmpid'],$companylist[$i]['cll_cmpname'],array('target'=>'_blank')).'<br/>Произвел заказ: '.$companylist[$i]['cll_username'];?></td>
+	<td><?=anchor('company-info/'.$companylist[$i]['cll_cmpid'],$companylist[$i]['cll_cmpname'],array('target'=>'_blank')).'<br/>Произвел заказ: '.$companylist[$i]['cll_username'];?><br/>Заказано: <?=$companylist[$i]['cll_count'];?></td>
 															</tr>
 														</table>
 													</td>
@@ -136,7 +149,7 @@
 											</table>
 										</div>
 										<div class="commentbox">
-										<?php if($companylist[$i]['cll_userid'] == $userinfo['uid']):?>
+										<?php if($companylist[$i]['cll_cmpid'] == $userinfo['cid']):?>
 											<div class="commentbox-option">
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$this->uri->segment(5).'/delete-company/'.$companylist[$i]['cll_id'],'Удалить');?>
 											</div>
@@ -171,11 +184,21 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+		<?php if(!$cmpexist): ?>
+			$("#count").keypress(function(e){
+				if($(this).val() == '' && e.which == 48) return false;
+				if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+			});
+			$('#SetPurchase').click(function(){$('#FormPurchase').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");$("#count").focus();return false;});
+			$("#Cancel").click(function(){$('#FormPurchase').fadeToggle('slow',function(){$("#count").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
+			$("#addPurchase").click(function(event){$("#count").css('border-color','#D0D0D0');if($("#count").val() == ''){$("#count").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
+		<?php endif;?>
 		});
 </script>
 </body>

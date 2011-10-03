@@ -14,6 +14,7 @@ class Asptopicsmodel extends CI_Model {
 	var $ast_aspid		= 0;
 	var $ast_usrid		= 0;
 	var $ast_comments	= 0;
+	var $ast_apply		= 0;
 	
 	function __construct(){
         
@@ -37,43 +38,77 @@ class Asptopicsmodel extends CI_Model {
 		return $this->db->get('tbl_asptopics');
 	}
 	
-	function insert_records($data,$sur,$usr){
+	function insert_record($data,$asp,$user){
 	
-		$this->ast_title = $data['title'];
-		$this->ast_note = $data['note'];
+		$this->ast_title = htmlspecialchars($data['title']);
+		$this->ast_photo = $data['photo'];
 		$this->ast_date = date("Y-m-d");
-		$this->ast_aspid = $sur;
-		$this->ast_usrid = $usr;
+		$this->ast_note = strip_tags($data['note'],'<br>');
+		$this->ast_price = htmlspecialchars($data['price']);
+		$this->ast_collected = 0;
+		$this->ast_must1 = htmlspecialchars($data['must1']);
+		$this->ast_must2 = htmlspecialchars($data['must2']);
+		$this->ast_must3 = htmlspecialchars($data['must3']);
+		$this->ast_aspid = $asp;
+		$this->ast_usrid = $user;
 		$this->ast_comments = 0;
+		$this->ast_apply = 0;
 		$this->db->insert('tbl_asptopics',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$data,$user){
 	
-		$this->db->set('ast_title',$data['title']);
-		$this->db->set('ast_date',date("Y-m-d"));
+		$this->db->set('ast_title',htmlspecialchars($data['title']));
+		$this->db->set('ast_note',strip_tags($data['note'],'<br>'));
+		$this->db->set('ast_price',htmlspecialchars($data['price']));
+		$this->db->set('ast_must1',htmlspecialchars($data['must1']));
+		$this->db->set('ast_must2',htmlspecialchars($data['must2']));
+		$this->db->set('ast_must3',htmlspecialchars($data['must3']));
+		if($data['photo']):
+			$this->db->set('ast_photo',$data['photo']);
+		endif;
 		$this->db->where('ast_id',$id);
+		$this->db->where('ast_usrid',$user);
+		$this->db->where('ast_collected',0);
 		$this->db->update('tbl_asptopics');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$userid){
 	
 		$this->db->where('ast_id',$id);
+		$this->db->where('ast_usrid',$userid);
+		$this->db->where('ast_collected',0);
 		$this->db->delete('tbl_asptopics');
 		return $this->db->affected_rows();
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('ast_comments','ast_comments+1',FALSE);
 		$this->db->where('ast_id',$id);
 		$this->db->update('tbl_asptopics');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('ast_comments','ast_comments-1',FALSE);
+		$this->db->where('ast_id',$id);
+		$this->db->update('tbl_asptopics');
+	}
+	
+	function insert_collected($id,$count){
+	
+		$this->db->set('ast_collected','ast_collected+1',FALSE);
+		$this->db->set('ast_apply','ast_apply+'.$count,FALSE);
+		$this->db->where('ast_id',$id);
+		$this->db->update('tbl_asptopics');
+	}
+	
+	function delete_collected($id,$count){
+	
+		$this->db->set('ast_collected','ast_collected-1',FALSE);
+		$this->db->set('ast_apply','ast_apply-'.$count,FALSE);
 		$this->db->where('ast_id',$id);
 		$this->db->update('tbl_asptopics');
 	}
@@ -98,7 +133,7 @@ class Asptopicsmodel extends CI_Model {
 		return NULL;
 	}
 
-	function owner($id,$section,$usr){
+	function topic_owner($id,$section,$usr){
 		
 		$this->db->where('ast_id',$id);
 		$this->db->where('ast_aspid',$section);

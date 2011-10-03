@@ -55,7 +55,7 @@
 							<div class="right-text">
 								<div class="add_events">
 							<?php if($type_news == 'activity-news'):?>
-<?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'].'/add-news','<img src="'.$baseurl.'images/add_news.png" alt="добавить новость"/>',array('title'=>'добавить новость'));?>
+<?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'].'/create-news','<img src="'.$baseurl.'images/add_news.png" alt="добавить новость"/>',array('title'=>'добавить новость'));?>
 							<?php endif; ?>
 								<?php if(count($topics)):?>
 									<span class="sort">

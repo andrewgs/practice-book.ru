@@ -61,12 +61,22 @@
 									</span>
 									<h2><?=$topic['bed_title'];?></h2>
 									<p><?=$topic['bed_note'];?></p>
+									<div class="clear"></div>
 									<span class="date"><?=$topic['bed_date'];?></span>
 									<span class="view">просмотров: <?=$topic['bed_views'];?></span>
-									<span class="green">
-			<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topic['bed_id'].'/comment','ответить');?>
-									</span>
-									<div class="clear">&nbsp;</div>
+									<span class="green"><a href="" id="SetComment">комментировать</a></span>
+									<div class="clear"></div>
+									<div id="FormComment" style="display:none;">
+								<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
+					<label class="label-input">Текст комментария: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('note'); ?>
+					<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=set_value('note');?></textarea>
+									<div class="clear"></div>
+						<input class="btn-action margin-1em" id="addComment" type="submit" name="submit" value="Добавить"/>
+						<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
+								<?= form_close(); ?>
+									</div>
+									<div class="clear"></div>
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
@@ -75,7 +85,6 @@
 													<?php if($topic['bed_userid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/edit-discount/'.$topic['bed_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/track-discount/'.$topic['bed_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/share-discount/'.$topic['bed_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/delete-discount/'.$topic['bed_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
@@ -115,12 +124,23 @@
 											</table>
 										</div>
 										<div class="commentbox">
-											<p><?=$comments[$i]['cmn_note'];?></p>
-											
+											<p id="p<?=$i;?>"><?=$comments[$i]['cmn_note'];?></p>
 										<?php if($comments[$i]['cmn_usrid'] == $userinfo['uid']):?>
 											<div class="commentbox-option">
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$this->uri->segment(5).'/edit-comment/'.$comments[$i]['cmn_id'],'Редактировать');?>
+											<a href="" class="EditComment" FC="<?=$i;?>">Редактировать</a>
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
+												<div class="clear">&nbsp;</div>
+												<div class="FormEditComment" id="FEC<?=$i;?>" style="display:none;">
+										<?=form_open($this->uri->uri_string(),array('class'=>'formular','id'=>'form'.$i)); ?>
+										<?=form_hidden('comments',$comments[$i]['cmn_id']);?>
+				<label class="label-input" style="text-align:left;">Текст комментария: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+				<textarea class="edit680-form-textarea txtinput" name="note" id="note<?=$i;?>" cols="50" rows="10"></textarea>
+												<div class="clear"></div>
+				<input class="btn-action margin-1em SEC" FC="<?=$i;?>" id="EditComment<?=$i;?>" type="submit" name="ssubmit" value="Сохранить"/>
+				<input class="btn-action margin-1em CEC" FC="<?=$i;?>" id="EditCancel<?=$i;?>" type="button" value="Отменить"/>
+										<?= form_close(); ?>
+												</div>
+												<div class="clear"></div>
 											</div>
 										<?php endif;?>
 										</div>
@@ -153,11 +173,19 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$('#SetComment').click(function(){$('#FormComment').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");return false;});
+			$("#Cancel").click(function(){$('#FormComment').fadeToggle('slow',function(){$("#note").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
+			$("#addComment").click(function(event){$("#note").css('border-color','#D0D0D0');if($("#note").val() == ''){$("#note").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
+			$(".EditComment").click(function(){var fc = $(this).attr('FC');var text = $('#p'+fc).text();$(".FormEditComment").hide();$(".txtinput").val('');$("#FEC"+fc).fadeIn('slow',function(){$("#note"+fc).val(text);});return false;});
+			$(".CEC").click(function(){var fc=$(this).attr('FC');$("#note"+fc).css('border-color','#D0D0D0');$("#FEC"+fc).fadeOut('slow',function(){$("#note"+fc).val('');});return false;});
+			$(".SEC").click(function(event){var fc=$(this).attr('FC');$("#note"+fc).css('border-color','#D0D0D0');if($("#note"+fc).val() == ''){$("#note"+fc).css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}else $("#form"+fc).submit();});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

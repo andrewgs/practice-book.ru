@@ -74,7 +74,7 @@
 									<?= form_error('description'); ?>
 			<textarea class="edit700-form-textarea" name="description" id="note" cols="50" rows="10"><?=set_value('description');?></textarea>
 									<div class="clear"></div>
-						<input class="btn-action margin-1em" id="addDiscussion" type="submit" name="submit" value="Добавить"/>
+						<input class="btn-action margin-1em" id="addNews" type="submit" name="submit" value="Добавить"/>
 								<?= form_close(); ?>
 								</div>
 							</div>
@@ -106,7 +106,7 @@
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
-			$("#addDiscussion").click(function(event){
+			$("#addNews").click(function(event){
 				$("#title").css('border-color','#D0D0D0');
 				$("#note").css('border-color','#D0D0D0');
 				if($("#title").val() == ''){

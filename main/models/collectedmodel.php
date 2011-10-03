@@ -9,6 +9,7 @@ class Collectedmodel extends CI_Model {
 	var $cll_username	= '';
 	var $cll_astid		= 0;
 	var $cll_date		= '';
+	var $cll_count		= 1;
 	
 	function __construct(){
         
@@ -34,34 +35,30 @@ class Collectedmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function insert_records($data,$cll_activity,$environment,$department){
+	function insert_record($cmpid,$cmpname,$userid,$username,$count,$astid){
 		
-		$this->cll_title = $data['title'];
-		$this->cll_activity = $cll_activity;
-		$this->cll_environment = $environment;
-		$this->cll_department = $department;
+		$this->cll_cmpid = $cmpid;
+		$this->cll_cmpname = $cmpname;
+		$this->cll_userid = $userid;
+		$this->cll_username = $username;
+		$this->cll_astid = $astid;
+		$this->cll_date = date("Y-m-d");
+		$this->cll_count = $count;
 		$this->db->insert('tbl_collected',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
-	
-		$this->db->set('cll_title',$data['title']);
-		$this->db->where('cll_id',$id);
-		$this->db->update('tbl_collected');
-		return $this->db->affected_rows();
-	}
-	
-	function delete_records($id){
+	function delete_record($id,$cmp){
 	
 		$this->db->where('cll_id',$id);
+		$this->db->where('cll_cmpid',$cmp);
 		$this->db->delete('tbl_collected');
 		return $this->db->affected_rows();
 	}
 
-	function read_field($section,$field){
+	function read_field($id,$field){
 			
-		$this->db->where('cll_id',$section);
+		$this->db->where('cll_id',$id);
 		$query = $this->db->get('tbl_collected',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
@@ -75,6 +72,27 @@ class Collectedmodel extends CI_Model {
 		$query = $this->db->get('tbl_collected');
 		$data = $query->result_array();
 		return $data[0]['cnt'];
+	}
+
+	function cmp_owner($ast,$id,$cmp){
+	
+		$this->db->where('cll_id',$id);
+		$this->db->where('cll_astid',$ast);
+		$this->db->where('cll_cmpid',$cmp);
+		$query = $this->db->get('tbl_collected',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
+
+	function company_exist($ast,$cmp){
+	
+		$this->db->where('cll_astid',$ast);
+		$this->db->where('cll_cmpid',$cmp);
+		$query = $this->db->get('tbl_collected',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
 	}
 }
 ?>

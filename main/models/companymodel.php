@@ -137,5 +137,6 @@ class Companymodel extends CI_Model {
 		$this->db->update('tbl_company');
 		return $this->db->affected_rows();
 	}
+
 }
 ?>

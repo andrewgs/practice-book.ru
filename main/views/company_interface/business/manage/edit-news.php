@@ -64,7 +64,6 @@
 									<span class="news-pic">
 					<img src="<?=$baseurl;?>activity-news/viewimage/<?=$topic['ben_id'];?>"class="floated" width="74" height="74" alt=""/>
 									</span>
-									
 					<label class="label-input">Изображение:</label>
 									<?= form_error('userfile'); ?>
 					<input class="reg-form-input inpvalue" type="file" id="userfile" name="userfile" size="30"/>
@@ -78,7 +77,7 @@
 									<?= form_error('note'); ?>
 			<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=$topic['ben_note'];?></textarea>
 									<div class="clear"></div>
-						<input class="btn-action margin-1em" id="addDiscussion" type="submit" name="submit" value="Добавить"/>
+						<input class="btn-action margin-1em" id="addDiscussion" type="submit" name="submit" value="Сохранить"/>
 								<?= form_close(); ?>
 								</div>
 							</div>

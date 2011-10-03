@@ -53,69 +53,26 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events">
-							<?php if($type_discounts == 'activity-discounts'):?>
-<?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'].'/create-discount','<img src="'.$baseurl.'images/add_news.png" alt="добавить новинку"/>',array('title'=>'добавить новинку'));?>
-							<?php endif; ?>
-								<?php if(count($topics)):?>
-									<span class="sort">
-										Сортировать:
-								<?php if($bysort == 'bed_date'):?><strong><?php endif;?>
-				<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/sort-date','по дате');?> / 
-								<?php if($bysort == 'bed_date'):?></strong><?php endif;?>
-								<?php if($bysort == 'bed_views'):?><strong><?php endif;?>
-				<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/sort-views','по количеству просмотров');?>
-								<?php if($bysort == 'bed_views'):?></strong><?php endif;?>
-									</span>
-							<?php endif; ?>
-								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
+							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
+								<hr size="2"/>
 								<div class="right-post">
-									<span class="news-pic">
-				<img src="<?=$baseurl.$type_discounts;?>/viewimage/<?=$topics[$i]['bed_id'];?>"class="floated" width="74" height="74" alt=""/>
-									</span>
-									<h2><?=$topics[$i]['bed_title'];?></h2>
-									<p><?=$topics[$i]['bed_note'];?></p>
+								<?=form_open_multipart($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
+					<label class="label-input">Название новинки: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('title'); ?>
+					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=set_value('title');?>"/>
 									<div class="clear"></div>
-									<span class="date"><?=$topics[$i]['bed_date'];?></span>
-									<span class="view">просмотров: <?=$topics[$i]['bed_views'];?></span>
-									<span class="green">
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topics[$i]['bed_id'],'читать полностью');?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/discount/'.$topics[$i]['bed_id'].'#comments','комментарии ('.$topics[$i]['bed_comments'].')');?>
-									</span>
+					<label class="label-input">Изображение:</label>
+									<?= form_error('userfile'); ?>
+					<input class="reg-form-input inpvalue" type="file" id="userfile" name="userfile" size="30"/>
+									<div class="form-reqs" style="width:250px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
 									<div class="clear"></div>
-									<div class="right-post-option">
-										<table cellspacing="0" class="post-option">
-											<tr>
-												<td class="right-option">
-													<div class="opt-bg">
-												<?php if($topics[$i]['bed_userid'] == $userinfo['uid']):?>
-														<div class="opt-bgg">
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/edit-discount/'.$topics[$i]['bed_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/share-discount/'.$topics[$i]['bed_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/delete-discount/'.$topics[$i]['bed_id'],'Удалить',array('title'=>'Удалить'));?>
-														</div>
-												<?php endif; ?>
-													</div>
-												</td>
-												<td class="right-avtor">
-												<?php if($topics[$i]['bed_userid']):?>
-													<table cellspacing="0" cellpadding="0">
-														<tr>
-			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['bed_userid'];?>" alt="" align="left" width="42" height="42"/></td>
-			<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['cmp_name']?></td>
-														</tr>
-													</table>
-												<?php endif;?>
-												</td>
-											</tr>
-										</table>
-									</div>
+					<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+									<?= form_error('note'); ?>
+					<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=set_value('note');?></textarea>
+									<div class="clear"></div>
+						<input class="btn-action margin-1em" id="addDiscount" type="submit" name="submit" value="Добавить"/>
+								<?= form_close(); ?>
 								</div>
-							<?php endfor; ?>
-							<?php if($pages): ?>
-								<?=$pages;?>
-							<?php endif;?>
 							</div>
 						</div>
 					</div>
@@ -139,11 +96,27 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$("#addDiscount").click(function(event){
+				$("#title").css('border-color','#D0D0D0');
+				$("#note").css('border-color','#D0D0D0');
+				if($("#title").val() == ''){
+					$("#title").css('border-color','#ff0000');
+					msgerror("Пропущены обязательные поля!");
+					event.preventDefault();
+				}
+				if($("#note").val() == ''){
+					$("#note").css('border-color','#ff0000');
+					msgerror("Пропущены обязательные поля!");
+					event.preventDefault();
+				}
+			});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

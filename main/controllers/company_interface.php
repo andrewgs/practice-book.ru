@@ -995,7 +995,15 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			case 'company-news':	$link = 'company-news/'.$this->user['uconfirmation'].'/news/'.$topic;
 									$table = 'benewsmodel';
 									break;
-			
+			case 'associations':	$link = 'associations/'.$this->user['uconfirmation'].'/association/'.$topic;
+									$table = 'asptopicsmodel';
+									break;
+			case 'activity-discounts':	$link = 'activity-discounts/'.$this->user['uconfirmation'].'/discount/'.$topic;
+									$table = 'bediscountmodel';
+									break;
+			case 'company-discounts':	$link = 'company-discounts/'.$this->user['uconfirmation'].'/discount/'.$topic;
+									$table = 'bediscountmodel';
+									break;
 			default:	redirect($this->session->userdata('backpath'));
 		endswitch;
 		$comment = $this->uri->segment(7);
@@ -2125,7 +2133,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			$pagevar['title'] .= 'Частная бизнес среда | Cтатьи';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
-		if($pagevar['article']['atp_usrid'] != $this->user['uid']):
+		if($pagevar['article']['atp_usrid'] != $this->user['uid'] && !$from):
 			$this->arttopicsmodel->insert_view($topic);
 		endif;
 		$this->load->view('company_interface/business/read-article',$pagevar);
@@ -2493,7 +2501,6 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		if(!$this->dtntopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
 			show_404();
 		endif;
-		
 		$this->commentsmodel->delete_records('documentation',$topic);
 		$this->dtntopicsmodel->delete_record($topic,$this->user['uid']);
 		redirect($this->session->userdata('backpath'));
@@ -3286,12 +3293,63 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		$this->load->view('company_interface/business/association-index',$pagevar);
 	}
 	
-	function associations_create_section(){
+	function create_association(){
 		
-	}
-
-	function associations_create_association(){
-		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->assprocmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title').' - Создание объединения',
+					'backpath'		=> $this->session->userdata('backpath')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_rules('price','Цена','required|trim');
+			$this->form_validation->set_rules('must1','Нужно','required|trim');
+			$this->form_validation->set_rules('must2','Нужно','required|trim');
+			$this->form_validation->set_rules('must3','Нужно','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_association();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],122,122);
+				else:
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+//				$_POST['note'] = nl2br($_POST['note']);
+				$this->asptopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/create-association',$pagevar);
 	}
 
 	function read_association(){
@@ -3327,8 +3385,36 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			);
 		$pagevar['topic']['ast_date'] = $this->operation_date($pagevar['topic']['ast_date']);
 		
-		$pagevar['count'] = $this->commentsmodel->count_records($topic,'association');
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_association();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'association',$topic);
+				$this->asptopicsmodel->insert_comment($topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		if($this->input->post('ssubmit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_association();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
 		
+		$pagevar['count'] = $this->commentsmodel->count_records($topic,'association');
 		$config['base_url'] = $pagevar['baseurl'].'business-environment/associations/'.$this->user['uconfirmation'].'/association/'.$topic.'/comments/count/';
         $config['total_rows'] 		= $pagevar['count']; 
         $config['per_page'] 		= 5;
@@ -3388,9 +3474,26 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'companylist'	=> array(),
 					'count'			=> 0,
-					'pages'			=> ''
+					'pages'			=> '',
+					'cmpexist'		=> FALSE
 			);
 		$pagevar['topic']['ast_date'] = $this->operation_date($pagevar['topic']['ast_date']);
+		$pagevar['cmpexist'] = $this->collectedmodel->company_exist($topic,$this->user['cid']);
+		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('count','Текст','required|trim|is_natural_no_zero|max_length[5]');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->collected_company();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$this->asptopicsmodel->insert_collected($topic,$_POST['count']);
+				$this->collectedmodel->insert_record($this->user['cid'],$pagevar['company']['cmp_name'],$this->user['uid'],$this->user['ufullname'],$_POST['count'],$topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
 		
 		$pagevar['count'] = $this->collectedmodel->count_records($topic);
 		
@@ -3426,36 +3529,118 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 	
 	function collected_delete_company(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->assprocmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->asptopicsmodel->topic_exist($topic,$section)):
+			show_404();
+		endif;
+		$collecte = $this->uri->segment(7);
+		if(!$this->collectedmodel->cmp_owner($topic,$collecte,$this->user['cid'])):
+			show_404();
+		endif;
+		$count = $this->collectedmodel->read_field($collecte,'cll_count');
+		$this->asptopicsmodel->delete_collected($topic,$count);
+		$this->collectedmodel->delete_record($collecte,$this->user['cid']);
+		redirect('business-environment/associations/'.$this->user['uconfirmation'].'/association/'.$topic.'/company#company');
 	}
 	
 	function edit_association(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->assprocmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->asptopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
+					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title').' - Редактирование объединения',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'topic'			=> $this->unionmodel->asp_topic_records($topic),
+			);
+		$pagevar['topic']['ast_note'] = preg_replace('/<br>/','',$pagevar['topic']['ast_note']);
+		if($pagevar['topic']['ast_collected'] > 0) redirect($pagevar['backpath']);
+		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_rules('price','Цена','required|trim');
+			$this->form_validation->set_rules('must1','Нужно','required|trim');
+			$this->form_validation->set_rules('must2','Нужно','required|trim');
+			$this->form_validation->set_rules('must3','Нужно','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_association();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],122,122);
+				else:
+					$_POST['photo'] = '';
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->asptopicsmodel->update_record($topic,$_POST,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Объединения для закупок';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/edit-association',$pagevar);
 	}
 
-	function track_association(){
-		
-	}
-	
 	function share_association(){
 		
 	}
 	
 	function delete_association(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0;
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$section = $this->session->userdata('section');
+		if(!$this->assprocmodel->owner($section,$activity,$environment,$this->user['department'])):
+			show_404();
+		endif;
+		$topic = $this->uri->segment(5);
+		if(!$this->asptopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+			show_404();
+		endif;
+		
+		$this->commentsmodel->delete_records('association',$topic);
+		$this->asptopicsmodel->delete_record($topic,$this->user['uid']);
+		redirect($this->session->userdata('backpath'));
 	}
 	
-	function association_add_comment(){
-		
-	}
-	
-	function association_edit_comment(){
-		
-	}
-	
-	function association_delete_comment(){
-		
-	}
-
 		/*================================================ offers-full ================================================*/
 		
 	function offers(){
@@ -3841,13 +4026,13 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		endfor;
 		
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Чтение новости';
+			$pagevar['title'] .= 'Общая бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Чтение новости';
+			$pagevar['title'] .= 'Частная бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
-		if($pagevar['topic']['ben_userid'] != $this->user['uid']):
+		if($pagevar['topic']['ben_userid'] != $this->user['uid'] && !$from):
 			$this->benewsmodel->insert_view($topic);
 		endif;
 		$this->load->view('company_interface/business/read-news',$pagevar);
@@ -3872,7 +4057,6 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 					'userinfo'		=> $this->user,
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> 'Новости отрасли - Редактирование новости',
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,1),
@@ -3901,10 +4085,10 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 			endif;
 		endif;
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Обсуждения';
+			$pagevar['title'] .= 'Общая бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Обсуждения';
+			$pagevar['title'] .= 'Частная бизнес среда | Новости';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
 		$this->load->view('company_interface/business/manage/edit-news',$pagevar);
@@ -4000,10 +4184,10 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		endfor;
 	
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Новости';
+			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Новости';
+			$pagevar['title'] .= 'Частная бизнес среда | Новинки и скидки';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
 		
@@ -4012,8 +4196,53 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		$this->load->view('company_interface/business/discounts-index',$pagevar);
 	}
 	
-	function add_discount(){
+	function create_discount(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'section_name'	=> 'Новинки отрасли - Создание новинки',
+					'backpath'		=> $this->session->userdata('backpath')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
+				else:
+					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->bediscountmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/create-discount',$pagevar);
 	}
 
 	function read_discount(){
@@ -4051,6 +4280,36 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		
 		if($group == 2) $pagevar['section_name'] = 'Скидки компаний';
 		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_discount();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
+				$this->bediscountmodel->insert_comment($topic);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		if($this->input->post('ssubmit')):
+			$this->form_validation->set_rules('note','Текст','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->read_discount();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
 		$pagevar['count'] = $this->commentsmodel->count_records($topic,$type);
 		
 	$config['base_url'] = $pagevar['baseurl'].'business-environment/'.$pagevar['type_discounts'].'/'.$this->user['uconfirmation'].'/discount/'.$topic.'/comments/count/';
@@ -4074,49 +4333,99 @@ $pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$enviro
 		endfor;
 		
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Чтение новинки/скидки';
+			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Чтение новинки/скидки';
+			$pagevar['title'] .= 'Частная бизнес среда | Новинки и скидки';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		if($pagevar['topic']['bed_userid'] != $this->user['uid'] && !$from):
+			$this->bediscountmodel->insert_view($topic);
 		endif;
 		$this->load->view('company_interface/business/read-discount',$pagevar);
 	}
 	
-	function activity_discount_add_comment(){
-		
-	}
-	
-	function company_discount_add_comment(){
-		
-	}
-
 	function edit_discount(){
 		
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-discounts': $group = 1; $type = 'activitydiscount'; break;
+			case 'company-discounts': $group = 2; $type = 'companydiscount'; break;
+		endswitch;
+		$topic = $this->uri->segment(5);
+		if(!$this->bediscountmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$group,$this->user['uid'])):
+			show_404();
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - ',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'environment'	=> $environment,
+					'company'		=> $this->companymodel->read_record($this->user['cid']),
+					'section_name'	=> 'Новинки отрасли - Редактирование новинки',
+					'backpath'		=> $this->session->userdata('backpath'),
+					'topic'			=> $this->unionmodel->bed_topic_record($topic,$environment,$this->user['department'],$activity,$group),
+			);
+		$pagevar['topic']['bed_note'] = preg_replace('/<br>/','',$pagevar['topic']['bed_note']);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title','Название','required|trim');
+			$this->form_validation->set_rules('userfile','','callback_userfile_check');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->create_news();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
+				else:
+					$_POST['photo'] = '';
+				endif;
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->bediscountmodel->update_record($topic,$_POST,$this->user['uid']);
+				redirect($pagevar['backpath']);
+			endif;
+		endif;
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Новинки и скидки';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->load->view('company_interface/business/manage/edit-discount',$pagevar);
 	}
 
-	function track_discount(){
-		
-	}
-	
 	function share_discount(){
 		
 	}
 	
 	function delete_discount(){
 		
-	}
-	
-	function discount_add_comment(){
+		$environment = $this->session->userdata('environment');
+		if(!$environment) $environment = 0; else show_404();
+		$activity = $this->session->userdata('activity');
+		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-discounts': $group = 1; $type = 'activitydiscount'; break;
+			case 'company-discounts': $group = 2; $type = 'companydiscount'; break;
+		endswitch;
+		$topic = $this->uri->segment(5);
+		if(!$this->bediscountmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$group,$this->user['uid'])):
+			show_404();
+		endif;
 		
-	}
-	
-	function discount_edit_comment(){
-		
-	}
-	
-	function discount_delete_comment(){
-		
+		$this->commentsmodel->delete_records($type,$topic);
+		$this->bediscountmodel->delete_record($topic,$this->user['uid']);
+		redirect($this->session->userdata('backpath'));
 	}
 	
 		/*================================================ who_main-full ================================================*/

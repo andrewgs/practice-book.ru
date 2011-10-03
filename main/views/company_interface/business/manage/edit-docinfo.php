@@ -77,7 +77,7 @@
 							<label class="label-input">Описание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 								<?= form_error('note'); ?>
 				<textarea class="edit700-form-textarea inpvalue" name="note" id="note" cols="50" rows="5"><?=$document['dls_note'];?></textarea>
-							<input class="btn-action margin-1em" id="addDocument" type="submit" name="submit" value="Добавить"/>
+							<input class="btn-action margin-1em" id="addDocument" type="submit" name="submit" value="Сохранить"/>
 									</div>
 									<div class="clear"></div>
 								<?= form_close(); ?>

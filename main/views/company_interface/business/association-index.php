@@ -78,7 +78,7 @@
 											</tr>
 											<tr>
 												<td class="first"><?=$topics[$i]['ast_price'];?></td>
-												<td class="td2"><?=$topics[$i]['ast_collected'];?></td>
+												<td class="td2"><?=$topics[$i]['ast_apply'];?></td>
 												<td class="td3"><?=$topics[$i]['ast_must1'];?></td>
 												<td class="td4"><?=$topics[$i]['ast_must2'];?></td>
 												<td class="last"><?=$topics[$i]['ast_must3'];?></td>
@@ -87,7 +87,6 @@
 										</div></div></div>
 										<span class="green">
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'],'читать полностью');?>
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'/comment','ответить');?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'#comments','комментарии ('.$topics[$i]['ast_comments'].')');?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topics[$i]['ast_id'].'/company#company','компаний ('.$topics[$i]['ast_collected'].')');?>
 									</span>
@@ -98,10 +97,9 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-													<?php if($topics[$i]['ast_usrid'] == $userinfo['uid']):?>
+												<?php if($topics[$i]['ast_usrid'] == $userinfo['uid'] && $topics[$i]['ast_collected'] == 0):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/edit-association/'.$topics[$i]['ast_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/track-association/'.$topics[$i]['ast_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/delete-association/'.$topics[$i]['ast_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 												<?php endif; ?>

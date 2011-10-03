@@ -369,7 +369,7 @@ class Unionmodel extends CI_Model{
 
 	function asp_topics_limit_records($count,$from,$asp){
 		
-		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_aspid = $asp ORDER BY ast_date DESC, ast_id DESC LIMIT $from,$count";
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_aspid = $asp ORDER BY ast_date DESC, ast_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -378,7 +378,7 @@ class Unionmodel extends CI_Model{
 
 	function asp_topic_records($topic){
 		
-		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -428,7 +428,7 @@ class Unionmodel extends CI_Model{
 	function bed_topics_limit_records($count,$from,$environment,$department,$activity,$group,$field){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group GROUP BY tbl_be_discount.bed_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group GROUP BY tbl_be_discount.bed_id ORDER BY $field DESC, bed_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

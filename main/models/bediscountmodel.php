@@ -20,12 +20,13 @@ class Bediscountmodel extends CI_Model {
 		parent::__construct();
 	}
 	
-	function insert_record($insertdata,$activity,$environment,$department,$userid,$group){
-			
-		$this->bed_title		= htmlspecialchars($insertdata['title']);
-		$this->bed_note			= strip_tags($insertdata['description'],'<br>');
-		$this->bed_photo		= $insertdata['photo'];
-		$this->bed_date			= $insertdata['pdatebegin'];
+	function insert_record($data,$activity,$environment,$department,$userid,$group){
+		
+		if(!$environment) $department = 0;
+		$this->bed_title		= htmlspecialchars($data['title']);
+		$this->bed_note			= strip_tags($data['note'],'<br>');
+		$this->bed_photo		= $data['photo'];
+		$this->bed_date			= date("Y-m-d");
 		$this->bed_activity		= $activity;
 		$this->bed_environment	= $environment;
 		$this->bed_department	= $department;
@@ -38,37 +39,17 @@ class Bediscountmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function read_record($nid,$mraid){
+	function update_record($id,$data,$user){
 		
-		$this->db->where('bed_id',$nid);
-		$this->db->where('bed_mraid',$mraid);
-		$query = $this->db->get('tbl_be_discount',1);
-		$data = $query->result_array();
-		if(isset($data[0])) return $data[0];
-		return NULL;
-	}
-	
-	function read_records($mraid){
-		
-		$this->db->select('bed_id,bed_mraid,bed_title,bed_note,bed_date,bed_source');
-		$this->db->where('bed_mraid',$mraid);
-		$this->db->order_by('bed_date','DESC');
-		$query = $this->db->get('tbl_be_discount');
-		$data = $query->result_array();
-		if(count($data)) return $data;
-		return NULL;
-	}
-	
-	function read_limit_records($mraid,$limit){
-	
-		$this->db->select('bed_id,bed_mraid,bed_title,bed_note,bed_date,bed_source');
-		$this->db->where('bed_mraid',$mraid);
-		$this->db->where('bed_date <=',date("Y-m-d"));
-		$this->db->order_by('bed_id desc, bed_date desc');
-		$query = $this->db->get('tbl_be_discount',$limit);
-		$data = $query->result_array();
-		if(isset($data)) return $data;
-		return NULL;
+		$this->db->set('bed_title',htmlspecialchars($data['title']));
+		$this->db->set('bed_note',strip_tags($data['note'],'<br>'));
+		if($data['photo']):
+			$this->db->set('bed_photo',$data['photo']);
+		endif;
+		$this->db->where('bed_id',$id);
+		$this->db->where('bed_userid',$user);
+		$this->db->update('tbl_be_discount');
+		return $this->db->affected_rows();
 	}
 	
 	function get_image($id){
@@ -93,35 +74,36 @@ class Bediscountmodel extends CI_Model {
 		return $data[0]['cnt'];
 	}
 	
-	function insert_comments($id){
+	function insert_comment($id){
 		$this->db->set('bed_comments','bed_comments+1',FALSE);
 		$this->db->where('bed_id',$id);
 		$this->db->update('tbl_be_discount');
 	}
 	
-	function delete_comments($id){
+	function delete_comment($id){
 	
 		$this->db->set('bed_comments','bed_comments-1',FALSE);
 		$this->db->where('bed_id',$id);
 		$this->db->update('tbl_be_discount');
 	}
 
-	function insert_views($id){
+	function insert_view($id){
 		$this->db->set('bed_views','bed_views+1',FALSE);
 		$this->db->where('bed_id',$id);
 		$this->db->update('tbl_be_discount');
 	}
 	
-	function clear_views($id){
+	function clear_view($id){
 	
 		$this->db->set('bed_comments',0,FALSE);
 		$this->db->where('bed_id',$id);
 		$this->db->update('tbl_be_discount');
 	}
 	
-	function delete_record($aid){
+	function delete_record($id,$user){
 	
-		$this->db->where('bed_id',$aid);
+		$this->db->where('bed_id',$id);
+		$this->db->where('bed_userid',$user);
 		$this->db->delete('tbl_be_discount');
 		return $this->db->affected_rows();
 	}
@@ -144,6 +126,21 @@ class Bediscountmodel extends CI_Model {
 		$this->db->where('bed_department',$department);
 		$this->db->where('bed_activity',$activity);
 		$this->db->where('bed_group',$group);
+		$query = $this->db->get('tbl_be_discount',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
+
+	function topic_owner($id,$environment,$department,$activity,$group,$userid){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('bed_id',$id);
+		$this->db->where('bed_environment',$environment);
+		$this->db->where('bed_department',$department);
+		$this->db->where('bed_activity',$activity);
+		$this->db->where('bed_group',$group);
+		$this->db->where('bed_userid',$userid);
 		$query = $this->db->get('tbl_be_discount',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;

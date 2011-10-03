@@ -365,7 +365,7 @@ $route['business-environment/surveys/:any'] = "company_interface/surveys";
 $route['business-environment/associations/:any/section/:num'] = "company_interface/association";
 $route['business-environment/associations/:any/section/:num/count/:num'] = "company_interface/association";
 $route['business-environment/associations/:any/create-section'] = "company_interface/create_section";
-$route['business-environment/associations/:any/create-association'] = "company_interface/associations_create_association";
+$route['business-environment/associations/:any/create-association'] = "company_interface/create_association";
 
 $route['business-environment/associations/:any/association/:num'] = "company_interface/read_association";
 
@@ -374,16 +374,13 @@ $route['business-environment/associations/:any/association/:num/company/count'] 
 $route['business-environment/associations/:any/association/:num/company/count/:num'] = "company_interface/collected_company";
 $route['business-environment/associations/:any/association/:num/delete-company/:num'] = "company_interface/collected_delete_company";
 
-$route['business-environment/associations/:any/association/:num/comment'] = "company_interface/association_add_comment";
 $route['business-environment/associations/:any/association/:num/comments'] = "company_interface/read_association";
 $route['business-environment/associations/:any/association/:num/comments/count'] = "company_interface/read_association";
 $route['business-environment/associations/:any/association/:num/comments/count/:num'] = "company_interface/read_association";
 
-$route['business-environment/associations/:any/association/:num/edit-comment/:num'] = "company_interface/association_edit_comment";
-$route['business-environment/associations/:any/association/:num/delete-comment/:num'] = "company_interface/association_delete_comment";
+$route['business-environment/associations/:any/association/:num/delete-comment/:num'] = "company_interface/delete_comment";
 
 $route['business-environment/associations/:any/edit-association/:num'] = "company_interface/edit_association";
-$route['business-environment/associations/:any/track-association/:num'] = "company_interface/track_association";
 $route['business-environment/associations/:any/share-association/:num'] = "company_interface/share_association";
 $route['business-environment/associations/:any/delete-association/:num'] = "company_interface/delete_association";
 
@@ -422,7 +419,7 @@ $route['business-environment/company-news/:any/count/:num'] = "company_interface
 $route['business-environment/company-news/:any/sort-date'] = "company_interface/news";
 $route['business-environment/company-news/:any/sort-views'] = "company_interface/news";
 
-$route['business-environment/activity-news/:any/add-news'] = "company_interface/create_news";	
+$route['business-environment/activity-news/:any/create-news'] = "company_interface/create_news";	
 
 $route['business-environment/activity-news/:any/news/:num'] = "company_interface/read_news";
 $route['business-environment/company-news/:any/news/:num'] = "company_interface/read_news";
@@ -440,7 +437,6 @@ $route['business-environment/activity-news/:any/share-news/:num'] = "company_int
 $route['business-environment/activity-news/:any/delete-news/:num'] = "company_interface/delete_news";
 
 $route['business-environment/company-news/:any/edit-news/:num'] = "company_interface/edit_news";
-$route['business-environment/company-news/:any/track-news/:num'] = "company_interface/track_news";
 $route['business-environment/company-news/:any/share-news/:num'] = "company_interface/share_news";
 $route['business-environment/company-news/:any/delete-news/:num'] = "company_interface/delete_news";
 
@@ -459,7 +455,7 @@ $route['business-environment/company-discounts/:any/count/:num'] = "company_inte
 $route['business-environment/company-discounts/:any/sort-date'] = "company_interface/discounts";
 $route['business-environment/company-discounts/:any/sort-views'] = "company_interface/discounts";
 
-$route['business-environment/activity-discounts/:any/add-discount'] = "company_interface/add_discount";	
+$route['business-environment/activity-discounts/:any/create-discount'] = "company_interface/create_discount";	
 
 $route['business-environment/activity-discounts/:any/discount/:num'] = "company_interface/read_discount";
 $route['business-environment/company-discounts/:any/discount/:num'] = "company_interface/read_discount";
@@ -473,23 +469,15 @@ $route['business-environment/company-discounts/:any/discount/:num/comments/count
 $route['business-environment/company-discounts/:any/discount/:num/comments/count/:num'] = "company_interface/read_discount";
 
 $route['business-environment/activity-discounts/:any/edit-discount/:num'] = "company_interface/edit_discount";
-$route['business-environment/activity-discounts/:any/track-discount/:num'] = "company_interface/track_discount";
 $route['business-environment/activity-discounts/:any/share-discount/:num'] = "company_interface/share_discount";
 $route['business-environment/activity-discounts/:any/delete-discount/:num'] = "company_interface/delete_discount";
 
 $route['business-environment/company-discounts/:any/edit-discount/:num'] = "company_interface/edit_discount";
-$route['business-environment/company-discounts/:any/track-discount/:num'] = "company_interface/track_discount";
 $route['business-environment/company-discodiscountsunt/:any/share-discount/:num'] = "company_interface/share_discount";
 $route['business-environment/company-discounts/:any/delete-discount/:num'] = "company_interface/delete_discount";
 
-$route['business-environment/activity-discounts/:any/discount/:num/comment'] = "company_interface/activity_discount_add_comment";
-$route['business-environment/company-discounts/:any/discount/:num/comment'] = "company_interface/company_discount_add_comment";
-
-$route['business-environment/activity-discounts/:any/discount/:num/edit-comment/:num'] = "company_interface/discount_edit_comment";
-$route['business-environment/activity-discounts/:any/discount/:num/delete-comment/:num'] = "company_interface/discount_delete_comment";
-
-$route['business-environment/company-discounts/:any/discount/:num/edit-comment/:num'] = "company_interface/discount_edit_comment";
-$route['business-environment/company-discounts/:any/discount/:num/delete-comment/:num'] = "company_interface/discount_delete_comment";
+$route['business-environment/activity-discounts/:any/discount/:num/delete-comment/:num'] = "company_interface/delete_comment";
+$route['business-environment/company-discounts/:any/discount/:num/delete-comment/:num'] = "company_interface/delete_comment";
 
 $route['business-environment/activity-discounts/:any/count/:num'] = "company_interface/discounts";
 $route['business-environment/activity-discounts/:any/sort-date'] = "company_interface/discounts";

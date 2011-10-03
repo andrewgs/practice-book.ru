@@ -70,17 +70,16 @@
 									<span class="green"><a href="" id="SetComment">комментировать</a></span>
 									<div class="clear"></div>
 									<div id="FormComment" style="display:none;">
-										<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
+								<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
 					<label class="label-input">Текст комментария: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('note'); ?>
 					<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=set_value('note');?></textarea>
 									<div class="clear"></div>
 						<input class="btn-action margin-1em" id="addComment" type="submit" name="submit" value="Добавить"/>
 						<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
-										<?= form_close(); ?>
+								<?= form_close(); ?>
 									</div>
 									<div class="clear"></div>
-									
 									<div class="right-post-option">
 										<table cellspacing="0" class="post-option">
 											<tr>
