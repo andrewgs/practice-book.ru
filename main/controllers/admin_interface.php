@@ -1,6 +1,6 @@
 <?php
 
-class Admin_interface extends CI_Controller {
+class Admin_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','priority'=>TRUE);
 	var $months = array("01"=>"января","02"=>"февраля","03"=>"марта","04"=>"апреля",
@@ -316,7 +316,7 @@ class Admin_interface extends CI_Controller {
 					$pagevar['companynews'][$i]['full_note'] = $pagevar['companynews'][$i]['cn_note'];
 					$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
 					if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 250):									
-						$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
+						$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
 						$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],' ',0,'UTF-8');
 						$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
 						$pagevar['companynews'][$i]['cn_note'] .= ' ... ';
@@ -1489,7 +1489,7 @@ class Admin_interface extends CI_Controller {
 		$record_id = NULL;
 		$case = $this->uri->segment(4);
 		switch ($case):
-			case 'manager'			: 
+			case 'federal': 
 				if($this->input->post('submit')):
 					$this->form_validation->set_rules('login','логин','required|valid_email|callback_login_check|trim');
 					$this->form_validation->set_message('valid_email','Укажите правильный адрес');
@@ -1523,7 +1523,80 @@ class Admin_interface extends CI_Controller {
 				$pagevar['activity'] = $this->activitymodel->read_records_by_pid(0);
 				$this->load->view("admin_interface/registration-federal",$pagevar);
 				break;
-			case 'administrator'	: 	
+			case 'regional': 
+				if($this->input->post('submit')):
+					$this->form_validation->set_rules('login','логин','required|valid_email|callback_login_check|trim');
+					$this->form_validation->set_message('valid_email','Укажите правильный адрес');
+					$this->form_validation->set_rules('password','пароль','required|min_length[6]|trim');
+					$this->form_validation->set_rules('confirmpass','пароль','required|min_length[6]|matches[password]|trim');
+					$this->form_validation->set_message('matches','Пароли не совпадают');
+					$this->form_validation->set_rules('userfile','','callback_userfile_check');
+					$this->form_validation->set_rules('fname','фамилия','required|trim');
+					$this->form_validation->set_rules('sname','имя','required|trim');
+					$this->form_validation->set_rules('tname','отчество','required|trim');
+					$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
+					$this->form_validation->set_rules('icq','ICQ','min_length[4]|integer|trim');
+					$this->form_validation->set_rules('activity','отрасли','required');
+					$this->form_validation->set_rules('region[]','регионы','required');
+					$this->form_validation->set_message('integer','Только целые числа');
+					$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+					if(!$this->form_validation->run()):
+						$_POST['submit'] = NULL;
+						$this->registration_users();
+						return FALSE;
+					else:
+						$_POST['submit'] = NULL;
+						if($_FILES['userfile']['error'] != 4):
+							$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],96,120);
+						else:
+							$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
+						endif;
+						$_POST['cmpid'] = $_POST['department'] = 0;
+						$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
+						$_POST['priority'] = 0;
+						$_POST['position'] = '';$_POST['birthday'] = "0000-00-00"; $_POST['manager'] = 1;
+						$countnewjob = count($_POST['exp']);
+						$joblist = array();
+						if($countnewjob > 0):
+							for($i = 0,$j = 0; $i < $countnewjob; $i+=4,$j++):
+								if(empty($_POST['exp'][$i])) continue;
+								$joblist[$j]['jcname'] = $_POST['exp'][$i];
+								$joblist[$j]['jposition'] = $_POST['exp'][$i+1];
+								$joblist[$j]['jdbegin'] = $_POST['exp'][$i+2].'-01-01';
+								$joblist[$j]['jdend'] = ($_POST['exp'][$i+3] === 'н/в') ? '0000-00-00' : $_POST['exp'][$i+3].'-01-01';
+							endfor;
+						endif;
+						$newmanager = $this->usersmodel->insert_record($_POST);
+						if(count($joblist)):
+							$this->jobsmodel->group_insert($newmanager,$joblist);
+						endif;
+						for($i = 0;$i < count($_POST['region']);$i++):
+							$mraid = $this->manregactmodel->record_exist($_POST['region'][$i],$_POST['activity']);
+							if(!$mraid):
+								$mraid = $this->manregactmodel->insert_record($newmanager,$_POST['region'][$i],$_POST['activity']);
+								$this->productsmodel->insert_empty($mraid);
+								$this->personamodel->insert_empty($mraid,$_POST['activity']);
+							else:
+								$this->manregactmodel->update_managers($newmanager,$_POST['region'][$i],$_POST['activity']);
+							endif;
+						endfor;
+						$this->session->set_userdata('newman_id',$newmanager);
+						
+						$message = 'Логин - '.$_POST['login']."\n".'Пароль - '.$_POST['password']."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+						
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+							redirect('admin/control-panel/'.$this->user['uconfirmation']);
+						else:
+							$this->email->print_debugger();
+							exit;
+						endif;
+					endif;
+				endif;
+				$pagevar['activity'] = $this->activitymodel->read_activity_final();
+				$pagevar['regions'] = $this->regionmodel->read_records_by_district();
+				$this->load->view("admin_interface/registration-regional",$pagevar);
+				break;
+			case 'administrator': 	
 				if($this->input->post('submit')):
 					$this->form_validation->set_rules('login','логин','required|valid_email|callback_login_check|trim');
 					$this->form_validation->set_message('valid_email','Укажите правильный адрес');
@@ -1556,6 +1629,11 @@ class Admin_interface extends CI_Controller {
 				break;
 			default : show_404();
 		endswitch;
+	}
+	
+	function view_formjob(){
+	
+		$this->load->view('forms/frmnewjob');
 	}
 	
 	function cabinet(){
@@ -1767,7 +1845,26 @@ class Admin_interface extends CI_Controller {
 		endif;
 		echo json_encode($statusval);
 	}
-
+	
+	function activate_user(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при активации');
+		$uid = trim($this->input->post('id'));
+		if(!isset($uid) or empty($uid)) show_404();
+		$ucode = $this->usersmodel->read_field($uid,'uconfirmation');
+		if($ucode):
+			$success = $this->usersmodel->update_status($ucode);
+			if($success):
+				$statusval['status'] = TRUE;
+			else:
+				$statusval['message'] = "Пользователь не активирован!";
+			endif;
+		else:
+			$statusval['message'] = "Пользователь не существет!";
+		endif;
+		echo json_encode($statusval);
+	}
+	
 	function dalete_group(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');

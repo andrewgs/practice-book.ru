@@ -82,7 +82,7 @@
 						<?php endif;?>
 						<br/><input type="image" title="Удалить" class="btnDel" id="dl<?=$k?>" rID="<?=$k;?>" src="<?=$baseurl;?>images/delete.png" />
 						<?php if($list[$i]['ustatus'] == "disabled"):?>
-				<br/><input type="image" title="Не активирован" src="<?= $baseurl; ?>images/exclamation.png" />
+				<br/><input type="image" title="Не активирован" class="StatusOff" id="act<?=$k?>" rID="<?=$k?>" src="<?=$baseurl;?>images/exclamation.png" />
 						<?php endif; ?>
 						</div>
 					</td> 

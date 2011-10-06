@@ -7,7 +7,7 @@
 			<input class="validate[required] reg-form-input" name="title" type="text" value="<?= set_value('title'); ?>" />
 			<label class="label-input">Город основной деятельности компании <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 			<?= form_error('city'); ?>
-			<select id="sel-field" class="mixed-combo" name="city" size="1">
+			<select id="sel-field" class="mixed-combo" name="city" size="1" style="width:300px; padding: 3px;">
 				<option value="0" <?= set_select('city','0');?>>Выберите город</option>
 			<?php for($i = 0; $i < count($regions); $i++):?>
 					<option value="<?=$regions[$i]['reg_id'];?>"<?=set_select('city',$regions[$i]['reg_id']);?>><?=$regions[$i]['reg_name'];?></option>

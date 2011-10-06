@@ -375,7 +375,7 @@ class Manager_interface extends CI_Controller{
 			$pagevar['companynews'][$i]['full_note'] = $pagevar['companynews'][$i]['cn_note'];
 			$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
 			if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 250):									
-				$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
+				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
 				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],' ',0,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] .= ' ... ';

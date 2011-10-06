@@ -1,5 +1,5 @@
 <?php
-class Usersmodel extends CI_Model {
+class Usersmodel extends CI_Model{
 
 	var $uid 			= 0;	/* идентификатор пользователя*/
 	var $ucompany		= 1;	/* идентификатор компании*/

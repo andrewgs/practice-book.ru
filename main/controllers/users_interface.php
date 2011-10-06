@@ -703,7 +703,7 @@ class Users_interface extends CI_Controller{
 			$pagevar['companynews'][$i]['full_note'] = $pagevar['companynews'][$i]['cn_note'];
 			$pagevar['companynews'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['companynews'][$i]['cn_pdatebegin']);
 			if(mb_strlen($pagevar['companynews'][$i]['cn_note'],'UTF-8') > 250):									
-				$pagevar['companynews'][$i]['an_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
+				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,250,'UTF-8');	
 				$pos = mb_strrpos($pagevar['companynews'][$i]['cn_note'],' ',0,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] = mb_substr($pagevar['companynews'][$i]['cn_note'],0,$pos,'UTF-8');
 				$pagevar['companynews'][$i]['cn_note'] .= ' ... ';
@@ -1180,6 +1180,7 @@ class Users_interface extends CI_Controller{
 	/* ----------------------------------------	registering company -------------------------------------------*/
 	
 	function newcompany1(){
+	
 		$regstatus = $this->session->userdata('regstatus');
 		if($regstatus == 2):
 			redirect('registering/step-2');
@@ -1199,23 +1200,23 @@ class Users_interface extends CI_Controller{
 		$pagevar['regions'] = $this->regionmodel->read_records();
 		$this->session->set_userdata('regstatus',1);
 		if($this->input->post('submit')):
-			$this->form_validation->set_rules('title','','required|callback_company_check|trim');
-			$this->form_validation->set_rules('city','','required|is_natural_no_zero');
+			$this->form_validation->set_rules('title',' ','required|callback_company_check|trim');
+			$this->form_validation->set_rules('city',' ','required|is_natural_no_zero');
 			$this->form_validation->set_message('is_natural_no_zero','Укажите город основной деятельности');
-			$this->form_validation->set_rules('maker','','');
-			$this->form_validation->set_rules('ur_face','','required|trim');
-			$this->form_validation->set_rules('userfile','','callback_userfile_check');
-			$this->form_validation->set_rules('comment','','required|xss_clean|encode_php_tags|trim');
-			$this->form_validation->set_rules('recvizit','','required|xss_clean|encode_php_tags|trim');
-			$this->form_validation->set_rules('site','','prep_url|trim');
-			$this->form_validation->set_rules('email','','valid_email|callback_cmp_email_check|trim');
+			$this->form_validation->set_rules('maker',' ','');
+			$this->form_validation->set_rules('ur_face',' ','required|trim');
+			$this->form_validation->set_rules('userfile',' ','callback_userfile_check');
+			$this->form_validation->set_rules('comment',' ','required|xss_clean|encode_php_tags|trim');
+			$this->form_validation->set_rules('recvizit',' ','required|xss_clean|encode_php_tags|trim');
+			$this->form_validation->set_rules('site',' ','prep_url|trim');
+			$this->form_validation->set_rules('email',' ','valid_email|callback_cmp_email_check|trim');
 			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
-			$this->form_validation->set_rules('tel','','required|min_length[6]|integer|trim');
-			$this->form_validation->set_rules('telfax','','min_length[6]|integer|trim');
+			$this->form_validation->set_rules('tel',' ','required|min_length[6]|integer|trim');
+			$this->form_validation->set_rules('telfax',' ','min_length[6]|integer|trim');
 			$this->form_validation->set_message('min_length','Не верный номер');
 			$this->form_validation->set_message('integer','Только целые числа');
-			$this->form_validation->set_rules('uradres','','required|trim');
-			$this->form_validation->set_rules('realadres','','required|trim');
+			$this->form_validation->set_rules('uradres',' ','required|trim');
+			$this->form_validation->set_rules('realadres',' ','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
@@ -1227,7 +1228,8 @@ class Users_interface extends CI_Controller{
 				if($cookieuid):
 show_error("Внимание!<br/>Вы авторизированы как ".$this->user['ufullname']."<br/>Авторизированным пользователям запрещено дабавлять компании.");
 				endif;
-				if(!$_POST['city__sexyComboHidden']):
+				
+				if(!$_POST['city']):
 					$this->session->set_userdata('errstatus',TRUE);
 					redirect('script_error');
 				endif;

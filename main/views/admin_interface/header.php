@@ -57,7 +57,8 @@
 			<li>
 				<a href="javascript:void(0);">Администрирование</a>
 				<ul>
-					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/manager','Добавление федерального менеджера');?></li>
+					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/federal','Добавление федерального менеджера');?></li>
+					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/regional','Добавление регионального менеджера');?></li>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/administrator','Добавление администратора');?></li>
 					<li><?=anchor('admin/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет');?></li>
 					<li><?=anchor('admin/shutdown/'.$userinfo['uconfirmation'],'Завершить сеанс');?></li>

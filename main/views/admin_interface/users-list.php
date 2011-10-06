@@ -102,6 +102,7 @@
 		});	
 		
 		$(".btnDel").click(function(){
+			if(!confirm('Удалить пользователя?')) return false;
 			var curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			$.post(
@@ -112,6 +113,22 @@
 						$("tr[rID='"+curID+"']").fadeOut("slow",function(){
 							$("tr[rID='"+curID+"']").remove();
 						});
+					}else
+						msgerror(data.message);
+				},"json");
+		});
+		
+		$(".StatusOff").click(function(){
+			if(!confirm('Активировать пользователя вручную?')) return false;
+			var curID = $(this).attr("rID");
+			var uID = $("td[rID='"+curID+"']").text();
+			var btnID = this.id;
+			$.post(
+				"<?=$baseurl;?>admin/activate-user/<?=$userinfo['uconfirmation'];?>",
+				{'id':uID},
+				function(data){
+					if(data.status){
+						$('#'+btnID).fadeOut("slow");
 					}else
 						msgerror(data.message);
 				},"json");

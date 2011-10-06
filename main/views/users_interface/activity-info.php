@@ -730,7 +730,7 @@
 								</div>
 								<h3><a href="#"><?= $othertext[11]['otxt_note'];?></a></h3>
 								<div class="box-content">
-									<?php if($companynews): ?>
+								<?php if($companynews): ?>
 									<?php for($i=0;$i<count($companynews);$i++):?>
 										<div class="content-separator">
 									<img src="<?=$baseurl;?>companynews/viewimage/<?=$companynews[$i]['cn_id'];?>" class="floated" alt=""/>

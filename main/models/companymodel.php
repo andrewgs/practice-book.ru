@@ -30,7 +30,7 @@ class Companymodel extends CI_Model {
 	function insert_record($insertdata){
 			
 		$this->cmp_name 		= strip_tags($insertdata['title']);
-		$this->cmp_region		= $insertdata['city__sexyComboHidden'];
+		$this->cmp_region		= $insertdata['city'];
 		$this->cmp_producer		= $insertdata['maker'];
 		$this->cmp_urface		= strip_tags($insertdata['ur_face']);
 		$this->cmp_logo			= $insertdata['logo'];

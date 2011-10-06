@@ -18,6 +18,9 @@
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
+		#btnDelJobLine{display: none;}
+		#select-region{float: left;margin-right: 20px;}
+		#area, #actinfo{font: bold normal 130% serif;}
 		.h20{min-height: 20px;}
 		.h250{min-height: 250px;}
 	</style>
@@ -37,7 +40,7 @@
 						<div class="">
 							<?=anchor('admin','Панель администрирования',array('class'=>'lnk-submit'));?>
 						</div>
-						<?php $this->load->view('forms/frmsignupfederal');?>
+						<?php $this->load->view('forms/frmsignupmanager');?>
 					</div>
 					<div class="clear"></div>
 				</div>	
@@ -55,7 +58,12 @@
 				var err = false;
 				$(".inputValid").css('border-color','#D0D0D0');
 				$(".inputValid").each(function(i,element){if($(this).val()===''){$(this).css('border-color','#ff0000');err = true;}});
+				var regObj = $("#select-region");
 				var actObj = $("#select-activity");
+				
+				if($(regObj).val() == null){
+					$(regObj).css('border-color','#ff0000');
+				}else $(regObj).css('border-color','#D0D0D0');
 				
 				if($(actObj).val() == null){
 					$(actObj).css('border-color','#ff0000');
@@ -63,9 +71,9 @@
 				
 				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
 			});
-			$("#btnReturn").click(function(){
-				window.location="<?=$baseurl;?>/admin/control-panel/<?=$userinfo['uconfirmation'];?>";
-			});
+			
+			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?=$baseurl;?>admin/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});
+			$("#btnDelJobLine").click(function(){$("div[list='jobLine']:last").remove();var cnt = $("div[list='jobLine']").size();if(cnt <= 1) $("#btnDelJobLine").hide();});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}});
 	</script>
 </body>

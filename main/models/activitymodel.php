@@ -1,6 +1,6 @@
 <?php
 
-class Activitymodel extends CI_Model {
+class Activitymodel extends CI_Model{
 	
 	var $act_id 		= 0;
 	var $act_title 		= "";
@@ -71,6 +71,15 @@ class Activitymodel extends CI_Model {
 	function read_records(){
 		
 		$this->db->order_by('act_id');
+		$query = $this->db->get('tbl_activity');
+		return $query->result_array();
+	}
+	
+	function read_activity_final(){
+	
+		$this->db->select('act_id,act_title');
+		$this->db->order_by('act_title');
+		$this->db->where('act_final',1);
 		$query = $this->db->get('tbl_activity');
 		return $query->result_array();
 	}

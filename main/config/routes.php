@@ -191,6 +191,8 @@ $route['admin/registration/:any/:any'] = "admin_interface/registration_users";
 $route['admin/cabinet/:any'] = "admin_interface/cabinet";
 $route['admin/shutdown/:any'] = "admin_interface/shutdown";
 
+$route['admin/form-job/:any'] = "admin_interface/view_formjob";
+
 $route['admin/save-group/:any']= "admin_interface/save_group";
 $route['admin/delete-group/:any']= "admin_interface/dalete_group";
 
@@ -199,9 +201,11 @@ $route['admin/save-activity/:any']= "admin_interface/save_activity";
 $route['admin/save-department/:any']= "admin_interface/save_department";
 $route['admin/save-user/:any']= "admin_interface/save_user";
 $route['admin/delete-user/:any']= "admin_interface/dalete_user";
+$route['admin/activate-user/:any']= "admin_interface/activate_user";
 $route['admin/save-company/:any']= "admin_interface/save_company";
 $route['admin/save-profile/:any']= "admin_interface/save_profile";
 $route['admin/delete-message/:any']= "admin_interface/delete_message";
+
 /************************************	COMPANY INTRERFACE	***********************************************/
 
 $route['company/control-panel/:any'] = "company_interface/cpanel";
