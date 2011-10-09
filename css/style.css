@@ -219,6 +219,7 @@ section#info-advert{
 	position: relative;
 	overflow: hidden;
 }
+#slide-browser { height: 300px; }
 
 #list-regions {
 	float: left;

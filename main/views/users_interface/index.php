@@ -137,7 +137,7 @@
 			fx: 'scrollUp',
 			speed: '2000',
 			easing: 'easeInOutExpo',
-			timeout: 7000,
+			timeout: 14000,
 			width: 960,
 			fit: 1
 		});
