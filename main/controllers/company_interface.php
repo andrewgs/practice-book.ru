@@ -44,6 +44,7 @@ class Company_interface extends CI_Controller{
 		$this->load->model('offerstopicmodel');
 		$this->load->model('benewsmodel');
 		$this->load->model('bediscountmodel');
+		$this->load->model('excelledmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -2902,6 +2903,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			$this->votemodel->insert_click($_POST['vote']);
 			$cntfullclick = $this->surtopicsmodel->read_field($topic,'stp_clicks');
 			$this->votemodel->update_percents($topic,$cntfullclick);
+			$this->excelledmodel->insert_record($this->user['uid'],'survay',$topic);
 			redirect($this->uri->uri_string());
 		endif;
 		
@@ -2942,6 +2944,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		for($i=0;$i<count($pagevar['topics']);$i++):
 			$pagevar['topics'][$i]['stp_date'] = $this->operation_date($pagevar['topics'][$i]['stp_date']);
 			$pagevar['topics'][$i]['vote'] = $this->votemodel->read_records($pagevar['topics'][$i]['stp_id']);
+			$pagevar['topics'][$i]['excelled'] = $this->excelledmodel->excelled_user($this->user['uid'],'survay',$pagevar['topics'][$i]['stp_id']);
 		endfor;
 		if(!$environment):
 			$pagevar['title'] .= 'Общая бизнес среда | Опрос';
@@ -3314,7 +3317,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title').' - Создание объединения',
-					'backpath'		=> $this->session->userdata('backpath')
+					'backpath'		=> $this->session->userdata('backpath'),
+					'regions'		=> $this->regionmodel->read_records_by_district()
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim');

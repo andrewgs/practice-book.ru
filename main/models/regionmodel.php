@@ -38,6 +38,15 @@ class Regionmodel extends CI_Model {
 		$query = $this->db->get('tbl_regions');
 		return $query->result_array();
 	}
+	function read_areas(){
+		
+		$this->db->select('reg_id,reg_area');
+		$this->db->order_by('reg_area','ASC');
+		$this->db->order_by('reg_district','ASC');
+		$this->db->group_by('reg_area');
+		$query = $this->db->get('tbl_regions');
+		return $query->result_array();
+	}
 	
 	function read_record($id){
 		

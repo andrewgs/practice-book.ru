@@ -87,7 +87,9 @@
 									<span class="date"><?=$topics[$i]['stp_date'];?></span>
 									<span class="view">проголосовало : <?=$topics[$i]['stp_clicks'];?> чел.</span>
 									<span class="green">
+							<?php if(!$topics[$i]['excelled']):?>
 								<img src="<?=$baseurl;?>images/vote.png" alt="голосовать" class="linkSubmit" id="img<?=$i;?>" vt="<?=$i;?>"/>
+							<?php endif;?>	
 <?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/survey/'.$topics[$i]['stp_id'].'#comments','комментарии ('.$topics[$i]['stp_comments'].')');?>
 									</span>
 								<?= form_close(); ?>
