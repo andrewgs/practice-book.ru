@@ -36,6 +36,7 @@
 					<td>
 						<div class="ButtonOperation">
 			<input type="image" title="Сохранить" class="NewsSave" id="s<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/save.png" />
+			<br/><input type="image" title="Удалить" class="btnDel" id="dl<?=$i;?>" rID="<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />
 						</div>
 					</td> 
 				</tr>

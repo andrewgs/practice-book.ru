@@ -1846,6 +1846,28 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function dalete_activity(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$aid = trim($this->input->post('id'));
+		if(!$aid) show_404();
+		$mra_rec = $this->manregactmodel->mra_exist('mra_aid',$aid);
+		if(!$mra_rec):
+			$company = $this->cmpsrvmodel->activity_exist($aid);
+			if(!$company):
+				$success = $this->activitymodel->delete_record($aid);
+				if($success):
+					$statusval['status'] = TRUE;
+				endif;
+			else:
+				$statusval['message'] = "Отрасль используется компаниями .<br/>Удалить не возможно.";
+			endif;
+		else:
+			$statusval['message'] = "Отрасль используется менеджерами.<br/>Удалить не возможно.";
+		endif;
+		echo json_encode($statusval);
+	}
+	
 	function activate_user(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при активации');

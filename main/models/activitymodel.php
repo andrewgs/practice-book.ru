@@ -36,6 +36,13 @@ class Activitymodel extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
+	function delete_record($id){
+	
+		$this->db->where('act_id',$id);
+		$this->db->delete('tbl_activity');
+		return $this->db->affected_rows();
+	}
+	
 	function read_records_by_pid($ParentID){
 		
 		$this->db->where('act_parentid',$ParentID);

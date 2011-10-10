@@ -146,6 +146,9 @@ $route['admin/control-panel/:any'] = "admin_interface/cpanel";
 
 $route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
 $route['admin/edit-activity/:any'] = "admin_interface/edit_activity";
+
+$route['admin/delete-activity/:any']= "admin_interface/dalete_activity";
+
 $route['admin/search-activity/:any'] = "admin_interface/create_search_activity";
 $route['admin/search-region/:any'] = "admin_interface/create_search_region";
 

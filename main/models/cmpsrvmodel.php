@@ -22,6 +22,13 @@ class Cmpsrvmodel extends CI_Model {
 		endfor;
 		$this->db->query($query);
 	}
+	function activity_exist($activity){
 	
+		$this->db->where('cs_srvid',$activity);
+		$query = $this->db->get('tbl_companyservices');
+		$data = $query->result_array();
+		if(count($data)>0) return TRUE;
+		return FALSE;
+	}
 }
 ?>

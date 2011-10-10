@@ -104,6 +104,23 @@
 			}
 		});
 		
+		$(".btnDel").click(function(){
+			if(!confirm('Удалить отрасль?')) return false;
+			var curID = $(this).attr("rID");
+			var actID = $("td[rID='"+curID+"']").text();
+			$.post(
+				"<?=$baseurl;?>admin/delete-activity/<?=$userinfo['uconfirmation'];?>",
+				{'id':actID},
+				function(data){
+					if(data.status){
+						$("tr[rID='"+curID+"']").fadeOut("slow",function(){
+							$("tr[rID='"+curID+"']").remove();
+						});
+					}else
+						msgerror(data.message);
+				},"json");
+		});
+		
 		$(".NewsSave").click(function(){
 			var err = false;
 			var curID = $(this).attr("rID");
