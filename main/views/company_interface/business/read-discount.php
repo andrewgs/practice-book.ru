@@ -85,7 +85,6 @@
 													<?php if($topic['bed_userid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/edit-discount/'.$topic['bed_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/share-discount/'.$topic['bed_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/delete-discount/'.$topic['bed_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 													<?php endif; ?>

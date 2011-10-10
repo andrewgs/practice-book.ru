@@ -33,72 +33,89 @@
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
 					<h1>Business Environment (Бизнес-Среда): Предложения контрагентов</h1>
 				</div>
-				<div class="content-center">
-					<div class="content-center-box">
-						<div class="center-title"></div>
-						<div class="content-text">
-							<div class="add_events add_marg">
-							<?php if(count($topics)):?>
-									<span class="sort sortleft">
-										Сортировать:
-								<?php if($bysort == 'oft_date DESC'):?><strong><?php endif;?>
-									<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/sort-date','по дате');?> /
-								<?php if($bysort == 'oft_date DESC'):?></strong><?php endif;?>
-								<?php if($bysort == 'oft_cmpname ASC'):?><strong><?php endif;?>
-									<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/sort-company','по компании');?>
-								<?php if($bysort == 'oft_cmpname ASC'):?></strong><?php endif;?>
-									</span>
-							<?php endif; ?>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>Регионы</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+									<?php for($i=0;$i<count($regions);$i++): ?>		
+<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+								<?php endfor; ?>
+								</ul>
 							</div>
-						<?php for($i=0;$i<count($topics);$i++):?>
-							<div>
-								<img src="<?=$baseurl;?>companythumb/viewimage/<?=$topics[$i]['oft_cmpid'];?>" alt="" height="42"/>
-								<?=anchor('company-info/'.$topics[$i]['oft_cmpid'],$topics[$i]['oft_cmpname'],array('target'=>'_blank','title'=>'На страницу компании'));?>
+						</div>
+					</div>
+				</div>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3><?=$section_name;?></h3>
 							</div>
-							<div class="right-post zakup zakup2">
-								<span class="news-pic">
-									<img src="<?=$baseurl;?>offers/viewimage/<?=$topics[$i]['oft_id'];?>"class="floated" alt=""/>
-								</span>
-								<h2><?=$topics[$i]['oft_title'];?></h2>
-								<span class="date"><?=$topics[$i]['oft_date'];?></span>
-								<p><?=$topics[$i]['oft_note'];?></p>
-								<span class="green">
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/offer/'.$topics[$i]['oft_id'],'читать полностью');?>
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/offer/'.$topics[$i]['oft_id'].'/comment','ответить');?>
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/offer/'.$topics[$i]['oft_id'].'/comments#comments','комментарии ('.$topics[$i]['oft_comments'].')');?>
-								</span>
-								<div class="clear">&nbsp;</div>
-								<div class="right-post-option">
-									<table cellspacing="0" class="post-option">
-										<tr>
-											<td class="right-option">
-												<div class="opt-bg">
-												<?php if($topics[$i]['oft_userid'] == $userinfo['uid']):?>
-													<div class="opt-bgg">
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/edit-offer/'.$topics[$i]['oft_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/track-offer/'.$topics[$i]['oft_id'],'Отслеживать',array('title'=>'Отслеживать'));?>
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/share-offer/'.$topics[$i]['oft_id'],'Поделиться',array('title'=>'Поделиться'));?>
-<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/delete-offer/'.$topics[$i]['oft_id'],'Удалить',array('title'=>'Удалить'));?>
-													</div>
-												<?php endif; ?>
-												</div>
-											</td>
-											<td class="right-avtor">
-												<table cellspacing="0" cellpadding="0">
-													<tr>
-			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['oft_userid'];?>" alt="" align="left" width="42" height="42"/></td>
-			<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['oft_cmpname']?></td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
+							<div class="right-text">
+								<div class="add_events add_marg">
+								<?php if(count($topics)):?>
+										<span class="sort sortleft">
+											Сортировать:
+									<?php if($bysort == 'oft_date DESC'):?><strong><?php endif;?>
+										<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/sort-date','по дате');?> /
+									<?php if($bysort == 'oft_date DESC'):?></strong><?php endif;?>
+									<?php if($bysort == 'oft_cmpname ASC'):?><strong><?php endif;?>
+										<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/sort-company','по компании');?>
+									<?php if($bysort == 'oft_cmpname ASC'):?></strong><?php endif;?>
+										</span>
+								<?php endif; ?>
 								</div>
+							<?php for($i=0;$i<count($topics);$i++):?>
+								<div class="right-post zakup zakup2">
+									<span class="news-pic">
+										<img src="<?=$baseurl;?>offers/viewimage/<?=$topics[$i]['oft_id'];?>"class="floated" alt=""/>
+									</span>
+									<h2><?=$topics[$i]['oft_title'];?></h2>
+									<span class="date"><?=$topics[$i]['oft_date'];?></span>
+									<p><?=$topics[$i]['oft_note'];?></p>
+									<span class="green">
+	<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/offer/'.$topics[$i]['oft_id'],'читать полностью');?>
+	<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/offer/'.$topics[$i]['oft_id'].'/comments#comments','комментарии ('.$topics[$i]['oft_comments'].')');?>
+									</span>
+									<div class="clear"></div>
+									<hr size="2"/>
+									<div>
+									<img src="<?=$baseurl;?>companythumb/viewimage/<?=$topics[$i]['oft_cmpid'];?>" alt="" height="42"/>
+										<?=anchor('company-info/'.$topics[$i]['oft_cmpid'],$topics[$i]['oft_cmpname'],array('target'=>'_blank','title'=>'На страницу компании'));?>
+								</div>
+									<div class="clear"></div>
+									<div class="right-post-option">
+										<table cellspacing="0" class="post-option">
+											<tr>
+												<td class="right-option">
+													<div class="opt-bg">
+													<?php if($topics[$i]['oft_userid'] == $userinfo['uid']):?>
+														<div class="opt-bgg">
+	<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/edit-offer/'.$topics[$i]['oft_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
+	<?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/delete-offer/'.$topics[$i]['oft_id'],'Удалить',array('title'=>'Удалить'));?>
+														</div>
+													<?php endif; ?>
+													</div>
+												</td>
+												<td class="right-avtor">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['oft_userid'];?>" alt="" align="left" width="42" height="42"/></td>
+				<td><?=$topics[$i]['usubname'].' '.$topics[$i]['uname'].' '.$topics[$i]['uposition'].' '.$topics[$i]['oft_cmpname']?></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							<?php endfor; ?>
+							<?php if($pages): ?>
+								<?=$pages;?>
+							<?php endif;?>
 							</div>
-						<?php endfor; ?>
-						<?php if($pages): ?>
-							<?=$pages;?>
-						<?php endif;?>
 						</div>
 					</div>
 				</div>

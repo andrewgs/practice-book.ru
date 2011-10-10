@@ -91,12 +91,19 @@
 				       $("#frmInsNews").hide();
 					   $("#insNews").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>');
 					   $("#formRep .inpvalue").val('');
+					   $("#chOffers").removeAttr("checked");
+					   $("#dActOffers").hide();
 					    $("#formRep .inpvalue").css('border-color','#D0D0D0');
 					   if($(".EraserInput").is(":hidden")) $(".EraserInput").hide();
 					 });
 				}
 			});
-			
+		<?php if($offers):?>
+			$("#chOffers").removeAttr("checked");
+			$("#chOffers").click(function(){
+				$("#dActOffers").toggle();
+			});
+		<?php endif;?>
 			$(".ExtendDay").click(function(){
 				var curID = $(this).attr("nID");
 				var objExtendID = $("#vex"+curID);

@@ -92,7 +92,6 @@
 												<?php if($topics[$i]['bed_userid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/edit-discount/'.$topics[$i]['bed_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
-<?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/share-discount/'.$topics[$i]['bed_id'],'Поделиться',array('title'=>'Поделиться'));?>
 <?=anchor('business-environment/'.$type_discounts.'/'.$userinfo['uconfirmation'].'/delete-discount/'.$topics[$i]['bed_id'],'Удалить',array('title'=>'Удалить'));?>
 														</div>
 												<?php endif; ?>

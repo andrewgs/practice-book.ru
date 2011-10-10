@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Companymodel extends CI_Model {
+class Companymodel extends CI_Model{
 	
 	var $cmp_id 		= 0;	/* идентификатор компании*/
 	var $cmp_name 		= "";	/* название компании*/
@@ -20,6 +20,7 @@ class Companymodel extends CI_Model {
 	var $cmp_destroy	= '';	/* дата запланированого удаления */
 	var $cmp_date 		= '';	/* дата регистрации */
 	var $cmp_rating 	= 0;
+	var $cmp_offers 	= 0;
 	
 	
 	function __construct(){
@@ -46,6 +47,7 @@ class Companymodel extends CI_Model {
 		$this->cmp_destroy		= '3000-01-01';
 		$this->cmp_date 		= date("Y-m-d");
 		$this->cmp_rating 		= 0;
+		$this->cmp_offers 		= 0;
 		
 		$this->db->insert('tbl_company',$this);
 		return $this->db->insert_id();
@@ -123,16 +125,17 @@ class Companymodel extends CI_Model {
 
 	function read_records(){
 	
-		$sql = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_date,cmp_rating FROM tbl_company ORDER BY cmp_rating DESC,cmp_name";
+		$sql = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_date,cmp_rating,cmp_offers FROM tbl_company ORDER BY cmp_rating DESC,cmp_name";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		return NULL;
 	}
 	
-	function save_company_rating($cid,$rating){
+	function save_rating_offers($cid,$rating,$offers){
 		
 		$this->db->set('cmp_rating',$rating);
+		$this->db->set('cmp_offers',$offers);
 		$this->db->where('cmp_id',$cid);
 		$this->db->update('tbl_company');
 		return $this->db->affected_rows();

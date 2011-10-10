@@ -31,16 +31,17 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Новости</h1>
+					<h1>Business Environment (Бизнес-Среда): Обсуждения</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
-						<h3>Темы</h3>
+						<h3>Регионы</h3>
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<li><?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'],'Новости отрасли');?></li>
-									<li><?=anchor('business-environment/company-news/'.$userinfo['uconfirmation'],'Новости компаний');?></li>
+									<?php for($i=0;$i<count($regions);$i++): ?>		
+<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+								<?php endfor; ?>
 								</ul>
 							</div>
 						</div>
@@ -59,23 +60,19 @@
 								<?=form_open_multipart($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
 					<label class="label-input">Название новости: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('title'); ?>
-					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=$topic['ben_title'];?>"/>
+					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=$topic['oft_title'];?>"/>
 									<div class="clear"></div>
 									<span class="news-pic">
-					<img src="<?=$baseurl;?>activity-news/viewimage/<?=$topic['ben_id'];?>"class="floated" width="74" height="74" alt=""/>
+					<img src="<?=$baseurl;?>offers/viewimage/<?=$topic['oft_id'];?>"class="floated" width="74" height="74" alt=""/>
 									</span>
 					<label class="label-input">Изображение:</label>
 									<?= form_error('userfile'); ?>
 					<input class="reg-form-input inpvalue" type="file" id="userfile" name="userfile" size="30"/>
 									<div class="form-reqs" style="margin-left:95px; width:250px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
 									<div class="clear"></div>
-					<label class="label-input">Источник новости:</label>
-									<?= form_error('source'); ?>
-					<input class="edit450-form-input" id="source" maxlength="50" name="source" type="text" value="<?=$topic['ben_source'];?>"/>
-									<div class="clear"></div>
 					<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('note'); ?>
-			<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=$topic['ben_note'];?></textarea>
+			<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=$topic['oft_note'];?></textarea>
 									<div class="clear"></div>
 						<input class="btn-action margin-1em" id="addDiscussion" type="submit" name="submit" value="Сохранить"/>
 								<?= form_close(); ?>

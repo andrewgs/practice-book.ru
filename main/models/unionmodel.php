@@ -367,9 +367,9 @@ class Unionmodel extends CI_Model{
 		else return null;
 	}
 
-	function asp_topics_limit_records($count,$from,$asp){
+	function asp_topics_limit_records($count,$from,$asp,$region,$company){
 		
-		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_aspid = $asp ORDER BY ast_date DESC, ast_id DESC LIMIT $from,$count";
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_apply,ast_company,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company,tbl_aspregions WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_aspregions.asr_astid = tbl_asptopics.ast_id AND tbl_asptopics.ast_aspid = $asp AND (tbl_aspregions.asr_regid = $region OR tbl_asptopics.ast_company = $company) GROUP BY tbl_aspregions.asr_astid ORDER BY ast_date DESC, ast_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -378,27 +378,27 @@ class Unionmodel extends CI_Model{
 
 	function asp_topic_records($topic){
 		
-		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_company,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
 		else return null;
 	}
 
-	function ofr_topics_limit_records($count,$from,$environment,$department,$activity,$field){
+	function oft_topics_limit_records($count,$from,$environment,$department,$activity,$field,$region,$company){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND tbl_offertopic.oft_activity = $activity ORDER BY $field LIMIT $from,$count";
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND (tbl_offertopic.oft_activity = $activity OR oft_cmpid = $company) AND oft_region = $region ORDER BY $field LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		else return null;
 	}
 
-	function oft_topic_record($topic,$environment,$department,$activity){
+	function oft_topic_record($topic,$environment,$department,$activity,$region){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND tbl_offertopic.oft_activity = $activity";
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND oft_region = $region AND tbl_offertopic.oft_activity = $activity";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];

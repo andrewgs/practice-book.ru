@@ -1884,15 +1884,18 @@ class Admin_interface extends CI_Controller{
 
 	function save_company(){
 	
-		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'');
-		$uid = $this->input->post('id');
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'','offers'=>'');
+		$cid = $this->input->post('id');
 		$rating = trim($this->input->post('rating'));
-		if(!isset($uid) or empty($uid)) show_404();
-		if(!isset($rating) or empty($rating)) $rating = 0;
-		$success = $this->companymodel->save_company_rating($uid,$rating);
+		$offers = trim($this->input->post('offers'));
+		if(!$cid) show_404();
+		if(!$rating) $rating = 0;
+		if(!$offers) $offers = 0;
+		$success = $this->companymodel->save_rating_offers($cid,$rating,$offers);
 		if($success){
 			$statusval['status'] = TRUE;
 			$statusval['rating'] = $rating;
+			$statusval['offers'] = $offers;
 		}
 		echo json_encode($statusval);
 	}

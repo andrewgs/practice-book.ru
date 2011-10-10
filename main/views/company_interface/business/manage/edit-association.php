@@ -65,10 +65,13 @@
 									<?=form_error('title');?>
 				<input class="edit450-form-input inpv" id="title" maxlength="50" name="title" type="text" value="<?=$topic['ast_title'];?>"/>
 									<div class="clear"></div>
+									<span class="news-pic">
+					<img src="<?=$baseurl;?>associations/viewimage/<?=$topic['ast_id'];?>"class="floated" width="74" height="74" alt=""/>
+									</span>
 					<label class="label-input">Изображение:</label>
 									<?=form_error('userfile');?>
 					<input class="reg-form-input" type="file" id="userfile" name="userfile" size="30"/>
-									<div class="form-reqs" style="width:250px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
+									<div class="form-reqs" style="margin-left:95px; width:250px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
 									<div class="clear"></div>
 					<label class="label-input">Цена: <span class="necessarily" title="Поля не можут быть пустыми">*</span> (Пример заполнения: 5000 руб.)</label>
 									<?=form_error('price');?>

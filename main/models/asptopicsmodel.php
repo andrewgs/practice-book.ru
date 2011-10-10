@@ -15,6 +15,7 @@ class Asptopicsmodel extends CI_Model {
 	var $ast_usrid		= 0;
 	var $ast_comments	= 0;
 	var $ast_apply		= 0;
+	var $ast_company	= 0;
 	
 	function __construct(){
         
@@ -32,13 +33,13 @@ class Asptopicsmodel extends CI_Model {
 	
 	function read_records($aspid){
 	
-		$this->db->select('ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3');
+		$this->db->select('ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_company');
 		$this->db->where('ast_aspid',$aspid);
 		$this->db->order_by('ast_date DESC');
 		return $this->db->get('tbl_asptopics');
 	}
 	
-	function insert_record($data,$asp,$user){
+	function insert_record($data,$asp,$user,$company){
 	
 		$this->ast_title = htmlspecialchars($data['title']);
 		$this->ast_photo = $data['photo'];
@@ -53,6 +54,7 @@ class Asptopicsmodel extends CI_Model {
 		$this->ast_usrid = $user;
 		$this->ast_comments = 0;
 		$this->ast_apply = 0;
+		$this->ast_company = $company;
 		$this->db->insert('tbl_asptopics',$this);
 		return $this->db->insert_id();
 	}

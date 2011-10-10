@@ -450,8 +450,7 @@ class Company_interface extends CI_Controller{
 					'regions'		=> array(),
 					'name'			=> 'Новости компании',
 					'typeavatar'	=> 'cnavatar',
-					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid']),
-					'offers'		=> FALSE
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title',' "Оглавление" ','required|trim');
@@ -558,7 +557,7 @@ class Company_interface extends CI_Controller{
 					'typeavatar'	=> 'cshavatar',
 					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid']),
 					'offers'		=> $this->companymodel->read_field($this->user['cid'],'cmp_offers'),
-					'activity'		=> $this->activitymodel->read_activity_final()
+					'activity'		=> $this->activitymodel->
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title',' "Оглавление" ','required|trim');
@@ -573,11 +572,8 @@ class Company_interface extends CI_Controller{
 			else:
 				$_POST['submit'] = NULL;
 				if($_FILES['userfile']['error'] != 4):
-					$_POST['image'] = $this->resize_img($_FILES['userfile']['tmp_name'],122,122);
-					$_POST['dimage'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
 					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
-					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
@@ -592,13 +588,11 @@ class Company_interface extends CI_Controller{
 				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
 				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
-				if($pagevar['offers']):
-					if(isset($_POST['offers'])):
-						$this->offerstopicmodel->insert_records($_POST,$this->user['uid'],$this->user['cid'],$pagevar['company']['cmp_name'],$_POST['actoffers'],0,0,$this->user['region']);
-					endif;
-				endif;
 				redirect('company/shares-management/'.$this->user['uconfirmation']);
 			endif;
+		endif;
+		if($pagevar['offers']):
+			
 		endif;
 		$pagevar['news'] = $this->cmpsharesmodel->read_allrecords($this->user['cid']);
 		for($i = 0;$i < count($pagevar['news']); $i++):
@@ -1016,9 +1010,6 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 									break;
 			case 'company-discounts':	$link = 'company-discounts/'.$this->user['uconfirmation'].'/discount/'.$topic;
 									$table = 'bediscountmodel';
-									break;
-			case 'offers':			$link = 'offers/'.$this->user['uconfirmation'].'/offer/'.$topic;
-									$table = 'offerstopicmodel';
 									break;
 			default:	redirect($this->session->userdata('backpath'));
 		endswitch;
@@ -3681,15 +3672,10 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'topics'		=> array(),
 					'count'			=> 0,
 					'pages'			=> '',
-					'bysort'		=> '',
-					'regions'		=> $this->regionmodel->read_records(),
-					'section_name'	=> ''
+					'bysort'		=> ''
 					
 			);
-		$curregion = $this->session->userdata('offerregion');
-		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
 		
-		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name');
 		if($this->uri->segment(4) == 'sort-date'): 
 			$this->session->set_userdata('offers_sort','oft_date DESC');
 		elseif($this->uri->segment(4) == 'sort-company'):
@@ -3698,7 +3684,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		$pagevar['bysort'] = $this->session->userdata('offers_sort');
 		if(!$pagevar['bysort']) $pagevar['bysort'] = 'oft_date DESC';
 		
-		$pagevar['count'] = $this->offerstopicmodel->count_records($activity,$environment,$this->user['department'],$curregion);
+		$pagevar['count'] = $this->offerstopicmodel->count_records($activity,$environment,$this->user['department']);
 
 		$config['base_url'] 		= $pagevar['baseurl'].'business-environment/offers/'.$this->user['uconfirmation'].'/count/';
         $config['total_rows'] 		= $pagevar['count']; 
@@ -3712,7 +3698,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		$config['cur_tag_open']		= '<b>';
 		$config['cur_tag_close'] 	= '</b>';
 		$from = intval($this->uri->segment(5));
-$pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$environment,$this->user['department'],$activity,$pagevar['bysort'],$curregion,$this->user['cid']);
+$pagevar['topics'] = $this->unionmodel->ofr_topics_limit_records(5,$from,$environment,$this->user['department'],$activity,$pagevar['bysort']);
 		$this->pagination->initialize($config);
 		$pagevar['pages'] = $this->pagination->create_links();
 
@@ -3738,27 +3724,14 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$this->load->view('company_interface/business/offers-index',$pagevar);
 	}
 	
-	function offers_setregion(){
-	
-		$region = $this->uri->segment(5);
-		if(!$this->regionmodel->region_exist($region)):
-			show_404();
-		else:
-			$this->session->set_userdata('offerregion',$region);
-			redirect('business-environment/offers/'.$this->user['uconfirmation']);
-		endif;
-	}
-	
 	function read_offer(){
 		
 		$environment = $this->session->userdata('environment');
 		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
-		$curregion = $this->session->userdata('offerregion');
-		if(!$curregion) show_404();
 		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$curregion)):
+		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$activity)):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -3770,46 +3743,13 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'userinfo'		=> $this->user,
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$activity,$curregion),
+					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$activity),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
-					'pages'			=> '',
-					'regions'		=> $this->regionmodel->read_records(),
-					'section_name'	=> $this->regionmodel->read_field($curregion,'reg_name')
+					'pages'			=> ''
 			);
 		$pagevar['topic']['oft_date'] = $this->operation_date($pagevar['topic']['oft_date']);
-		
-		if($this->input->post('submit')):
-			$this->form_validation->set_rules('note','Текст','required|trim');
-			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
-			if(!$this->form_validation->run()):
-				$_POST['submit'] = NULL;
-				$this->read_offer();
-				return FALSE;
-			else:
-				$_POST['submit'] = NULL;
-				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'offers',$topic);
-				$this->offerstopicmodel->insert_comment($topic);
-				redirect($this->uri->uri_string());
-			endif;
-		endif;
-		
-		if($this->input->post('ssubmit')):
-			$this->form_validation->set_rules('note','Текст','required|trim');
-			if(!$this->form_validation->run()):
-				$_POST['submit'] = NULL;
-				$this->read_offer();
-				return FALSE;
-			else:
-				$_POST['submit'] = NULL;
-				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->update_record($_POST['comments'],$_POST['note']);
-				redirect($this->uri->uri_string());
-			endif;
-		endif;
-		
 		
 		$pagevar['count'] = $this->commentsmodel->count_records($topic,'offers');
 		
@@ -3834,95 +3774,45 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		endfor;
 		
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Предложения контрагентов';
+			$pagevar['title'] .= 'Общая бизнес среда | Чтение предложения контрагентов';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Предложения контрагентов';
+			$pagevar['title'] .= 'Частная бизнес среда | Чтение предложения контрагентов';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
 		$this->load->view('company_interface/business/read-offer',$pagevar);
 	}
 	
+	function offer_add_comment(){
+		
+	}
+	
+	function offer_edit_comment(){
+		
+	}
+	
+	function offer_delete_comment(){
+		
+	}
+	
+	function create_offer(){
+		
+	}
+	
 	function edit_offer(){
 		
-		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0; else show_404();
-		$activity = $this->session->userdata('activity');
-		if(!$activity) show_404();
-		$curregion = $this->session->userdata('offerregion');
-		if(!$curregion) show_404();
-		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$curregion)):
-			show_404();
-		endif;
-		$pagevar = array(
-					'description'	=> '',
-					'keywords'		=> '',
-					'author'		=> '',
-					'title'			=> 'Practice-Book - ',
-					'baseurl' 		=> base_url(),
-					'userinfo'		=> $this->user,
-					'environment'	=> $environment,
-					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'backpath'		=> $this->session->userdata('backpath'),
-					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$activity,$curregion),
-					'comments'		=> array(),
-					'count'			=> 0,
-					'pages'			=> '',
-					'regions'		=> $this->regionmodel->read_records(),
-					'section_name'	=> $this->regionmodel->read_field($curregion,'reg_name').' - Редактирование предложения'
-			);
-		$pagevar['topic']['oft_note'] = preg_replace('/<br>/','',$pagevar['topic']['oft_note']);
-		if($this->input->post('submit')):
-			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
-			$this->form_validation->set_rules('note','Содержание','required|trim');
-			$this->form_validation->set_rules('userfile','','callback_userfile_check');
-			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
-			if(!$this->form_validation->run()):
-				$_POST['submit'] = NULL;
-				$this->edit_offer();
-				return FALSE;
-			else:
-				$_POST['submit'] = NULL;
-				if($_FILES['userfile']['error'] != 4):
-					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],122,122);
-				else:
-					$_POST['photo'] = '';
-				endif;
-				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->offerstopicmodel->update_record($topic,$_POST,$this->user['uid']);
-				redirect($pagevar['backpath']);
-			endif;
-		endif;
-		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Предложения контрагентов';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Предложения контрагентов';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		endif;
-		$this->load->view('company_interface/business/manage/edit-offers',$pagevar);
 	}
 
+	function track_offer(){
+		
+	}
+	
 	function share_offer(){
 		
 	}
 	
 	function delete_offer(){
 		
-		$environment = $this->session->userdata('environment');
-		if(!$environment) $environment = 0; else show_404();
-		$activity = $this->session->userdata('activity');
-		if(!$activity) show_404();
-		$curregion = $this->session->userdata('offerregion');
-		if(!$curregion) show_404();
-		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$this->user['uid'],$curregion)):
-			show_404();
-		endif;
-		$this->commentsmodel->delete_records('offers',$topic);
-		$this->offerstopicmodel->delete_record($topic,$this->user['uid']);
-		redirect($this->session->userdata('backpath'));
 	}
 
 		/*================================================ news-full ================================================*/

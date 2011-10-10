@@ -49,28 +49,34 @@
 		$(".parentid").keypress(function(e){
 			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
 		});
-		
+		$(".final").keypress(function(e){
+			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>49))return false;
+			if($(this).val().length > 0){$(this).val('');}
+		});
 		$(".btnSave").click(function(){
 			var err = false;
 			var curID = $(this).attr("rID");
-			var uID = $("td[rID='"+curID+"']").text();
+			var cID = $("td[rID='"+curID+"']").text();
 			var objRating = $("#vRating"+curID);
 			var valRating = $(objRating).val();
+			var objOffers = $("#vOffers"+curID);
+			var valOffers = $(objOffers).val();
 			$(objRating).css('border-color','#D0D0D0');
-			if(valRating == "" && valRating != 0){
-				$(objActivity).css('border-color','#ff0000');
-				err = true;
-			}
+			$(objOffers).css('border-color','#D0D0D0');
+			if(valRating == "" && valRating != 0){$(objActivity).css('border-color','#ff0000');err = true;}
+			if(valOffers == ""){$(objOffers).css('border-color','#ff0000');err = true;}
 			if(err){
 				msgerror('Пропущены обязательные поля');
 				return false;
 			}else{
 				$.post("<?=$baseurl;?>admin/save-company/<?=$userinfo['uconfirmation'];?>",
-				{'id':uID,'rating':valRating},
+				{'id':cID,'rating':valRating,'offers':valOffers},
 				function(data){
 					if(data.status){
 						$(objRating).val(data.rating);
+						$(objOffers).val(data.offers);
 						$(objRating).css('border-color','#00ff00');
+						$(objOffers).css('border-color','#00ff00');
 					}else{
 						msgerror(data.message);
 					}

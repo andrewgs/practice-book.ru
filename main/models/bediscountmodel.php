@@ -24,8 +24,8 @@ class Bediscountmodel extends CI_Model {
 		
 		if(!$environment) $department = 0;
 		$this->bed_title		= htmlspecialchars($data['title']);
-		$this->bed_note			= strip_tags($data['note'],'<br>');
-		$this->bed_photo		= $data['photo'];
+		$this->bed_note			= strip_tags($data['description'],'<br>');
+		$this->bed_photo		= $data['dimage'];
 		$this->bed_date			= date("Y-m-d");
 		$this->bed_activity		= $activity;
 		$this->bed_environment	= $environment;

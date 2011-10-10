@@ -17,8 +17,8 @@ class Jobsmodel extends CI_Model {
 	function insert_record($uid,$insertdata){
 			
 		$this->job_uid 		= $uid;
-		$this->job_cname 	= $insertdata['jcname'];
-		$this->job_position = $insertdata['jposition'];
+		$this->job_cname 	= htmlspecialchars($insertdata['jcname']);
+		$this->job_position = htmlspecialchars($insertdata['jposition']);
 		$this->job_dbegin 	= $insertdata['jdbegin']."-01-01";
 		$this->job_dend 	= $insertdata['jdend'];
 		
@@ -29,7 +29,7 @@ class Jobsmodel extends CI_Model {
 	function group_insert($uid,$insertdata){
 		$query = '';
 		for($i = 0;$i < count($insertdata);$i++):
-			$query .= '('.$uid.',"'.$insertdata[$i]['jcname'].'","'.$insertdata[$i]['jposition'].'","'.$insertdata[$i]['jdbegin'].'","'.$insertdata[$i]['jdend'].'") ';
+			$query .= '('.$uid.',"'.htmlspecialchars($insertdata[$i]['jcname']).'","'.htmlspecialchars($insertdata[$i]['jposition']).'","'.$insertdata[$i]['jdbegin'].'","'.$insertdata[$i]['jdend'].'") ';
 			if($i + 1 < count($insertdata)) $query.=',';
 		endfor;
 		$this->db->query("INSERT INTO tbl_jobs (job_uid,job_cname,job_position,job_dbegin,job_dend) VALUES ".$query);

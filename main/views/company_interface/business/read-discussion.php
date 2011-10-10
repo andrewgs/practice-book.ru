@@ -127,7 +127,7 @@
 											<div class="commentbox-option">
 											<a href="" class="EditComment" FC="<?=$i;?>">Редактировать</a>
 <?=anchor('business-environment/discussions/'.$userinfo['uconfirmation'].'/discussion/'.$this->uri->segment(5).'/delete-comment/'.$comments[$i]['cmn_id'],'Удалить');?>
-												<div class="clear">&nbsp;</div>
+												<div class="clear"></div>
 												<div class="FormEditComment" id="FEC<?=$i;?>" style="display:none;">
 										<?=form_open($this->uri->uri_string(),array('class'=>'formular','id'=>'form'.$i)); ?>
 										<?=form_hidden('comments',$comments[$i]['cmn_id']);?>

@@ -1,6 +1,6 @@
 <?php
 
-class Offerstopicmodel extends CI_Model {
+class Offerstopicmodel extends CI_Model{
 	
 	var $oft_id 		= 0;
 	var $oft_title 		= "";
@@ -14,6 +14,7 @@ class Offerstopicmodel extends CI_Model {
 	var $oft_department	= 0;
 	var $oft_activity	= 0;
 	var $oft_photo		= "";
+	var $oft_region		= 0;
 	
 	function __construct(){
         
@@ -70,63 +71,96 @@ class Offerstopicmodel extends CI_Model {
 		return $query->result_array();
 	}
 	
-	function insert_records($data,$activity,$environment,$department){
+	function insert_records($data,$uid,$cid,$cname,$activity,$environment,$department,$region){
 		
-		$this->oft_title = $data['title'];
-		$this->oft_activity = $activity;
+		if(!$environment) $department = 0;
+		$this->oft_title = htmlspecialchars($data['title']);
+		$this->oft_date = date("Y-m-d");
+		$this->oft_note = strip_tags($data['description']);
+		$this->oft_userid = $uid;
+		$this->oft_comments = 0;
+		$this->oft_cmpid = $cid;
+		$this->oft_cmpname = $cname;
 		$this->oft_environment = $environment;
 		$this->oft_department = $department;
+		$this->oft_activity = $activity;
+		$this->oft_photo = $data['image'];
+		$this->oft_region = $region;
 		$this->db->insert('tbl_offertopic',$this);
 		return $this->db->insert_id();
 	}
 	
-	function update_records($id,$data){
+	function update_record($id,$data,$user){
 	
-		$this->db->set('oft_title',$data['title']);
+		$this->db->set('oft_title',htmlspecialchars($data['title']));
+		$this->db->set('oft_note',strip_tags($data['note'],'<br>'));
+		if($data['photo']):
+			$this->db->set('oft_photo',$data['photo']);
+		endif;
 		$this->db->where('oft_id',$id);
+		$this->db->where('oft_userid',$user);
 		$this->db->update('tbl_offertopic');
 		return $this->db->affected_rows();
 	}
 	
-	function delete_records($id){
+	function delete_record($id,$userid){
 	
 		$this->db->where('oft_id',$id);
+		$this->db->where('oft_userid',$userid);
 		$this->db->delete('tbl_offertopic');
 		return $this->db->affected_rows();
 	}
 	
-	function topic_exist($id,$environment,$department,$activity){
+	function insert_comment($id){
+		$this->db->set('oft_comments','oft_comments+1',FALSE);
+		$this->db->where('oft_id',$id);
+		$this->db->update('tbl_offertopic');
+	}
+	
+	function delete_comment($id){
+	
+		$this->db->set('oft_comments','oft_comments-1',FALSE);
+		$this->db->where('oft_id',$id);
+		$this->db->update('tbl_offertopic');
+	}
+	
+	function topic_exist($id,$environment,$department,$activity,$region){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('oft_id',$id);
 		$this->db->where('oft_environment',$environment);
 		$this->db->where('oft_department',$department);
 		$this->db->where('oft_activity',$activity);
+		$this->db->where('oft_region',$region);
 		$query = $this->db->get('tbl_offertopic',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
 	
-	function owner($activity,$environment,$department){
+	function topic_owner($id,$environment,$department,$activity,$user,$region){
 		
 		if(!$environment) $department = 0;
-		$this->db->where('oft_activity',$activity);
+		$this->db->where('oft_id',$id);
 		$this->db->where('oft_environment',$environment);
 		$this->db->where('oft_department',$department);
+		$this->db->where('oft_activity',$activity);
+		$this->db->where('oft_userid',$user);
+		$this->db->where('oft_region',$region);
 		$query = $this->db->get('tbl_offertopic',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
 	
-	function count_records($activity,$environment,$department){
+	function count_records($activity,$environment,$department,$curregion){
 		
 		if(!$environment) $department = 0;
 		$this->db->select('count(*) as cnt');
 		$this->db->where('oft_activity',$activity);
 		$this->db->where('oft_environment',$environment);
 		$this->db->where('oft_department',$department);
+		$this->db->where('oft_region',$curregion);
 		$query = $this->db->get('tbl_offertopic');
 		$data = $query->result_array();
 		return $data[0]['cnt'];

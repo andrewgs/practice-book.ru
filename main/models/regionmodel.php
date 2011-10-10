@@ -38,6 +38,7 @@ class Regionmodel extends CI_Model {
 		$query = $this->db->get('tbl_regions');
 		return $query->result_array();
 	}
+	
 	function read_areas(){
 		
 		$this->db->select('reg_id,reg_area');

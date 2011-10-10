@@ -26,14 +26,28 @@
 		<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('description'); ?>
 	<textarea class="edit-form-textarea mbottom inpvalue" name="description" id="description" cols="50" rows="8"><?=set_value('description');?></textarea>
-		<label class="label-input"">Новость отрасли:<span class="necessarily" title="Поле не может быть пустым">*</span></label>
-		<select name="activity" id="activity" class="mixed-combo inpvalue" size="1" title="Укажите к какой отрасли относиться новость" style="width: 400px;">
+		<label class="label-input"">Отрасли компании: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+		<select name="activity" id="activity" class="mixed-combo inpvalue" size="1" title="Укажите к какой отрасли относиться" style="width: 400px;">
 			<option value="0">Выберите отрасль</option>
 			<?php for($i = 0; $i < count($cmpactivity); $i++): ?>
 				<option value="<?=$cmpactivity[$i]['act_id'];?>"><?=$cmpactivity[$i]['act_fulltitle'];?></option>
 			<?php endfor; ?>
 		</select>
 		<div class="clear"></div>
+	<?php if($offers):?>	
+		<div style="margin: 15px 0px;">
+			<input type="checkbox" name="offers" id="chOffers" value="offers">Как предложение контрагентам
+		</div>
+		<div class="clear"></div>
+		<div class="btnHidden" id="dActOffers">
+			<select name="actoffers" id="sActOffers" class="mixed-combo inpvalue" size="1" title="Укажите в какую отрасли отправить предложение" style="width: 400px;">
+				<?php for($i=0;$i<count($activity);$i++): ?>
+					<option value="<?=$activity[$i]['act_id'];?>"><?=$activity[$i]['act_fulltitle'];?></option>
+				<?php endfor; ?>
+			</select>
+		</div>
+		<div class="clear"></div>
+	<?php endif;?>
 		<input class="btn-action margin-1em" id="addNews" type="submit" name="submit" value="Добавить"/>
 	</div>
 	<div class="clear"></div>

@@ -15,6 +15,7 @@
 					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛЕФОН</th>
 					<th scope="col" abbr="ЗАРЕГ.">ЗАРЕГ.</th>
 					<th scope="col" abbr="РЕЙТИНГ">РЕЙТИНГ</th>
+					<th scope="col" abbr="РАЗР.КнАг">КА (0|1)</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
@@ -35,6 +36,9 @@
 						<td><?=$list[$i]['cmp_date'];?></td>
 						<td>
 		<input class="reg-form-small parentid" id="vRating<?=$i?>" rID="<?=$i?> name="rating" type="text" value="<?=$list[$i]['cmp_rating'];?>">
+						</td>
+						<td>
+		<input class="reg-form-small final" id="vOffers<?=$i?>" rID="<?=$i?> name="offers" type="text" value="<?=$list[$i]['cmp_offers'];?>">
 						</td>
 					<td>
 						<div class="ButtonOperation">
