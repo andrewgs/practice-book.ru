@@ -4590,6 +4590,11 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		
 		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name').' - Кто главный?';
 		$pagevar['topic'] = $this->whomainmodel->read_record($activity,$environment,$this->user['department'],$curregion);
+		
+		if(!$pagevar['topic']):
+			redirect('business-environment/who-main/'.$this->user['uconfirmation'].'/region/'.$pagevar['regions'][0]['reg_id']);
+		endif;
+		
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('summa','Текст','required|trim|is_natural_no_zero|max_length[7]');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -4607,7 +4612,6 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
-		
 		$pagevar['count'] = $this->wmcompanymodel->count_records($pagevar['topic']['wmn_id']);
 		
 		$config['base_url'] 		= $pagevar['baseurl'].'business-environment/who-main/'.$this->user['uconfirmation'].'/count/';
@@ -4652,7 +4656,6 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 			$pagevar['auc_title'] = 'Аукцион завершился';
 			$pagevar['auc_text'] = 'Следующий аукцион начнется<br/>через квартал';
 		endif;
-		
 		if(!$environment):
 			$pagevar['title'] .= 'Общая бизнес среда | Кто главный?';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
