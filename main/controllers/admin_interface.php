@@ -37,6 +37,8 @@ class Admin_interface extends CI_Controller{
 		$this->load->model('jobsmodel');
 		$this->load->model('productionunitmodel');
 		$this->load->model('cmpunitsmodel');
+		$this->load->model('whomainmodel');
+		$this->load->model('wmcompanymodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -361,7 +363,29 @@ class Admin_interface extends CI_Controller{
 			$this->session->unset_userdata('parent_act');
 		endif;
 	}
-
+	
+	function manage_whomain(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Панель управления',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'list'			=> $this->supportmodel->read_records()
+			);
+		$this->load->view("admin_interface/manage-whomain",$pagevar);
+	}
+	
+	function start_auction(){
+		
+	}
+	
+	function finish_auction(){
+		
+	}
+	
 	/* ======================================== EDIT CONTROL PANEL =============================================*/
 	
 	function edit_product($error = FALSE){

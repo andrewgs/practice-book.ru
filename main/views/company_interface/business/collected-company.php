@@ -199,6 +199,7 @@
 			$("#Cancel").click(function(){$('#FormPurchase').fadeToggle('slow',function(){$("#count").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
 			$("#addPurchase").click(function(event){$("#count").css('border-color','#D0D0D0');if($("#count").val() == ''){$("#count").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
 		<?php endif;?>
+		function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

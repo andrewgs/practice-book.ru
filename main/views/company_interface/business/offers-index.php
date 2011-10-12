@@ -39,7 +39,7 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<?php for($i=0;$i<count($regions);$i++): ?>		
+								<?php for($i=0;$i<count($regions);$i++): ?>		
 <li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
 								<?php endfor; ?>
 								</ul>

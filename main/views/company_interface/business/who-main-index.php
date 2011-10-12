@@ -39,8 +39,9 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-								<li>1</li>
-								<li>2</li>
+								<?php for($i=0;$i<count($regions);$i++): ?>		
+<li><?=anchor('business-environment/who-main/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+								<?php endfor; ?>
 								</ul>
 							</div>
 						</div>
@@ -53,46 +54,80 @@
 								<h3><?=$section_name;?></h3>
 							</div>
 							<div class="right-text">
-								<div class="add_events add_marg">
-
+								<div class="timeout"><?=$auc_title;?></div>
+								<div class="right-post whois">
+									<span class="whois-pic"><img src="<?=$baseurl;?>images/whois.png" alt="" /></span>
+									<div class="whois-timer">
+										<ul class="clock">
+											<li id="whois-d"><?=$days;?></li>
+											<li id="whois-h"><?=$hours;?></li>
+											<li id="whois-m"><?=$minutes;?></li>
+										</ul>
+										<div class="clear"></div>
+										<p><?=$auc_text;?></p>
+										<div class="clear"> </div>
+									</div>
 								</div>
-							<?php for($i=0;$i<count($topics);$i++):?>
-								<div class="rtdblock">
-									<div class="rtblockbg">
-										<div class="rtdblockwrap">
-											<span class="rtd-num"><?=$this->uri->segment(5)+$i+1;?></span>
-											<span class="news-pic">
-						<img src="<?=$baseurl;?>cravatar/viewimage/<?=$topics[$i]['uid'];?>" alt="" align="left" width="74" height="74"/>
+							<?php if(!$auc_close):?>
+								<div class="add_events left">
+									<a href="#" id="SetParticipate" title="Сделать ставку">Сделать ставку</a>
+								</div>
+								<div class="clear"></div>
+								<div id="FormParticipate" style="display:none;">
+									<?=form_open($this->uri->uri_string(),array('class'=>'formular')); ?>
+									<hr size="2"/>
+						<label class="label-input">Сумма (рубли): <span class="necessarily" title="Поле не может быть пустым">*</span></label>
+								<?= form_error('summa'); ?>
+						<input class="edit60-form-input" id="summa" maxlength="7" name="summa" type="text" value="<?=set_value('summa');?>">
+						<input class="btn-action margin-1em" id="addParticipate" type="submit" name="submit" value="Поставить"/>
+						<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
+									<div class="clear"></div>
+									ВНИМАНИЕ: Ставка меньше за предыдущую будет проигнорирована!
+									<hr size="2"/>
+									<?= form_close(); ?>
+								</div>
+								<div class="clear"></div>
+							<?php else:?>
+								<hr size="2"/>
+								<h3>ПОБЕДИТЕЛЬ АУКЦИОНА:</h3>
+							<?php endif;?>
+							<?php for($i=0;$i<count($companylist);$i++):?>
+								<div class="right-post whois">
+									<?php $number = $this->uri->segment(5)+$i+1;?>
+									<?php if($auc_close && $number == 1):?>
+									<div class="whois-box" style="border-color:#FF0000;border-style:solid;">
+									<?php else:?>
+									<div class="whois-box">
+									<?php endif;?>
+										<div class="current-position leader"><?=$number;?></div>
+										<div class="company-info">
+											<span class="whois-pic">
+							<img src="<?=$baseurl;?>companythumb/viewimage/<?=$companylist[$i]['cmp_id'];?>" alt="" align="left" height="80"/>
 											</span>
-											<div class="rtd-autor-info">
-												<h3><?=$topics[$i]['uname'].' '.$topics[$i]['usubname'].' '.$topics[$i]['uthname'];?></h3>
-												<span>
-													<?=$topics[$i]['uposition'];?><br />
-													<?=$topics[$i]['cmp_name'];?><br />
-												</span>
-											</div>
-											<div class="rtd-info">
-												<div class="green">Рейтинг: <span><?=$topics[$i]['urating'];?></span></div>
-												<div class="silver">Месяцев на сайте: <span><?=$topics[$i]['months'];?></span></div>
-											</div>
-											<div class="clear">&nbsp;</div>
-											<div class="rtd-text">
-												<p><?=$topics[$i]['uachievement'];?></p>
-											</div>
-											<div class="clear">&nbsp;</div>
-											<div class="rtd-contact">
-											<?php if($topics[$i]['uskype']):?>
-												<span class="skype"><?=$topics[$i]['uskype'];?></span>
-											<?php endif; ?>
-											<?php if($topics[$i]['uicq']):?>
-												<span class="icq"><?=$topics[$i]['uicq'];?></span>
-											<?php endif; ?>
-												<span class="mail"><?=$topics[$i]['uemail'];?></span>
-											<?php if($topics[$i]['uphone']):?>
-												<span class="phone"><?=$topics[$i]['uphone'];?></span>
-											<?php endif; ?>
-											</div>
+											<div class="company-title"><?=$companylist[$i]['cmp_name'];?></div>
+											<div class="company-address">Юридический адрес: <?=$companylist[$i]['cmp_uraddress'];?></div>
+											<div class="company-address">Фактический адрес: <?=$companylist[$i]['cmp_realaddress'];?></div>
+											<div class="clear"></div>
 										</div>
+										<div class="company-rates">
+											<div class="company-rating"><?=$companylist[$i]['cmp_rating'];?></div>
+											<div class="company-age">Месяцев на сайте: <span><?=$companylist[$i]['months'];?></span></div>
+										</div>
+										<div class="clear"></div>
+										<div class="company-description">
+										Направления деятельности: 
+										<?php for($j=0;$j<count($companylist[$i]['activity']);$j++):?>
+											<?=$companylist[$i]['activity'][$j]['act_title'];?>;
+										<?php endfor; ?>
+										</div>
+										<div class="company-contacts">
+										<?php if($companylist[$i]['cmp_site']):?>
+		<div class="contact site"><?=anchor($companylist[$i]['cmp_site'],'Сайт компании',array('target'=>'_blank'));?></div>
+										<?php endif;?>
+		<div class="contact male"><img src="<?=$baseurl;?>images/mail-icon.png" alt=""/><?=$companylist[$i]['cmp_email'];?></div>
+		<div class="contact phone"><img src="<?=$baseurl;?>images/phone-icon.png" alt=""/><?=$companylist[$i]['cmp_phone'];?></div>
+										</div>
+										<div class="clear"> </div>
 									</div>
 								</div>
 							<?php endfor; ?>
@@ -122,11 +157,22 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			<?php if(!$auc_close): ?>
+			$("#summa").keypress(function(e){
+				if($(this).val() == '' && e.which == 48) return false;
+				if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+			});
+			$('#SetParticipate').click(function(){$('#FormParticipate').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");$("#count").focus();return false;});
+			$("#Cancel").click(function(){$('#FormParticipate').fadeToggle('slow',function(){$("#summa").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
+			$("#addParticipate").click(function(event){$("#summa").css('border-color','#D0D0D0');if($("#summa").val() == ''){$("#summa").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
+		<?php endif;?>
+		function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

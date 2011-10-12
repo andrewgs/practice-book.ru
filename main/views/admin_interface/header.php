@@ -7,6 +7,7 @@
 				<a href="javascript:void(0);">Управление</a>
 				<ul>
 					<li><?=anchor('admin/edit-activity/'.$userinfo['uconfirmation'],'Управление отраслью');?></li>
+					<li><?=anchor('admin/manage-whomain/'.$userinfo['uconfirmation'],'Управление аукционами "Кто главный?"');?></li>
 				</ul>
 			</li>
 			<li>

@@ -46,6 +46,8 @@ class Company_interface extends CI_Controller{
 		$this->load->model('bediscountmodel');
 		$this->load->model('excelledmodel');
 		$this->load->model('aspregionsmodel');
+		$this->load->model('whomainmodel');
+		$this->load->model('wmcompanymodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -4567,13 +4569,90 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'environment'	=> $environment,
-					'topics'		=> array(),
+					'topic'			=> array(),
+					'companylist'	=> array(),
 					'count'			=> 0,
 					'pages'			=> '',
-					'section_name'	=> 'Кто главный?',
-					'type_rating'	=> $this->uri->segment(2),
-					'bysort'		=> ''
+					'regions'		=> $this->regionmodel->read_records(),
+					'section_name'	=> '',
+					'days'			=> '',
+					'hours'			=> '',
+					'minutes'		=> '',
+					'auc_title'		=> 'До завершения аукциона осталось:',
+					'auc_text'		=> 'Обновление данных происходит<br/>ежедневно в 20:00',
+					'auc_close'		=> FALSE
+					
 			);
+			
+		
+		$curregion = $this->session->userdata('whomainregion');
+		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
+		
+		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name').' - Кто главный?';
+		$pagevar['topic'] = $this->whomainmodel->read_record($activity,$environment,$this->user['department'],$curregion);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('summa','Текст','required|trim|is_natural_no_zero|max_length[7]');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->who_main();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($this->wmcompanymodel->company_exist($pagevar['topic']['wmn_id'],$this->user['cid'])):
+					$this->wmcompanymodel->company_update($pagevar['topic']['wmn_id'],$this->user['cid'],$_POST['summa']);
+				else:
+					$this->wmcompanymodel->company_insert($pagevar['topic']['wmn_id'],$_POST['summa'],$this->user['uid'],$this->user['cid']);
+				endif;
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		$pagevar['count'] = $this->wmcompanymodel->count_records($pagevar['topic']['wmn_id']);
+		
+		$config['base_url'] 		= $pagevar['baseurl'].'business-environment/who-main/'.$this->user['uconfirmation'].'/count/';
+        $config['total_rows'] 		= $pagevar['count']; 
+        $config['per_page'] 		= 5;
+        $config['num_links'] 		= 4;
+        $config['uri_segment'] 		= 5;
+		$config['first_link']		= 'В начало';
+		$config['last_link'] 		= 'В конец';
+		$config['next_link'] 		= 'Далее &raquo;';
+		$config['prev_link'] 		= '&laquo; Назад';
+		$config['cur_tag_open']		= '<b>';
+		$config['cur_tag_close'] 	= '</b>';
+		$from = intval($this->uri->segment(5));
+		$pagevar['companylist'] = $this->unionmodel->wmncompany_limit_records(5,$from,$pagevar['topic']['wmn_id']);
+		$this->pagination->initialize($config);
+		$pagevar['pages'] = $this->pagination->create_links();
+		
+		for($i=0;$i<count($pagevar['companylist']);$i++):
+			$pagevar['companylist'][$i]['activity'] = $this->unionmodel->company_activity($pagevar['companylist'][$i]['cmp_id']);
+		endfor;
+		
+		if(!$pagevar['topic']['wmn_over'] && $pagevar['topic']['minutes'] <= 0):
+			$this->whomainmodel->close_auc($pagevar['topic']['wmn_id'],$pagevar['companylist'][0]['cmp_id'],$pagevar['companylist'][0]['cmp_name'],$pagevar['companylist'][0]['wmc_price']);
+			$pagevar['topic']['wmn_over'] = 1;
+		endif;
+		if($pagevar['topic']['wmn_over']):
+			$pagevar['auc_close'] = TRUE;
+			
+		endif;
+		
+		$pagevar['days'] = floor($pagevar['topic']['minutes']/86400);
+		if(strlen($pagevar['days']) == 1) $pagevar['days'] = '0'.$pagevar['days'];
+		$pagevar['hours'] = floor(($pagevar['topic']['minutes'] - ($pagevar['days']*86400))/3600);
+		if(strlen($pagevar['hours']) == 1) $pagevar['hours'] = '0'.$pagevar['hours'];
+		$pagevar['minutes'] = floor(($pagevar['topic']['minutes'] - (($pagevar['days']*86400)+($pagevar['hours']*3600)))/60);
+		if(strlen($pagevar['minutes']) == 1) $pagevar['minutes'] = '0'.$pagevar['minutes'];
+		if($pagevar['topic']['wmn_over']):
+			$pagevar['days'] = '&minus;&minus;';
+			$pagevar['hours'] = '&minus;&minus;';
+			$pagevar['minutes'] = '&minus;&minus;';
+			$pagevar['auc_title'] = 'Аукцион завершился';
+			$pagevar['auc_text'] = 'Следующий аукцион начнется<br/>через квартал';
+		endif;
+		
 		if(!$environment):
 			$pagevar['title'] .= 'Общая бизнес среда | Кто главный?';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
@@ -4584,6 +4663,25 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$this->load->view('company_interface/business/who-main-index',$pagevar);
 	}
 	
+	function whomain_setregion(){
+		
+		$region = $this->uri->segment(5);
+		if(!$this->regionmodel->region_exist($region)):
+			show_404();
+		else:
+			$environment = $this->session->userdata('environment');
+			if(!$environment) $environment = 0; else show_404();
+			$activity = $this->session->userdata('activity');
+			if(!$activity) show_404();
+			if(!$this->whomainmodel->record_exist($activity,$environment,$this->user['department'],$region)):
+				$photo = file_get_contents(base_url().'images/whois.png');
+				$this->whomainmodel->insert_record($photo,$activity,$environment,$this->user['department'],$region);
+			endif;
+			$this->session->set_userdata('whomainregion',$region);
+			redirect('business-environment/who-main/'.$this->user['uconfirmation']);
+		endif;
+	}
+
 		/*================================================= rating-full ================================================*/
 	
 	function rating(){
