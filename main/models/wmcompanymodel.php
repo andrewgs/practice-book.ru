@@ -43,6 +43,12 @@ class Wmcompanymodel extends CI_Model {
 		$this->db->empty_table('tbl_wmcompany');
 	}
 	
+	function delete_auccompany($wmnid){
+		
+		$this->db->where('wmc_wmnid',$wmnid);
+		$this->db->delete('tbl_wmcompany');
+	}
+	
 	function read_record($activity,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;

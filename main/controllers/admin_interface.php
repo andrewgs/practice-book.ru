@@ -397,10 +397,9 @@ class Admin_interface extends CI_Controller{
 			for($j=0;$j<count($regions);$j++):
 				$curauc = $this->whomainmodel->auction_exist($activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
 				if(!$curauc):
-					$this->whomainmodel->insert_record($photo,$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
-				else:
-					$this->whomainmodel->open_auc($curauc);
+					$curauc = $this->whomainmodel->insert_record($photo,$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
 				endif;
+				$this->whomainmodel->open_auc($curauc);
 			endfor;
 		endfor;
 		$this->wmcompanymodel->delete_records();
@@ -423,10 +422,34 @@ class Admin_interface extends CI_Controller{
 	
 	function begin_auction(){
 		
+		$statusval = array('status'=>TRUE,'message'=>'Данные не изменились','date'=>'');
+		$id = $this->input->post('id');
+		$date = $this->input->post('date');
+		if(!$id || !$date) show_404();
+		$photo = file_get_contents(base_url().'images/whois.png');
+		$this->wmcompanymodel->delete_auccompany($id);
+		$this->whomainmodel->open_oneauc($id,$date);
+		$statusval['status'] = TRUE;
+		$statusval['date'] = trim($date);
+		echo json_encode($statusval);
 	}
 	
 	function end_auction(){
 		
+		$statusval = array('status'=>TRUE,'message'=>'Данные не изменились','date'=>'','company'=>'','price'=>'');
+		$id = $this->input->post('id');
+		if(!$id) show_404();
+		$winner = $this->unionmodel->winner_auction($id);
+		if($winner):
+			$this->whomainmodel->close_auc($id,$winner['cmp_id'],$winner['cmp_name'],$winner['wmc_price']);
+		else:
+			$this->whomainmodel->close_auc($id,'','','0.00');
+		endif;
+		$statusval['status'] = TRUE;
+		$statusval['date'] = '0000-00-00 00:00:00';
+		$statusval['company'] = $winner['cmp_name'];
+		$statusval['price'] = $winner['wmc_price'];
+		echo json_encode($statusval);
 	}
 	
 	/* ======================================== EDIT CONTROL PANEL =============================================*/

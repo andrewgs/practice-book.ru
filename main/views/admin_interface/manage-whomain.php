@@ -119,7 +119,7 @@
 			var objDate = $("#vDate"+curID);
 			var valDate = $(objDate).val();
 			$(objDate).css('border-color','#D0D0D0');
-			if(valDate == ""){
+			if(valDate == "" || valDate == "0000-00-00 00:00:00"){
 				$(objDate).css('border-color','#ff0000');
 				msgerror('Пропущены обязательные поля');
 				return false;
@@ -130,6 +130,9 @@
 					if(data.status){
 						$(objDate).val(data.date);
 						$(objDate).css('border-color','#00ff00');
+						$("#vDate"+curID).text('');
+						$("#c"+curID).text('');
+						$("#p"+curID).text('');
 					}else{
 						msgerror(data.message);
 					}
@@ -141,11 +144,17 @@
 			if(!confirm("Завершить укцион?")) return false;
 			var curID = $(this).attr("rID");
 			var recID = $("td[rID='"+curID+"']").text();
+			var objDate = $("#vDate"+curID);
+			var objCompany = $("#c"+curID);
+			var objPrice = $("#p"+curID);
+			
 			$.post("<?=$baseurl;?>admin/end-auction/<?=$userinfo['uconfirmation'];?>",
 			{'id':recID},
 			function(data){
 				if(data.status){
 					$(objDate).val(data.date);
+					$(objCompany).text(data.company);
+					$(objPrice).text(data.price);
 					$(objDate).css('border-color','#00ff00');
 				}else{
 					msgerror(data.message);

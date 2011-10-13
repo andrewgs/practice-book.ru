@@ -26,8 +26,8 @@
 				<?php endif; ?>
 					<td rID="<?=$i?>"><?=$auctions[$i]['wmn_id'];?></td>
 						<td><?=$auctions[$i]['reg_name'];?></td>
-						<td><?=$auctions[$i]['wmn_cmpname'];?></td>
-						<td><?=$auctions[$i]['wmn_price'];?></td>
+						<td id="c<?=$i?>"><?=$auctions[$i]['wmn_cmpname'];?></td>
+						<td id="p<?=$i?>"><?=$auctions[$i]['wmn_price'];?></td>
 <td><input class="small150-form-input" id="vDate<?=$i?>" rID="<?=$i?> name="name" type="text" value="<?=$auctions[$i]['wmn_edate'];?>"></td>
 					<td>
 						<div class="ButtonOperation">

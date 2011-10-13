@@ -50,9 +50,25 @@ class Whomainmodel extends CI_Model {
 		$this->db->set('wmn_over',0);
 		$this->db->set('wmn_bdate',date("Y-m-d H:i:s"));
 		$this->db->set('wmn_edate',date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d")+7, date("Y"))));
+		$this->db->set('wmn_cmpid',0);
+		$this->db->set('wmn_cmpname',"");
+		$this->db->set('wmn_price',"0.00");
 		$this->db->where('wmn_id',$id);
 		$this->db->update('tbl_whomain');
 		return $this->db->affected_rows(); 
+	}
+	
+	function open_oneauc($id,$date){
+	
+		$this->db->set('wmn_over',0);
+		$this->db->set('wmn_bdate',date("Y-m-d H:i:s"));
+		$this->db->set('wmn_edate',$date);
+		$this->db->set('wmn_cmpid',0);
+		$this->db->set('wmn_cmpname',"");
+		$this->db->set('wmn_price',"0.00");
+		$this->db->where('wmn_id',$id);
+		$this->db->update('tbl_whomain');
+		return TRUE; 
 	}
 	
 	function read_record($activity,$environment,$department,$region){
