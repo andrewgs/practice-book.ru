@@ -124,13 +124,12 @@ class Offerstopicmodel extends CI_Model{
 		$this->db->update('tbl_offertopic');
 	}
 	
-	function topic_exist($id,$environment,$department,$activity,$region){
+	function topic_exist($id,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('oft_id',$id);
 		$this->db->where('oft_environment',$environment);
 		$this->db->where('oft_department',$department);
-		$this->db->where('oft_activity',$activity);
 		$this->db->where('oft_region',$region);
 		$query = $this->db->get('tbl_offertopic',1);
 		$data = $query->result_array();
@@ -138,13 +137,12 @@ class Offerstopicmodel extends CI_Model{
 		return FALSE;
 	}
 	
-	function topic_owner($id,$environment,$department,$activity,$user,$region){
+	function topic_owner($id,$environment,$department,$user,$region){
 		
 		if(!$environment) $department = 0;
 		$this->db->where('oft_id',$id);
 		$this->db->where('oft_environment',$environment);
 		$this->db->where('oft_department',$department);
-		$this->db->where('oft_activity',$activity);
 		$this->db->where('oft_userid',$user);
 		$this->db->where('oft_region',$region);
 		$query = $this->db->get('tbl_offertopic',1);

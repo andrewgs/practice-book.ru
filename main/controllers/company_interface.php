@@ -3854,7 +3854,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$curregion = $this->session->userdata('offerregion');
 		if(!$curregion) show_404();
 		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$curregion)):
+		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$curregion)):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -3867,7 +3867,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'backpath'		=> $this->session->userdata('backpath'),
-					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$activity,$curregion),
+					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$curregion),
 					'comments'		=> array(),
 					'count'			=> 0,
 					'pages'			=> '',
@@ -3919,7 +3919,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$curregion = $this->session->userdata('offerregion');
 		if(!$curregion) show_404();
 		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$this->user['uid'],$curregion)):
+		if(!$this->offerstopicmodel->topic_owner($topic,$environment,$this->user['department'],$this->user['uid'],$curregion)):
 			show_404();
 		endif;
 		$this->commentsmodel->delete_records('offers',$topic);
@@ -4604,10 +4604,12 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
-				if($this->wmcompanymodel->company_exist($pagevar['topic']['wmn_id'],$this->user['cid'])):
-					$this->wmcompanymodel->company_update($pagevar['topic']['wmn_id'],$this->user['cid'],$_POST['summa']);
-				else:
+				if($_POST['summa']>=1000):
+					if($this->wmcompanymodel->company_exist($pagevar['topic']['wmn_id'],$this->user['cid'])):
+						$this->wmcompanymodel->company_update($pagevar['topic']['wmn_id'],$this->user['cid'],$_POST['summa']);
+					else:
 					$this->wmcompanymodel->company_insert($pagevar['topic']['wmn_id'],$_POST['summa'],$this->user['uid'],$this->user['cid']);
+					endif;
 				endif;
 				redirect($this->uri->uri_string());
 			endif;

@@ -45,7 +45,7 @@ class Whomainmodel extends CI_Model {
 		return $this->db->affected_rows(); 
 	}
 	
-	function open_auc($id){
+	function open_auctions(){
 	
 		$this->db->set('wmn_over',0);
 		$this->db->set('wmn_bdate',date("Y-m-d H:i:s"));
@@ -53,7 +53,6 @@ class Whomainmodel extends CI_Model {
 		$this->db->set('wmn_cmpid',0);
 		$this->db->set('wmn_cmpname',"");
 		$this->db->set('wmn_price',"0.00");
-		$this->db->where('wmn_id',$id);
 		$this->db->update('tbl_whomain');
 		return $this->db->affected_rows(); 
 	}
@@ -94,6 +93,14 @@ class Whomainmodel extends CI_Model {
 		return NULL;
 	}
 	
+	function count_records(){
+	
+		$this->db->select('count(*) as cnt');
+		$query = $this->db->get('tbl_whomain');
+		$data = $query->result_array();
+		return $data[0]['cnt'];
+	}
+	
 	function read_field($id,$field){
 			
 		$this->db->where('wmn_id',$id);
@@ -127,6 +134,11 @@ class Whomainmodel extends CI_Model {
 		$data = $query->result_array();
 		if(count($data)) return $data[0]['wmn_id'];
 		return FALSE;
+	}
+
+	function delete_records(){
+		
+		$this->db->empty_table('tbl_whomain');
 	}
 }
 ?>

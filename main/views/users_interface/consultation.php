@@ -112,7 +112,7 @@
 			var curPeriod = $(this).val();
 			var subperiod = curPeriod-period;
 			if(subperiod > 0){
-				subprice = subperiod*0.2;
+				subprice = subperiod*0.1;
 				newprice = price - (price*subprice);
 				$("#PriceVal").val(Math.round(newprice));
 			}else{

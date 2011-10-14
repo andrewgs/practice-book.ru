@@ -82,7 +82,8 @@
 						<input class="btn-action margin-1em" id="addParticipate" type="submit" name="submit" value="Поставить"/>
 						<input class="btn-action margin-1em" id="Cancel" type="button" value="Отменить"/>
 									<div class="clear"></div>
-									ВНИМАНИЕ: Ставка меньше за предыдущую будет проигнорирована!
+									<span style="color:#FF0000;">ВНИМАНИЕ:</span> Ставка меньше за предыдущую будет проигнорирована!<br/>
+									<span style="margin-left:70px;">Минимальная ставка - 1000 рублей!</span>
 									<hr size="2"/>
 									<?= form_close(); ?>
 								</div>
@@ -170,7 +171,7 @@
 			});
 			$('#SetParticipate').click(function(){$('#FormParticipate').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");$("#count").focus();return false;});
 			$("#Cancel").click(function(){$('#FormParticipate').fadeToggle('slow',function(){$("#summa").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});
-			$("#addParticipate").click(function(event){$("#summa").css('border-color','#D0D0D0');if($("#summa").val() == ''){$("#summa").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
+			$("#addParticipate").click(function(event){$("#summa").css('border-color','#D0D0D0');if($("#summa").val() == ''){$("#summa").css('border-color','#ff0000');	msgerror("Пропущены обязательные поля!");event.preventDefault(); return false;}if($("#summa").val() < 1000){$("#summa").css('border-color','#ff0000');msgerror("Минимальная ставка - 1000 рублей!");event.preventDefault();}});
 		<?php endif;?>
 		function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});

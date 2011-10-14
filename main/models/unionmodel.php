@@ -395,10 +395,10 @@ class Unionmodel extends CI_Model{
 		else return null;
 	}
 
-	function oft_topic_record($topic,$environment,$department,$activity,$region){
+	function oft_topic_record($topic,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND oft_region = $region AND tbl_offertopic.oft_activity = $activity";
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND oft_region = $region";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];

@@ -31,7 +31,7 @@ class Wmcompanymodel extends CI_Model {
 		
 		$this->db->set('wmc_price',$price);
 		$this->db->set('wmc_date',date("Y-m-d"));
-		$this->db->where('wmc_cmpid',$cmpid);
+		$this->db->where('wmc_wmnid',$wmnid);
 		$this->db->where('wmc_cmpid',$cmpid);
 		$this->db->where('wmc_price <',$price);
 		$this->db->update('tbl_wmcompany');

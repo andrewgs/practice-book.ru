@@ -181,5 +181,14 @@ class Activitymodel extends CI_Model{
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
+
+	function count_activity_final(){
+	
+		$this->db->select('count(*) as cnt');
+		$this->db->where('act_final',1);
+		$query = $this->db->get('tbl_activity');
+		$data = $query->result_array();
+		return $data[0]['cnt'];
+	}
 }
 ?>

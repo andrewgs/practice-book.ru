@@ -149,5 +149,13 @@ class Regionmodel extends CI_Model {
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
+	
+	function count_records(){
+	
+		$this->db->select('count(*) as cnt');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		return $data[0]['cnt'];
+	}
 }
 ?>

@@ -389,20 +389,22 @@ class Admin_interface extends CI_Controller{
 	
 	function start_auctions(){
 	
-		$activity = $this->activitymodel->read_activity_final();
-		$regions = $this->regionmodel->read_records();
-		$photo = file_get_contents(base_url().'images/whois.png');
-		
-		for($i=0;$i<count($activity);$i++):
-			for($j=0;$j<count($regions);$j++):
-				$curauc = $this->whomainmodel->auction_exist($activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
-				if(!$curauc):
-					$curauc = $this->whomainmodel->insert_record($photo,$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
-				endif;
-				$this->whomainmodel->open_auc($curauc);
+		$act_count = $this->activitymodel->count_activity_final();
+		$reg_count = $this->regionmodel->count_records();
+		$auc_count = $this->whomainmodel->count_records();
+		$full = $act_count*$reg_count;
+		if($auc_count != $full):
+			$activity = $this->activitymodel->read_activity_final();
+			$regions = $this->regionmodel->read_records();
+			$this->whomainmodel->delete_records();
+			$this->wmcompanymodel->delete_records();
+			for($i=0;$i<count($activity);$i++):
+				for($j=0;$j<count($regions);$j++):
+					$this->whomainmodel->insert_record('',$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
+				endfor;
 			endfor;
-		endfor;
-		$this->wmcompanymodel->delete_records();
+		endif;
+		$this->whomainmodel->open_auctions();
 		redirect('admin/manage-whomain/'.$this->user['uconfirmation']);
 	}
 	

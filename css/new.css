@@ -53,7 +53,7 @@
 .opt-bgg a {color:#434343;text-decoration:none;font:normal 15px/25px Myriad Pro, Arial;padding:0 20px 0 15px;text-shadow: -1px 1px #c6c6c6;height:25px;background:url(../images/opt-list.png) no-repeat top left;letter-spacing:-1px;}
 .opt-bgg a.first {color:#434343;background:#adb668 url(../images/green.png) no-repeat top left;}
 .opt-bgg a.none {color:#434343;background:none;}
-.right-option {vertical-align:middle;width:530px;}
+.right-option {vertical-align:middle;width:400px;}
 .right-option a, .right-option img {float:left;}
 .right-post .right-avtor {vertical-align:middle;color:#6f772e;font-size:14px;line-height:17px;}
 .right-avtor td {height:62px;vertical-align:middle;padding:0 5px;}

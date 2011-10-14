@@ -4637,7 +4637,7 @@
 				<treenode node="userinfo;Php:Var Name;11;44;20;44;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\views\users_interface\consultation.php" crc="2069274054">
+		</csfile><csfile name="S:\home\practice-book\www\main\views\users_interface\consultation.php" crc="-1899931346">
 			<phptree>
 				<treenode node="author;Php:Var Name;34;6;41;6;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -4656,6 +4656,46 @@
 				<treenode node="title;Php:Var Name;12;8;18;8;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
+			<jstree>
+				<treenode node="isValidEmailAddress;JS:Function Name;2;154;3;157;34;;;v;;r;;d44,154;;b0,0;;memailAddress;;p">
+					<treenode node="emailAddress;JS:JS Var Name;31;154;43;154;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="pattern;JS:JS Var Name;7;155;14;155;34;Object;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="curID;JS:JS Var Name;8;96;13;96;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="curPeriod;JS:JS Var Name;7;111;16;111;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="document;JS:JS Var Name;27;86;35;86;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="email;JS:JS Var Name;8;125;13;125;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="err;JS:JS Var Name;7;122;10;122;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="event;JS:JS Var Name;33;121;38;121;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="i;JS:JS Var Name;12;103;13;103;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="message;JS:JS Var Name;8;129;15;129;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="name;JS:JS Var Name;8;124;12;124;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="newprice;JS:JS Var Name;4;115;12;115;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="period;JS:JS Var Name;8;98;14;98;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="phone;JS:JS Var Name;8;126;13;126;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="price;JS:JS Var Name;8;97;13;97;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="subperiod;JS:JS Var Name;7;112;16;112;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="subprice;JS:JS Var Name;4;114;12;114;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="window;JS:JS Var Name;10;86;16;86;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+			</jstree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\users_interface\company-info.php" crc="2011999283">
 			<phptree>
 				<treenode node="author;Php:Var Name;34;6;41;6;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -4927,7 +4967,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;3;79;263;79;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;79;263;79;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;100;79;115;79;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;79;61;79;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5605,9 +5645,9 @@
 			<phptree>
 				<treenode node="activity;Php:Var Name;29;94;38;94;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="baseurl;Php:Var Name;84;7;92;7;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="baseurl;Php:Var Name;99;7;107;7;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="cmpregion;Php:Var Name;24;92;34;92;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="cmpregion;Php:Var Name;30;92;40;92;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="company;Php:Var Name;105;5;113;5;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -5763,7 +5803,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;107;161;107;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;107;161;107;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;107;31;107;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;107;153;107;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5771,7 +5811,7 @@
 					<treenode node="window;JS:JS Var Name;57;107;63;107;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;122;262;122;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;122;262;122;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;122;114;122;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;122;61;122;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5832,7 +5872,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;110;161;110;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;110;161;110;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;110;31;110;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;110;153;110;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5840,7 +5880,7 @@
 					<treenode node="window;JS:JS Var Name;57;110;63;110;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;125;262;125;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;125;262;125;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;125;114;125;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;125;61;125;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5986,7 +6026,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;99;161;99;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;99;161;99;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;99;31;99;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;99;153;99;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -5994,7 +6034,7 @@
 					<treenode node="window;JS:JS Var Name;57;99;63;99;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;114;262;114;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;114;262;114;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;114;114;114;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;114;61;114;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6055,7 +6095,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;106;161;106;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;106;161;106;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;106;31;106;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;106;153;106;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6063,7 +6103,7 @@
 					<treenode node="window;JS:JS Var Name;57;106;63;106;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;121;262;121;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;121;262;121;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;121;114;121;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;121;61;121;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6382,7 +6422,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;141;161;141;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;141;161;141;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;141;31;141;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;141;153;141;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6390,7 +6430,7 @@
 					<treenode node="window;JS:JS Var Name;57;141;63;141;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;151;262;151;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;151;262;151;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;151;114;151;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;151;61;151;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6458,7 +6498,7 @@
 				<treenode node="userinfo;Php:Var Name;56;42;65;42;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\views\company_interface\business\who-main-index.php" crc="89223434">
+		</csfile><csfile name="S:\home\practice-book\www\main\views\company_interface\business\who-main-index.php" crc="-1776607168">
 			<phptree>
 				<treenode node="auc_close;Php:Var Name;17;70;27;70;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -6470,7 +6510,7 @@
 				</treenode>
 				<treenode node="baseurl;Php:Var Name;33;12;41;12;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="companylist;Php:Var Name;31;93;43;93;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="companylist;Php:Var Name;31;94;43;94;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="days;Php:Var Name;31;61;36;61;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -6480,15 +6520,15 @@
 				</treenode>
 				<treenode node="i;Php:Var Name;18;41;20;41;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="j;Php:Var Name;20;118;22;118;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="j;Php:Var Name;20;119;22;119;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="keywords;Php:Var Name;35;7;44;7;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="minutes;Php:Var Name;31;63;39;63;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="number;Php:Var Name;15;95;22;95;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="number;Php:Var Name;15;96;22;96;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="pages;Php:Var Name;16;133;22;133;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="pages;Php:Var Name;16;134;22;134;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="regions;Php:Var Name;32;41;40;41;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -6502,59 +6542,59 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;164;161;164;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
-					<treenode node="obj;JS:JS Var Name;28;164;31;164;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="change_category;JS:Function Name;3;165;161;165;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
+					<treenode node="obj;JS:JS Var Name;28;165;31;165;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="uconfirmation;JS:JS Var Name;140;164;153;164;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="uconfirmation;JS:JS Var Name;140;165;153;165;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="window;JS:JS Var Name;57;164;63;164;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-				</treenode>
-				<treenode node="msgerror;JS:Function Name;2;174;261;174;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
-					<treenode node="backgroundColor;JS:JS Var Name;98;174;113;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="border;JS:JS Var Name;54;174;60;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="color;JS:JS Var Name;121;174;126;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="css;JS:JS Var Name;49;174;52;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="message;JS:JS Var Name;36;174;43;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="msg;JS:JS Var Name;20;174;23;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="opacity;JS:JS Var Name;134;174;141;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="padding;JS:JS Var Name;68;174;75;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="size;JS:JS Var Name;84;174;88;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="window;JS:JS Var Name;211;174;217;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="window;JS:JS Var Name;57;165;63;165;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="auc_close;JS:JS Var Name;14;165;23;165;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="msgerror;JS:Function Name;2;175;261;175;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
+					<treenode node="backgroundColor;JS:JS Var Name;98;175;113;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="border;JS:JS Var Name;54;175;60;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="color;JS:JS Var Name;121;175;126;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="css;JS:JS Var Name;49;175;52;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="message;JS:JS Var Name;36;175;43;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="msg;JS:JS Var Name;20;175;23;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="opacity;JS:JS Var Name;134;175;141;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="padding;JS:JS Var Name;68;175;75;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="size;JS:JS Var Name;84;175;88;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="window;JS:JS Var Name;211;175;217;175;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
-				<treenode node="data;JS:JS Var Name;94;162;98;162;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="auc_close;JS:JS Var Name;14;166;23;166;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="document;JS:JS Var Name;27;146;35;146;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="data;JS:JS Var Name;94;163;98;163;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="e;JS:JS Var Name;33;166;34;166;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="document;JS:JS Var Name;27;147;35;147;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="endif;JS:JS Var Name;8;173;13;173;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="e;JS:JS Var Name;33;167;34;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="error;JS:JS Var Name;163;162;168;162;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="endif;JS:JS Var Name;8;174;13;174;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="event;JS:JS Var Name;39;172;44;172;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="error;JS:JS Var Name;163;163;168;163;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="php;JS:JS Var Name;5;165;8;165;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="event;JS:JS Var Name;39;173;44;173;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="scrollTop;JS:JS Var Name;107;170;116;170;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="php;JS:JS Var Name;5;166;8;166;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="success;JS:JS Var Name;76;162;83;162;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="scrollTop;JS:JS Var Name;107;171;116;171;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="url;JS:JS Var Name;45;162;48;162;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="success;JS:JS Var Name;76;163;83;163;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="window;JS:JS Var Name;10;146;16;146;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="url;JS:JS Var Name;45;163;48;163;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="window;JS:JS Var Name;10;147;16;147;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</jstree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\company_interface\business\surveys-index.php" crc="1184859618">
@@ -6682,7 +6722,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;178;161;178;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;178;161;178;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;178;31;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;178;153;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6690,7 +6730,7 @@
 					<treenode node="window;JS:JS Var Name;57;178;63;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;185;262;185;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;185;262;185;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;185;114;185;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;185;61;185;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6920,7 +6960,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;178;161;178;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;178;161;178;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;178;31;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;178;153;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -6928,7 +6968,7 @@
 					<treenode node="window;JS:JS Var Name;57;178;63;178;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;185;262;185;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;185;262;185;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;185;114;185;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;185;61;185;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7003,7 +7043,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;179;161;179;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;179;161;179;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;179;31;179;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;179;153;179;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7011,7 +7051,7 @@
 					<treenode node="window;JS:JS Var Name;57;179;63;179;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;186;262;186;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;186;262;186;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;186;114;186;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;186;61;186;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7086,7 +7126,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;201;161;201;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;201;161;201;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;201;31;201;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;201;153;201;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7094,7 +7134,7 @@
 					<treenode node="window;JS:JS Var Name;57;201;63;201;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;3;208;262;208;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;208;262;208;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;99;208;114;208;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;55;208;61;208;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7300,7 +7340,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;144;161;144;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;144;161;144;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;144;31;144;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;144;153;144;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7501,7 +7541,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;130;161;130;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;130;161;130;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;130;31;130;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;130;153;130;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7552,7 +7592,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;144;161;144;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;144;161;144;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;144;31;144;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;144;153;144;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7607,7 +7647,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="change_category;JS:Function Name;3;191;161;191;34;;;v;;r;;d32,164;;b0,0;;mobj;;p">
+				<treenode node="change_category;JS:Function Name;3;191;161;191;34;;;v;;r;;d32,165;;b0,0;;mobj;;p">
 					<treenode node="obj;JS:JS Var Name;28;191;31;191;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="uconfirmation;JS:JS Var Name;140;191;153;191;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7615,7 +7655,7 @@
 					<treenode node="window;JS:JS Var Name;57;191;63;191;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="msgerror;JS:Function Name;2;201;261;201;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;2;201;261;201;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;98;201;113;201;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;54;201;60;201;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -7739,7 +7779,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;3;276;4;283;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;276;4;283;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;54;279;69;279;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;10;279;16;279;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -8003,7 +8043,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;3;106;4;113;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;3;106;4;113;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;54;109;69;109;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;10;109;16;109;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -8286,57 +8326,57 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;2;136;3;143;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
-					<treenode node="backgroundColor;JS:JS Var Name;53;139;68;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="msgerror;JS:Function Name;2;135;3;142;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
+					<treenode node="backgroundColor;JS:JS Var Name;53;138;68;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="border;JS:JS Var Name;9;139;15;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="border;JS:JS Var Name;9;138;15;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="color;JS:JS Var Name;76;139;81;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="color;JS:JS Var Name;76;138;81;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="css;JS:JS Var Name;4;139;7;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="css;JS:JS Var Name;4;138;7;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="message;JS:JS Var Name;4;138;11;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="message;JS:JS Var Name;4;137;11;137;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="msg;JS:JS Var Name;20;136;23;136;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="msg;JS:JS Var Name;20;135;23;135;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="opacity;JS:JS Var Name;89;139;96;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="opacity;JS:JS Var Name;89;138;96;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="padding;JS:JS Var Name;23;139;30;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="padding;JS:JS Var Name;23;138;30;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="size;JS:JS Var Name;39;139;43;139;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="size;JS:JS Var Name;39;138;43;138;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="window;JS:JS Var Name;3;141;9;141;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="window;JS:JS Var Name;3;140;9;140;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="btnID;JS:JS Var Name;7;124;12;124;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="btnID;JS:JS Var Name;7;123;12;123;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="curID;JS:JS Var Name;7;58;12;58;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="curID;JS:JS Var Name;7;57;12;57;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="data;JS:JS Var Name;13;88;17;88;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="data;JS:JS Var Name;13;87;17;87;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="document;JS:JS Var Name;27;43;35;43;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="document;JS:JS Var Name;27;42;35;42;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="e;JS:JS Var Name;35;48;36;48;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="e;JS:JS Var Name;35;47;36;47;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="err;JS:JS Var Name;7;57;10;57;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="err;JS:JS Var Name;7;56;10;56;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objActivity;JS:JS Var Name;7;62;18;62;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objActivity;JS:JS Var Name;7;61;18;61;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objDate;JS:JS Var Name;7;60;14;60;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objDate;JS:JS Var Name;7;59;14;59;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objPriority;JS:JS Var Name;7;61;18;61;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objPriority;JS:JS Var Name;7;60;18;60;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="uID;JS:JS Var Name;7;59;10;59;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="uID;JS:JS Var Name;7;58;10;58;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="undefined;JS:JS Var Name;21;66;30;66;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="undefined;JS:JS Var Name;21;65;30;65;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valActivity;JS:JS Var Name;7;65;18;65;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valActivity;JS:JS Var Name;7;64;18;64;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valDate;JS:JS Var Name;7;63;14;63;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valDate;JS:JS Var Name;7;62;14;62;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valPriority;JS:JS Var Name;7;64;18;64;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valPriority;JS:JS Var Name;7;63;18;63;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="window;JS:JS Var Name;10;43;16;43;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="window;JS:JS Var Name;10;42;16;42;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</jstree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\users-list-content.php" crc="-705889635">
@@ -8440,7 +8480,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;2;139;3;146;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;2;139;3;146;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;53;142;68;142;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;9;142;15;142;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -8495,7 +8535,7 @@
 			</jstree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\region-list-content.php" crc="-284441424">
 			<phptree>
-				<treenode node="baseurl;Php:Var Name;104;34;112;34;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="baseurl;Php:Var Name;113;34;121;34;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="i;Php:Var Name;13;22;15;22;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -8538,7 +8578,75 @@
 				<treenode node="title;Php:Var Name;12;8;18;8;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\manage-whomain.php" crc="1441448755">
+			<jstree>
+				<treenode node="offer_list;JS:Function Name;2;316;3;319;34;;;v;;r;;d44,316;;b0,0;;mproduct;;pbprice;;peprice;;p">
+					<treenode node="bprice;JS:JS Var Name;30;316;36;316;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="eprice;JS:JS Var Name;37;316;43;316;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="product;JS:JS Var Name;22;316;29;316;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="actID;JS:JS Var Name;8;154;13;154;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="AN;JS:JS Var Name;7;236;9;236;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="animated;JS:JS Var Name;29;320;37;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="autoHeight;JS:JS Var Name;45;320;55;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="CN;JS:JS Var Name;7;241;9;241;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="data;JS:JS Var Name;18;179;22;179;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="document;JS:JS Var Name;26;105;34;105;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="e;JS:JS Var Name;35;226;36;226;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="eprice;JS:JS Var Name;7;299;13;299;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="event;JS:JS Var Name;31;160;36;160;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="lprice;JS:JS Var Name;7;304;13;304;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="oprice;JS:JS Var Name;7;305;13;305;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="PF;JS:JS Var Name;7;231;9;231;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="product;JS:JS Var Name;7;298;14;298;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="quest;JS:JS Var Name;7;256;12;256;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="range;JS:JS Var Name;228;320;233;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="regID;JS:JS Var Name;8;155;13;155;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="SearchVal;JS:JS Var Name;8;112;17;112;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="ShM;JS:JS Var Name;7;246;10;246;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="slide;JS:JS Var Name;282;320;287;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="SM;JS:JS Var Name;7;251;9;251;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="tip;JS:JS Var Name;7;281;10;281;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="tprice;JS:JS Var Name;7;306;13;306;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="ui;JS:JS Var Name;305;320;307;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="valID;JS:JS Var Name;11;118;16;118;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="valProduct;JS:JS Var Name;11;120;21;120;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="valTitle;JS:JS Var Name;11;119;19;119;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="values;JS:JS Var Name;261;320;267;320;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="window;JS:JS Var Name;9;105;15;105;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+			</jstree>
+		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\manage-whomain.php" crc="1781480066">
 			<phptree>
 				<treenode node="author;Php:Var Name;34;6;41;6;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
@@ -8548,74 +8656,76 @@
 				</treenode>
 				<treenode node="keywords;Php:Var Name;36;7;45;7;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="this;Php:Var Name;8;34;13;34;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="setActivity;Php:Var Name;14;65;26;65;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="this;Php:Var Name;8;39;13;39;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 				<treenode node="title;Php:Var Name;12;8;18;8;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
+				<treenode node="userinfo;Php:Var Name;34;46;43;46;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;2;147;3;154;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
-					<treenode node="backgroundColor;JS:JS Var Name;53;150;68;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="msgerror;JS:Function Name;2;164;3;171;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
+					<treenode node="backgroundColor;JS:JS Var Name;53;167;68;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="border;JS:JS Var Name;9;150;15;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="border;JS:JS Var Name;9;167;15;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="color;JS:JS Var Name;76;150;81;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="color;JS:JS Var Name;76;167;81;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="css;JS:JS Var Name;4;150;7;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="css;JS:JS Var Name;4;167;7;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="message;JS:JS Var Name;4;149;11;149;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="message;JS:JS Var Name;4;166;11;166;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="msg;JS:JS Var Name;20;147;23;147;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="msg;JS:JS Var Name;20;164;23;164;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="opacity;JS:JS Var Name;89;150;96;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="opacity;JS:JS Var Name;89;167;96;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="padding;JS:JS Var Name;23;150;30;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="padding;JS:JS Var Name;23;167;30;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="size;JS:JS Var Name;39;150;43;150;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="size;JS:JS Var Name;39;167;43;167;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="window;JS:JS Var Name;3;152;9;152;34;;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="window;JS:JS Var Name;3;169;9;169;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="curID;JS:JS Var Name;7;104;12;104;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="actID;JS:JS Var Name;7;109;12;109;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="data;JS:JS Var Name;13;133;17;133;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="curID;JS:JS Var Name;7;116;12;116;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="document;JS:JS Var Name;27;51;35;51;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="data;JS:JS Var Name;13;128;17;128;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="err;JS:JS Var Name;7;82;10;82;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="document;JS:JS Var Name;27;73;35;73;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="event;JS:JS Var Name;31;81;36;81;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objCompany;JS:JS Var Name;7;147;17;147;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="height;JS:JS Var Name;8;68;14;68;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objDate;JS:JS Var Name;7;118;14;118;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objArea;JS:JS Var Name;7;107;14;107;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="objPrice;JS:JS Var Name;7;148;15;148;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objDistrict;JS:JS Var Name;7;108;18;108;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="recID;JS:JS Var Name;7;117;12;117;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="objName;JS:JS Var Name;7;106;14;106;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="SearchVal;JS:JS Var Name;7;87;16;87;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="regID;JS:JS Var Name;7;105;12;105;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valDate;JS:JS Var Name;7;119;14;119;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="scrollTop;JS:JS Var Name;29;69;38;69;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valID;JS:JS Var Name;10;93;15;93;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valArea;JS:JS Var Name;7;110;14;110;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valProduct;JS:JS Var Name;10;95;20;95;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valDistrict;JS:JS Var Name;7;111;18;111;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="valTitle;JS:JS Var Name;10;94;18;94;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="valName;JS:JS Var Name;7;109;14;109;34;;;v;;r;;d-1,-1;;b0,0;;m">
-				</treenode>
-				<treenode node="window;JS:JS Var Name;10;51;16;51;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="window;JS:JS Var Name;10;73;16;73;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</jstree>
-		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\manage-whomain-content.php" crc="-809465991">
+		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\manage-whomain-content.php" crc="2106735830">
 			<phptree>
-				<treenode node="baseurl;Php:Var Name;104;39;112;39;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="auctions;Php:Var Name;27;20;36;20;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="i;Php:Var Name;13;27;15;27;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="baseurl;Php:Var Name;91;33;99;33;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="list;Php:Var Name;27;27;32;27;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="boxtitile;Php:Var Name;5;2;15;2;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
-				<treenode node="userinfo;Php:Var Name;34;4;43;4;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="i;Php:Var Name;13;20;15;20;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\admin_interface\header.php" crc="1527599782">
@@ -8749,7 +8859,7 @@
 				</treenode>
 			</phptree>
 			<jstree>
-				<treenode node="msgerror;JS:Function Name;2;186;3;193;34;;;v;;r;;d24,147;;b0,0;;mmsg;;p">
+				<treenode node="msgerror;JS:Function Name;2;186;3;193;34;;;v;;r;;d24,175;;b0,0;;mmsg;;p">
 					<treenode node="backgroundColor;JS:JS Var Name;53;189;68;189;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="border;JS:JS Var Name;9;189;15;189;34;;;v;;r;;d-1,-1;;b0,0;;m">
@@ -8889,22 +8999,26 @@
 			</phptree>
 		</csfile><csfile name="S:\home\practice-book\www\main\views\index.html" crc="-1574479902">
 		</csfile><csfile name="S:\home\practice-book\www\main\third_party\index.html" crc="-1574479902">
-		</csfile><csfile name="S:\home\practice-book\www\main\models\wmcompanymodel.php" crc="-1483293790">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\wmcompanymodel.php" crc="-845524329">
 			<phptree>
-				<treenode node="Wmcompanymodel;Php:Class Name;0;2;1;81;34;;;vCI_Model;;c;;r;;d38,2;;b0,0;;m">
+				<treenode node="Wmcompanymodel;Php:Class Name;0;2;1;92;34;;;vCI_Model;;c;;r;;d38,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;12;5;15;34;;;v;;r;;d23,12;;b0,0;;m">
 					</treenode>
-					<treenode node="company_exist;Php:Function Name;1;63;2;71;34;;;v;;r;;d38,63;;b0,0;;mwmnid;;pcmpid;;p">
+					<treenode node="company_exist;Php:Function Name;1;74;2;82;34;;;v;;r;;d38,74;;b0,0;;mwmnid;;pcmpid;;p">
 					</treenode>
 					<treenode node="company_insert;Php:Function Name;1;17;2;27;34;;;v;;r;;d54,17;;b0,0;;mwmnid;;pprice;;puserid;;pcmpid;;p">
 					</treenode>
 					<treenode node="company_update;Php:Function Name;1;29;2;38;34;;;v;;r;;d46,29;;b0,0;;mwmnid;;pcmpid;;pprice;;p">
 					</treenode>
-					<treenode node="count_records;Php:Function Name;1;73;2;80;34;;;v;;r;;d31,73;;b0,0;;mwmnid;;p">
+					<treenode node="count_records;Php:Function Name;1;84;2;91;34;;;v;;r;;d31,84;;b0,0;;mwmnid;;p">
 					</treenode>
-					<treenode node="read_field;Php:Function Name;1;54;2;61;34;;;v;;r;;d32,54;;b0,0;;mid;;pfield;;p">
+					<treenode node="delete_auccompany;Php:Function Name;1;45;2;49;34;;;v;;r;;d35,45;;b0,0;;mwmnid;;p">
 					</treenode>
-					<treenode node="read_record;Php:Function Name;1;40;2;52;34;;;v;;r;;d65,40;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
+					<treenode node="delete_records;Php:Function Name;1;40;2;43;34;;;v;;r;;d26,40;;b0,0;;m">
+					</treenode>
+					<treenode node="read_field;Php:Function Name;1;65;2;72;34;;;v;;r;;d32,65;;b0,0;;mid;;pfield;;p">
+					</treenode>
+					<treenode node="read_record;Php:Function Name;1;51;2;63;34;;;v;;r;;d65,51;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
 					<treenode node="wmc_cmpid;Php:Var Name;5;6;15;6;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
@@ -8922,20 +9036,32 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\models\whomainmodel.php" crc="-1422571894">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\whomainmodel.php" crc="-2007403406">
 			<phptree>
-				<treenode node="Whomainmodel;Php:Class Name;0;2;1;82;34;;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
+				<treenode node="Whomainmodel;Php:Class Name;0;2;1;142;34;;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;17;5;20;34;;;v;;r;;d23,17;;b0,0;;m">
+					</treenode>
+					<treenode node="auction_exist;Php:Function Name;1;125;2;136;34;;;v;;r;;d67,125;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
 					<treenode node="close_auc;Php:Function Name;1;34;2;45;34;;;v;;r;;d46,34;;b0,0;;mid;;pcmpid;;pcmpame;;pprice;;p">
 					</treenode>
+					<treenode node="count_records;Php:Function Name;1;95;2;101;34;;;v;;r;;d25,95;;b0,0;;m">
+					</treenode>
+					<treenode node="delete_records;Php:Function Name;1;138;2;141;34;;;v;;r;;d26,138;;b0,0;;m">
+					</treenode>
 					<treenode node="insert_record;Php:Function Name;1;22;2;32;34;;;v;;r;;d74,22;;b0,0;;mphoto;;pactivity;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
-					<treenode node="read_field;Php:Function Name;1;61;2;68;34;;;v;;r;;d32,61;;b0,0;;mid;;pfield;;p">
+					<treenode node="open_auctions;Php:Function Name;1;47;2;57;34;;;v;;r;;d25,47;;b0,0;;m">
 					</treenode>
-					<treenode node="read_record;Php:Function Name;1;47;2;59;34;;;v;;r;;d65,47;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
+					<treenode node="open_oneauc;Php:Function Name;1;59;2;70;34;;;v;;r;;d32,59;;b0,0;;mid;;pdate;;p">
 					</treenode>
-					<treenode node="record_exist;Php:Function Name;1;70;2;81;34;;;v;;r;;d66,70;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
+					<treenode node="read_field;Php:Function Name;1;103;2;110;34;;;v;;r;;d32,103;;b0,0;;mid;;pfield;;p">
+					</treenode>
+					<treenode node="read_record;Php:Function Name;1;72;2;84;34;;;v;;r;;d65,72;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
+					</treenode>
+					<treenode node="read_records;Php:Function Name;1;86;2;93;34;;;v;;r;;d24,86;;b0,0;;m">
+					</treenode>
+					<treenode node="record_exist;Php:Function Name;1;112;2;123;34;;;v;;r;;d66,112;;b0,0;;mactivity;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
 					<treenode node="wmn_activity;Php:Var Name;5;12;18;12;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
@@ -9125,9 +9251,9 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\models\unionmodel.php" crc="-1866543096">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\unionmodel.php" crc="-1871782169">
 			<phptree>
-				<treenode node="Unionmodel;Php:Class Name;0;2;1;489;34;;;vCI_Model;;c;;r;;d33,2;;b0,0;;m">
+				<treenode node="Unionmodel;Php:Class Name;0;2;1;507;34;;;vCI_Model;;c;;r;;d33,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;4;5;7;34;;;v;;r;;d23,4;;b0,0;;m">
 					</treenode>
 					<treenode node="article_topic_records;Php:Function Name;1;288;2;295;34;;;v;;r;;d41,288;;b0,0;;marticle;;p">
@@ -9180,7 +9306,7 @@
 					</treenode>
 					<treenode node="offer_list_top;Php:Function Name;1;186;2;193;34;;;v;;r;;d50,186;;b0,0;;mproduct;;pbprice;;pregion;;p">
 					</treenode>
-					<treenode node="oft_topic_record;Php:Function Name;1;397;2;405;34;;;v;;r;;d77,397;;b0,0;;mtopic;;penvironment;;pdepartment;;pactivity;;pregion;;p">
+					<treenode node="oft_topic_record;Php:Function Name;1;397;2;405;34;;;v;;r;;d67,397;;b0,0;;mtopic;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
 					<treenode node="oft_topics_limit_records;Php:Function Name;1;387;2;395;34;;;v;;r;;d107,387;;b0,0;;mcount;;pfrom;;penvironment;;pdepartment;;pactivity;;pfield;;pregion;;pcompany;;p">
 					</treenode>
@@ -9195,6 +9321,8 @@
 					<treenode node="read_activity_group;Php:Function Name;1;147;2;155;34;;;v;;r;;d31,147;;b0,0;;m">
 					</treenode>
 					<treenode node="read_activity_news;Php:Function Name;1;97;2;105;34;;;v;;r;;d46,97;;b0,0;;mactivity;;plimit;;p">
+					</treenode>
+					<treenode node="read_auctions;Php:Function Name;1;490;2;497;34;;;v;;r;;d34,490;;b0,0;;mactivity;;p">
 					</treenode>
 					<treenode node="read_cmpnews_by_activity;Php:Function Name;1;69;2;76;34;;;v;;r;;d53,69;;b0,0;;mactivity;;pregion;;p">
 					</treenode>
@@ -9229,6 +9357,8 @@
 					<treenode node="update_product;Php:Function Name;1;63;2;67;34;;;v;;r;;d43,63;;b0,0;;mactivity;;pupdata;;p">
 					</treenode>
 					<treenode node="users_consultation;Php:Function Name;1;195;2;209;34;;;v;;r;;d35,195;;b0,0;;mtype;;p">
+					</treenode>
+					<treenode node="winner_auction;Php:Function Name;1;499;2;506;34;;;v;;r;;d32,499;;b0,0;;mwmnid;;p">
 					</treenode>
 					<treenode node="wmncompany_limit_records;Php:Function Name;1;481;2;488;34;;;v;;r;;d55,481;;b0,0;;mcount;;pfrom;;pwmnid;;p">
 					</treenode>
@@ -9425,10 +9555,12 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\models\regionmodel.php" crc="-879216549">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\regionmodel.php" crc="1691569070">
 			<phptree>
-				<treenode node="Regionmodel;Php:Class Name;0;2;1;151;34;;;vCI_Model;;c;;r;;d35,2;;b0,0;;m">
+				<treenode node="Regionmodel;Php:Class Name;0;2;1;159;34;;;vCI_Model;;c;;r;;d35,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;10;5;13;34;;;v;;r;;d23,10;;b0,0;;m">
+					</treenode>
+					<treenode node="count_records;Php:Function Name;1;152;2;158;34;;;v;;r;;d25,152;;b0,0;;m">
 					</treenode>
 					<treenode node="full_name;Php:Function Name;1;105;2;113;34;;;v;;r;;d25,105;;b0,0;;mrid;;p">
 					</treenode>
@@ -9772,24 +9904,24 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\models\offerstopicmodel.php" crc="950146044">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\offerstopicmodel.php" crc="2042191517">
 			<phptree>
-				<treenode node="Offerstopicmodel;Php:Class Name;0;2;1;185;34;;;vCI_Model;;c;;r;;d39,2;;b0,0;;m">
+				<treenode node="Offerstopicmodel;Php:Class Name;0;2;1;183;34;;;vCI_Model;;c;;r;;d39,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;18;5;21;34;;;v;;r;;d23,18;;b0,0;;m">
 					</treenode>
-					<treenode node="count_records;Php:Function Name;1;155;2;166;34;;;v;;r;;d70,155;;b0,0;;mactivity;;penvironment;;pdepartment;;pcurregion;;p">
+					<treenode node="count_records;Php:Function Name;1;153;2;164;34;;;v;;r;;d70,153;;b0,0;;mactivity;;penvironment;;pdepartment;;pcurregion;;p">
 					</treenode>
 					<treenode node="delete_comment;Php:Function Name;1;119;2;124;34;;;v;;r;;d29,119;;b0,0;;mid;;p">
 					</treenode>
 					<treenode node="delete_record;Php:Function Name;1;105;2;111;34;;;v;;r;;d36,105;;b0,0;;mid;;puserid;;p">
 					</treenode>
-					<treenode node="get_image;Php:Function Name;1;177;2;184;34;;;v;;r;;d24,177;;b0,0;;mid;;p">
+					<treenode node="get_image;Php:Function Name;1;175;2;182;34;;;v;;r;;d24,175;;b0,0;;mid;;p">
 					</treenode>
 					<treenode node="insert_comment;Php:Function Name;1;113;2;117;34;;;v;;r;;d29,113;;b0,0;;mid;;p">
 					</treenode>
 					<treenode node="insert_records;Php:Function Name;1;73;2;90;34;;;v;;r;;d91,73;;b0,0;;mdata;;puid;;pcid;;pcname;;pactivity;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
-					<treenode node="read_field;Php:Function Name;1;168;2;175;34;;;v;;r;;d37,168;;b0,0;;msection;;pfield;;p">
+					<treenode node="read_field;Php:Function Name;1;166;2;173;34;;;v;;r;;d37,166;;b0,0;;msection;;pfield;;p">
 					</treenode>
 					<treenode node="read_limit_records;Php:Function Name;1;46;2;59;34;;;v;;r;;d84,46;;b0,0;;mcount;;pfrom;;penvironment;;pdepartment;;pactivity;;pfield;;p">
 					</treenode>
@@ -9799,9 +9931,9 @@
 					</treenode>
 					<treenode node="read_records;Php:Function Name;1;61;2;71;34;;;v;;r;;d58,61;;b0,0;;mactivity;;penvironment;;pdepartment;;p">
 					</treenode>
-					<treenode node="topic_exist;Php:Function Name;1;126;2;138;34;;;v;;r;;d69,126;;b0,0;;mid;;penvironment;;pdepartment;;pactivity;;pregion;;p">
+					<treenode node="topic_exist;Php:Function Name;1;126;2;137;34;;;v;;r;;d59,126;;b0,0;;mid;;penvironment;;pdepartment;;pregion;;p">
 					</treenode>
-					<treenode node="topic_owner;Php:Function Name;1;140;2;153;34;;;v;;r;;d75,140;;b0,0;;mid;;penvironment;;pdepartment;;pactivity;;puser;;pregion;;p">
+					<treenode node="topic_owner;Php:Function Name;1;139;2;151;34;;;v;;r;;d65,139;;b0,0;;mid;;penvironment;;pdepartment;;puser;;pregion;;p">
 					</treenode>
 					<treenode node="update_record;Php:Function Name;1;92;2;103;34;;;v;;r;;d40,92;;b0,0;;mid;;pdata;;puser;;p">
 					</treenode>
@@ -11063,12 +11195,14 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\models\activitymodel.php" crc="1134873788">
+		</csfile><csfile name="S:\home\practice-book\www\main\models\activitymodel.php" crc="910293399">
 			<phptree>
-				<treenode node="Activitymodel;Php:Class Name;0;2;1;183;34;;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
+				<treenode node="Activitymodel;Php:Class Name;0;2;1;192;34;;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;11;5;14;34;;;v;;r;;d23,11;;b0,0;;m">
 					</treenode>
 					<treenode node="activity_exist;Php:Function Name;1;174;2;182;34;;;v;;r;;d29,174;;b0,0;;mid;;p">
+					</treenode>
+					<treenode node="count_activity_final;Php:Function Name;1;184;2;191;34;;;v;;r;;d32,184;;b0,0;;m">
 					</treenode>
 					<treenode node="delete_record;Php:Function Name;1;38;2;43;34;;;v;;r;;d28,38;;b0,0;;mid;;p">
 					</treenode>
@@ -11472,9 +11606,9 @@
 				</treenode>
 			</phptree>
 		</csfile><csfile name="S:\home\practice-book\www\main\controllers\index.html" crc="-1574479902">
-		</csfile><csfile name="S:\home\practice-book\www\main\controllers\company_interface.php" crc="586510103">
+		</csfile><csfile name="S:\home\practice-book\www\main\controllers\company_interface.php" crc="-853251932">
 			<phptree>
-				<treenode node="Company_interface;Php:Class Name;0;2;1;4974;34;;;vCI_Controller;;c;;r;;d45,2;;b0,0;;m">
+				<treenode node="Company_interface;Php:Class Name;0;2;1;4976;34;;;vCI_Controller;;c;;r;;d45,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;9;2;77;34;;;v;;r;;d23,9;;b0,0;;m">
 					</treenode>
 					<treenode node="articles;Php:Function Name;1;1928;2;2011;34;;;v;;r;;d20,1928;;b0,0;;m">
@@ -11483,7 +11617,7 @@
 					</treenode>
 					<treenode node="business;Php:Function Name;1;831;2;873;34;;;v;;r;;d20,831;;b0,0;;m">
 					</treenode>
-					<treenode node="case_image;Php:Function Name;1;4928;2;4937;34;;;v;;r;;d27,4928;;b0,0;;mfile;;p">
+					<treenode node="case_image;Php:Function Name;1;4930;2;4939;34;;;v;;r;;d27,4930;;b0,0;;mfile;;p">
 					</treenode>
 					<treenode node="collected_company;Php:Function Name;1;3469;2;3549;34;;;v;;r;;d29,3469;;b0,0;;m">
 					</treenode>
@@ -11543,7 +11677,7 @@
 					</treenode>
 					<treenode node="doc_del_comments;Php:Function Name;1;2862;2;2884;34;;;v;;r;;d28,2862;;b0,0;;m">
 					</treenode>
-					<treenode node="document_type_check;Php:Function Name;1;4816;2;4833;34;;;v;;r;;d36,4816;;b0,0;;mfile;;p">
+					<treenode node="document_type_check;Php:Function Name;1;4818;2;4835;34;;;v;;r;;d36,4818;;b0,0;;mfile;;p">
 					</treenode>
 					<treenode node="documentation;Php:Function Name;1;2240;2;2308;34;;;v;;r;;d25,2240;;b0,0;;m">
 					</treenode>
@@ -11569,9 +11703,9 @@
 					</treenode>
 					<treenode node="edit_survey;Php:Function Name;1;3150;2;3203;34;;;v;;r;;d23,3150;;b0,0;;m">
 					</treenode>
-					<treenode node="filedelete;Php:Function Name;1;4792;2;4800;34;;;v;;r;;d27,4792;;b0,0;;mfile;;p">
+					<treenode node="filedelete;Php:Function Name;1;4794;2;4802;34;;;v;;r;;d27,4794;;b0,0;;mfile;;p">
 					</treenode>
-					<treenode node="fileupload;Php:Function Name;1;4802;2;4814;34;;;v;;r;;d42,4802;;b0,0;;muserfile;;poverwrite;;p">
+					<treenode node="fileupload;Php:Function Name;1;4804;2;4816;34;;;v;;r;;d42,4804;;b0,0;;muserfile;;poverwrite;;p">
 					</treenode>
 					<treenode node="group_cmpunit_load;Php:Function Name;1;794;2;800;34;;;v;;r;;d30,794;;b0,0;;m">
 					</treenode>
@@ -11579,7 +11713,7 @@
 					</treenode>
 					<treenode node="interactions;Php:Function Name;1;1627;2;1701;34;;;v;;r;;d24,1627;;b0,0;;m">
 					</treenode>
-					<treenode node="login_check;Php:Function Name;1;4939;2;4946;34;;;v;;r;;d29,4939;;b0,0;;mlogin;;p">
+					<treenode node="login_check;Php:Function Name;1;4941;2;4948;34;;;v;;r;;d29,4941;;b0,0;;mlogin;;p">
 					</treenode>
 					<treenode node="management;Php:Function Name;1;280;2;338;34;;;v;;r;;d22,280;;b0,0;;m">
 					</treenode>
@@ -11597,11 +11731,11 @@
 					</treenode>
 					<treenode node="offers_setregion;Php:Function Name;1;3742;2;3751;34;;;v;;r;;d28,3742;;b0,0;;m">
 					</treenode>
-					<treenode node="operation_date;Php:Function Name;1;4948;2;4955;34;;;v;;r;;d32,4948;;b0,0;;mfield;;p">
+					<treenode node="operation_date;Php:Function Name;1;4950;2;4957;34;;;v;;r;;d32,4950;;b0,0;;mfield;;p">
 					</treenode>
-					<treenode node="operation_date_minus;Php:Function Name;1;4966;2;4973;34;;;v;;r;;d38,4966;;b0,0;;mfield;;p">
+					<treenode node="operation_date_minus;Php:Function Name;1;4968;2;4975;34;;;v;;r;;d38,4968;;b0,0;;mfield;;p">
 					</treenode>
-					<treenode node="operation_date_slash;Php:Function Name;1;4957;2;4964;34;;;v;;r;;d38,4957;;b0,0;;mfield;;p">
+					<treenode node="operation_date_slash;Php:Function Name;1;4959;2;4966;34;;;v;;r;;d38,4959;;b0,0;;mfield;;p">
 					</treenode>
 					<treenode node="price_management;Php:Function Name;1;617;2;720;34;;;v;;r;;d28,617;;b0,0;;m">
 					</treenode>
@@ -11615,7 +11749,7 @@
 					</treenode>
 					<treenode node="question_answer;Php:Function Name;1;1335;2;1402;34;;;v;;r;;d27,1335;;b0,0;;m">
 					</treenode>
-					<treenode node="rating;Php:Function Name;1;4689;2;4771;34;;;v;;r;;d18,4689;;b0,0;;m">
+					<treenode node="rating;Php:Function Name;1;4691;2;4773;34;;;v;;r;;d18,4691;;b0,0;;m">
 					</treenode>
 					<treenode node="read_article;Php:Function Name;1;2062;2;2157;34;;;v;;r;;d24,2062;;b0,0;;m">
 					</treenode>
@@ -11645,11 +11779,11 @@
 					</treenode>
 					<treenode node="representative_save_profile;Php:Function Name;1;175;2;247;34;;;v;;r;;d39,175;;b0,0;;m">
 					</treenode>
-					<treenode node="resize_avatar;Php:Function Name;1;4910;2;4926;34;;;v;;r;;d50,4910;;b0,0;;mtmpName;;pwgt;;phgt;;pratio;;p">
+					<treenode node="resize_avatar;Php:Function Name;1;4912;2;4928;34;;;v;;r;;d50,4912;;b0,0;;mtmpName;;pwgt;;phgt;;pratio;;p">
 					</treenode>
-					<treenode node="resize_image;Php:Function Name;1;4895;2;4908;34;;;v;;r;;d47,4895;;b0,0;;mimage;;pwgt;;phgt;;pratio;;p">
+					<treenode node="resize_image;Php:Function Name;1;4897;2;4910;34;;;v;;r;;d47,4897;;b0,0;;mimage;;pwgt;;phgt;;pratio;;p">
 					</treenode>
-					<treenode node="resize_img;Php:Function Name;1;4852;2;4893;34;;;v;;r;;d40,4852;;b0,0;;mtmpName;;pwgt;;phgt;;p">
+					<treenode node="resize_img;Php:Function Name;1;4854;2;4895;34;;;v;;r;;d40,4854;;b0,0;;mtmpName;;pwgt;;phgt;;p">
 					</treenode>
 					<treenode node="save_profile;Php:Function Name;1;340;2;429;34;;;v;;r;;d24,340;;b0,0;;m">
 					</treenode>
@@ -11657,7 +11791,7 @@
 					</treenode>
 					<treenode node="section_check;Php:Function Name;1;952;2;977;34;;;v;;r;;d31,952;;b0,0;;mtitle;;p">
 					</treenode>
-					<treenode node="sendmail;Php:Function Name;1;4775;2;4790;34;;;v;;r;;d46,4775;;b0,0;;memail;;pmsg;;psubject;;pfrom;;p">
+					<treenode node="sendmail;Php:Function Name;1;4777;2;4792;34;;;v;;r;;d46,4777;;b0,0;;memail;;pmsg;;psubject;;pfrom;;p">
 					</treenode>
 					<treenode node="share_article;Php:Function Name;1;2214;2;2216;34;;;v;;r;;d25,2214;;b0,0;;m">
 					</treenode>
@@ -11693,11 +11827,11 @@
 					</treenode>
 					<treenode node="upload_document;Php:Function Name;1;2526;2;2591;34;;;v;;r;;d27,2526;;b0,0;;m">
 					</treenode>
-					<treenode node="userfile_check;Php:Function Name;1;4835;2;4850;34;;;v;;r;;d31,4835;;b0,0;;mfile;;p">
+					<treenode node="userfile_check;Php:Function Name;1;4837;2;4852;34;;;v;;r;;d31,4837;;b0,0;;mfile;;p">
 					</treenode>
-					<treenode node="who_main;Php:Function Name;1;4555;2;4666;34;;;v;;r;;d20,4555;;b0,0;;m">
+					<treenode node="who_main;Php:Function Name;1;4555;2;4668;34;;;v;;r;;d20,4555;;b0,0;;m">
 					</treenode>
-					<treenode node="whomain_setregion;Php:Function Name;1;4668;2;4685;34;;;v;;r;;d29,4668;;b0,0;;m">
+					<treenode node="whomain_setregion;Php:Function Name;1;4670;2;4687;34;;;v;;r;;d29,4670;;b0,0;;m">
 					</treenode>
 					<treenode node="months;Php:Var Name;5;5;12;5;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
@@ -11705,144 +11839,148 @@
 					</treenode>
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\controllers\admin_interface.php" crc="1615525518">
+		</csfile><csfile name="S:\home\practice-book\www\main\controllers\admin_interface.php" crc="-127084956">
 			<phptree>
-				<treenode node="Admin_interface;Php:Class Name;0;2;1;2161;34;;;vCI_Controller;;c;;r;;d43,2;;b0,0;;m">
+				<treenode node="Admin_interface;Php:Class Name;0;2;1;2229;34;;;vCI_Controller;;c;;r;;d43,2;;b0,0;;m">
 					<treenode node="__construct;Php:Function Name;1;10;2;61;34;;;v;;r;;d23,10;;b0,0;;m">
 					</treenode>
-					<treenode node="activate_user;Php:Function Name;1;1894;2;1911;34;;;v;;r;;d25,1894;;b0,0;;m">
+					<treenode node="activate_user;Php:Function Name;1;1962;2;1979;34;;;v;;r;;d25,1962;;b0,0;;m">
 					</treenode>
-					<treenode node="activity_chack;Php:Function Name;1;1957;2;1963;34;;;v;;r;;d35,1957;;b0,0;;mactivity;;p">
+					<treenode node="activity_chack;Php:Function Name;1;2025;2;2031;34;;;v;;r;;d35,2025;;b0,0;;mactivity;;p">
 					</treenode>
-					<treenode node="activity_content;Php:Function Name;1;1251;2;1385;34;;;v;;r;;d28,1251;;b0,0;;m">
+					<treenode node="activity_content;Php:Function Name;1;1319;2;1453;34;;;v;;r;;d28,1319;;b0,0;;m">
 					</treenode>
-					<treenode node="activity_select;Php:Function Name;1;1839;2;1853;34;;;v;;r;;d49,1839;;b0,0;;mcats;;pparent_id;;pmas;;p">
+					<treenode node="activity_select;Php:Function Name;1;1907;2;1921;34;;;v;;r;;d49,1907;;b0,0;;mcats;;pparent_id;;pmas;;p">
 					</treenode>
-					<treenode node="cabinet;Php:Function Name;1;1662;2;1674;34;;;v;;r;;d19,1662;;b0,0;;m">
+					<treenode node="begin_auction;Php:Function Name;1;424;2;436;34;;;v;;r;;d25,424;;b0,0;;m">
 					</treenode>
-					<treenode node="case_image;Php:Function Name;1;2106;2;2115;34;;;v;;r;;d27,2106;;b0,0;;mfile;;p">
+					<treenode node="cabinet;Php:Function Name;1;1730;2;1742;34;;;v;;r;;d19,1730;;b0,0;;m">
+					</treenode>
+					<treenode node="case_image;Php:Function Name;1;2174;2;2183;34;;;v;;r;;d27,2174;;b0,0;;mfile;;p">
 					</treenode>
 					<treenode node="cpanel;Php:Function Name;1;63;2;75;34;;;v;;r;;d18,63;;b0,0;;m">
 					</treenode>
-					<treenode node="create_search_activity;Php:Function Name;1;1225;2;1238;34;;;v;;r;;d34,1225;;b0,0;;m">
+					<treenode node="create_search_activity;Php:Function Name;1;1293;2;1306;34;;;v;;r;;d34,1293;;b0,0;;m">
 					</treenode>
-					<treenode node="create_search_region;Php:Function Name;1;1240;2;1249;34;;;v;;r;;d32,1240;;b0,0;;m">
+					<treenode node="create_search_region;Php:Function Name;1;1308;2;1317;34;;;v;;r;;d32,1308;;b0,0;;m">
 					</treenode>
-					<treenode node="dalete_activity;Php:Function Name;1;1872;2;1892;34;;;v;;r;;d27,1872;;b0,0;;m">
+					<treenode node="dalete_activity;Php:Function Name;1;1940;2;1960;34;;;v;;r;;d27,1940;;b0,0;;m">
 					</treenode>
-					<treenode node="dalete_group;Php:Function Name;1;1913;2;1928;34;;;v;;r;;d24,1913;;b0,0;;m">
+					<treenode node="dalete_group;Php:Function Name;1;1981;2;1996;34;;;v;;r;;d24,1981;;b0,0;;m">
 					</treenode>
-					<treenode node="dalete_user;Php:Function Name;1;1855;2;1870;34;;;v;;r;;d23,1855;;b0,0;;m">
+					<treenode node="dalete_user;Php:Function Name;1;1923;2;1938;34;;;v;;r;;d23,1923;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_document;Php:Function Name;1;851;2;866;34;;;v;;r;;d27,851;;b0,0;;m">
+					<treenode node="delete_document;Php:Function Name;1;919;2;934;34;;;v;;r;;d27,919;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_message;Php:Function Name;1;1994;2;2001;34;;;v;;r;;d26,1994;;b0,0;;m">
+					<treenode node="delete_message;Php:Function Name;1;2062;2;2069;34;;;v;;r;;d26,2062;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_news;Php:Function Name;1;705;2;713;34;;;v;;r;;d23,705;;b0,0;;m">
+					<treenode node="delete_news;Php:Function Name;1;773;2;781;34;;;v;;r;;d23,773;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_pitfalls;Php:Function Name;1;494;2;502;34;;;v;;r;;d27,494;;b0,0;;m">
+					<treenode node="delete_pitfalls;Php:Function Name;1;562;2;570;34;;;v;;r;;d27,562;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_question;Php:Function Name;1;560;2;567;34;;;v;;r;;d27,560;;b0,0;;m">
+					<treenode node="delete_question;Php:Function Name;1;628;2;635;34;;;v;;r;;d27,628;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_specials;Php:Function Name;1;937;2;945;34;;;v;;r;;d27,937;;b0,0;;m">
+					<treenode node="delete_specials;Php:Function Name;1;1005;2;1013;34;;;v;;r;;d27,1005;;b0,0;;m">
 					</treenode>
-					<treenode node="delete_tips;Php:Function Name;1;629;2;636;34;;;v;;r;;d23,629;;b0,0;;m">
+					<treenode node="delete_tips;Php:Function Name;1;697;2;704;34;;;v;;r;;d23,697;;b0,0;;m">
 					</treenode>
-					<treenode node="document_type_check;Php:Function Name;1;2141;2;2160;34;;;v;;r;;d36,2141;;b0,0;;mfile;;p">
+					<treenode node="document_type_check;Php:Function Name;1;2209;2;2228;34;;;v;;r;;d36,2209;;b0,0;;mfile;;p">
 					</treenode>
 					<treenode node="edit_activity;Php:Function Name;1;113;2;364;34;;;v;;r;;d25,113;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_coordinator;Php:Function Name;1;996;2;1108;34;;;v;;r;;d28,996;;b0,0;;m">
+					<treenode node="edit_coordinator;Php:Function Name;1;1064;2;1176;34;;;v;;r;;d28,1064;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_documents;Php:Function Name;1;798;2;849;34;;;v;;r;;d26,798;;b0,0;;m">
+					<treenode node="edit_documents;Php:Function Name;1;866;2;917;34;;;v;;r;;d26,866;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_news;Php:Function Name;1;655;2;703;34;;;v;;r;;d21,655;;b0,0;;m">
+					<treenode node="edit_news;Php:Function Name;1;723;2;771;34;;;v;;r;;d21,723;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_persona;Php:Function Name;1;732;2;796;34;;;v;;r;;d38,732;;b0,0;;merror;;p">
+					<treenode node="edit_persona;Php:Function Name;1;800;2;864;34;;;v;;r;;d38,800;;b0,0;;merror;;p">
 					</treenode>
-					<treenode node="edit_pitfalls;Php:Function Name;1;453;2;492;34;;;v;;r;;d25,453;;b0,0;;m">
+					<treenode node="edit_pitfalls;Php:Function Name;1;521;2;560;34;;;v;;r;;d25,521;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_product;Php:Function Name;1;390;2;451;34;;;v;;r;;d38,390;;b0,0;;merror;;p">
+					<treenode node="edit_product;Php:Function Name;1;458;2;519;34;;;v;;r;;d38,458;;b0,0;;merror;;p">
 					</treenode>
-					<treenode node="edit_questions;Php:Function Name;1;521;2;558;34;;;v;;r;;d26,521;;b0,0;;m">
+					<treenode node="edit_questions;Php:Function Name;1;589;2;626;34;;;v;;r;;d26,589;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_specials;Php:Function Name;1;885;2;935;34;;;v;;r;;d25,885;;b0,0;;m">
+					<treenode node="edit_specials;Php:Function Name;1;953;2;1003;34;;;v;;r;;d25,953;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_tips;Php:Function Name;1;589;2;627;34;;;v;;r;;d21,589;;b0,0;;m">
+					<treenode node="edit_tips;Php:Function Name;1;657;2;695;34;;;v;;r;;d21,657;;b0,0;;m">
 					</treenode>
-					<treenode node="edit_whomain;Php:Function Name;1;965;2;994;34;;;v;;r;;d24,965;;b0,0;;m">
+					<treenode node="edit_whomain;Php:Function Name;1;1033;2;1062;34;;;v;;r;;d24,1033;;b0,0;;m">
 					</treenode>
-					<treenode node="filedelete;Php:Function Name;1;2117;2;2125;34;;;v;;r;;d27,2117;;b0,0;;mfile;;p">
+					<treenode node="end_auction;Php:Function Name;1;438;2;454;34;;;v;;r;;d23,438;;b0,0;;m">
 					</treenode>
-					<treenode node="fileupload;Php:Function Name;1;2127;2;2139;34;;;v;;r;;d42,2127;;b0,0;;muserfile;;poverwrite;;p">
+					<treenode node="filedelete;Php:Function Name;1;2185;2;2193;34;;;v;;r;;d27,2185;;b0,0;;mfile;;p">
 					</treenode>
-					<treenode node="finish_auction;Php:Function Name;1;384;2;386;34;;;v;;r;;d26,384;;b0,0;;m">
+					<treenode node="fileupload;Php:Function Name;1;2195;2;2207;34;;;v;;r;;d42,2195;;b0,0;;muserfile;;poverwrite;;p">
 					</treenode>
-					<treenode node="information_list;Php:Function Name;1;1387;2;1499;34;;;v;;r;;d28,1387;;b0,0;;m">
+					<treenode node="finish_auctions;Php:Function Name;1;410;2;422;34;;;v;;r;;d27,410;;b0,0;;m">
 					</treenode>
-					<treenode node="login_check;Php:Function Name;1;1948;2;1955;34;;;v;;r;;d29,1948;;b0,0;;mlogin;;p">
+					<treenode node="information_list;Php:Function Name;1;1455;2;1567;34;;;v;;r;;d28,1455;;b0,0;;m">
 					</treenode>
-					<treenode node="manage_whomain;Php:Function Name;1;366;2;378;34;;;v;;r;;d26,366;;b0,0;;m">
+					<treenode node="login_check;Php:Function Name;1;2016;2;2023;34;;;v;;r;;d29,2016;;b0,0;;mlogin;;p">
 					</treenode>
-					<treenode node="offer_list;Php:Function Name;1;1191;2;1221;34;;;v;;r;;d22,1191;;b0,0;;m">
+					<treenode node="manage_whomain;Php:Function Name;1;366;2;387;34;;;v;;r;;d26,366;;b0,0;;m">
 					</treenode>
-					<treenode node="operation_date;Php:Function Name;1;2003;2;2010;34;;;v;;r;;d32,2003;;b0,0;;mfield;;p">
+					<treenode node="offer_list;Php:Function Name;1;1259;2;1289;34;;;v;;r;;d22,1259;;b0,0;;m">
 					</treenode>
-					<treenode node="operation_date_minus;Php:Function Name;1;2021;2;2028;34;;;v;;r;;d38,2021;;b0,0;;mfield;;p">
+					<treenode node="operation_date;Php:Function Name;1;2071;2;2078;34;;;v;;r;;d32,2071;;b0,0;;mfield;;p">
 					</treenode>
-					<treenode node="operation_date_slash;Php:Function Name;1;2012;2;2019;34;;;v;;r;;d38,2012;;b0,0;;mfield;;p">
+					<treenode node="operation_date_minus;Php:Function Name;1;2089;2;2096;34;;;v;;r;;d38,2089;;b0,0;;mfield;;p">
+					</treenode>
+					<treenode node="operation_date_slash;Php:Function Name;1;2080;2;2087;34;;;v;;r;;d38,2080;;b0,0;;mfield;;p">
 					</treenode>
 					<treenode node="page_content;Php:Function Name;1;77;2;111;34;;;v;;r;;d24,77;;b0,0;;m">
 					</treenode>
-					<treenode node="product_form_load;Php:Function Name;1;1135;2;1150;34;;;v;;r;;d29,1135;;b0,0;;m">
+					<treenode node="product_form_load;Php:Function Name;1;1203;2;1218;34;;;v;;r;;d29,1203;;b0,0;;m">
 					</treenode>
-					<treenode node="product_unit_dalete;Php:Function Name;1;1110;2;1119;34;;;v;;r;;d31,1110;;b0,0;;m">
+					<treenode node="product_unit_dalete;Php:Function Name;1;1178;2;1187;34;;;v;;r;;d31,1178;;b0,0;;m">
 					</treenode>
-					<treenode node="product_unit_info;Php:Function Name;1;1152;2;1189;34;;;v;;r;;d29,1152;;b0,0;;m">
+					<treenode node="product_unit_info;Php:Function Name;1;1220;2;1257;34;;;v;;r;;d29,1220;;b0,0;;m">
 					</treenode>
-					<treenode node="product_unit_load;Php:Function Name;1;1121;2;1133;34;;;v;;r;;d29,1121;;b0,0;;m">
+					<treenode node="product_unit_load;Php:Function Name;1;1189;2;1201;34;;;v;;r;;d29,1189;;b0,0;;m">
 					</treenode>
-					<treenode node="registration_users;Php:Function Name;1;1501;2;1655;34;;;v;;r;;d30,1501;;b0,0;;m">
+					<treenode node="registration_users;Php:Function Name;1;1569;2;1723;34;;;v;;r;;d30,1569;;b0,0;;m">
 					</treenode>
-					<treenode node="resize_avatar;Php:Function Name;1;2088;2;2104;34;;;v;;r;;d50,2088;;b0,0;;mtmpName;;pwgt;;phgt;;pratio;;p">
+					<treenode node="resize_avatar;Php:Function Name;1;2156;2;2172;34;;;v;;r;;d50,2156;;b0,0;;mtmpName;;pwgt;;phgt;;pratio;;p">
 					</treenode>
-					<treenode node="resize_image;Php:Function Name;1;2073;2;2086;34;;;v;;r;;d47,2073;;b0,0;;mimage;;pwgt;;phgt;;pratio;;p">
+					<treenode node="resize_image;Php:Function Name;1;2141;2;2154;34;;;v;;r;;d47,2141;;b0,0;;mimage;;pwgt;;phgt;;pratio;;p">
 					</treenode>
-					<treenode node="resize_img;Php:Function Name;1;2030;2;2071;34;;;v;;r;;d40,2030;;b0,0;;mtmpName;;pwgt;;phgt;;p">
+					<treenode node="resize_img;Php:Function Name;1;2098;2;2139;34;;;v;;r;;d40,2098;;b0,0;;mtmpName;;pwgt;;phgt;;p">
 					</treenode>
-					<treenode node="save_activity;Php:Function Name;1;1791;2;1816;34;;;v;;r;;d25,1791;;b0,0;;m">
+					<treenode node="save_activity;Php:Function Name;1;1859;2;1884;34;;;v;;r;;d25,1859;;b0,0;;m">
 					</treenode>
-					<treenode node="save_company;Php:Function Name;1;1930;2;1946;34;;;v;;r;;d24,1930;;b0,0;;m">
+					<treenode node="save_company;Php:Function Name;1;1998;2;2014;34;;;v;;r;;d24,1998;;b0,0;;m">
 					</treenode>
-					<treenode node="save_department;Php:Function Name;1;1776;2;1789;34;;;v;;r;;d27,1776;;b0,0;;m">
+					<treenode node="save_department;Php:Function Name;1;1844;2;1857;34;;;v;;r;;d27,1844;;b0,0;;m">
 					</treenode>
-					<treenode node="save_document;Php:Function Name;1;868;2;883;34;;;v;;r;;d25,868;;b0,0;;m">
+					<treenode node="save_document;Php:Function Name;1;936;2;951;34;;;v;;r;;d25,936;;b0,0;;m">
 					</treenode>
-					<treenode node="save_group;Php:Function Name;1;1762;2;1774;34;;;v;;r;;d22,1762;;b0,0;;m">
+					<treenode node="save_group;Php:Function Name;1;1830;2;1842;34;;;v;;r;;d22,1830;;b0,0;;m">
 					</treenode>
-					<treenode node="save_news;Php:Function Name;1;715;2;730;34;;;v;;r;;d21,715;;b0,0;;m">
+					<treenode node="save_news;Php:Function Name;1;783;2;798;34;;;v;;r;;d21,783;;b0,0;;m">
 					</treenode>
-					<treenode node="save_pitfalls;Php:Function Name;1;504;2;519;34;;;v;;r;;d25,504;;b0,0;;m">
+					<treenode node="save_pitfalls;Php:Function Name;1;572;2;587;34;;;v;;r;;d25,572;;b0,0;;m">
 					</treenode>
-					<treenode node="save_profile;Php:Function Name;1;1676;2;1739;34;;;v;;r;;d24,1676;;b0,0;;m">
+					<treenode node="save_profile;Php:Function Name;1;1744;2;1807;34;;;v;;r;;d24,1744;;b0,0;;m">
 					</treenode>
-					<treenode node="save_question;Php:Function Name;1;569;2;587;34;;;v;;r;;d25,569;;b0,0;;m">
+					<treenode node="save_question;Php:Function Name;1;637;2;655;34;;;v;;r;;d25,637;;b0,0;;m">
 					</treenode>
-					<treenode node="save_region;Php:Function Name;1;1741;2;1760;34;;;v;;r;;d23,1741;;b0,0;;m">
+					<treenode node="save_region;Php:Function Name;1;1809;2;1828;34;;;v;;r;;d23,1809;;b0,0;;m">
 					</treenode>
-					<treenode node="save_specials;Php:Function Name;1;947;2;963;34;;;v;;r;;d25,947;;b0,0;;m">
+					<treenode node="save_specials;Php:Function Name;1;1015;2;1031;34;;;v;;r;;d25,1015;;b0,0;;m">
 					</treenode>
-					<treenode node="save_tips;Php:Function Name;1;638;2;653;34;;;v;;r;;d21,638;;b0,0;;m">
+					<treenode node="save_tips;Php:Function Name;1;706;2;721;34;;;v;;r;;d21,706;;b0,0;;m">
 					</treenode>
-					<treenode node="save_user;Php:Function Name;1;1818;2;1837;34;;;v;;r;;d21,1818;;b0,0;;m">
+					<treenode node="save_user;Php:Function Name;1;1886;2;1905;34;;;v;;r;;d21,1886;;b0,0;;m">
 					</treenode>
-					<treenode node="sendmail;Php:Function Name;1;1965;2;1980;34;;;v;;r;;d46,1965;;b0,0;;memail;;pmsg;;psubject;;pfrom;;p">
+					<treenode node="sendmail;Php:Function Name;1;2033;2;2048;34;;;v;;r;;d46,2033;;b0,0;;memail;;pmsg;;psubject;;pfrom;;p">
 					</treenode>
-					<treenode node="shutdown;Php:Function Name;1;1982;2;1992;34;;;v;;r;;d20,1982;;b0,0;;m">
+					<treenode node="shutdown;Php:Function Name;1;2050;2;2060;34;;;v;;r;;d20,2050;;b0,0;;m">
 					</treenode>
-					<treenode node="start_auction;Php:Function Name;1;380;2;382;34;;;v;;r;;d25,380;;b0,0;;m">
+					<treenode node="start_auctions;Php:Function Name;1;389;2;408;34;;;v;;r;;d26,389;;b0,0;;m">
 					</treenode>
-					<treenode node="view_formjob;Php:Function Name;1;1657;2;1660;34;;;v;;r;;d24,1657;;b0,0;;m">
+					<treenode node="view_formjob;Php:Function Name;1;1725;2;1728;34;;;v;;r;;d24,1725;;b0,0;;m">
 					</treenode>
 					<treenode node="months;Php:Var Name;5;5;12;5;34;;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
@@ -11866,7 +12004,7 @@
 				<treenode node="smileys;Php:Var Name;0;14;8;14;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</phptree>
-		</csfile><csfile name="S:\home\practice-book\www\main\config\routes.php" crc="258569154">
+		</csfile><csfile name="S:\home\practice-book\www\main\config\routes.php" crc="1075136816">
 			<phptree>
 				<treenode node="route;Php:Var Name;0;3;6;3;34;;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
