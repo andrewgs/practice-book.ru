@@ -36,12 +36,8 @@
 			<section id="auth1">
 				<div class="container_12 framing">
 					<div class="grid_12">
-						<hr size="2"/>
-						<div class="">
-							<?=anchor('admin','Панель администрирования',array('class'=>'lnk-submit'));?>
-						</div>
-						<h1>Регистрация регионального менеджера</h1>
-						<?php $this->load->view('forms/frmsignupmanager');?>
+						<h1>Регистрация дилера</h1>
+						<?php $this->load->view('forms/frmsignupdealer');?>
 					</div>
 					<div class="clear"></div>
 				</div>	
@@ -52,6 +48,9 @@
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.megaselectlist.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.simplemodal.js"></script>
+	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -60,25 +59,16 @@
 				$(".inputValid").css('border-color','#D0D0D0');
 				$(".inputValid").each(function(i,element){if($(this).val()===''){$(this).css('border-color','#ff0000');err = true;}});
 				var regObj = $("#select-region");
-				var actObj = $("#select-activity");
-				
-				if($(regObj).val() == null){
-					$(regObj).css('border-color','#ff0000');
-				}else $(regObj).css('border-color','#D0D0D0');
-				
-				if($(actObj).val() == null){
-					$(actObj).css('border-color','#ff0000');
-				}else $(actObj).css('border-color','#D0D0D0');
-				
+				if($(regObj).val() == null){$(regObj).css('border-color','#ff0000');}else $(regObj).css('border-color','#D0D0D0');
 				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
 				var email = $("#email").val();
 				if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
 					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');
 					$("#email").focus();event.preventDefault();return false;};
 			});
-			
-			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?=$baseurl;?>admin/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});
-			$("#btnDelJobLine").click(function(){$("div[list='jobLine']:last").remove();var cnt = $("div[list='jobLine']").size();if(cnt <= 1) $("#btnDelJobLine").hide();});
+			$("#btnReturn").click(function(){
+				window.location="<?=$baseurl;?>admin/control-panel/<?=$userinfo['uconfirmation'];?>";
+			});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}});
 	</script>
 </body>

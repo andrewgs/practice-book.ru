@@ -3,7 +3,7 @@
 		<div class="centerizer w520">
 			<ul class="bottom-nav">
 				<li><?= anchor('','Главная'); ?></li>
-				<li><div id="contact-form"><?= anchor('#','Техподдержка',array('class'=>'contact')); ?></div></li>
+				<li><div id="contact-form"><?= anchor('#','Техподдержка',array('id'=>'Support')); ?></div></li>
 				<li><?= anchor('ideas','Идеи'); ?></li>
 				<li><?= anchor('job','Работа'); ?></li>
 				<li><?= anchor('conditions-cooperation','Условия сотрудничества'); ?></li>

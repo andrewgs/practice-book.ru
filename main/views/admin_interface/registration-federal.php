@@ -33,10 +33,7 @@
 			<section id="auth1">
 				<div class="container_12 framing">
 					<div class="grid_12">
-						<hr size="2"/>
-						<div class="">
-							<?=anchor('admin','Панель администрирования',array('class'=>'lnk-submit'));?>
-						</div>
+						<h1>Регистрация федерального менеджера</h1>
 						<?php $this->load->view('forms/frmsignupfederal');?>
 					</div>
 					<div class="clear"></div>
@@ -62,9 +59,13 @@
 				}else $(actObj).css('border-color','#D0D0D0');
 				
 				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
+				var email = $("#email").val();
+				if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
+					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');
+					$("#email").focus();event.preventDefault();return false;};
 			});
 			$("#btnReturn").click(function(){
-				window.location="<?=$baseurl;?>/admin/control-panel/<?=$userinfo['uconfirmation'];?>";
+				window.location="<?=$baseurl;?>admin/control-panel/<?=$userinfo['uconfirmation'];?>";
 			});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}});
 	</script>

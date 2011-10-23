@@ -1,7 +1,7 @@
 <?= form_open_multipart($this->uri->uri_string(),array('id'=>'formmanauth','class'=>'formular')); ?>
 	<hr size="2px"/>
 	<div class="grid_4">
-		<div class="regLabel">Логин <span class="necessarily" title="Обязательно нужно указать">*</span></div>
+		<div class="regLabel">Логин (E-mail) <span class="necessarily" title="Обязательно нужно указать">*</span></div>
 		<?= form_error('login'); ?>
 		<input class="reg-form-input inputValid" id="email" name="login" type="text" value="<?=set_value('login');?>"/>
 		<div class="regLabel">Пароль</div>

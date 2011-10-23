@@ -18,6 +18,8 @@ class Admin_interface extends CI_Controller{
 		$this->load->model('activitymodel');
 		$this->load->model('cmpsrvmodel');
 		$this->load->model('usersmodel');
+		$this->load->model('dealersmodel');
+		$this->load->model('dlrregionmodel');
 		$this->load->model('unionmodel');
 		$this->load->model('cmpnewsmodel');
 		$this->load->model('manregactmodel');
@@ -397,7 +399,6 @@ class Admin_interface extends CI_Controller{
 			$activity = $this->activitymodel->read_activity_final();
 			$regions = $this->regionmodel->read_records();
 			$this->whomainmodel->delete_records();
-			$this->wmcompanymodel->delete_records();
 			for($i=0;$i<count($activity);$i++):
 				for($j=0;$j<count($regions);$j++):
 					$this->whomainmodel->insert_record('',$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
@@ -405,6 +406,7 @@ class Admin_interface extends CI_Controller{
 			endfor;
 		endif;
 		$this->whomainmodel->open_auctions();
+		$this->wmcompanymodel->delete_records();
 		redirect('admin/manage-whomain/'.$this->user['uconfirmation']);
 	}
 	
@@ -1556,12 +1558,13 @@ class Admin_interface extends CI_Controller{
 													$pagevar['list']['caption'] = "Представители компаний";
 														break;
 									endswitch;
-//									print_r($pagevar['list']);exit;
-//									$pagevar['list'][1] = $this->unionmodel->users_consultation(1);
 									$this->load->view("admin_interface/users-list",$pagevar);
 								break;
 			case 'company'		: 	$pagevar['list'] = $this->companymodel->read_records();
 									$this->load->view("admin_interface/company-list",$pagevar);
+									break;
+			case 'dielers'		: 	$pagevar['list'] = $this->dealersmodel->read_records();
+									$this->load->view("admin_interface/dielers-list",$pagevar);
 									break;
 			default : show_404();
 		endswitch;
@@ -1719,6 +1722,41 @@ class Admin_interface extends CI_Controller{
 				endif;
 				$this->load->view("admin_interface/registration-admin",$pagevar);
 				break;
+			case 'dealer': 	
+				if($this->input->post('submit')):
+					$this->form_validation->set_rules('login','логин','required|valid_email|callback_dealer_check|trim');
+					$this->form_validation->set_message('valid_email','Укажите правильный адрес');
+					$this->form_validation->set_rules('fname','фамилия','required|trim');
+					$this->form_validation->set_rules('sname','имя','required|trim');
+					$this->form_validation->set_rules('tname','отчество','required|trim');
+					$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
+					$this->form_validation->set_rules('region[]','регионы','required');
+					$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+					if(!$this->form_validation->run()):
+						$_POST['submit'] = NULL;
+						$this->registration_users();
+						return FALSE;
+					else:
+						$_POST['submit'] = NULL;
+						$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
+						$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
+						$_POST['position'] = '';
+						$newdialer = $this->dealersmodel->insert_record($_POST);
+						if(count($_POST['region'])):
+							$this->dlrregionmodel->group_insert($newdialer,$_POST['region']);
+						endif;
+						$message = 'Для допуска с панели администрирования необходимо авторизироваться.'."\n".'Ссылка для авторизации http://practice-book.ru/dealers'."\n".'Логин - '.$_POST['login']."\n".'Пароль - dealer'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'dealer-activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'dealer-activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+							redirect('admin/control-panel/'.$this->user['uconfirmation']);
+						else:
+							$this->email->print_debugger();
+							exit;
+						endif;
+					endif;
+				endif;
+				$pagevar['regions'] = $this->regionmodel->read_records_by_district();
+				$this->load->view("admin_interface/registration-dealer",$pagevar);
+				break;
 			default : show_404();
 		endswitch;
 	}
@@ -1733,7 +1771,7 @@ class Admin_interface extends CI_Controller{
 					'description'	=> '',
 					'keywords'		=> '',
 					'author'		=> '',
-					'title'			=> 'Practice-Book - Личный кабинет менеджера',
+					'title'			=> 'Practice-Book - Личный кабинет администратора',
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'manager' 		=> array(),
@@ -1905,6 +1943,20 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function save_dealer(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','date'=>'');
+		$dlrid = $this->input->post('id');
+		$date = trim($this->input->post('date'));
+		if(!$dlrid || !$date) show_404();
+		$success = $this->dealersmodel->save_user($dlrid,$date);
+		if($success){
+			$statusval['status'] = TRUE;
+			$statusval['date'] = $date;
+		}
+		echo json_encode($statusval);
+	}
+	
 	function activity_select($cats,$parent_id,&$mas){
 		
 		if(isset($cats[$parent_id])):
@@ -1938,6 +1990,47 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function dalete_dealer(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$dlrid = trim($this->input->post('id'));
+		if(!$dlrid) show_404();
+		$success = $this->dealersmodel->delete_record($dlrid);
+		if($success):
+			$this->companymodel->dealers_zero($dlrid);
+			$this->dlrregionmodel->delete_records($dlrid);
+			$statusval['status'] = TRUE;
+		endif;
+		echo json_encode($statusval);
+	}
+	
+	function delete_company(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при закрытии');
+		$cid = trim($this->input->post('id'));
+		if(!$cid) show_404();
+		$success = $this->companymodel->close_company($cid);
+		if($success):
+			$count = $this->usersmodel->close_representatives($cid);
+			$statusval['status'] = TRUE;
+			$statusval['message'] = "Компания закрыта!<br/>$count представителей заблокированы.";
+		endif;
+		echo json_encode($statusval);
+	}
+	
+	function restore_company(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при восстановлении');
+		$cid = trim($this->input->post('id'));
+		if(!$cid) show_404();
+		$success = $this->companymodel->open_company($cid);
+		if($success):
+			$statusval['status'] = TRUE;
+			$statusval['message'] = "Компания восстановлена!";
+		endif;
+		echo json_encode($statusval);
+	}
+	
 	function dalete_activity(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
@@ -1960,6 +2053,24 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function dealers_regions(){
+		
+		$pagevar = array('baseurl'=>base_url(),'regions'=>array());
+		$dlrid = trim($this->input->post('id'));
+		if(!$dlrid) show_404();
+		$pagevar['regions'] = $this->unionmodel->dealer_regions($dlrid);
+		$this->load->view('admin_interface/dealers-regions-list',$pagevar);
+	}
+	
+	function dealers_company(){
+		
+		$pagevar = array('baseurl'=>base_url(),'company'=>array());
+		$dlrid = trim($this->input->post('id'));
+		if(!$dlrid) show_404();
+		$pagevar['company'] = $this->companymodel->dealer_company($dlrid);
+		$this->load->view('admin_interface/dealers-company-list',$pagevar);
+	}
+	
 	function activate_user(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при активации');
@@ -1975,6 +2086,25 @@ class Admin_interface extends CI_Controller{
 			endif;
 		else:
 			$statusval['message'] = "Пользователь не существет!";
+		endif;
+		echo json_encode($statusval);
+	}
+	
+	function activate_dealer(){
+		
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при активации');
+		$dlrid = trim($this->input->post('id'));
+		if(!$dlrid) show_404();
+		$ucode = $this->dealersmodel->read_field($dlrid,'dlr_confirmation');
+		if($ucode):
+			$success = $this->dealersmodel->update_status($ucode);
+			if($success):
+				$statusval['status'] = TRUE;
+			else:
+				$statusval['message'] = "Дилер не активирован!";
+			endif;
+		else:
+			$statusval['message'] = "Дилер не существет!";
 		endif;
 		echo json_encode($statusval);
 	}
@@ -1998,18 +2128,21 @@ class Admin_interface extends CI_Controller{
 
 	function save_company(){
 	
-		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'','offers'=>'');
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'','offers'=>'','status'=>'');
 		$cid = $this->input->post('id');
 		$rating = trim($this->input->post('rating'));
 		$offers = trim($this->input->post('offers'));
+		$status = trim($this->input->post('status'));
 		if(!$cid) show_404();
 		if(!$rating) $rating = 0;
 		if(!$offers) $offers = 0;
-		$success = $this->companymodel->save_rating_offers($cid,$rating,$offers);
+		if(!$status) $status = 0;
+		$success = $this->companymodel->save_rating_offers($cid,$rating,$offers,$status);
 		if($success){
 			$statusval['status'] = TRUE;
 			$statusval['rating'] = $rating;
 			$statusval['offers'] = $offers;
+			$statusval['status'] = $status;
 		}
 		echo json_encode($statusval);
 	}
@@ -2018,6 +2151,15 @@ class Admin_interface extends CI_Controller{
 		
 		if($this->usersmodel->user_exist('uemail',$login)):
 			$this->form_validation->set_message('login_check','Логин уже занят');
+			return FALSE;
+		endif;
+		return TRUE;
+	}
+	
+	function dealer_check($login){
+		
+		if($this->dealersmodel->user_exist('dlr_email',$login)):
+			$this->form_validation->set_message('dealer_check','Логин уже занят');
 			return FALSE;
 		endif;
 		return TRUE;

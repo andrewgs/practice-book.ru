@@ -17,10 +17,13 @@ class Companymodel extends CI_Model{
 	var $cmp_telfax 	= '';
 	var $cmp_uraddress 	= '';
 	var $cmp_realaddress = '';
-	var $cmp_destroy	= '';	/* дата запланированого удаления */
+	var $cmp_destroy	= '3000-01-01';	/* дата запланированого удаления */
 	var $cmp_date 		= '';	/* дата регистрации */
 	var $cmp_rating 	= 0;
 	var $cmp_offers 	= 0;
+	var $cmp_confirmation 	= '';
+	var $cmp_dealer 	= 0;
+	var $cmp_status 	= 0;
 	
 	
 	function __construct(){
@@ -28,10 +31,21 @@ class Companymodel extends CI_Model{
 		parent::__construct();
 	}
 	
+	function insert_empty($dealer,$data){
+			
+		$this->cmp_region		= 0;
+		$this->cmp_date 		= date("Y-m-d");
+		$this->cmp_confirmation	= $data['confirm'];
+		$this->cmp_dealer		= $dealer;
+		
+		$this->db->insert('tbl_company',$this);
+		return $this->db->insert_id();
+	}
+	
 	function insert_record($insertdata){
 			
 		$this->cmp_name 		= strip_tags($insertdata['title']);
-		$this->cmp_region		= $insertdata['city'];
+		$this->cmp_region		= $insertdata['city__sexyComboHidden'];
 		$this->cmp_producer		= $insertdata['maker'];
 		$this->cmp_urface		= strip_tags($insertdata['ur_face']);
 		$this->cmp_logo			= $insertdata['logo'];
@@ -47,7 +61,6 @@ class Companymodel extends CI_Model{
 		$this->cmp_destroy		= '3000-01-01';
 		$this->cmp_date 		= date("Y-m-d");
 		$this->cmp_rating 		= 0;
-		$this->cmp_offers 		= 0;
 		
 		$this->db->insert('tbl_company',$this);
 		return $this->db->insert_id();
@@ -64,11 +77,13 @@ class Companymodel extends CI_Model{
 	
 	function read_record($id){
 		
+		$this->db->select('cmp_id,cmp_name,cmp_region,cmp_producer,cmp_urface,cmp_description,cmp_details,cmp_site,cmp_email,cmp_phone,cmp_telfax,cmp_uraddress,cmp_realaddress,cmp_date,cmp_rating,cmp_offers,cmp_confirmation,cmp_dealer,cmp_status');
 		$this->db->where('cmp_id',$id);
+		$this->db->where('cmp_destroy',"3000-01-01");
 		$query = $this->db->get('tbl_company',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
-		return NULL;
+		return FALSE;
 	}
 	
 	function company_exist($field,$parameter){
@@ -125,21 +140,56 @@ class Companymodel extends CI_Model{
 
 	function read_records(){
 	
-		$sql = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_date,cmp_rating,cmp_offers FROM tbl_company ORDER BY cmp_rating DESC,cmp_name";
+		$sql = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_date,cmp_rating,cmp_offers,cmp_status,cmp_destroy FROM tbl_company ORDER BY cmp_date DESC,cmp_rating DESC,cmp_name";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		return NULL;
 	}
 	
-	function save_rating_offers($cid,$rating,$offers){
+	function close_company($id){
+	
+		$this->db->where('cmp_id',$id);
+		$this->db->set('cmp_destroy',date("Y-m-d"));
+		$this->db->set('cmp_status',0);
+		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
+	}
+	
+	function open_company($id){
+	
+		$this->db->where('cmp_id',$id);
+		$this->db->set('cmp_destroy',"3000-01-01");
+		$this->db->set('cmp_status',0);
+		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
+	}
+	
+	function save_rating_offers($cid,$rating,$offers,$status){
 		
 		$this->db->set('cmp_rating',$rating);
 		$this->db->set('cmp_offers',$offers);
+		$this->db->set('cmp_status',$status);
 		$this->db->where('cmp_id',$cid);
 		$this->db->update('tbl_company');
 		return $this->db->affected_rows();
 	}
-
+	
+	function dealer_company($dlrid){
+		
+		$query = "SELECT cmp_id,cmp_name,cmp_email,cmp_phone,cmp_rating,cmp_date FROM tbl_company WHERE cmp_dealer = $dlrid ORDER BY cmp_date DESC, cmp_rating DESC,cmp_name";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	function dealers_zero($dlrid){
+		
+		$this->db->set('cmp_dealer',0);
+		$this->db->where('cmp_dealer',$dlrid);
+		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
+	}
 }
 ?>

@@ -49,6 +49,7 @@
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/department','Список отделов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/company','Список компаний');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/groups','Список групп продуктов');?></li>
+					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/dielers','Список дилеров');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/admins','Список администраторов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/federals','Список фед.менеджеров');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/users/regionals','Список рег.менеджеров');?></li>
@@ -61,6 +62,7 @@
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/federal','Добавление федерального менеджера');?></li>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/regional','Добавление регионального менеджера');?></li>
 					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/administrator','Добавление администратора');?></li>
+					<li><?=anchor('admin/registration/'.$userinfo['uconfirmation'].'/dealer','Добавление дилера');?></li>
 					<li><?=anchor('admin/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет');?></li>
 					<li><?=anchor('admin/shutdown/'.$userinfo['uconfirmation'],'Завершить сеанс');?></li>
 				</ul>

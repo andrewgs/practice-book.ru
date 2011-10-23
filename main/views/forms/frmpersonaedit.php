@@ -45,6 +45,7 @@ endif; ?>
 			</div>
 			<div class="box-content h150 w918">
 				<?= form_error('note'); ?>
+				<h4 style="margin: 0 0 10px 0"><span style="color:#ff0000">Внимание: </span>Если необходимо вставить скопированный текст с внешнего источника воспользуйтесь кнопкой в верхней панели редактора "Вставить только текст" и отформатируйте его вручную. В противном случае вставка текст может привести в нарушению HTML-разметке документа, что приведет к неправильному отображению страницы.</h4>
 				<textarea class="edit-form-textarea" name="note" id="prNote" cols="40" rows="18"><?=$note;?></textarea>
 				<div class="clear"></div>
 				<input class="btn-action" id="saveProduct" type="submit" name="submit" value="Сохранить"/>

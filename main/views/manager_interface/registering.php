@@ -72,6 +72,10 @@
 				}else $(actObj).css('border-color','#D0D0D0');
 				
 				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
+				var email = $("#email").val();
+				if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
+					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');
+					$("#email").focus();event.preventDefault();return false;};
 			});
 			
 			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?= $baseurl; ?>views/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});

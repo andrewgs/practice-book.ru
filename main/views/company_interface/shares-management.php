@@ -34,6 +34,7 @@
 		.btnHidden{display:none;}
 		.ExtendDay{padding: 5px;margin-left: 10px;cursor: pointer;}
 		.tmpTitle,.tmpDesc,.newsID{display:none;}
+		.h250{min-height: 250px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -74,7 +75,6 @@
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/datepicker/jquery.ui.widget.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#select-region").change(function(){$("#change-region").remove();if($(this).val()>0){$(this).css('float','left');$(this).after('<input type="button" class="lnk-submit" id="change-region" value="Продолжить"/>');$("#change-region").live('click',function(){$("#regionview").submit();});};});
 			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			
 			if($("input#end-date").val() != '') $(".EraserInput").show();
@@ -101,7 +101,11 @@
 		<?php if($offers):?>
 			$("#chOffers").removeAttr("checked");
 			$("#chOffers").click(function(){
-				$("#dActOffers").toggle();
+				$("#sActOffers").val(null)
+				$("#sActOffers").css('border-color','#D0D0D0');
+				$("#sRegOffers").val(null);
+				$("#sRegOffers").css('border-color','#D0D0D0');
+				$("#dRegActOffers").toggle();
 			});
 		<?php endif;?>
 			$(".ExtendDay").click(function(){
@@ -255,6 +259,16 @@
 				if($("#activity").val() == 0){
 					err = true;
 					$("#activity").css('border-color','#ff0000');
+				}
+				if($("#chOffers").attr("checked")){
+					if($("#sActOffers").val() == null){
+						err = true;
+						$("#sActOffers").css('border-color','#ff0000');
+					}
+					if($("#sRegOffers").val() == null){
+						err = true;
+						$("#sRegOffers").css('border-color','#ff0000');
+					}
 				}
 				if(err){
 					event.preventDefault();

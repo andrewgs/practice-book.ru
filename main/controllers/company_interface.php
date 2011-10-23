@@ -97,6 +97,29 @@ class Company_interface extends CI_Controller{
 					'group'			=> 0
 					
 			);
+		$cmp_paid = $this->session->userdata('cmp_paid');
+		if(!$cmp_paid):
+			if($pagevar['company']['cmp_status']):
+				$this->session->set_userdata('cmp_paid',TRUE);
+				$cmp_paid = TRUE;
+			endif;
+		endif;
+		if(!$cmp_paid):
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> FALSE,
+			);
+			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Пожалуйста произведите платеж в ближайшее время</b>';
+			$this->load->view('company_interface/paid-message',$pagevar);
+			$this->session->set_userdata('cmp_paid',TRUE);
+			return FALSE;
+		endif;
 		for($i = 0;$i < count($pagevar['news']); $i++):
 			$pagevar['news'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['news'][$i]['cn_pdatebegin']);
 			if(mb_strlen($pagevar['news'][$i]['cn_note'],'UTF-8') > 325):									
@@ -361,12 +384,12 @@ class Company_interface extends CI_Controller{
 			case 'vdescription':$fdata = preg_replace('/\n/','<br>',$fdata);
 								$this->companymodel->save_single_data($this->user['cid'],'cmp_description',strip_tags($fdata,'<br>'));
 								$statusval['status'] 	= TRUE;
-								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n",strip_tags($fdata,'<br>'));
+								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n\n",strip_tags($fdata,'<br>'));
 								break;
 			case 'vdetails'	:	$fdata = preg_replace('/\n/','<br>',$fdata);
 								$this->companymodel->save_single_data($this->user['cid'],'cmp_details',strip_tags($fdata,'<br>'));
 								$statusval['status'] 	= TRUE;
-								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n",strip_tags($fdata,'<br>'));
+								$statusval['retvalue'] 	= preg_replace('/<br>/',"\n\n",strip_tags($fdata,'<br>'));
 								break;
 			case 'vsite'	:	$this->companymodel->save_single_data($this->user['cid'],'cmp_site',prep_url($fdata));
 								$statusval['status'] 	= TRUE;
@@ -555,7 +578,7 @@ class Company_interface extends CI_Controller{
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
-					'regions'		=> array(),
+					'regions'		=> $this->regionmodel->read_records_by_district(),
 					'name'			=> 'Акции компании',
 					'typeavatar'	=> 'cshavatar',
 					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid']),
@@ -567,6 +590,8 @@ class Company_interface extends CI_Controller{
 			$this->form_validation->set_rules('description',' "Содержание" ','required|trim');
 			$this->form_validation->set_rules('pdatebegin',' "Начальная дата" ','required');
 			$this->form_validation->set_rules('activity',' "Отрасль" ','required');
+			$this->form_validation->set_rules('actoffers',' "Отрасль" ','required');
+			$this->form_validation->set_rules('regoffers[]',' "Регионы" ','required');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
@@ -590,13 +615,16 @@ class Company_interface extends CI_Controller{
 				else:
 					$_POST['pdateend'] = "3000-01-01";
 				endif;
-//				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
+				$desc = $_POST['description'];
 				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
+				$_POST['description'] = preg_replace('/\n{2}/','<br>',$desc);
 				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				if($pagevar['offers']):
 					if(isset($_POST['offers'])):
-						$this->offerstopicmodel->insert_records($_POST,$this->user['uid'],$this->user['cid'],$pagevar['company']['cmp_name'],$_POST['actoffers'],0,0,$this->user['region']);
+						for($i=0;$i<count($_POST['regoffers']);$i++):
+							$this->offerstopicmodel->insert_records($_POST,$this->user['uid'],$this->user['cid'],$pagevar['company']['cmp_name'],$_POST['actoffers'],0,0,$_POST['regoffers'][$i]);
+						endfor;
 					endif;
 				endif;
 				redirect('company/shares-management/'.$this->user['uconfirmation']);
@@ -843,6 +871,30 @@ class Company_interface extends CI_Controller{
 					'actenvironment'=> 0,
 					'environment'	=> 0
 			);
+		
+		$cmp_paid = $this->session->userdata('cmp_paid');
+		if(!$cmp_paid):
+			if($pagevar['company']['cmp_status']):
+				$this->session->set_userdata('cmp_paid',TRUE);
+				$cmp_paid = TRUE;
+			endif;
+		endif;
+		if(!$cmp_paid):
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> FALSE,
+			);
+			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Пожалуйста произведите платеж в ближайшее время</b>';
+			$this->load->view('company_interface/paid-message',$pagevar);
+			$this->session->set_userdata('cmp_paid',TRUE);
+			return FALSE;
+		endif;
 		
 		if($this->input->post('activity')):
 			$pagevar['actenvironment'] = $this->activitymodel->read_field($this->input->post('activity'),'act_environment');
@@ -1280,7 +1332,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->dsc_topic_records($topic),
 			);
-		$pagevar['topic']['top_note'] = preg_replace('/<br>/','',$pagevar['topic']['top_note']);
+		$pagevar['topic']['top_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['top_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
 			$this->form_validation->set_rules('note','Содержание','required|trim');
@@ -1573,7 +1625,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->qa_topic_records($topic),
 			);
-		$pagevar['topic']['qat_title'] = preg_replace('/<br>/','',$pagevar['topic']['qat_title']);
+		$pagevar['topic']['qat_title'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['qat_title']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Текст','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -1873,7 +1925,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->int_topic_records($topic),
 			);
-		$pagevar['topic']['itp_note'] = preg_replace('/<br>/','',$pagevar['topic']['itp_note']);
+		$pagevar['topic']['itp_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['itp_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
 			$this->form_validation->set_rules('note','Содержание','required|trim');
@@ -2185,7 +2237,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->article_topic_records($topic),
 			);
-		$pagevar['topic']['atp_note'] = preg_replace('/<br>/','',$pagevar['topic']['atp_note']);
+		$pagevar['topic']['atp_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['atp_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
 			$this->form_validation->set_rules('note','Содержание','required|trim');
@@ -2479,7 +2531,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 			);
-		$pagevar['topic']['dtt_title'] = preg_replace('/<br>/','',$pagevar['topic']['dtt_title']);
+		$pagevar['topic']['dtt_title'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['dtt_title']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Текст','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -2575,7 +2627,6 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					case '4' : $_POST['image'] = file_get_contents(base_url().'images/documents/pdf.png'); break;
 				endswitch;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-//				$_POST['note'] = nl2br($_POST['note']);
 				$this->doclistmodel->insert_record($_POST,$topic,$this->user['uid']);
 				$this->dtntopicsmodel->insert_document($topic);
 				redirect('business-environment/documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/documents-list');
@@ -2689,7 +2740,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpathdoc'),
 					'document'		=> $this->doclistmodel->read_record($document),
 			);
-		$pagevar['document']['dls_note'] = preg_replace('/<br>/','',$pagevar['document']['dls_note']);
+		$pagevar['document']['dls_note'] = preg_replace('/<br>/',"\n\n",$pagevar['document']['dls_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
 			$this->form_validation->set_rules('note','Название','required|trim');
@@ -3177,7 +3228,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'topic'			=> $this->unionmodel->sur_topic_records($topic),
 					'vote'			=> $this->votemodel->read_records($topic),
 			);
-		$pagevar['topic']['stp_title'] = preg_replace('/<br>/','',$pagevar['topic']['stp_title']);
+		$pagevar['topic']['stp_title'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['stp_title']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Текст','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -3601,7 +3652,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->asp_topic_records($topic),
 			);
-		$pagevar['topic']['ast_note'] = preg_replace('/<br>/','',$pagevar['topic']['ast_note']);
+		$pagevar['topic']['ast_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['ast_note']);
 		if($pagevar['topic']['ast_collected'] > 0) redirect($pagevar['backpath']);
 		
 		if($this->input->post('submit')):
@@ -3760,7 +3811,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$curregion = $this->session->userdata('offerregion');
 		if(!$curregion) show_404();
 		$topic = $this->uri->segment(5);
-		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$activity,$curregion)):
+		if(!$this->offerstopicmodel->topic_exist($topic,$environment,$this->user['department'],$curregion)):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -3772,7 +3823,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'userinfo'		=> $this->user,
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$activity,$curregion),
+					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$curregion),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -3874,7 +3925,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'regions'		=> $this->regionmodel->read_records(),
 					'section_name'	=> $this->regionmodel->read_field($curregion,'reg_name').' - Редактирование предложения'
 			);
-		$pagevar['topic']['oft_note'] = preg_replace('/<br>/','',$pagevar['topic']['oft_note']);
+		$pagevar['topic']['oft_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['oft_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim|htmlspecialchars');
 			$this->form_validation->set_rules('note','Содержание','required|trim');
@@ -4167,8 +4218,12 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-news': $group = 1; break;
+			case 'company-news': $group = 2; break;
+		endswitch;
 		$topic = $this->uri->segment(5);
-		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,1,$this->user['uid'])):
+		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$group,$this->user['uid'])):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -4182,9 +4237,9 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> 'Новости отрасли - Редактирование новости',
 					'backpath'		=> $this->session->userdata('backpath'),
-					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,1),
+					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,$group),
 			);
-		$pagevar['topic']['ben_note'] = preg_replace('/<br>/','',$pagevar['topic']['ben_note']);
+		$pagevar['topic']['ben_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['ben_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim');
 			$this->form_validation->set_rules('source','Название','prep_url|trim');
@@ -4227,8 +4282,12 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		if(!$environment) $environment = 0; else show_404();
 		$activity = $this->session->userdata('activity');
 		if(!$activity) show_404();
+		switch ($this->uri->segment(2)):
+			case 'activity-news': $group = 1; break;
+			case 'company-news': $group = 2; break;
+		endswitch;
 		$topic = $this->uri->segment(5);
-		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,1,$this->user['uid'])):
+		if(!$this->benewsmodel->topic_owner($topic,$environment,$this->user['department'],$activity,$group,$this->user['uid'])):
 			show_404();
 		endif;
 		
@@ -4495,7 +4554,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->bed_topic_record($topic,$environment,$this->user['department'],$activity,$group),
 			);
-		$pagevar['topic']['bed_note'] = preg_replace('/<br>/','',$pagevar['topic']['bed_note']);
+		$pagevar['topic']['bed_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['bed_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim');
 			$this->form_validation->set_rules('userfile','','callback_userfile_check');

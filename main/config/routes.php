@@ -16,7 +16,7 @@ $route['contacts'] = "users_interface/contacts";
 $route['conditions-cooperation'] = "users_interface/cooperation";
 $route['support'] = "users_interface/support";
 $route['information'] = "users_interface/information";
-$route['dilers'] = "users_interface/dilers";
+$route['for-dealers'] = "users_interface/for_dealers";
 
 /* --------------------------------------------- started work ---------------------------------------------*/
 $route['started'] = "users_interface/select_settings";
@@ -46,11 +46,13 @@ $route['registering/step-4'] = "users_interface/newcompany4";
 
 /* ------------------------------------------	activation -----------------------------------------------*/
 $route['activation/([a-zA-Z0-9])*'] = "users_interface/activation";
+$route['dealer-activation/([a-zA-Z0-9])*'] = "users_interface/dealer_activation";
 
 /* ----------------------------------- authorization/shutdown ---------------------------------------------*/
 $route['authorization'] = "users_interface/authorization";
 $route['shutdown'] = "users_interface/shutdown";
 $route['admin']	= "users_interface/admin_login";
+$route['dealers']	= "users_interface/dealers_login";
 /* ------------------------------------------ views -------------------------------------------------------*/
 $route['views/login'] = "users_interface/views";
 $route['views/logout'] = "users_interface/views";
@@ -66,6 +68,7 @@ $route['anavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['pravatar/viewimage/:num'] = "users_interface/viewimage";
 $route['activitynews/viewimage/:num'] = "users_interface/viewimage";
 $route['companynews/viewimage/:num'] = "users_interface/viewimage";
+$route['davatar/viewimage/:num'] = "users_interface/viewimage";
 $route['prsavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['docavatar/viewimage/:num'] = "users_interface/viewimage";
 $route['bedocavatar/viewimage/:num'] = "users_interface/viewimage";
@@ -140,9 +143,25 @@ $route['manager/delete-consultation/:any'] = "manager_interface/delete_consultat
 $route['manager/save-consultation/:any'] = "manager_interface/save_consultation";
 $route['manager/close-consultation/:any'] = "manager_interface/close_consultation";
 
+/************************************	DEALERS INTRERFACE	***********************************************/
+
+$route['dealer/control-panel/:any'] = "dealer_interface/cpanel";
+$route['dealer/shutdown/:any'] = "dealer_interface/shutdown";
+$route['dealer/cabinet/:any'] = "dealer_interface/cabinet";
+
+$route['dealer/save-profile/:any'] = "dealer_interface/save_profile";
+
+$route['dealer/get-code/:any'] = "dealer_interface/get_code";
+$route['dealer/generate-code/:any'] = "dealer_interface/generate_code";
+
+$route['dealer/register-company/:any'] = "dealer_interface/register_company";
+
 /************************************	ADMIN INTRERFACE	***********************************************/
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";
+
+$route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
+$route['admin/edit-activity/:any'] = "admin_interface/edit_activity";
 
 $route['admin/manage-whomain/:any/start-auctions'] = "admin_interface/start_auctions";
 $route['admin/manage-whomain/:any/finish-auctions'] = "admin_interface/finish_auctions";
@@ -152,9 +171,6 @@ $route['admin/end-auction/:any'] = "admin_interface/end_auction";
 
 $route['admin/edit-activity/:any/activity/:num'] = "admin_interface/manage_whomain";
 $route['admin/manage-whomain/:any'] = "admin_interface/manage_whomain";
-
-$route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
-$route['admin/edit-activity/:any'] = "admin_interface/edit_activity";
 
 $route['admin/delete-activity/:any']= "admin_interface/dalete_activity";
 
@@ -207,6 +223,15 @@ $route['admin/form-job/:any'] = "admin_interface/view_formjob";
 
 $route['admin/save-group/:any']= "admin_interface/save_group";
 $route['admin/delete-group/:any']= "admin_interface/dalete_group";
+
+$route['admin/delete-company/:any']= "admin_interface/delete_company";
+$route['admin/restore-company/:any']= "admin_interface/restore_company";
+
+$route['admin/save-dealer/:any']= "admin_interface/save_dealer";
+$route['admin/delete-dealer/:any']= "admin_interface/dalete_dealer";
+$route['admin/activate-dealer/:any']= "admin_interface/activate_dealer";
+$route['admin/dealers-regions/:any']= "admin_interface/dealers_regions";
+$route['admin/dealers-company/:any']= "admin_interface/dealers_company";
 
 $route['admin/save-region/:any']= "admin_interface/save_region";
 $route['admin/save-activity/:any']= "admin_interface/save_activity";

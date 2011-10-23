@@ -44,7 +44,7 @@ font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-
 	<div id="container">
 		<?php $this->load->view('admin_interface/header-nomenu'); ?>
 		<div id="main">
-			<?php $this->load->view('forms/frmadminprofile'); ?>
+			<?php $this->load->view('forms/frmdealerprofile'); ?>
 		</div>
 		<div class="clear"></div>
 		<?php $this->load->view('admin_interface/footer'); ?>
@@ -55,10 +55,12 @@ font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#btnReturn").click(function(){
-				window.location="<?=$baseurl;?>admin/control-panel/<?=$userinfo['uconfirmation'];?>";
+				window.location="<?=$baseurl;?>dealer/control-panel/<?=$userinfo['uconfirmation'];?>";
 			});
+			$("#savatar").click(function(){var vObj = $("#vavatar").val();if(vObj === ''){msgerror('Поле не может быть пустым');$("#vavatar").css('border-color','#ff0000');$("#vavatar").focus();}else $("#formAvatar").submit();});
+			
 			$(".ajaxsave").click(function(){var btnID = this.id;saveSingleData(btnID);});
-			function saveSingleData(btnID){var txtObj = $("#v"+btnID);var objValue = txtObj.val();var objID = txtObj.attr('id');if(objValue === ''){msgerror('Поле не может быть пустым');txtObj.css('border-color','#ff0000');txtObj.focus();if(btnID === 'pass') $("#d"+btnID).text('');}else{$.ajax({url:"<?=$baseurl;?>admin/save-profile/<?=$userinfo['uconfirmation'];?>",type: "POST",data: ({id:objID,value:objValue}),dataType: "JSON",beforeSend: function(){$("#"+btnID).hide();$("#"+btnID).after('<img id="loading" src="<?=$baseurl;?>images/progress.gif"/>');},success: function(data){if(data.status){txtObj.css('border-color','#00ff00');$('#d'+btnID).text(data.retvalue);txtObj.val('');}else{msgerror(data.message);txtObj.css('border-color','#ff0000');if(btnID === 'pass')$("#d"+btnID).text('');}$("#"+btnID).show();$("#loading").remove();},error: function(){$("#"+btnID).show();$("#loading").remove();txtObj.css('border-color','#ff0000');msgerror("Ошибка при сохранении!");}});}return true;};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}});
+			function saveSingleData(btnID){var txtObj = $("#v"+btnID);var objValue = txtObj.val();var objID = txtObj.attr('id');if(objValue === ''){msgerror('Поле не может быть пустым');txtObj.css('border-color','#ff0000');txtObj.focus();if(btnID === 'pass') $("#d"+btnID).text('');}else{$.ajax({url:"<?=$baseurl;?>dealer/save-profile/<?=$userinfo['uconfirmation'];?>",type: "POST",data: ({id:objID,value:objValue}),dataType: "JSON",beforeSend: function(){$("#"+btnID).hide();$("#"+btnID).after('<img id="loading" src="<?=$baseurl;?>images/progress.gif"/>');},success: function(data){if(data.status){txtObj.css('border-color','#00ff00');$('#d'+btnID).text(data.retvalue);txtObj.val('');}else{msgerror(data.message);txtObj.css('border-color','#ff0000');if(btnID === 'pass')$("#d"+btnID).text('');}$("#"+btnID).show();$("#loading").remove();},error: function(){$("#"+btnID).show();$("#loading").remove();txtObj.css('border-color','#ff0000');msgerror("Ошибка при сохранении!");}});}return true;};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}});
 	</script>
 </body>
 </html>

@@ -505,5 +505,14 @@ class Unionmodel extends CI_Model{
 		if(count($data)) return $data[0];
 		return NULL;
 	}
+
+	function dealer_regions($dlrid){
+		
+		$query = "SELECT reg_id,reg_name,reg_area FROM tbl_regions,tbl_dealer_region WHERE tbl_dealer_region.drg_regid = tbl_regions.reg_id AND drg_dlrid = $dlrid ORDER BY reg_name";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
 }
 ?>

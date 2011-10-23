@@ -1,6 +1,6 @@
 <div class="box">
 	<div class="box-content h470 w918">
-		<table summary="Список регионов">
+		<table summary="Список заявок">
 			<thead>
 				<tr class="odd">
 					<th scope="col" abbr="ID">ID</th>

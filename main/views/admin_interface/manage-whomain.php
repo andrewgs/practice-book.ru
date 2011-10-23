@@ -78,10 +78,12 @@
 		
 		$("#bauc").click(function(){
 			if(!confirm("Начать укционы?\nВсе текущие аукционы и данные будут удалены!")) return false;
+			$("#eauc").before('<span style="color:#FF0000;margin-left:275px;">Идет создание аукционов. Ожидайте!</span>');
 		});
 		
 		$("#eauc").click(function(){
 			if(!confirm("Завершить укционы?")) return false;
+			$("#eauc").before('<span style="color:#FF0000;margin-left:260px;">Идет завершение аукционов. Ожидайте!</span>');
 		});
 		
 		$("#ActivityName").keyup(function(){

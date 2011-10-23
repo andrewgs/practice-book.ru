@@ -41,7 +41,7 @@
 						<td><?=$list[$i]['uemail'];?></td>
 						<td><?=$list[$i]['usignupdate'];?></td>
 					<?php if($list['group']>0):?>
-						<td><input class="date-form-input" id="vDate<?=$k?>" rID="<?=$k?> name="ddes" type="text" value="<?=$list[$i]['udestroy'];?>"></td>
+						<td><input class="date-form-input" maxlength="10" id="vDate<?=$k?>" rID="<?=$k?> name="ddes" type="text" value="<?=$list[$i]['udestroy'];?>"></td>
 						<td><input class="reg-form-small final" id="vPriority<?=$k?>" rID="<?=$k?> name="priority" type="text" value="<?=$list[$i]['upriority'];?>"></td>
 					<?php else: ?>
 						<td>&mdash;</td>
@@ -78,7 +78,7 @@
 					<td>
 						<div class="ButtonOperation">
 						<?php if($list['group']>0):?>
-							<input type="image" title="Сохранить" class="btnSave" btnHidden" id="s<?=$k?>" rID="<?=$k?>" src="<?=$baseurl;?>images/save.png" />
+							<input type="image" title="Сохранить" class="btnSave" id="s<?=$k?>" rID="<?=$k?>" src="<?=$baseurl;?>images/save.png" />
 						<?php endif;?>
 						<br/><input type="image" title="Удалить" class="btnDel" id="dl<?=$k?>" rID="<?=$k;?>" src="<?=$baseurl;?>images/delete.png" />
 						<?php if($list[$i]['ustatus'] == "disabled"):?>

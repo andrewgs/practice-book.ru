@@ -441,6 +441,7 @@ class Manager_interface extends CI_Controller{
 			else:
 				$photo = $this->resize_img($_FILES['userfile']['tmp_name'],96,120);
 				$this->usersmodel->save_single_data($this->user['uid'],'uphoto',$photo);
+				redirect($this->uri->uri_string());
 			endif;
 		endif;
 		$pagevar['manager'] = $this->usersmodel->read_record($this->user['uid']);
@@ -1866,6 +1867,6 @@ class Manager_interface extends CI_Controller{
 		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
 		$replacement = "\$5-\$3-\$1"; 
 		return preg_replace($pattern, $replacement,$field);
-	}				
+	}
 }
 ?>

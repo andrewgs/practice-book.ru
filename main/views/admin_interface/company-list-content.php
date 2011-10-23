@@ -1,12 +1,12 @@
 <div class="box">
 	<div class="box-header">
-		Список регионов:
+		Список компаний:
 		<div class="box-search">
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>
 	</div>
 	<div class="box-content h960 w918">
-		<table summary="Список регионов">
+		<table summary="Список компаний">
 			<thead>
 				<tr class="odd">
 					<th scope="col" abbr="ID">ID</th>
@@ -15,7 +15,8 @@
 					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛЕФОН</th>
 					<th scope="col" abbr="ЗАРЕГ.">ЗАРЕГ.</th>
 					<th scope="col" abbr="РЕЙТИНГ">РЕЙТИНГ</th>
-					<th scope="col" abbr="РАЗР.КнАг">КА (0|1)</th>
+					<th scope="col" abbr="ПРЕДЛОЖЕНИЕ КОНТРАГЕНТАМ">КА(0|1)</th>
+					<th scope="col" abbr="СТАТУС">СТАТУС(0|1)</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
@@ -30,7 +31,11 @@
 					<tr class="odd"> 
 				<?php endif; ?>
 					<td rID="<?=$i?>"><?=$list[$i]['cmp_id'];?></td>
-						<td><?=$list[$i]['cmp_name'];?></td>
+						<?php if($list[$i]['cmp_name'] != ''):?>
+							<td><?=anchor('company-info/'.$list[$i]['cmp_id'],$list[$i]['cmp_name'],array('target'=>'_blank'));?></td>
+						<?php else:?>
+							<td>Нет имени</td>
+						<?php endif;?>
 						<td><?=$list[$i]['cmp_email'];?></td>
 						<td><?=$list[$i]['cmp_phone'];?></td>
 						<td><?=$list[$i]['cmp_date'];?></td>
@@ -40,12 +45,21 @@
 						<td>
 		<input class="reg-form-small final" id="vOffers<?=$i?>" rID="<?=$i?> name="offers" type="text" value="<?=$list[$i]['cmp_offers'];?>">
 						</td>
+						<td>
+		<input class="reg-form-small final" id="vStatus<?=$i?>" rID="<?=$i?> name="status" type="text" value="<?=$list[$i]['cmp_status'];?>">
+						</td>
 					<td>
 						<div class="ButtonOperation">
 						<input type="image" title="Сохранить" class="btnSave" id="s<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/save.png" />
+						<?php if($list[$i]['cmp_destroy'] == "3000-01-01"):?>
+				<br/><input type="image" title="Закрыть" class="btnDel" id="dl<?=$i?>" rID="<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />
+						<?php endif; ?>
+					<?php if($list[$i]['cmp_destroy'] != "3000-01-01"):?>
+<br/><input type="image" title="Компания закрыта" id="at<?=$i?>" rID="<?=$i;?>" class="StatusOff" src="<?=$baseurl;?>images/exclamation.png" />
+					<?php endif; ?>
 						</div>
 					</td> 
-				</tr	>
+				</tr>
 				<?php endfor; ?>	
 			</tbody>
 		</table>

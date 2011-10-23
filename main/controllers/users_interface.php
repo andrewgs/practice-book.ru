@@ -19,6 +19,7 @@ class Users_interface extends CI_Controller{
 		$this->load->model('activitymodel');
 		$this->load->model('cmpsrvmodel');
 		$this->load->model('usersmodel');
+		$this->load->model('dealersmodel');
 		$this->load->model('unionmodel');
 		$this->load->model('cmpnewsmodel');
 		$this->load->model('manregactmodel');
@@ -360,7 +361,7 @@ class Users_interface extends CI_Controller{
 		$this->load->view('users_interface/information',$pagevar);
 	}
 
-	function dilers(){
+	function for_dealers(){
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -983,7 +984,7 @@ class Users_interface extends CI_Controller{
 					'description'	=> '',
 					'keywords'		=> '',
 					'author'		=> '',
-					'title'			=> 'Practice-Book - Панель управления компанией',
+					'title'			=> '',
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($company),
@@ -998,6 +999,27 @@ class Users_interface extends CI_Controller{
 					'activitypath'	=> ''
 					
 			);
+			
+		if(!$pagevar['company']):
+		
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> FALSE,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
+			$pagevar['text'] = '<br><br><b>Запрашиваемая Вами компания прекратила пользоваться нашим ресурсом</b>';
+			$this->load->view('users_interface/message',$pagevar);
+			return FALSE;
+		endif;
+		
 		$pagevar['activitypath'] = $pagevar['company']['cmp_name'];
 		for($i = 0;$i < count($pagevar['news']); $i++):
 			$pagevar['news'][$i]['cn_pdatebegin'] = $this->operation_date($pagevar['news'][$i]['cn_pdatebegin']);
@@ -1421,7 +1443,8 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					'logo' 			=> 'default',
 					'timer' 		=> FALSE,
 					'cmpid'			=> 1,
-					'cmpname'		=> ''
+					'cmpname'		=> '',
+					'uri'			=> ''
 			);
 		$code = $this->uri->segment(2);
 		if(!isset($code) or !empty($code)):
@@ -1433,6 +1456,43 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 				return FALSE;
 			endif;
 			if($this->usersmodel->update_status($code)):
+				$this->session->sess_destroy();
+				$this->load->view('users_interface/registration/activation',$pagevar);
+			else:
+				$pagevar['text'] = '<b>Активация невозможна: профиль уже активирован</b>';
+				$this->load->view('users_interface/message',$pagevar);
+				return FALSE;
+			endif;
+		else:
+			show_404();
+		endif;
+	}
+	
+	function dealer_activation(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Активация',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> FALSE,
+					'cmpid'			=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
+		$code = $this->uri->segment(2);
+		if(!isset($code) or !empty($code)):
+			$userid = $this->dealersmodel->user_id('dlr_confirmation',$code);
+			if($userid == FALSE):
+				$this->session->sess_destroy();
+				$pagevar['text'] = '<b>Активация невозможна: <br> ссылка устарела или не верна!</b>';
+				$this->load->view('users_interface/message',$pagevar);
+				return FALSE;
+			endif;
+			if($this->dealersmodel->update_status($code)):
 				$this->session->sess_destroy();
 				$this->load->view('users_interface/registration/activation',$pagevar);
 			else:
@@ -1514,13 +1574,54 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					$this->session->set_userdata('adminid',$user['uid']);
 					$this->session->set_userdata('adminconfirm',$user['uconfirmation']);
 					$this->usersmodel->active_user($user['uid']);
-					redirect('admin/control-panel/'.$user['uconfirmation']);exit;
+					redirect('admin/control-panel/'.$user['uconfirmation']);
 				endif;
 				redirect("admin");
 			endif;
 		endif;
 		$this->load->view('users_interface/admin-login',$pagevar);
 	}
+
+	function dealers_login(){
+		
+		if($this->session->userdata('dealerid')):
+			redirect('dealers/control-panel/'.$this->session->userdata('dealerconfirm'));
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Диллеры | Авторизация',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('login-name','','required|trim');
+			$this->form_validation->set_rules('login-pass','','required');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				redirect("dealers");
+			else:
+				$user = $this->dealersmodel->auth_dealer($_POST['login-name'],$_POST['login-pass']);
+				if($user):
+					if($user['dlr_status'] == 'disabled'):
+						redirect("dealers");
+					endif;
+					$this->session->sess_destroy();
+					$this->session->sess_create();
+					$this->session->set_userdata('cookieaid',md5($user['dlr_email'].$user['dlr_confirmation']));
+					$this->session->set_userdata('dealerid',$user['dlr_id']);
+					$this->session->set_userdata('dealerconfirm',$user['dlr_confirmation']);
+					$this->dealersmodel->active_user($user['dlr_id']);
+					redirect('dealer/control-panel/'.$user['dlr_confirmation']);
+				endif;
+				redirect("dealers");
+			endif;
+		endif;
+		$this->load->view('users_interface/admin-login',$pagevar);
+	}
+
 	/* ------------------------------------------ views -------------------------------------------------------*/
 	function views(){
 	
@@ -1590,6 +1691,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			case 'company-news'	: 	$image = $this->benewsmodel->get_image($id); break;
 			case 'activity-discounts'	: 	$image = $this->bediscountmodel->get_image($id); break;
 			case 'company-discounts'	: 	$image = $this->bediscountmodel->get_image($id); break;
+			case 'davatar'		: 	$image = $this->dealersmodel->get_image($id); break;
 		}
 		header('Content-type: image/gif');
 		echo $image;

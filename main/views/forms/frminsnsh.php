@@ -39,12 +39,46 @@
 			<input type="checkbox" name="offers" id="chOffers" value="offers">Как предложение контрагентам
 		</div>
 		<div class="clear"></div>
-		<div class="btnHidden" id="dActOffers">
-			<select name="actoffers" id="sActOffers" class="mixed-combo inpvalue" size="1" title="Укажите в какую отрасли отправить предложение" style="width: 400px;">
-				<?php for($i=0;$i<count($activity);$i++): ?>
-					<option value="<?=$activity[$i]['act_id'];?>"><?=$activity[$i]['act_fulltitle'];?></option>
-				<?php endfor; ?>
-			</select>
+		<div class="grid_12">
+			<div class="btnHidden" id="dRegActOffers">
+				<div class="grid_6">
+					<h2>Выберите отрасль:</h2>
+					<div class="box">
+						<div class="box-header"><?=form_error('activity');?>&nbsp;</div>
+							<div class="box-content w280 h250">
+								<select name="actoffers" id="sActOffers" class="mixed-combo inpvalue" size="16" title="Укажите в какую отрасли отправить предложение" style="width: 280px;">
+								<?php for($i=0;$i<count($activity);$i++): ?>
+									<option value="<?=$activity[$i]['act_id'];?>"><?=$activity[$i]['act_title'];?></option>
+								<?php endfor; ?>
+								</select>
+							</div>
+						<div class="box-bottom-links h20">&nbsp;</div>
+					</div>
+				</div>
+				<div class="grid_5">
+				<h2>Выберите регионы: </h2>
+					<div class="box">
+						<div class="box-header"><?=form_error('region[]');?>&nbsp;</div>
+							<div class="box-content w280 h250">
+								<select name="regoffers[]" id="sRegOffers" class="mixed-combo inpvalue" size="16" multiple style="width: 280px;">
+								<?php for($i=0;$i<count($regions);$i++): ?>
+									<optgroup label="<?=$regions[$i]['reg_district'];?>">
+									<?php $j = $i;?>
+									<?php while($regions[$j]['reg_district'] === $regions[$i]['reg_district']): ?>
+										<option value="<?=$regions[$j]['reg_id'];?>"<?=set_select('region[]',$regions[$j]['reg_id']);?>>
+											<?=$regions[$j]['reg_name'].' ('.$regions[$j]['reg_area'].')';?>
+										</option>
+										<?php $j++; ?>
+									<?php endwhile; ?>
+									<?php $i = $j-1;?>
+									</optgroup>
+								<?php endfor; ?>
+								</select>
+							</div>
+						<div class="box-bottom-links h20">&nbsp;</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="clear"></div>
 	<?php endif;?>

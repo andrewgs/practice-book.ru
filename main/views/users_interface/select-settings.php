@@ -86,7 +86,7 @@
 							</div>
 						</div>
 						<div class="searhcbox">
-							<b>Поиск отрасли/товаров/услуг</b>
+							<b>Поиск региона</b>
 							<p>от 3-х символов</p>
 							<div class="">
 								<input class="edit265-form-input" id="RegionName" type="text" value=""/>

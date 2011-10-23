@@ -17,11 +17,17 @@
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">
 	<link rel="stylesheet" href="<?= $baseurl; ?>css/admin.css">
+	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
+	<!--[if lt IE 7]>
+	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
+	<![endif]-->
 	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
 	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		.h960{max-height: 960px; min-height: 470px;}
 		.w960{width: 960px;}
+		.h365{height: 365px;}
+		.w575{width: 575px;}
 		div.ButtonOperation{min-height:30px;}
 	</style>
 </head>
@@ -35,7 +41,20 @@
 		<div id="main">
 			<section id="frmlogin"><br/>
 				<div class="container_12">
-					<?php $this->load->view("admin_interface/users-list-content");?>
+					<?php $this->load->view("admin_interface/dealers-list-content");?>
+				</div>
+				<div id="offer-modal-content">
+					<div class="box">
+						<div class="box-header"><div id="mdTitle">&nbsp;</div>
+							<div class="box-search">&nbsp;</div>
+						</div>
+						<div class="box-content h365 w575">
+							<div id="mdList">&nbsp;</div>
+						</div>
+						<div class="box-bottom-links h20">&nbsp;
+							<div class="clear"></div>
+						</div>
+					</div>
 				</div>
 			</section>
 		</div>
@@ -43,6 +62,8 @@
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -50,54 +71,24 @@
 			if(e.which!=45 && e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
 		});
 		
-		$(".parentid").keypress(function(e){
-			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
-		});
-		$(".final").keypress(function(e){
-			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>49))return false;
-			if($(this).val().length > 0){$(this).val('');}
-		});
-		
 		$(".btnSave").click(function(){
 			var err = false;
 			var curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			var objDate = $("#vDate"+curID);
-			var objPriority = $("#vPriority"+curID);
-			var objActivity = $("#vActivity"+curID);
 			var valDate = $(objDate).val();
-			var valPriority = $(objPriority).val();
-			var valActivity = $(objActivity).val();
-			if(valActivity == undefined) valActivity = 0;
 			$(objDate).css('border-color','#D0D0D0');
-			$(objPriority).css('border-color','#D0D0D0');
-			$(objActivity).css('border-color','#D0D0D0');
 			if(valDate == ""){
 				$(objDate).css('border-color','#ff0000');
-				err = true;
-			}
-			if(valPriority == ""){
-				$(objPriority).css('border-color','#ff0000');
-				err = true;
-			}
-			if(valActivity == "" && valActivity != 0){
-				$(objActivity).css('border-color','#ff0000');
-				err = true;
-			}
-			if(err){
 				msgerror('Пропущены обязательные поля');
 				return false;
 			}else{
-				$.post("<?=$baseurl;?>admin/save-user/<?=$userinfo['uconfirmation'];?>",
-				{'id':uID,'date':valDate,'priority':valPriority,'activity':valActivity},
+				$.post("<?=$baseurl;?>admin/save-dealer/<?=$userinfo['uconfirmation'];?>",
+				{'id':uID,'date':valDate},
 				function(data){
 					if(data.status){
 						$(objDate).val(data.date);
-						$(objPriority).val(data.priority);
-						$(objActivity).val(data.activity);
 						$(objDate).css('border-color','#00ff00');
-						$(objPriority).css('border-color','#00ff00');
-						$(objActivity).css('border-color','#00ff00');
 					}else{
 						msgerror(data.message);
 					}
@@ -106,11 +97,11 @@
 		});	
 		
 		$(".btnDel").click(function(){
-			if(!confirm('Удалить пользователя?')) return false;
+			if(!confirm("Удалить дилера?\n\nОперация не обратима и приведет\nк нарушению целосности БД!")) return false;
 			var curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			$.post(
-				"<?=$baseurl;?>admin/delete-user/<?=$userinfo['uconfirmation'];?>",
+				"<?=$baseurl;?>admin/delete-dealer/<?=$userinfo['uconfirmation'];?>",
 				{'id':uID},
 				function(data){
 					if(data.status){
@@ -123,12 +114,12 @@
 		});
 		
 		$(".StatusOff").click(function(){
-			if(!confirm('Активировать пользователя вручную?')) return false;
+			if(!confirm('Активировать дилера вручную?')) return false;
 			var curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			var btnID = this.id;
 			$.post(
-				"<?=$baseurl;?>admin/activate-user/<?=$userinfo['uconfirmation'];?>",
+				"<?=$baseurl;?>admin/activate-dealer/<?=$userinfo['uconfirmation'];?>",
 				{'id':uID},
 				function(data){
 					if(data.status){
@@ -136,6 +127,22 @@
 					}else
 						msgerror(data.message);
 				},"json");
+		});
+		
+		$(".btnRegion").click(function(e){
+			var curID = $(this).attr("rID");
+			var dlrID = $("td[rID='"+curID+"']").text();
+			var title = $("#sp"+curID).text();
+			$("#mdTitle").html(title);
+			$("#mdList").load("<?=$baseurl;?>admin/dealers-regions/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal();});
+		});
+		
+		$(".btnCompany").click(function(e){
+			var curID = $(this).attr("rID");
+			var dlrID = $("td[rID='"+curID+"']").text();
+			var title = $("#sp"+curID).text();
+			$("#mdTitle").html(title);
+			$("#mdList").load("<?=$baseurl;?>admin/dealers-company/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal();});
 		});
 		
 		function msgerror(msg){

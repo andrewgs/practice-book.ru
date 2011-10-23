@@ -61,29 +61,62 @@
 			var valRating = $(objRating).val();
 			var objOffers = $("#vOffers"+curID);
 			var valOffers = $(objOffers).val();
+			var objStatus = $("#vStatus"+curID);
+			var valStatus = $(objStatus).val();
 			$(objRating).css('border-color','#D0D0D0');
 			$(objOffers).css('border-color','#D0D0D0');
+			$(objStatus).css('border-color','#D0D0D0');
 			if(valRating == "" && valRating != 0){$(objActivity).css('border-color','#ff0000');err = true;}
 			if(valOffers == ""){$(objOffers).css('border-color','#ff0000');err = true;}
+			if(valStatus == ""){$(objStatus).css('border-color','#ff0000');err = true;}
 			if(err){
 				msgerror('Пропущены обязательные поля');
 				return false;
 			}else{
 				$.post("<?=$baseurl;?>admin/save-company/<?=$userinfo['uconfirmation'];?>",
-				{'id':cID,'rating':valRating,'offers':valOffers},
+				{'id':cID,'rating':valRating,'offers':valOffers,'status':valStatus},
 				function(data){
 					if(data.status){
 						$(objRating).val(data.rating);
 						$(objOffers).val(data.offers);
+						$(objStatus).val(data.status);
 						$(objRating).css('border-color','#00ff00');
 						$(objOffers).css('border-color','#00ff00');
+						$(objStatus).css('border-color','#00ff00');
 					}else{
 						msgerror(data.message);
 					}
 				},"json");
 			};
 		});	
-		
+		$(".btnDel").click(function(){
+			if(!confirm('Закрыть компанию?')) return false;
+			var curID = $(this).attr("rID");
+			var uID = $("td[rID='"+curID+"']").text();
+			var btnID = this.id;
+			$.post(
+				"<?=$baseurl;?>admin/delete-company/<?=$userinfo['uconfirmation'];?>",
+				{'id':uID},
+				function(data){
+					$('#'+btnID).fadeOut("slow");
+					$("#vStatus"+curID).val('0');
+					msgerror(data.message);
+				},"json");
+		});
+		$(".StatusOff").click(function(){
+			if(!confirm('Восстановить компанию?')) return false;
+			var curID = $(this).attr("rID");
+			var uID = $("td[rID='"+curID+"']").text();
+			var btnID = this.id;
+			$.post(
+				"<?=$baseurl;?>admin/restore-company/<?=$userinfo['uconfirmation'];?>",
+				{'id':uID},
+				function(data){
+					$('#'+btnID).fadeOut("slow");
+					$("#vStatus"+curID).val('0');
+					msgerror(data.message);
+				},"json");
+		});
 		function msgerror(msg){
 			$.blockUI({
 				message: msg,

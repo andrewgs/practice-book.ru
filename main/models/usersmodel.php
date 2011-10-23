@@ -321,6 +321,14 @@ class Usersmodel extends CI_Model{
 		$this->db->where('uid',$uid);
 		$this->db->update('tbl_user');
 	}
+	
+	function close_representatives($cid){
+		
+		$this->db->set('udestroy',date("Y-m-d"));
+		$this->db->where('ucompany',$cid);
+		$this->db->update('tbl_user');
+		return $this->db->affected_rows();
+	}
 
 	function get_image($id){
 	
