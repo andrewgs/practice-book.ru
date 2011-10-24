@@ -39,7 +39,7 @@
 				<li><?= anchor('about','О проекте'); ?></li>
 				<li><?= anchor('information','Партнерам'); ?></li>
 				<li><?= anchor('job','Работа'); ?></li>
-				<li><?= anchor('dilers','Дилерам'); ?></li>
+				<li><?= anchor('for-dealers','Дилерам'); ?></li>
 				<li><?= anchor('contacts','Контакты'); ?></li>
 			</ul>
 		</nav>

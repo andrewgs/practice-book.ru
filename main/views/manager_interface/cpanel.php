@@ -3,10 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -21,8 +21,8 @@
 	<![endif]-->
 	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/custom.css">
 	
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.w278{width: 278px;}
@@ -1197,12 +1197,12 @@
 		<?php $this->load->view('manager_interface/footer'); ?>
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-		$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
+		$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);}});});
 		$(".tooltip").click(function(event){event.preventDefault();})
 		$("#select-region").change(function(){change_region($(this));});
 		$("#select-activity").change(function(){change_activity($(this));});

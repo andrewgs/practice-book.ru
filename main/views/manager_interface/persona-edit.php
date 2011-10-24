@@ -3,21 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/jquery-ui.css?v=1.8.5">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy-combo.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/jquery-ui.css?v=1.8.5">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		span.text{font: bold 12px/14px "Trebuchet MS",Arial,Helvetica,sans-serif; margin: 0 5px 0 0;}
 		.h150{min-height: 150px;}
@@ -43,12 +43,12 @@
 		<?php $this->load->view('manager_interface/footer'); ?>
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery-ui.min.js?v=1.8.5"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>ckfinder/ckfinder.js"></script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>ckfinder/ckfinder.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var config = {
@@ -76,7 +76,7 @@
 			var editor = $('#prNote').ckeditorGet();
 			CKFinder.setupCKEditor(editor,"<?= $baseurl.'ckfinder/'; ?>");
 			
-		$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);}});});
+		$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);}});});
 		$("#forAllRegion").click(function(){
 			if(this.checked)
 				$("#msgAllRegion").text("Вся информация о персонах в других регионах будет перезаписана");

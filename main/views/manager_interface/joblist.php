@@ -13,7 +13,7 @@
 		<?php endif; ?>
 		<?= $manager['jobs'][$i]['job_cname']; ?>
 		<span class="btndelete" id="dljob1">
-			<input type="image" title="Удалить" class="ajaxdel" id="job<?=$i;?>" src="<?= $baseurl; ?>images/delete.png" />
+			<input type="image" title="Удалить" class="ajaxdel" id="job<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />
 		</span>
 		<div class="jobPosiotion" id="">
 			&rarr;&nbsp;<?= $manager['jobs'][$i]['job_position']; ?>

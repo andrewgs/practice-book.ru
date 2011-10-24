@@ -27,10 +27,10 @@
 				</div>
 			<?php endif; ?>
 			<?php if($userinfo['priority'] and !$representative[$i]['upriority']): ?>
-				<input type="image" title="Удалить" class="ajaxdel" rep="<?=$i;?>" src="<?= $baseurl; ?>images/delete.png" />
+				<input type="image" title="Удалить" class="ajaxdel" rep="<?=$i;?>" src="<?=$baseurl;?>images/delete.png" />
 			<?php endif; ?>
 			<?php if($representative[$i]['ustatus'] == 'disabled'): ?>
-			<input type="image" title="Не активирован" class="ajaxdel" style="margin-right: 5px;" src="<?= $baseurl; ?>images/exclamation.png" />
+			<input type="image" title="Не активирован" class="ajaxdel" style="margin-right: 5px;" src="<?=$baseurl;?>images/exclamation.png" />
 			<?php endif; ?>
 			<div class="clear"></div>
 			<?php if($representative[$i]['uactive'] and $representative[$i]['uid'] != $userinfo['uid']): ?>

@@ -3,21 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
 	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
 	<![endif]-->
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		.accordion {
 			width: 940px;border-bottom: solid 1px #c4c4c4;}
@@ -77,7 +77,7 @@
 					
 					<!--<div class="content-separator">
 						<img class="floated" src=""><strong></strong>
-						<a title="Отправить личное сообщение менеджеру" href="#" ><img src="<?= $baseurl; ?>images/email.png" /></a>
+						<a title="Отправить личное сообщение менеджеру" href="#" ><img src="<?=$baseurl;?>images/email.png" /></a>
 						тел.:<br>e-mail:<br>
 						<div style="clear:both"></div>
 					</div>-->
@@ -91,13 +91,13 @@
 		<?php $this->load->view('users_interface/footer/footer'); ?>
 	</div> <!-- end of #container -->
 <script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script src="<?= $baseurl; ?>javascript/jquery.bgiframe.min.js?v=1"></script>
-	<script src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
-	<script src="<?= $baseurl; ?>javascript/script.js?v=1"></script>	
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#lnk-login").click(function(event){autorized(event);});
@@ -151,9 +151,9 @@
 					}
 			}
 				
-			function shotduwn(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){$("#loginstatus").load("<?= $baseurl; ?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});}});};
+			function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});}});};
 				
-			function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?= $baseurl; ?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?= $baseurl; ?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});}else msgerror(data.message);},"json");}};
+			function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});}else msgerror(data.message);},"json");}};
 			$("a#Support").click(function(e){
 			$("#support-modal-content").modal();
 			return false;
@@ -198,12 +198,12 @@
 				});
 	</script>
 <!--[if lt IE 7 ]>
-	<script src="<?= $baseurl; ?>javascript/dd_belatedpng.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 <![endif]-->
 
 <!--
-	<script src="<?= $baseurl; ?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
-	<script src="<?= $baseurl; ?>javascript/profiling/config.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/profiling/config.js?v=1"></script>
 <script>
 	var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; 
 	(function(d, t) {

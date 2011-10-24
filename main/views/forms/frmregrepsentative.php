@@ -12,8 +12,8 @@
 			<input class="reg-form-input" type="password" name="confirmpass" id="confpassword" value="<?=set_value('confirmpass');?>"/>
 			<label class="label-input">Фото представителя</label>
 			<?= form_error('userfile'); ?>
-			<input class="reg-form-edit" type="file" name="userfile" accept="image/jpeg,png,gif" size="30"/> 
-			<div class="form-reqs">Поддерживаемые форматы: JPG, GIF, PNG</div>
+			<input class="reg-form-edit" type="file" name="userfile" accept="image/jpeg,png,gif" size="32"/> 
+			<div class="form-reqs" style="width:275px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
 		</div>
 		<div class="grid_4 prefix_2">
 			<label class="label-input">Введите Фамилию <span class="necessarily" title="Поле не может быть пустым">*</span></label>

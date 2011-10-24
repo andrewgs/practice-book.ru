@@ -1,8 +1,8 @@
-<?= form_open($formaction,array('id'=>'formSignup')); ?>
-	<h1>Выбор сферы деятельности компании</h1>
+<?= form_open($this->uri->uri_string(),array('id'=>'formSignup')); ?>
 	<div class="grid_12">
-		<label class="label-input">Сферы деятельности компании: <span class="necessarily" title="Обязательно нужно указать">*</span></label> 
-		<div class="box-content" >
+		<hr size="2"/>
+		<label class="label-input">Отрасли: <span class="necessarily" title="Обязательно нужно указать">*</span></label> 
+		<div class="box-content" style="max-height: 1024px;">
 		<?php
 			function build_tree($cats,$parent_id,$cnt){
 				if(isset($cats[$parent_id])):
@@ -27,5 +27,6 @@
 		</div>
 	</div>
 	<div class="clear"></div>
-	<input type="submit" class="btn-action margin-1em" name="submit" id="btnSubmit" value="Следующий Шаг >> "/>
+	<hr size="2"/>
+	<input type="submit" class="btn-action margin-1em" name="submit" id="next" value="Следующий Шаг >> "/>
 <?= form_close(); ?>

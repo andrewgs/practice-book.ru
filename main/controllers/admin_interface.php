@@ -2128,7 +2128,7 @@ class Admin_interface extends CI_Controller{
 
 	function save_company(){
 	
-		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'','offers'=>'','status'=>'');
+		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','rating'=>'','offers'=>'','statuscmp'=>'');
 		$cid = $this->input->post('id');
 		$rating = trim($this->input->post('rating'));
 		$offers = trim($this->input->post('offers'));
@@ -2142,7 +2142,7 @@ class Admin_interface extends CI_Controller{
 			$statusval['status'] = TRUE;
 			$statusval['rating'] = $rating;
 			$statusval['offers'] = $offers;
-			$statusval['status'] = $status;
+			$statusval['statuscmp'] = $status;
 		}
 		echo json_encode($statusval);
 	}

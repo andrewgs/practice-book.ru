@@ -3,20 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy-combo.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">  
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">  
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		#btnDelJobLine{display: none;}
 		#select-region{float: left;margin-right: 20px;}
@@ -48,13 +48,13 @@
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.megaselectlist.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.simplemodal.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.megaselectlist.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.simplemodal.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			
 			$("#btnSubmit").click(function(event){
 				var err = false;
@@ -78,7 +78,7 @@
 					$("#email").focus();event.preventDefault();return false;};
 			});
 			
-			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?= $baseurl; ?>views/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});
+			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?=$baseurl;?>views/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});
 			$("#btnDelJobLine").click(function(){$("div[list='jobLine']:last").remove();var cnt = $("div[list='jobLine']").size();if(cnt <= 1) $("#btnDelJobLine").hide();});
 			
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}});

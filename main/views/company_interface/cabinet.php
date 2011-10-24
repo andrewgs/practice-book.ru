@@ -3,21 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="description" content="<?= $description; ?>"/>
-	<meta name="author" content="<?= $author; ?>"/>
-	<meta name="keywords" content="<?= $keywords; ?>"/>
-	<title><?= $title; ?></title>
+	<meta name="description" content="<?=$description;?>"/>
+	<meta name="author" content="<?=$author;?>"/>
+	<meta name="keywords" content="<?=$keywords;?>"/>
+	<title><?=$title;?></title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/style.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/960.css?v=1">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/jquery-ui.css?v=1.8.5">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy-combo.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/sexy.css">
-	<link rel="stylesheet" href="<?= $baseurl; ?>css/custom.css">
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
-	<script src="<?= $baseurl; ?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/jquery-ui.css?v=1.8.5">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
+	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
 		.ajaxsave,.ajaxdel,.ajaxSaveFile {float: right;padding: 5px;margin-right: 50px;cursor: pointer;}
 		.mbottom{margin-bottom: 10px;}
@@ -26,7 +26,7 @@
 		.box-controls {display:block;float:right;height:16px;margin:10px 20px 0 5px;text-indent:-9999px;width:16px;}
 		.messageBox{margin: 10px 0 0px 0px;font: bold normal 125% serif;color: #808080;}
 		#company-data{margin: 10px 0 10px 0;}
-		.box-controls.ask { background: url("<?= $baseurl; ?>/images/ask_transparent.png") no-repeat scroll 0 0 transparent; }
+		.box-controls.ask { background: url("<?=$baseurl;?>/images/ask_transparent.png") no-repeat scroll 0 0 transparent; }
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -43,11 +43,11 @@
 		<?php $this->load->view('company_interface/footer'); ?>
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			
 			
 			$("#select-region").change(function(){$("#change-region").remove();if($(this).val()>0){$(this).css('float','left');$(this).after('<input type="button" class="lnk-submit" id="change-region" value="Продолжить"/>');$("#change-region").live('click',function(){$("#regionview").submit();});};});
@@ -56,7 +56,7 @@
 			
 			$(".ajaxsave").click(function(){var btnID = this.id;saveSingleData(btnID);});
 			
-			$("#regman").click(function(){window.location="<?= $baseurl; ?>company/representatives/<?=$userinfo['uconfirmation'];?>";});
+			$("#regman").click(function(){window.location="<?=$baseurl;?>company/representatives/<?=$userinfo['uconfirmation'];?>";});
 			
 			function saveSingleData(btnID){
 				var txtObj = $("#v"+btnID);

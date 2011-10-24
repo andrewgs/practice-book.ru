@@ -19,15 +19,13 @@
 			<div class="clear"></div>
 			<div class="vRight" id="dsavatar"><?= form_error('userfile'); ?></div>
 			<?= form_open_multipart($this->uri->uri_string(),array('id'=>'formAvatar','class'=>'formular')); ?>
-				<input class="reg-form-input" type="file" id="vavatar" name="userfile">
+				<input class="reg-form-input" type="file" name="userfile" accept="image/jpeg,png,gif" size="32" id="vavatar" />
 				<?= form_hidden('fileupload',TRUE); ?>
 			<?= form_close(); ?>
 			<span class="btnsave" id="svavatar">
 			<input type="image" title="Сменить аватар" class="ajaxSaveFile" id="savatar" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
-			<div class="grid_4" style="margin:0px;width:75%;">
-				<div class="form-reqs">Поддерживаемые форматы: JPG, GIF, PNG</div>
-			</div>
+			<div class="form-reqs" style="width:275px;">Поддерживаемые форматы: JPG, GIF, PNG</div>
 		</div>
 		<div class="grid_5 prefix_1">
 			

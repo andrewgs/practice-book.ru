@@ -30,5 +30,11 @@ class Cmpsrvmodel extends CI_Model {
 		if(count($data)>0) return TRUE;
 		return FALSE;
 	}
+	function delete_records($cid){
+	
+		$this->db->where('cs_cmpid',$cid);
+		$this->db->delete('tbl_companyservices');
+		return $this->db->affected_rows();
+	}
 }
 ?>

@@ -13,7 +13,7 @@
 			<div class="newsID" id="id<?=$i?>"><?=$questions[$i]['mraq_id'];?></div>
 			<div class="content-separator">
 				<?php if(!$questions[$i]['mraq_status']):?>
-					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?= $baseurl; ?>images/exclamation.png"/>
+					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?=$baseurl;?>images/exclamation.png"/>
 				<?php endif; ?>
 				<span class="text">Вопрос: </span>
 				<div class="nsh-title" id="t<?=$i?>"><?=$questions[$i]['mraq_title'];?></div>

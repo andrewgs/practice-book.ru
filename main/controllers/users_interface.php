@@ -8,7 +8,6 @@ class Users_interface extends CI_Controller{
 						"05"=>"мая","06"=>"июня","07"=>"июля","08"=>"августа",
 						"09"=>"сентября","10"=>"октября","11"=>"ноября","12"=>"декабря");
 	
-	
 	function __construct(){
 	
 		parent::__construct();
@@ -87,6 +86,7 @@ class Users_interface extends CI_Controller{
 					'text'			=> $this->othertextmodel->read_text(50)
 			);
 		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		$pagevar['userinfo']['regstatus'] = $this->session->userdata('regstatus');
 		if($this->user['manager']):
 			if($this->user['priority']):
 				$pagevar['regions'] = $this->regionmodel->read_records();
@@ -110,7 +110,6 @@ class Users_interface extends CI_Controller{
 		else:
 			$pagevar['regions'] = $this->regionmodel->read_records();
 		endif;
-		$this->session->unset_userdata('regstatus');
 		$this->load->view('users_interface/index',$pagevar);
 	}
 
@@ -400,7 +399,29 @@ class Users_interface extends CI_Controller{
 		$this->session->unset_userdata('regstatus');
 		$this->load->view('users_interface/dilers',$pagevar);
 	}
-
+	
+	function dealers_list(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> $this->regionmodel->read_records(),
+					'section_name'	=> '',
+					'dealers'		=> array()
+			);
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		$curregion = $this->uri->segment(3);
+		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
+		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name');
+		$pagevar['dealers'] = $this->unionmodel->dealers_region($curregion);
+		$this->session->unset_userdata('regstatus');
+		$this->load->view('users_interface/dealers-list',$pagevar);
+	}
+	
 	/* --------------------------------------------- started work ---------------------------------------------*/
 	
 	function select_settings(){
@@ -439,7 +460,7 @@ class Users_interface extends CI_Controller{
 		endswitch;
 		$this->load->view('users_interface/region-box-select',$pagevar);
 	}
-
+	
 	function create_select_activity(){
 	
 		$act_id = $this->input->post('aid');
@@ -1201,10 +1222,48 @@ class Users_interface extends CI_Controller{
 	
 	/* ----------------------------------------	registering company -------------------------------------------*/
 	
-	function newcompany1(){
+	function abort_registering(){
 	
 		$regstatus = $this->session->userdata('regstatus');
-		if($regstatus == 2):
+		if(!$regstatus):
+			show_404();
+		else:
+			$cmpid = $this->session->userdata('companyid');
+			$this->companymodel->delete_record($cmpid);
+			$this->cmpsrvmodel->delete_records($cmpid);
+			$this->usersmodel->delete_representatives($cmpid);
+			$this->session->unset_userdata('regstatus');
+			$this->session->unset_userdata('companyid');
+			redirect('');
+		endif;
+		
+	}	
+	
+	function register_step0(){
+	
+		if($this->input->post('submit')):
+			$cookieuid = $this->session->userdata('login_id');
+			if($cookieuid) redirect('');
+			$code = $this->input->post('code');
+			if(!$code) redirect('');
+			$cmpid = $this->companymodel->company_exist('cmp_confirmation',$code);
+			if($cmpid):
+				$this->session->set_userdata('companyid',$cmpid);
+				$this->companymodel->save_single_data($cmpid,'cmp_confirmation','');
+				$this->session->set_userdata('regstatus',1);
+				redirect('registering/step-1');
+			endif;
+		else:
+			show_404();
+		endif;
+	}
+	
+	function register_step1(){
+	
+		$regstatus = $this->session->userdata('regstatus');
+		if(!$regstatus):
+			show_404();
+		elseif($regstatus == 2):
 			redirect('registering/step-2');
 		elseif($regstatus == 3):
 			redirect('registering/step-3');
@@ -1220,10 +1279,9 @@ class Users_interface extends CI_Controller{
 			);
 		
 		$pagevar['regions'] = $this->regionmodel->read_records();
-		$this->session->set_userdata('regstatus',1);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title',' ','required|callback_company_check|trim');
-			$this->form_validation->set_rules('city',' ','required|is_natural_no_zero');
+			$this->form_validation->set_rules('region',' ','required|is_natural_no_zero');
 			$this->form_validation->set_message('is_natural_no_zero','Укажите город основной деятельности');
 			$this->form_validation->set_rules('maker',' ','');
 			$this->form_validation->set_rules('ur_face',' ','required|trim');
@@ -1233,28 +1291,17 @@ class Users_interface extends CI_Controller{
 			$this->form_validation->set_rules('site',' ','prep_url|trim');
 			$this->form_validation->set_rules('email',' ','valid_email|callback_cmp_email_check|trim');
 			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
-			$this->form_validation->set_rules('tel',' ','required|min_length[6]|integer|trim');
-			$this->form_validation->set_rules('telfax',' ','min_length[6]|integer|trim');
-			$this->form_validation->set_message('min_length','Не верный номер');
-			$this->form_validation->set_message('integer','Только целые числа');
+			$this->form_validation->set_rules('tel',' ','required|trim');
+			$this->form_validation->set_rules('telfax',' ','trim');
 			$this->form_validation->set_rules('uradres',' ','required|trim');
 			$this->form_validation->set_rules('realadres',' ','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
-				$this->newcompany1();
+				$this->register_step1();
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
-				$cookieuid = $this->session->userdata('login_id');
-				if($cookieuid):
-show_error("Внимание!<br/>Вы авторизированы как ".$this->user['ufullname']."<br/>Авторизированным пользователям запрещено дабавлять компании.");
-				endif;
-				
-				if(!$_POST['city']):
-					$this->session->set_userdata('errstatus',TRUE);
-					redirect('script_error');
-				endif;
 				if($_FILES['userfile']['error'] != 4):
 					$_POST['logo'] = $this->resize_img($_FILES['userfile']['tmp_name'],128,128);
 					$_POST['thumb'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
@@ -1262,8 +1309,11 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 					$_POST['logo'] = file_get_contents(base_url().'images/no_photo.jpg');
 					$_POST['thumb'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
-				$company_id = $this->companymodel->insert_record($_POST);
-				$this->session->set_userdata('companyid',$company_id);
+				$cmpid = $this->session->userdata('companyid');
+				$ucmp = $this->companymodel->update_record($cmpid,$_POST);
+				if(!$ucmp):
+					show_error("Внимание!<br/>Нарушена процедура регисрации. Обратитесь к региональному дилеру за консультацией");
+				endif;
 				$this->session->set_userdata('regstatus',2);
 				redirect('registering/step-2');
 			endif;
@@ -1271,7 +1321,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		$this->load->view('users_interface/registration/newcompany1',$pagevar);
 	}
 
-	function newcompany2(){
+	function register_step2(){
 		
 		$regstatus = $this->session->userdata('regstatus');
 		if(!$regstatus):
@@ -1310,20 +1360,20 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 				redirect('registering/step-3');
 			else:
 				$_POST['submit'] = NULL;
-				$this->newcompany2();
+				$this->register_step2();
 				return FALSE;
 			endif;
 		endif;
 		$services = $this->activitymodel->read_records();
 		if(count($services) > 0):
-			for($i = 0; $i < count($services); $i++):
+			for($i=0;$i<count($services); $i++):
 				$pagevar['list'][$services[$i]['act_parentid']][] = $services[$i];
 			endfor;
 		endif;
 		$this->load->view('users_interface/registration/newcompany2',$pagevar);
 	}
 	
-	function newcompany3(){
+	function register_step3(){
 	
 		$regstatus = $this->session->userdata('regstatus');
 		if(!$regstatus):
@@ -1349,8 +1399,8 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('login',' ','required|valid_email|callback_login_check|trim');
 			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
-			$this->form_validation->set_rules('password',' ','required|min_length[6]|trim');
-			$this->form_validation->set_rules('confirmpass',' ','required|min_length[6]|matches[password]|trim');
+			$this->form_validation->set_rules('password',' ','required|min_length[8]|trim');
+			$this->form_validation->set_rules('confirmpass',' ','required|min_length[8]|matches[password]|trim');
 			$this->form_validation->set_message('matches','Пароли не совпадают');
 			$this->form_validation->set_rules('userfile',' ','callback_userfile_check');
 			$this->form_validation->set_rules('fname',' ','required|trim');
@@ -1358,13 +1408,11 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 			$this->form_validation->set_rules('tname',' ','required|trim');
 			$this->form_validation->set_rules('department',' ','required');
 			$this->form_validation->set_rules('position',' ','required|trim');
-			$this->form_validation->set_rules('phones',' ','required|min_length[6]|integer|trim');
-			$this->form_validation->set_message('min_length','Меньше 6 символов');
-			$this->form_validation->set_message('integer','Только целые числа');
+			$this->form_validation->set_rules('phones',' ','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
-				$this->newcompany3();
+				$this->register_step3();
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
@@ -1390,7 +1438,7 @@ show_error("Внимание!<br/>Вы авторизированы как ".$th
 		$this->load->view('users_interface/registration/newcompany3',$pagevar);
 	}
 
-	function newcompany4(){
+	function register_step4(){
 	
 		$regstatus = $this->session->userdata('regstatus');
 		if(!$regstatus):

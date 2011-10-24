@@ -13,7 +13,7 @@
 			<div class="newsID" id="id<?=$i?>"><?=$tips[$i]['tps_id'];?></div>
 			<div class="content-separator">
 				<?php if(!$tips[$i]['tps_status']):?>
-					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?= $baseurl; ?>images/exclamation.png"/>
+					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?=$baseurl;?>images/exclamation.png"/>
 				<?php endif; ?>
 				<div class="nsh-title" id="t<?=$i?>"><?=$tips[$i]['tps_title'];?></div>
 				<div class="nshNote" id="ds<?=$i?>"><?=$tips[$i]['tps_note'];?></div>

@@ -33,7 +33,7 @@
 		<input type="image" title="Сохранить" class="NewsSave btnHidden" id="s<?=$i?>" nID="<?=$i?>" src="<?=$baseurl;?>images/save.png" />
 				<?php if($news[$i]['pdateend'] != "01-01-3000"):?>
 					<?php if(strtotime($news[$i]['dend']) < strtotime(date("Y-m-d"))):?>
-						<input type="image" title="Закончилось время публикации" class="NewsExc" src="<?= $baseurl; ?>images/exclamation.png" />
+						<input type="image" title="Закончилось время публикации" class="NewsExc" src="<?=$baseurl;?>images/exclamation.png" />
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>	

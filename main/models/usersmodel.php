@@ -357,6 +357,13 @@ class Usersmodel extends CI_Model{
 		return $this->db->affected_rows();
 	}
 	
+	function delete_representatives($cid){
+	
+		$this->db->where('ucompany',$cid);
+		$this->db->delete('tbl_user');
+		return $this->db->affected_rows();
+	}
+	
 	function close_consult($uid,$check){
 	
 		$this->db->set('ucloseconsult',$check);

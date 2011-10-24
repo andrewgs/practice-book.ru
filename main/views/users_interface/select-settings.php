@@ -157,7 +157,7 @@
 		<?php $this->load->view('users_interface/footer/footer-nomenu'); ?>
 	</div> <!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?= $baseurl; ?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript">
@@ -334,12 +334,12 @@
 		});
 	</script>
 <!--[if lt IE 7 ]>
-	<script src="<?= $baseurl; ?>javascript/dd_belatedpng.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 <![endif]-->
 
 <!--
-	<script src="<?= $baseurl; ?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
-	<script src="<?= $baseurl; ?>javascript/profiling/config.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/profiling/config.js?v=1"></script>
 <script>
 	var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; 
 	(function(d, t) {

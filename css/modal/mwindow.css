@@ -9,7 +9,8 @@
 #tips-modal-content-list,#unit-modal-note-content,
 #offer-modal-content,#consultations-modal-content,
 #single-news-modal-content,#single-cmpnews-modal-content,
-#single-specials-modal-content,#single-shares-modal-content{
+#single-specials-modal-content,#single-shares-modal-content,
+#registering-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}

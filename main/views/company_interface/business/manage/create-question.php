@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -88,11 +88,11 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.blockUI.js"></script>
-	<script type="text/javascript" src="<?= $baseurl; ?>javascript/jquery.maxlength-min.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.maxlength-min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addQuestion").click(function(event){$("#title").css('border-color','#D0D0D0');if($("#title").val() == ''){$("#title").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});

@@ -12,9 +12,11 @@
 	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/style.css?v=1">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/960.css?v=1">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/jquery-ui.css?v=1.8.5">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
 	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
@@ -33,18 +35,72 @@
 		<?php else: ?>
 			<?php $this->load->view('users_interface/header/header-logout'); ?>
 		<?php endif; ?>
-		<div id="main">
-			<div class="container_12 framing">
-				<div class="grid_12">
-					<div class="box-header" style="margin:20px 0px 40px 0px;">
-						<h2>Предложение для SEO и Web студий.</h2>
+		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="content-top">
+					<h1>Список дилеров</h1>
+				</div>
+				<div class="content-left">
+					<div class="content-left-box">
+						<h3>Регионы</h3>
+						<div class="content-left-text">
+							<div class="left-menu">
+								<ul>
+								<?php for($i=0;$i<count($regions);$i++): ?>		
+									<li><?=anchor('dealers-list/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+								<?php endfor; ?>
+								</ul>
+							</div>
+						</div>
 					</div>
-					<div style="margin-top">
-						<?=$text;?>
+				</div>
+				<div class="content-right">
+					<div class="content-right-top">
+						<div class="content-right-bot">
+							<div class="right-title">
+								<h3><?=$section_name;?></h3>
+							</div>
+							<div class="right-text">
+							<?php for($i=0;$i<count($dealers);$i++):?>
+								<div class="rtdblock">
+									<div class="rtblockbg">
+										<div class="rtdblockwrap">
+											<span class="rtd-num"><?=$this->uri->segment(5)+$i+1;?></span>
+											<span class="news-pic">
+						<img src="<?=$baseurl;?>davatar/viewimage/<?=$dealers[$i]['dlr_id'];?>" alt="" align="left" width="74" height="74"/>
+											</span>
+											<div class="rtd-autor-info">
+										<h3><?=$dealers[$i]['dlr_name'].' '.$dealers[$i]['dlr_subname'].' '.$dealers[$i]['dlr_thname'];?></h3>
+												<span>
+													<?=$dealers[$i]['dlr_position'];?><br />
+												</span>
+											</div>
+											<div class="rtd-info">
+												<div class="green">Зарег.компаний: <span><?=$dealers[$i]['dlr_company'];?></span></div>
+												<div class="silver">Месяцев на сайте: <span><?=$dealers[$i]['months'];?></span></div>
+											</div>
+											<div class="clear">&nbsp;</div>
+											<div class="rtd-contact">
+											<?php if($dealers[$i]['dlr_skype']):?>
+												<span class="skype"><?=$dealers[$i]['dlr_skype'];?></span>
+											<?php endif; ?>
+											<?php if($dealers[$i]['dlr_icq']):?>
+												<span class="icq"><?=$dealers[$i]['dlr_icq'];?></span>
+											<?php endif; ?>
+												<span class="mail"><?=$dealers[$i]['dlr_email'];?></span>
+											<?php if($dealers[$i]['dlr_phone']):?>
+												<span class="phone"><?=$dealers[$i]['dlr_phone'];?></span>
+											<?php endif; ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							<?php endfor; ?>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
 		<div id="support-modal-content">
 			<?php $this->load->view('forms/frmsupport'); ?>

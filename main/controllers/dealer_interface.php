@@ -21,6 +21,8 @@ class Dealer_interface extends CI_Controller{
 		$this->load->model('dealersmodel');
 		$this->load->model('unionmodel');
 		$this->load->model('supportmodel');
+		$this->load->model('departmentsmodel');
+		$this->load->model('cmpunitsmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -221,8 +223,217 @@ class Dealer_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
-	function register_company(){
+	function register_step1(){
+	
+		if($this->uri->total_segments()==3):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-1');
+		endif;
+	
+		$regstatus = $this->session->userdata('regstatus');
+		if($regstatus == 2):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-2');
+		elseif($regstatus == 3):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-3');
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Регистрация новой компании | Шаг №1',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array()
+			);
 		
+		$pagevar['regions'] = $this->regionmodel->read_records();
+		$this->session->set_userdata('regstatus',1);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('title',' ','required|callback_company_check|trim');
+			$this->form_validation->set_rules('region',' ','required|is_natural_no_zero');
+			$this->form_validation->set_message('is_natural_no_zero','Укажите город основной деятельности');
+			$this->form_validation->set_rules('maker',' ','');
+			$this->form_validation->set_rules('ur_face',' ','required|trim');
+			$this->form_validation->set_rules('userfile',' ','callback_userfile_check');
+			$this->form_validation->set_rules('comment',' ','required|xss_clean|encode_php_tags|trim');
+			$this->form_validation->set_rules('recvizit',' ','required|xss_clean|encode_php_tags|trim');
+			$this->form_validation->set_rules('site',' ','prep_url|trim');
+			$this->form_validation->set_rules('email',' ','valid_email|callback_cmp_email_check|trim');
+			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
+			$this->form_validation->set_rules('tel',' ','required|trim');
+			$this->form_validation->set_rules('telfax',' ','trim');
+			$this->form_validation->set_rules('uradres',' ','required|trim');
+			$this->form_validation->set_rules('realadres',' ','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->register_step1();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['logo'] = $this->resize_img($_FILES['userfile']['tmp_name'],128,128);
+					$_POST['thumb'] = $this->resize_img($_FILES['userfile']['tmp_name'],74,74);
+				else:
+					$_POST['logo'] = file_get_contents(base_url().'images/no_photo.jpg');
+					$_POST['thumb'] = file_get_contents(base_url().'images/no_photo.jpg');
+				endif;
+				$company_id = $this->companymodel->insert_record($_POST);
+				$this->session->set_userdata('companyid',$company_id);
+				$this->session->set_userdata('regstatus',2);
+				redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-2');
+			endif;
+		endif;
+		$this->load->view('dealer_interface/register-step1',$pagevar);
+	}
+
+	function register_step2(){
+		
+		$regstatus = $this->session->userdata('regstatus');
+		if(!$regstatus):
+			redirect('dealers/control-panel/'.$this->user['uconfirmation']);
+		elseif($regstatus == 1):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-1');
+		elseif($regstatus == 3):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-3');
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Регистрация новой компании | Шаг №2',
+					'baseurl' 		=> base_url(),
+					'list' 			=> array()
+			);
+		$this->session->set_userdata('regstatus',2);
+		if($this->input->post('submit')):
+			if($this->input->post('servname')):
+				$_POST['submit'] = NULL;
+				$cmpid = $this->session->userdata('companyid');
+				if(!$cmpid):
+					$this->session->set_userdata('errstatus',TRUE);
+					redirect('script_error');
+				endif;
+				$this->cmpsrvmodel->multi_insert($_POST['servname'],$cmpid);
+				$units = $this->unionmodel->units_by_activity($_POST['servname']);
+				if(count($units)):
+					for($i=0;$i<count($units);$i++):
+						$this->cmpunitsmodel->insert_empty($cmpid,$units[$i],$units[$i]['groupe']);
+					endfor;
+				endif;
+				$this->session->set_userdata('regstatus',3);
+				redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-3');
+			else:
+				$_POST['submit'] = NULL;
+				$this->register_step2();
+				return FALSE;
+			endif;
+		endif;
+		$services = $this->activitymodel->read_records();
+		if(count($services) > 0):
+			for($i=0;$i<count($services);$i++):
+				$pagevar['list'][$services[$i]['act_parentid']][] = $services[$i];
+			endfor;
+		endif;
+		$this->load->view('dealer_interface/register-step2',$pagevar);
+	}
+	
+	function register_step3(){
+	
+		$regstatus = $this->session->userdata('regstatus');
+		if(!$regstatus):
+			redirect('dealers/control-panel/'.$this->user['uconfirmation']);
+		elseif($regstatus == 1):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-1');
+		elseif($regstatus == 2):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-2');
+		endif;
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Регистрация новой компании | Шаг №3',
+					'baseurl' 		=> base_url(),
+					'regions'		=> array(),
+					'departments'	=> array()
+			);
+		$pagevar['regions'] = $this->regionmodel->read_records();
+		$pagevar['departments'] = $this->departmentsmodel->read_records();
+		$this->session->set_userdata('regstatus',3);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('login',' ','required|valid_email|callback_login_check|trim');
+			$this->form_validation->set_message('valid_email','Укажите правильный адрес.');
+			$this->form_validation->set_rules('password',' ','required|min_length[8]|trim');
+			$this->form_validation->set_rules('confirmpass',' ','required|min_length[8]|matches[password]|trim');
+			$this->form_validation->set_message('matches','Пароли не совпадают');
+			$this->form_validation->set_rules('userfile',' ','callback_userfile_check');
+			$this->form_validation->set_rules('fname',' ','required|trim');
+			$this->form_validation->set_rules('sname',' ','required|trim');
+			$this->form_validation->set_rules('tname',' ','required|trim');
+			$this->form_validation->set_rules('department',' ','required');
+			$this->form_validation->set_rules('position',' ','required|trim');
+			$this->form_validation->set_rules('phones',' ','requiredtrim');
+			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->register_step3();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				if($_FILES['userfile']['error'] != 4):
+					$_POST['photo'] = $this->resize_img($_FILES['userfile']['tmp_name'],96,120);
+				else:
+					$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
+				endif;
+				$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
+				$_POST['cmpid'] = $this->session->userdata('companyid');
+				if(!$_POST['cmpid']):
+					$this->session->set_userdata('errstatus',TRUE);
+					redirect('script_error');
+				endif;
+				$_POST['icq'] = $_POST['skype'] = ''; $_POST['priority'] = 1;
+				$_POST['birthday'] = "0000-00-00"; $_POST['manager'] =  $_POST['activity']= 0;
+				$user_id = $this->usersmodel->insert_record($_POST);
+				$this->session->set_userdata('userid',$user_id);
+				$this->session->set_userdata('regstatus',4);
+				redirect('dealer/register-company/'.$this->user['uconfirmation'].'/finish');
+			endif;
+		endif;
+		$this->load->view('dealer_interface/register-step3',$pagevar);
+	}
+
+	function register_step4(){
+	
+		$regstatus = $this->session->userdata('regstatus');
+		if(!$regstatus):
+			redirect('dealer/control-panel/'.$this->user['uconfirmation']);
+		elseif($regstatus == 1):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-1');
+		elseif($regstatus == 2):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-2');
+		elseif($regstatus == 3):
+			redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-3');
+		endif;
+		$this->session->unset_userdata('regstatus');
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Регистрация новой компании | Завершение регистрации',
+					'baseurl' 		=> base_url(),
+					'text' 			=> ''
+			);
+		$cmpid = $this->session->userdata('companyid');
+		$userid = $this->session->userdata('userid');
+		$confirm = $this->usersmodel->read_field($userid,'uconfirmation');
+		$email = $this->usersmodel->read_field($userid,'uemail');
+		$message = 'Ваша компания зарегистрирована."\n\n"Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$confirm.'" target="_blank">'.base_url().'activation/'.$confirm.'</a>'."\nИли скопируйте ссылку в окно ввода адреса браузера и нажмите enter.\n";
+		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+			$pagevar['text'] = '<br><br><b>Учетная запись создана.</b><p><b>На адрес "'.$email.'" выслано письмо.</b></p>';
+			$this->load->view('dealer_interface/message',$pagevar);
+			return TRUE;
+		else:
+			$this->email->print_debugger();
+		endif;
 	}
 	
 	function userfile_check($file){
@@ -265,7 +476,7 @@ class Dealer_interface extends CI_Controller{
 
 	function login_check($login){
 		
-		if($this->dealersmodel->user_exist('uemail',$login)):
+		if($this->usersmodel->user_exist('uemail',$login)):
 			$this->form_validation->set_message('login_check','Логин уже занят');
 			return FALSE;
 		endif;

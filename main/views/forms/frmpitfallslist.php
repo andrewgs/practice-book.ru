@@ -13,7 +13,7 @@
 			<div class="newsID" id="id<?=$i?>"><?=$pitfalls[$i]['pf_id'];?></div>
 			<div class="content-separator">
 				<?php if(!$pitfalls[$i]['pf_status']):?>
-					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?= $baseurl; ?>images/exclamation.png"/>
+					<input type="image" title="Не прошла модерацию" id="ex<?=$i?>" class="NewsExc" src="<?=$baseurl;?>images/exclamation.png"/>
 				<?php endif; ?>
 				<div class="nsh-title" id="t<?=$i?>"><?=$pitfalls[$i]['pf_title'];?></div>
 				<div class="nshNote" id="ds<?=$i?>"><?=$pitfalls[$i]['pf_note'];?></div>

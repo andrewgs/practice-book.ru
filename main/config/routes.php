@@ -18,6 +18,9 @@ $route['support'] = "users_interface/support";
 $route['information'] = "users_interface/information";
 $route['for-dealers'] = "users_interface/for_dealers";
 
+$route['dealers-list'] = "users_interface/dealers_list";
+$route['dealers-list/region/:num'] = "users_interface/dealers_list";
+
 /* --------------------------------------------- started work ---------------------------------------------*/
 $route['started'] = "users_interface/select_settings";
 $route['users/select-region'] = "users_interface/create_select_region";
@@ -39,10 +42,12 @@ $route['representatives/company/:num'] = "users_interface/representatives_list";
 $route['company/products-group-list'] = "users_interface/products_unit_info";
 
 /* ----------------------------------------	registering company -------------------------------------------*/
-$route['registering/step-1'] = "users_interface/newcompany1";
-$route['registering/step-2'] = "users_interface/newcompany2";
-$route['registering/step-3'] = "users_interface/newcompany3";
-$route['registering/step-4'] = "users_interface/newcompany4";
+$route['registering'] 		 = "users_interface/register_step0";
+$route['abort-registering']	 = "users_interface/abort_registering";
+$route['registering/step-1'] = "users_interface/register_step1";
+$route['registering/step-2'] = "users_interface/register_step2";
+$route['registering/step-3'] = "users_interface/register_step3";
+$route['registering/step-4'] = "users_interface/register_step4";
 
 /* ------------------------------------------	activation -----------------------------------------------*/
 $route['activation/([a-zA-Z0-9])*'] = "users_interface/activation";
@@ -154,7 +159,12 @@ $route['dealer/save-profile/:any'] = "dealer_interface/save_profile";
 $route['dealer/get-code/:any'] = "dealer_interface/get_code";
 $route['dealer/generate-code/:any'] = "dealer_interface/generate_code";
 
-$route['dealer/register-company/:any'] = "dealer_interface/register_company";
+$route['dealer/register-company/:any/step-1'] = "dealer_interface/register_step1";
+$route['dealer/register-company/:any/step-2'] = "dealer_interface/register_step2";
+$route['dealer/register-company/:any/step-3'] = "dealer_interface/register_step3";
+$route['dealer/register-company/:any/finish'] = "dealer_interface/register_step4";
+
+$route['dealer/register-company/:any'] = "dealer_interface/register_step1";
 
 /************************************	ADMIN INTRERFACE	***********************************************/
 

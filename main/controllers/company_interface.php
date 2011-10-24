@@ -1082,7 +1082,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 		redirect('business-environment/'.$link);
 	}
 
-		/*============================================= discussion-full ============================================*/
+		/*=============================================== discussion-full ===============================================*/
 	
 	function discussions(){
 		

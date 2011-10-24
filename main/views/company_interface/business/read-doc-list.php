@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
-	<link rel="stylesheet" media="handheld" href="<?= $baseurl; ?>css/handheld.css?v=1">
+	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -88,7 +88,7 @@
 													<table cellspacing="0" cellpadding="0">
 														<tr>
 				<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$topic['dtt_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-				<td><?=$topic['usubname'].' '.$topic['uname'].' '.$topic['uposition'].' '.$topic['cmp_name']?></td>
+				<td><?=$topic['usubname'].' '.$topic['uname'].'<br/>'.$topic['uposition'].'<br/>'.$topic['cmp_name']?></td>
 														</tr>
 													</table>
 												</td>
@@ -108,7 +108,7 @@
 														<table cellspacing="0" cellpadding="0">
 															<tr>
 			<td><img src="<?=$baseurl;?>cravatar/viewimage/<?=$documents[$i]['dls_usrid'];?>" alt="" align="left" width="42" height="42"/></td>
-			<td><?=$documents[$i]['usubname'].' '.$documents[$i]['uname'].' '.$documents[$i]['uposition'].' '.$documents[$i]['cmp_name']?></td>
+			<td><?=$documents[$i]['usubname'].' '.$documents[$i]['uname'].'<br/>'.$documents[$i]['uposition'].'<br/>'.$documents[$i]['cmp_name']?></td>
 															</tr>
 														</table>
 													</td>
@@ -162,7 +162,7 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#lnk-logout").click(function(){$.ajax({url:"<?= $baseurl; ?>shutdown",success: function(data){window.setTimeout("window.location='<?= $baseurl; ?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
+			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});

@@ -42,28 +42,53 @@ class Companymodel extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
-	function insert_record($insertdata){
+	function insert_record($data){
 			
-		$this->cmp_name 		= strip_tags($insertdata['title']);
-		$this->cmp_region		= $insertdata['city__sexyComboHidden'];
-		$this->cmp_producer		= $insertdata['maker'];
-		$this->cmp_urface		= strip_tags($insertdata['ur_face']);
-		$this->cmp_logo			= $insertdata['logo'];
-		$this->cmp_thumb		= $insertdata['thumb'];
-		$this->cmp_description	= strip_tags($insertdata['comment']);
-		$this->cmp_details		= strip_tags($insertdata['recvizit']);
-		$this->cmp_site			= strtolower($insertdata['site']);
-		$this->cmp_email		= strtolower($insertdata['email']);
-		$this->cmp_phone		= strip_tags($insertdata['tel']);
-		$this->cmp_telfax		= strip_tags($insertdata['telfax']);
-		$this->cmp_uraddress	= strip_tags($insertdata['uradres']);
-		$this->cmp_realaddress	= strip_tags($insertdata['realadres']);
+		$this->cmp_name 		= strip_tags($data['title']);
+		$this->cmp_region		= $data['region'];
+		$this->cmp_producer		= $data['maker'];
+		$this->cmp_urface		= strip_tags($data['ur_face']);
+		$this->cmp_logo			= $data['logo'];
+		$this->cmp_thumb		= $data['thumb'];
+		$this->cmp_description	= strip_tags($data['comment']);
+		$this->cmp_details		= strip_tags($data['recvizit']);
+		$this->cmp_site			= strtolower($data['site']);
+		$this->cmp_email		= strtolower($data['email']);
+		$this->cmp_phone		= strip_tags($data['tel']);
+		$this->cmp_telfax		= strip_tags($data['telfax']);
+		$this->cmp_uraddress	= strip_tags($data['uradres']);
+		$this->cmp_realaddress	= strip_tags($data['realadres']);
 		$this->cmp_destroy		= '3000-01-01';
 		$this->cmp_date 		= date("Y-m-d");
 		$this->cmp_rating 		= 0;
 		
 		$this->db->insert('tbl_company',$this);
 		return $this->db->insert_id();
+	}
+	
+	function update_record($cid,$data){
+			
+		$this->db->set('cmp_name',strip_tags($data['title']));
+		$this->db->set('cmp_region',$data['region']);
+		$this->db->set('cmp_producer',$data['maker']);
+		$this->db->set('cmp_urface',strip_tags($data['ur_face']));
+		$this->db->set('cmp_logo',$data['logo']);
+		$this->db->set('cmp_thumb',$data['thumb']);
+		$this->db->set('cmp_description',strip_tags($data['comment']));
+		$this->db->set('cmp_details',strip_tags($data['recvizit']));
+		$this->db->set('cmp_site',strtolower($data['site']));
+		$this->db->set('cmp_email',strtolower($data['email']));
+		$this->db->set('cmp_phone',strip_tags($data['tel']));
+		$this->db->set('cmp_telfax',strip_tags($data['telfax']));
+		$this->db->set('cmp_uraddress',strip_tags($data['uradres']));
+		$this->db->set('cmp_realaddress',strip_tags($data['realadres']));
+		$this->db->set('cmp_destroy','3000-01-01');
+		$this->db->set('cmp_date',date("Y-m-d"));
+		$this->db->set('cmp_rating',0);
+		$this->db->where('cmp_id',$cid);
+		
+		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
 	}
 	
 	function read_field($cmpid,$field){
@@ -153,6 +178,13 @@ class Companymodel extends CI_Model{
 		$this->db->set('cmp_destroy',date("Y-m-d"));
 		$this->db->set('cmp_status',0);
 		$this->db->update('tbl_company');
+		return $this->db->affected_rows();
+	}
+	
+	function delete_record($id){
+	
+		$this->db->where('cmp_id',$id);
+		$this->db->delete('tbl_company');
 		return $this->db->affected_rows();
 	}
 	

@@ -19,12 +19,6 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/admin.css">
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
-	<style type="text/css">
-		.h960{max-height: 960px; min-height: 470px;}
-		.w918{width: 918px;}
-		div.ButtonOperation{min-height:30px;}
-		.GrSave{padding-right: 5px;cursor:pointer;}
-	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
 <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
@@ -32,12 +26,13 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container">
-		<?php $this->load->view('admin_interface/header-nomenu'); ?>
+		<?php $this->load->view('dealer_interface/header-nomenu'); ?>
 		<div id="main">
 			<section id="frmlogin"><br/>
 				<div class="container_12">
-					<?php $this->load->view("admin_interface/group-list-content");?>
-					<div class="clear"></div>
+					<h1 align="center">Регистрация новой компании </h1>
+					<img src='<?=$baseurl;?>images/step3.png'>
+					<?php $this->load->view('forms/frmsignupstep3'); ?>
 				</div>
 			</section>
 		</div>
@@ -48,55 +43,28 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
-		$(".GrSave").click(function(){
-			var curID = $(this).attr("rID");
-			var grID = $("td[rID='"+curID+"']").text();
-			var objName = $("#vName"+curID);
-			var valName = $(objName).val();
-			$(objName).css('border-color','#D0D0D0');
-			if(valName == ""){
-				$(objName).css('border-color','#ff0000');
-				msgerror('Пропущены обязательные поля');
-				return false;
-			}else{
-				$.post("<?=$baseurl;?>admin/save-group/<?=$userinfo['uconfirmation'];?>",
-				{'id':grID,'name':valName},
-				function(data){
-					if(data.status){
-						$(objName).val(data.name);
-						$(objName).css('border-color','#00ff00');
-					}else{
-						msgerror(data.message);
-					}
-				},"json");
-			};
+		$(".number").keypress(function(e){
+			if(e.which!=45 && e.which!=32 && e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
 		});
 		
-		$(".btnDel").click(function(){
-			var curID = $(this).attr("rID");
-			var grID = $("td[rID='"+curID+"']").text();
-			$.post(
-				"<?=$baseurl;?>admin/delete-group/<?=$userinfo['uconfirmation'];?>",
-				{'id':grID},
-				function(data){
-					if(data.status){
-						$("tr[rID='"+curID+"']").fadeOut("slow",function(){
-							$("tr[rID='"+curID+"']").remove();
-						});
-					}else
-						msgerror(data.message);
-				},"json");
+		$("#next").click(function(event){
+			var err = false;
+			$(".inpval").css('border-color','#D0D0D0');
+			$(".inpval").each(function(i,element){if($(this).val()===''){$(this).css('border-color','#ff0000');err = true;}});
+			if($("#department").val() == 0){err = true;$("#department").css('border-color','#ff0000');}
+			if(err){msgerror('Поле не может быть пустым');event.preventDefault();}
+			var email = $("#email").val();
+			if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
+				msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');$("#email").focus();return false;}
+			var pass = $("#password").val();
+			var confirm = $("#confirm").val();
+			if(pass != '' && pass.length<8){
+			msgerror('Короткий пароль! Не менее 8 символов.');$("#password").css('border-color','#ff0000');$("#password").focus();return false;}
+			if(pass != '' && confirm != '' && pass != confirm){
+				msgerror('Пароли не совпадают');$(".pass").css('border-color','#ff0000');return false;}
+			
 		});
-		
-		function msgerror(msg){
-			$.blockUI({
-				message: msg,
-				css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}
-			});
-			window.setTimeout($.unblockUI,1000);
-			return false;
-		}
-	});
+		function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}});
 	</script>
 </body>
 </html>

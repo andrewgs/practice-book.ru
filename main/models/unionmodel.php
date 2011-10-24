@@ -514,5 +514,14 @@ class Unionmodel extends CI_Model{
 		if(count($data)) return $data;
 		return NULL;
 	}
+	
+	function dealers_region($region){
+		
+		$query = "SELECT dlr_id,dlr_email,dlr_name,dlr_subname,dlr_thname,dlr_phone,dlr_confirmation,dlr_skype,dlr_icq,dlr_position,dlr_status,dlr_active,dlr_company,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(dlr_signupdate,'%Y%m')) AS months FROM tbl_dealers,tbl_dealer_region WHERE tbl_dealer_region.drg_dlrid = tbl_dealers.dlr_id AND tbl_dealer_region.drg_regid = $region ORDER BY dlr_subname,dlr_name,dlr_thname";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
 }
 ?>
