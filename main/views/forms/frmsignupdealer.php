@@ -19,7 +19,7 @@
 		<input class="reg-form-input inputValid" name="tname" type="text" value="<?=set_value('tname');?>"/>
 		<div class="regLabel">Номер контактного телефона <span class="necessarily" title="Обязательно нужно указать">*</span></div>
 		<?= form_error('phones'); ?>
-		<input class="reg-form-input inputValid" name="phones" type="text" value="<?=set_value('phones');?>"/>
+		<input class="reg-form-input inputValid number" name="phones" type="text" value="<?=set_value('phones');?>"/>
 		<div class="regLabel">Номер ICQ</div>
 		<?= form_error('icq'); ?>
 		<input class="reg-form-input" name="icq" type="text" size="45" maxlength="15" value="<?=set_value('icq');?>"/>

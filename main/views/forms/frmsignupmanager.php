@@ -95,4 +95,5 @@
 	<div class="clear"></div>
 	<hr size="2px"/>
 	<input class="btn-action margin-1em" type="submit" id="btnSubmit" name="submit" value="Зарегистрировать"/>
+	<input class="btn-action margin-1em" type="button" id="btnReturn" value="Отменить"/>
 <?= form_close(); ?>

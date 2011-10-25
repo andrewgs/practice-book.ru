@@ -33,7 +33,7 @@
 		</div>
 		<div class="grid_5">
 			Контактный телефон: <div class="vRight" id="dphones"><?=$dealer['dlr_phone'];?></div><br>
-			<input class="reg-form-input" name="phones" id="vphones" type="text">
+			<input class="reg-form-input number" name="phones" id="vphones" type="text">
 			<span class="btnsave" id="svphones">
 				<input type="image" title="Сохранить н/тел." class="ajaxsave" id="phones" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
@@ -59,7 +59,7 @@
 		</div>
 		<div class="clear"></div>
 		<hr size="2px"/>
-		<input class="btn-action margin-1em" type="button" id="btnReturn" value="Отменить"/>
+		<input class="btn-action margin-1em" type="button" id="btnReturn" value="Готово"/>
 	</div>
 	<div class="clear"></div>
 </div>

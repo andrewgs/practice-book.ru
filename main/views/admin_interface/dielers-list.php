@@ -24,7 +24,7 @@
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h960{max-height: 960px; min-height: 470px;}
+		.h960{max-height: none; min-height: 470px;}
 		.w960{width: 960px;}
 		.h365{height: 365px;}
 		.w575{width: 575px;}

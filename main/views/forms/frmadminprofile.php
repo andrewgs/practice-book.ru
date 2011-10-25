@@ -37,7 +37,7 @@
 		</div>
 		<div class="clear"></div>
 		<hr size="2px"/>
-		<input class="btn-action margin-1em" type="button" id="btnReturn" value="Отменить"/>
+		<input class="btn-action margin-1em" type="button" id="btnReturn" value="Готово"/>
 	</div>
 	<div class="clear"></div>
 </div>

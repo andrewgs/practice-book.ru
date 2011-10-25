@@ -1758,6 +1758,32 @@ class Users_interface extends CI_Controller{
 		endif;
 		$this->load->view('users_interface/single-contact',$pagevar);
 	}
+
+	function page_locked(){
+	
+		if($this->loginstatus['status']):
+			if($this->user['cid']):
+				$pagevar = array(
+						'description'	=> '',
+						'keywords'		=> '',
+						'author'		=> '',
+						'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+						'baseurl' 		=> base_url(),
+						'text' 			=> '',
+						'logo' 			=> 'default',
+						'msglink'		=> 'company/full-business-environment/'.$this->user['uconfirmation']
+				);
+				$environment = $this->session->userdata('environment');
+				if($environment) $pagevar['msglink'] = 'company/private-business-environment/'.$this->user['uconfirmation'];
+				$pagevar['text'] = '<br><br><b>Доступ к разделам бизнес среды заблокирован</b><br><b>Оплатите услугу для дальнейшего пользования</b><br>';
+				$this->load->view('company_interface/paid-message',$pagevar);
+			else:
+				show_404();
+			endif;
+		else:
+			show_404();
+		endif;
+	}
 	/* -----------------------------------------	other function -------------------------------------------*/
 	
 	function ajax_add_pitfall(){

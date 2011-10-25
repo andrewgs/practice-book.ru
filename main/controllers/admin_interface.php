@@ -1591,7 +1591,7 @@ class Admin_interface extends CI_Controller{
 					$this->form_validation->set_rules('fname','фамилия','required|trim');
 					$this->form_validation->set_rules('sname','имя','required|trim');
 					$this->form_validation->set_rules('tname','отчество','required|trim');
-					$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
+					$this->form_validation->set_rules('phones','телефон','required|trim');
 					$this->form_validation->set_rules('activity','отрасли','required|callback_activity_chack');
 					$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
 					if(!$this->form_validation->run()):
@@ -1729,7 +1729,7 @@ class Admin_interface extends CI_Controller{
 					$this->form_validation->set_rules('fname','фамилия','required|trim');
 					$this->form_validation->set_rules('sname','имя','required|trim');
 					$this->form_validation->set_rules('tname','отчество','required|trim');
-					$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
+					$this->form_validation->set_rules('phones','телефон','required|trim');
 					$this->form_validation->set_rules('region[]','регионы','required');
 					$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
 					if(!$this->form_validation->run()):

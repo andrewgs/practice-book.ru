@@ -27,7 +27,7 @@ class Unionmodel extends CI_Model{
 	
 	function select_company_by_region($activity,$region){
 		
-		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company INNER JOIN tbl_companyservices ON tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = ? AND tbl_company.cmp_region = ? ORDER BY tbl_company.cmp_rating DESC";
+		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company INNER JOIN tbl_companyservices ON tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = ? AND tbl_company.cmp_destroy = '3000-01-01' AND tbl_company.cmp_region = ? ORDER BY tbl_company.cmp_rating DESC";
 		$query = $this->db->query($query,array($activity,$region));
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -36,7 +36,7 @@ class Unionmodel extends CI_Model{
 	
 	function select_company_by_rating($activity,$region,$condition,$rating,$days){
 		
-		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company inner join tbl_companyservices on tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = $activity AND tbl_company.cmp_region = $region AND tbl_company.cmp_rating $condition $rating AND DATE_ADD(tbl_company.cmp_date,INTERVAL $days DAY) <= CURDATE() ORDER BY tbl_company.cmp_rating DESC";
+		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company inner join tbl_companyservices on tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = $activity AND tbl_company.cmp_region = $region AND tbl_company.cmp_rating $condition $rating AND tbl_company.cmp_destroy = '3000-01-01' AND DATE_ADD(tbl_company.cmp_date,INTERVAL $days DAY) <= CURDATE() ORDER BY tbl_company.cmp_rating DESC";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -69,7 +69,7 @@ class Unionmodel extends CI_Model{
 
 	function read_cmpnews_by_activity($activity,$region){
 		
-		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_company.cmp_rating,tbl_cmpnews.cn_id,tbl_cmpnews.cn_title,tbl_cmpnews.cn_note,tbl_cmpnews.cn_pdatebegin FROM tbl_cmpnews inner join tbl_company on tbl_company.cmp_id = tbl_cmpnews.cn_cmpid WHERE tbl_cmpnews.cn_activity = $activity AND tbl_company.cmp_region = $region AND tbl_cmpnews.cn_pdatebegin <= CURDATE() ORDER BY tbl_company.cmp_rating DESC,tbl_company.cmp_id ASC";
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_company.cmp_rating,tbl_cmpnews.cn_id,tbl_cmpnews.cn_title,tbl_cmpnews.cn_note,tbl_cmpnews.cn_pdatebegin FROM tbl_cmpnews inner join tbl_company on tbl_company.cmp_id = tbl_cmpnews.cn_cmpid WHERE tbl_cmpnews.cn_activity = $activity AND tbl_company.cmp_region = $region AND tbl_company.cmp_destroy = '3000-01-01' AND tbl_cmpnews.cn_pdatebegin <= CURDATE() ORDER BY tbl_company.cmp_rating DESC,tbl_company.cmp_id ASC";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -78,7 +78,7 @@ class Unionmodel extends CI_Model{
 	
 	function read_cmpshares_by_activity($activity,$region){
 		
-		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_company.cmp_rating,tbl_cmpshares.sh_id,tbl_cmpshares.sh_title,tbl_cmpshares.sh_note,tbl_cmpshares.sh_pdatebegin FROM tbl_cmpshares inner join tbl_company on tbl_company.cmp_id = tbl_cmpshares.sh_cmpid WHERE tbl_cmpshares.sh_activity = $activity AND tbl_company.cmp_region = $region AND tbl_cmpshares.sh_pdatebegin <= CURDATE() ORDER BY tbl_company.cmp_rating DESC,tbl_company.cmp_id ASC";
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_company.cmp_rating,tbl_cmpshares.sh_id,tbl_cmpshares.sh_title,tbl_cmpshares.sh_note,tbl_cmpshares.sh_pdatebegin FROM tbl_cmpshares inner join tbl_company on tbl_company.cmp_id = tbl_cmpshares.sh_cmpid WHERE tbl_cmpshares.sh_activity = $activity AND tbl_company.cmp_region = $region AND tbl_company.cmp_destroy = '3000-01-01' AND tbl_cmpshares.sh_pdatebegin <= CURDATE() ORDER BY tbl_company.cmp_rating DESC,tbl_company.cmp_id ASC";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

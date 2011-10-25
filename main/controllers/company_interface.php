@@ -2,7 +2,7 @@
 
 class Company_interface extends CI_Controller{
 
-	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','region'=>1,'priority'=>0,'department'=>0);
+	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','region'=>1,'priority'=>0,'department'=>0,'cmpstatus'=>FALSE);
 	var $months = array("01"=>"января","02"=>"февраля","03"=>"марта","04"=>"апреля",
 						"05"=>"мая","06"=>"июня","07"=>"июля","08"=>"августа",
 						"09"=>"сентября","10"=>"октября","11"=>"ноября","12"=>"декабря");
@@ -65,6 +65,12 @@ class Company_interface extends CI_Controller{
 					$this->user['cid'] 				= $userinfo['ucompany'];
 					$this->user['region'] 			= $this->companymodel->read_field($this->user['cid'],'cmp_region');
 					$this->user['department'] 		= $userinfo['udepartment'];
+					$this->user['cmpstatus'] 		= $this->companymodel->read_field($this->user['cid'],'cmp_status');
+				endif;
+			endif;
+			if($this->uri->segment(1) == 'business-environment'):
+				if(!$this->user['cmpstatus']):
+					redirect('business-environment/page-locked');
 				endif;
 			endif;
 			if($this->user['uconfirmation'] != $this->uri->segment(3)) show_404();
@@ -113,7 +119,7 @@ class Company_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'text' 			=> '',
 					'logo' 			=> 'default',
-					'timer' 		=> FALSE,
+					'msglink'		=> $this->uri->uri_string()
 			);
 			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Пожалуйста произведите платеж в ближайшее время</b>';
 			$this->load->view('company_interface/paid-message',$pagevar);
@@ -871,7 +877,7 @@ class Company_interface extends CI_Controller{
 					'actenvironment'=> 0,
 					'environment'	=> 0
 			);
-		
+			
 		$cmp_paid = $this->session->userdata('cmp_paid');
 		if(!$cmp_paid):
 			if($pagevar['company']['cmp_status']):
@@ -888,9 +894,9 @@ class Company_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'text' 			=> '',
 					'logo' 			=> 'default',
-					'timer' 		=> FALSE,
+					'msglink'		=> $this->uri->uri_string()
 			);
-			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Пожалуйста произведите платеж в ближайшее время</b>';
+			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Доступ к среде не возможен. Оплатите услугу.</b>';
 			$this->load->view('company_interface/paid-message',$pagevar);
 			$this->session->set_userdata('cmp_paid',TRUE);
 			return FALSE;
@@ -2587,7 +2593,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			show_404();
 		endif;
 		$topic = $this->uri->segment(5);
-		if(!$this->dtntopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+		if(!$this->dtntopicsmodel->topic_owner_nouser($topic,$section)):
 			show_404();
 		endif;
 		$pagevar = array(
@@ -2719,7 +2725,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			show_404();
 		endif;
 		$topic = $this->uri->segment(5);
-		if(!$this->dtntopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+		if(!$this->dtntopicsmodel->topic_owner_nouser($topic,$section)):
 			show_404();
 		endif;
 		$document = $this->uri->segment(7);
@@ -2797,7 +2803,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			show_404();
 		endif;
 		$topic = $this->uri->segment(5);
-		if(!$this->dtntopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+		if(!$this->dtntopicsmodel->topic_owner_nouser($topic,$section)):
 			show_404();
 		endif;
 		$document = $this->uri->segment(7);

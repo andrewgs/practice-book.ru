@@ -20,7 +20,7 @@ $route['for-dealers'] = "users_interface/for_dealers";
 
 $route['dealers-list'] = "users_interface/dealers_list";
 $route['dealers-list/region/:num'] = "users_interface/dealers_list";
-
+$route['business-environment/page-locked'] = "users_interface/page_locked";
 /* --------------------------------------------- started work ---------------------------------------------*/
 $route['started'] = "users_interface/select_settings";
 $route['users/select-region'] = "users_interface/create_select_region";
@@ -263,7 +263,6 @@ $route['company/delete-representatives/:any'] = "company_interface/delele_repres
 
 $route['representative/cabinet/:any'] = "company_interface/representative_cabinet";
 $route['representative/save-profile/:any'] = "company_interface/representative_save_profile";
-
 /* ------------------------------------------ business-environment --------------------------------------------*/
 
 $route['company/full-business-environment/:any'] = "company_interface/business";

@@ -325,6 +325,7 @@ class Usersmodel extends CI_Model{
 	function close_representatives($cid){
 		
 		$this->db->set('udestroy',date("Y-m-d"));
+		$this->db->where('udestroy',"3000-01-01");
 		$this->db->where('ucompany',$cid);
 		$this->db->update('tbl_user');
 		return $this->db->affected_rows();

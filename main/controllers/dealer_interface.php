@@ -209,6 +209,7 @@ class Dealer_interface extends CI_Controller{
 		endif;
 		$data['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime().$this->user['uconfirmation']);
 		$newcmp = $this->companymodel->insert_empty($this->user['uid'],$data);
+		$this->dealersmodel->insert_company($this->user['uid']);
 		if($newcmp):
 			if($email):
 				$message = 'Здравствуйте. Предлагаем зарегистрировать Вашу компанию у нас на сайте.'."\n\n".'Для этого введите в интернет браузере адрес: <a href="http://practice-book.ru/" target="_blank">http://practice-book.ru/</a> и нажмите кнопку "Добавить свою компанию в наш каталог"'."\n\n".'В появившемся окне введите код: '.$data['confirm']."\n\n".'Далее следует стандартная форма регистрации.'."\n\n\n".'Спасибо что пользуетесь нашим проектом. С уважением администрации сайта';

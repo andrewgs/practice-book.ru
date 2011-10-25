@@ -54,6 +54,9 @@ font: 12px/18px "Trebuchet MS",Arial,Helvetica,sans-serif;padding: 2px 8px;text-
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$(".number").keypress(function(e){
+				if(e.which!=45 && e.which!=32 && e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+			});
 			$("#btnReturn").click(function(){
 				window.location="<?=$baseurl;?>dealer/control-panel/<?=$userinfo['uconfirmation'];?>";
 			});

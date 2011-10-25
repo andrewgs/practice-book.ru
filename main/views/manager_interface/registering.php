@@ -77,7 +77,9 @@
 					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');
 					$("#email").focus();event.preventDefault();return false;};
 			});
-			
+			$("#btnReturn").click(function(){
+				window.location="<?=$baseurl;?>manager/cabinet/<?=$userinfo['uconfirmation'];?>";
+			});
 			$("#btnAddJobLine").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?=$baseurl;?>views/form-job/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelJobLine").show();});});
 			$("#btnDelJobLine").click(function(){$("div[list='jobLine']:last").remove();var cnt = $("div[list='jobLine']").size();if(cnt <= 1) $("#btnDelJobLine").hide();});
 			

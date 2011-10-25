@@ -20,7 +20,7 @@
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h960{max-height: 960px; min-height: 470px;}
+		.h960{max-height: none; min-height: 470px;}
 		.w918{width: 918px;}
 		div.ButtonOperation{min-height:30px;}
 		.NewsSave{float: right;padding: 5px;cursor: pointer;}
@@ -60,7 +60,7 @@
 				email = $("#email").val();
 				if(email == ''){
 					msgerror('Поле не может быть пустым');$("#email").css('border-color','#ff0000');
-					$("#email").focus();
+					$("#email").focus();return false;
 				}
 				if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
 					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');

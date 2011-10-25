@@ -95,7 +95,7 @@
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
-			$("#addSection").click(function(event){if($("#title").val() == ''){$("#title").css('border-color','#ff0000');msgerror("Пропущены обязательное поле!");event.preventDefault();}});
+			$("#addSection").click(function(event){var title = $("#title").val();if(title == ''){$("#title").css('border-color','#ff0000');msgerror("Пропущены обязательное поле!");event.preventDefault();}else if(!confirm('Создать тему: '+title+'?')) return false;});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>

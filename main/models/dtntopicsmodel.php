@@ -119,6 +119,16 @@ class Dtntopicsmodel extends CI_Model {
 		if(count($data)) return TRUE;
 		return FALSE;
 	}
+	
+	function topic_owner_nouser($id,$section){
+		
+		$this->db->where('dtt_id',$id);
+		$this->db->where('dtt_dtnid',$section);
+		$query = $this->db->get('tbl_dtn_topics',1);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
 
 	function topic_exist($id,$section){
 		

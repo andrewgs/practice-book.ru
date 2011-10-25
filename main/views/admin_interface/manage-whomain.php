@@ -20,7 +20,7 @@
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
-		.h960{max-height: 960px; min-height: 470px;}
+		.h960{max-height: none; min-height: 470px;}
 		.w918{width: 918px;}
 		.AucBegin{cursor: pointer; padding-right:5px;}
 		.AucEnd{cursor: pointer; padding-left:5px;}

@@ -28,7 +28,7 @@
 				<div style="text-align: center;">
 					<center><img src="<?=$baseurl;?>images/logo.png" vspace="10" border="0"></center>
 					<br/><br/><b><?=$text;?></b>
-					<a href="<?=$baseurl.$this->uri->uri_string();?>">Продолжить работу</a>
+					<a href="<?=$baseurl.$msglink;?>">Продолжить работу</a>
 				</div>
 			</div>
 		</div>
