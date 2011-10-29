@@ -22,8 +22,13 @@
 	<style type="text/css">
 		.h960{max-height: 960px; min-height: 470px;}
 		.w918{width: 918px;}
-		div.ButtonOperation{min-height:30px;}
-		.NewsSave{float: right;padding: 5px;cursor: pointer;}
+		.AucBegin{cursor: pointer; padding-right:5px;}
+		.AucEnd{cursor: pointer; padding-left:5px;}
+		.btnHidden{display:none;}
+		.activity,.region{font: bold normal 110% serif;margin: 0px;}
+		#search-result,#region-result{margin-top:10px;}
+		div.ButtonOperation{padding:5px 0px;}
+		#bauc,#eauc{float:right}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -36,14 +41,31 @@
 		<div id="main">
 			<section id="frmlogin"><br/>
 				<div class="container_12">
-					<?php $this->load->view("admin_interface/manage-whomain-content");?>
-					<div class="clear"></div>
-					<div id="frmInsert" style="display:none;">
-						<?php $this->load->view('forms/frminsregion');?>
+					<hr size="2"/>
+					<div class="">
+						<?=anchor('admin','Панель администрирования',array('class'=>'lnk-submit'));?>
+<?=anchor('admin/manage-whomain/'.$userinfo['uconfirmation'].'/finish-auctions','Завершить аукционы',array('id'=>'eauc','class'=>'lnk-submit'));?>
+<?=anchor('admin/manage-whomain/'.$userinfo['uconfirmation'].'/start-auctions','Начать аукционы',array('id'=>'bauc','class'=>'lnk-submit'));?>
 					</div>
-					<button id="btnInsert" style="height:2.5em; margin-top:15px; min-width: 130px;">
-						<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>
-					</button>
+					<hr size="2"/>
+					<div class="grid_6" style="margin:0">
+						<h2>Поиск отрасли:</h2>
+						от 3-х символов
+						<input class="edit450-form-input" id="ActivityName" type="text" value=""/>
+						<div class="clear"></div>
+						<div id="ASV" class="btnHidden"></div>
+						<div id="search-result"></div>
+					</div>
+					<div class="grid_2">
+						<h2>&nbsp;</h2>
+						<h2>&nbsp;</h2>
+						<input class="btn-action" style="margin-top:0" id="setSearch" type="button" name="submit" value="Получить информацию"/>
+					</div>
+					<div class="clear"></div>
+					<hr size="2"/>
+					<?php if($setActivity):?>
+						<?php $this->load->view("admin_interface/manage-whomain-content");?>
+					<?php endif; ?>
 				</div>
 			</section>
 		</div>
@@ -62,89 +84,75 @@
 			if(!confirm("Завершить укционы?")) return false;
 		});
 		
-		$("#btnInsert").click(function(){
-			if($("#frmInsert").is(":hidden")){
-				$("#btnInsert").html('<img src="<?=$baseurl;?>images/arrow-curve.png"><font size="3"> Отменить</font>');
-				$("#frmInsert").slideDown("slow");
-				var height = $(window).height();
-				$("html, body").animate({scrollTop:height+'px'},"slow");
+		$("#ActivityName").keyup(function(){
+			var SearchVal = $(this).val();
+			if(SearchVal.length > 2){
+				$("#search-result").load("<?=$baseurl;?>admin/search-activity/<?=$userinfo['uconfirmation'];?>",{'search':SearchVal},
+				function(){
+					$("#SearchAct").die();
+					$("#SearchAct").live('change',function(){
+						var valID = $(this.options[this.selectedIndex]).val();
+						var valTitle = $(this.options[this.selectedIndex]).text();
+						var valProduct = $(this.options[this.selectedIndex]).attr("PR");
+						$("#ASV").text(valID);
+						$("#PSV").text(valProduct);
+						$('#ActivityName').val(valTitle);
+					});
+				}
+			);
 			}else{
-				$("#frmInsert").slideUp("slow",function(){
-					$("#frmInsert").hide();
-					$(".flvalid_error").text('');
-					$("#btnInsert").html('<img src="<?=$baseurl;?>images/news-plus.png"><font size="3"> Добавить</font>');
-					$("#formRep .inpvalue").val('');
-					$("#formRep .inpvalue").css('border-color','#D0D0D0');
-				 });
+				$("#SearchAct").die();
+				$("#search-result").text('');
 			}
 		});
-		
-		$("#addItem").click(function(event){
-			var err = false;
-			 $("#formRep .inpvalue").css('border-color','#D0D0D0');
-			if($("#name").val() == ''){
-				err = true;
-				$("#name").css('border-color','#ff0000');
-			}
-			if($("#area").val() == ''){
-				err = true;
-				$("#area").css('border-color','#ff0000');
-			}
-			if($("#district").val() == ''){
-				err = true;
-				$("#district").css('border-color','#ff0000');
-			}
-			if(err){
-				event.preventDefault();
-				msgerror('Пропущены обязательные поля');
-			}
+			
+		$("#setSearch").click(function(){
+			var actID = $("#ASV").text();
+			if(actID != '')
+		window.setTimeout("window.location='<?=$baseurl;?>admin/manage-whomain/<?=$userinfo['uconfirmation'];?>/activity/"+actID+"'",1000);
 		});
 		
-		$(".NewsSave").click(function(){
-			var err = false;
+		$(".AucBegin").click(function(){
+			if(!confirm("Начать укцион?")) return false;
 			var curID = $(this).attr("rID");
-			var regID = $("td[rID='"+curID+"']").text();
-			var objName = $("#vName"+curID);
-			var objArea = $("#vArea"+curID);
-			var objDistrict = $("#vDistrict"+curID);
-			var valName = $(objName).val();
-			var valArea = $(objArea).val();
-			var valDistrict = $(objDistrict).val();
-			$(objName).css('border-color','#D0D0D0');
-			$(objArea).css('border-color','#D0D0D0');
-			$(objDistrict).css('border-color','#D0D0D0');
-			if(valName == ""){
-				$(objName).css('border-color','#ff0000');
-				err = true;
-			}
-			if(valArea == ""){
-				$(objArea).css('border-color','#ff0000');
-				err = true;
-			}
-			if(valDistrict == ""){
-				$(objDistrict).css('border-color','#ff0000');
-				err = true;
-			}
-			if(err){
+			var recID = $("td[rID='"+curID+"']").text();
+			var objDate = $("#vDate"+curID);
+			var valDate = $(objDate).val();
+			$(objDate).css('border-color','#D0D0D0');
+			if(valDate == ""){
+				$(objDate).css('border-color','#ff0000');
 				msgerror('Пропущены обязательные поля');
 				return false;
 			}else{
-				$.post("<?=$baseurl;?>admin/save-region/<?=$userinfo['uconfirmation'];?>",
-				{'id':regID,'name':valName,'area':valArea,'distr':valDistrict},
+				$.post("<?=$baseurl;?>admin/begin-auction/<?=$userinfo['uconfirmation'];?>",
+				{'id':recID,'date':valDate},
 				function(data){
 					if(data.status){
-						$(objName).val(data.name);
-						$(objArea).val(data.area);
-						$(objDistrict).val(data.distr);
-						$(objName).css('border-color','#00ff00');
-						$(objArea).css('border-color','#00ff00');
-						$(objDistrict).css('border-color','#00ff00');
+						$(objDate).val(data.date);
+						$(objDate).css('border-color','#00ff00');
 					}else{
 						msgerror(data.message);
 					}
 				},"json");
 			};
 		});	
+		
+		$(".AucEnd").click(function(){
+			if(!confirm("Завершить укцион?")) return false;
+			var curID = $(this).attr("rID");
+			var recID = $("td[rID='"+curID+"']").text();
+			$.post("<?=$baseurl;?>admin/end-auction/<?=$userinfo['uconfirmation'];?>",
+			{'id':recID},
+			function(data){
+				if(data.status){
+					$(objDate).val(data.date);
+					$(objDate).css('border-color','#00ff00');
+				}else{
+					msgerror(data.message);
+				}
+			},"json");
+		});
+		
 		function msgerror(msg){
 			$.blockUI({
 				message: msg,

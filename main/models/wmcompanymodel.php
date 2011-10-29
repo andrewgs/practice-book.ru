@@ -38,6 +38,11 @@ class Wmcompanymodel extends CI_Model {
 		return $this->db->affected_rows(); 
 	}
 	
+	function delete_records(){
+		
+		$this->db->empty_table('tbl_wmcompany');
+	}
+	
 	function read_record($activity,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;

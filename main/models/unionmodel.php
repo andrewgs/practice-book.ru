@@ -481,11 +481,29 @@ class Unionmodel extends CI_Model{
 
 	function wmncompany_limit_records($count,$from,$wmnid){
 		
-		$query = "SELECT wmc_id,wmc_wmnid,wmc_date,wmc_userid,wmc_price,cmp_id,cmp_name,cmp_uraddress,cmp_realaddress,cmp_rating,cmp_phone,cmp_email,cmp_site,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(cmp_date,'%Y%m')) AS months FROM tbl_wmcompany,tbl_company WHERE tbl_wmcompany.wmc_cmpid = tbl_company.cmp_id AND wmc_wmnid = $wmnid ORDER BY tbl_wmcompany.wmc_price DESC, tbl_wmcompany.wmc_date DESC, tbl_wmcompany.wmc_id DESC LIMIT $from,$count";
+		$query = "SELECT wmc_id,wmc_wmnid,wmc_date,wmc_userid,wmc_price,cmp_id,cmp_name,cmp_uraddress,cmp_realaddress,cmp_rating,cmp_phone,cmp_email,cmp_site,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(cmp_date,'%Y%m')) AS months FROM tbl_wmcompany,tbl_company WHERE tbl_wmcompany.wmc_cmpid = tbl_company.cmp_id AND wmc_wmnid = $wmnid ORDER BY tbl_wmcompany.wmc_price DESC, tbl_wmcompany.wmc_id ASC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
 		else return null;
+	}
+
+	function read_auctions($activity){
+	
+		$query = "SELECT wmn_id,wmn_edate,wmn_cmpid,wmn_cmpname,wmn_price,reg_name FROM tbl_whomain,tbl_regions WHERE tbl_whomain.wmn_region = tbl_regions.reg_id AND tbl_whomain.wmn_activity = $activity ORDER BY tbl_regions.reg_name";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+
+	function winner_auction($wmnid){
+	
+		$query = "SELECT wmc_id,wmc_price,cmp_id,cmp_name FROM tbl_wmcompany,tbl_company WHERE tbl_wmcompany.wmc_cmpid = tbl_company.cmp_id AND wmc_wmnid = $wmnid ORDER BY tbl_wmcompany.wmc_price DESC, tbl_wmcompany.wmc_id ASC LIMIT 1";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data[0];
+		return NULL;
 	}
 }
 ?>

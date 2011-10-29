@@ -370,19 +370,62 @@ class Admin_interface extends CI_Controller{
 					'description'	=> '',
 					'keywords'		=> '',
 					'author'		=> '',
-					'title'			=> 'Practice-Book - Администрирование | Панель управления',
+					'title'			=> 'Practice-Book - Администрирование | Управления аукционами "Кто главный?"',
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
-					'list'			=> $this->supportmodel->read_records()
+					'setActivity'	=> FALSE,
+					'auctions'		=> array(),
+					'boxtitile'		=> ''
 			);
+		if($this->uri->total_segments() == 5):
+			$activity = $this->uri->segment(5);
+			if(!$this->activitymodel->activity_exist($activity)) show_404();
+			$pagevar['setActivity'] = TRUE;
+			$pagevar['auctions'] = $this->unionmodel->read_auctions($activity);
+			$pagevar['boxtitile'] = 'Список укционов отрасли: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
 		$this->load->view("admin_interface/manage-whomain",$pagevar);
 	}
 	
-	function start_auction(){
+	function start_auctions(){
+	
+		$activity = $this->activitymodel->read_activity_final();
+		$regions = $this->regionmodel->read_records();
+		$photo = file_get_contents(base_url().'images/whois.png');
+		
+		for($i=0;$i<count($activity);$i++):
+			for($j=0;$j<count($regions);$j++):
+				$curauc = $this->whomainmodel->auction_exist($activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
+				if(!$curauc):
+					$this->whomainmodel->insert_record($photo,$activity[$i]['act_id'],0,0,$regions[$j]['reg_id']);
+				else:
+					$this->whomainmodel->open_auc($curauc);
+				endif;
+			endfor;
+		endfor;
+		$this->wmcompanymodel->delete_records();
+		redirect('admin/manage-whomain/'.$this->user['uconfirmation']);
+	}
+	
+	function finish_auctions(){
+		
+		$auctions = $this->whomainmodel->read_records();
+		for($i=0;$i<count($auctions);$i++):
+			$winner = $this->unionmodel->winner_auction($auctions[$i]['wmn_id']);
+			if($winner):
+				$this->whomainmodel->close_auc($auctions[$i]['wmn_id'],$winner['cmp_id'],$winner['cmp_name'],$winner['wmc_price']);
+			else:
+				$this->whomainmodel->close_auc($auctions[$i]['wmn_id'],'','','0.00');
+			endif;
+		endfor;
+		redirect('admin/manage-whomain/'.$this->user['uconfirmation']);
+	}
+	
+	function begin_auction(){
 		
 	}
 	
-	function finish_auction(){
+	function end_auction(){
 		
 	}
 	

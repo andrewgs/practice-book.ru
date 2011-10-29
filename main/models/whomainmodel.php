@@ -45,6 +45,16 @@ class Whomainmodel extends CI_Model {
 		return $this->db->affected_rows(); 
 	}
 	
+	function open_auc($id){
+	
+		$this->db->set('wmn_over',0);
+		$this->db->set('wmn_bdate',date("Y-m-d H:i:s"));
+		$this->db->set('wmn_edate',date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d")+7, date("Y"))));
+		$this->db->where('wmn_id',$id);
+		$this->db->update('tbl_whomain');
+		return $this->db->affected_rows(); 
+	}
+	
 	function read_record($activity,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;
@@ -56,6 +66,15 @@ class Whomainmodel extends CI_Model {
 		$query = $this->db->get('tbl_whomain',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
+		return NULL;
+	}
+
+	function read_records(){
+		
+		$this->db->select("wmn_id,wmn_cmpid,wmn_cmpname,wmn_price,wmn_over,wmn_edate,wmn_bdate");
+		$query = $this->db->get('tbl_whomain');
+		$data = $query->result_array();
+		if(isset($data[0])) return $data;
 		return NULL;
 	}
 	
@@ -78,6 +97,19 @@ class Whomainmodel extends CI_Model {
 		$query = $this->db->get('tbl_whomain',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;
+		return FALSE;
+	}
+
+	function auction_exist($activity,$environment,$department,$region){
+		
+		if(!$environment) $department = 0;
+		$this->db->where('wmn_activity',$activity);
+		$this->db->where('wmn_environment',$environment);
+		$this->db->where('wmn_department',$department);
+		$this->db->where('wmn_region',$region);
+		$query = $this->db->get('tbl_whomain',1);
+		$data = $query->result_array();
+		if(count($data)) return $data[0]['wmn_id'];
 		return FALSE;
 	}
 }

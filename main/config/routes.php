@@ -144,8 +144,13 @@ $route['manager/close-consultation/:any'] = "manager_interface/close_consultatio
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";
 
-$route['admin/manage-whomain/:any/start-auction'] = "admin_interface/start_auction";
-$route['admin/manage-whomain/:any/finish-auction'] = "admin_interface/finish_auction";
+$route['admin/manage-whomain/:any/start-auctions'] = "admin_interface/start_auctions";
+$route['admin/manage-whomain/:any/finish-auctions'] = "admin_interface/finish_auctions";
+
+$route['admin/begin-auction/:any'] = "admin_interface/begin_auction";
+$route['admin/end-auction/:any'] = "admin_interface/end_auction";
+
+$route['admin/edit-activity/:any/activity/:num'] = "admin_interface/manage_whomain";
 $route['admin/manage-whomain/:any'] = "admin_interface/manage_whomain";
 
 $route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
