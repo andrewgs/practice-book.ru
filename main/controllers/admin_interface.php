@@ -1499,7 +1499,8 @@ class Admin_interface extends CI_Controller{
 											return FALSE;
 										else:
 											$newactivity = $this->activitymodel->insert_record($_POST);
-											$this->productgroupmodel->insert_empty($newactivity);
+											$activityname = $this->activitymodel->read_field($newactivity,'act_title');
+											$this->productgroupmodel->insert_empty($newactivity,$activityname);
 											redirect('admin/information-list/'.$this->user['uconfirmation'].'/activity');
 										endif;
 									endif;

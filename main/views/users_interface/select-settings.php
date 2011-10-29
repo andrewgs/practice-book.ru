@@ -75,17 +75,6 @@
 					</div>
 					<div class="searhcblock">
 						<div class="searhcbox">
-							<b>Поиск отрасли/товаров/услуг</b>
-							<p>от 3-х символов</p>
-							<div class="">
-								<input class="edit450-form-input" id="ActivityName" type="text" value=""/>
-								<div class="clear"></div>
-								<div id="ASV" class="btnHidden"></div>
-								<div id="PSV" class="btnHidden"></div>
-								<div id="search-result"></div>
-							</div>
-						</div>
-						<div class="searhcbox">
 							<b>Поиск региона</b>
 							<p>от 3-х символов</p>
 							<div class="">
@@ -93,6 +82,17 @@
 								<div class="clear"></div>
 								<div id="RSV" class="btnHidden"></div>
 								<div id="region-result"></div>
+							</div>
+						</div>
+						<div class="searhcbox">
+							<b>Поиск отрасли/товаров/услуг</b>
+							<p>от 3-х символов</p>
+							<div class="">
+								<input class="edit450-form-input" id="ActivityName" disabled="disabled" type="text" value=""/>
+								<div class="clear"></div>
+								<div id="ASV" class="btnHidden"></div>
+								<div id="PSV" class="btnHidden"></div>
+								<div id="search-result"></div>
 							</div>
 						</div>
 						<h2>&nbsp;</h2>
@@ -126,8 +126,6 @@
 						</div>
 					</div>
 				</div>
-				
-				
 				<div class="search-slaider-top search-slaider-bot">
 				<ul id="mycarousel2" class="jcarousel-skin-tango">
 <li><a href="#" onmouseover="changePic(this,'<?=$baseurl;?>images/search/stroy.png')" onmouseout="changePic(this,'<?=$baseurl;?>images/search/stroy-ch.png')"><img src="images/search/stroy-ch.png" alt="" /></a><h2>Проектирование <br /> и строительство </h2></li>
@@ -161,9 +159,7 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.jcarousel.min.js"></script>
 	<script type="text/javascript">
-		
 		function changePic(element,src){var img = element.getElementsByTagName("IMG")[0];img.src = src;return;}
-		
 		$(document).ready(function(){
 			$('#mycarousel').jcarousel();
 			$('#mycarousel2').jcarousel();
@@ -178,8 +174,10 @@
 			
 			$("#ActivityName").keyup(function(){
 				var SearchVal = $(this).val();
+				var RegID = $("#RSV").text();
+				if(RegID == '') return false;				
 				if(SearchVal.length > 2){
-					$("#search-result").load("<?=$baseurl;?>users/search-activity",{'search':SearchVal},
+					$("#search-result").load("<?=$baseurl;?>users/search-activity",{'search':SearchVal,'region':RegID},
 					function(){
 						$("#SearchAct").die();
 						$("#SearchAct").live('change',function(){
@@ -209,11 +207,18 @@
 							var valTitle = $(this.options[this.selectedIndex]).text();
 							$("#RSV").text(valID);
 							$('#RegionName').val(valTitle);
+							$('#ActivityName').val("");
+							$("#ASV").text("");
+							$("#ActivityName").removeAttr("disabled");
+							$("#ActivityName").focus();
+							$("#SearchAct").die();
+							$("#SearchAct").remove();
 						});
 					}
 				);
 				}else{
 					$("#SearchReg").die();
+					$("#ActivityName").attr("disabled");
 					$("#region-result").text('');
 				}
 			});
@@ -325,7 +330,6 @@
 				var actID = $("#activityValue").val();
 				var regID = $("#regionValue").val();
 				if(actID == '' || regID == ''){
-//					$(this).css('float','left');
 					$(this).after('<div class="valid_error">Ошибка! Повторите выбор снова</div>');
 					$(".valid_error").fadeOut(3000,function(){$(this).remove();});
 				}else

@@ -964,13 +964,14 @@ class Users_interface extends CI_Controller{
 	function create_search_activity(){
 	
 		$search = $this->input->post('search');
-		if(!$search) show_404();
+		$region = $this->input->post('region');
+		if(!$search || !$region) show_404();
 		$pagevar = array('baseurl'=>base_url(),'result'=>array());
-		$units = $this->unionmodel->search_unit($search);
+		$units = $this->unionmodel->search_unit($search,$region);
 		$activity = $this->activitymodel->search_activity($search);
 		for($i=0;$i<count($units);$i++):
 			$pagevar['result'][$i]['id'] = $units[$i]['id'];
-			$pagevar['result'][$i]['title'] = $units[$i]['title'];
+			$pagevar['result'][$i]['title'] = $units[$i]['title'].' (товар/услуга)';
 			$pagevar['result'][$i]['product'] = $units[$i]['pid'];
 		endfor;
 		for($i=0,$j=count($units);$i<count($activity);$i++,$j++):

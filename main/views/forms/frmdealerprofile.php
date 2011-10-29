@@ -20,7 +20,7 @@
 			<div class="clear"></div>
 			<div class="vRight" id="dsavatar"><?= form_error('userfile'); ?></div>
 			<?= form_open_multipart($this->uri->uri_string(),array('id'=>'formAvatar','class'=>'formular')); ?>
-				<input class="reg-form-input" type="file" id="vavatar" name="userfile">
+				<input class="reg-form-input" type="file" id="vavatar" name="userfile" size="32">
 				<?= form_hidden('fileupload',TRUE); ?>
 			<?= form_close(); ?>
 			<span class="btnsave" id="svavatar">

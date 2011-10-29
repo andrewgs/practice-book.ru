@@ -137,7 +137,7 @@ class Dealer_interface extends CI_Controller{
 							endif;
 							break;
 							
-			case 'vphones': if(preg_match("/^[0-9 ]{6,}$/i",$fdata)):
+			case 'vphones': if(preg_match("/^[0-9 \-]{6,}$/i",$fdata)):
 								$this->dealersmodel->save_single_data($this->user['uid'],'dlr_phone',$fdata);
 								$statusval['status'] 	= TRUE;
 								$statusval['retvalue'] 	= $fdata;

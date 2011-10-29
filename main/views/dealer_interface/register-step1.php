@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/admin.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/chosen.css" />
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 </head>
@@ -40,6 +41,7 @@
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/chosen.jquery.js" ></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -50,7 +52,7 @@
 		$("#btnReturn").click(function(){
 			window.location="<?=$baseurl;?>dealer/control-panel/<?=$userinfo['uconfirmation'];?>";
 		});
-		
+		$("#regions").chosen();
 		$("#next").click(function(event){
 			var err = false;
 			$(".inpval").css('border-color','#D0D0D0');

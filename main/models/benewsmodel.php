@@ -136,10 +136,10 @@ class Benewsmodel extends CI_Model {
 		$this->db->update('tbl_be_news');
 	}
 	
-	function delete_record($id,$userid){
+	function delete_record($id,$userid,$group){
 	
 		$this->db->where('ben_id',$id);
-		$this->db->where('ben_group',1);
+		$this->db->where('ben_group',$group);
 		$this->db->where('ben_userid',$userid);
 		$this->db->delete('tbl_be_news');
 		return $this->db->affected_rows();

@@ -52,9 +52,9 @@ class Productgroupmodel extends CI_Model {
 		$this->db->update('tbl_productgroup');
 	}
 
-	function insert_empty($activity){
+	function insert_empty($activity,$groupname){
 		
-		$this->prg_title = "__base_group__";
+		$this->prg_title = $groupname;
 		$this->prg_activity = $activity;
 		
 		$this->db->insert('tbl_productgroup',$this);

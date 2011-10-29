@@ -209,8 +209,8 @@ class Unionmodel extends CI_Model{
 		return NULL;
 	}
 
-	function search_unit($search){
-		$query = "SELECT tbl_mra.mra_aid AS id,tbl_productionunit.pri_id AS pid,tbl_productionunit.pri_title AS title FROM tbl_productionunit INNER JOIN tbl_mra ON tbl_productionunit.pri_mraid = tbl_mra.mra_id WHERE tbl_productionunit.pri_title LIKE '%$search%' ORDER BY tbl_productionunit.pri_title";
+	function search_unit($search,$region){
+		$query = "SELECT tbl_mra.mra_aid AS id,tbl_productionunit.pri_id AS pid,tbl_productionunit.pri_title AS title FROM tbl_productionunit INNER JOIN tbl_mra ON tbl_productionunit.pri_mraid = tbl_mra.mra_id WHERE tbl_productionunit.pri_title LIKE '%$search%' AND tbl_mra.mra_rid = $region ORDER BY tbl_productionunit.pri_title";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

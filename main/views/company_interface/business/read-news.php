@@ -57,7 +57,7 @@
 								<hr size="2"/>
 								<div class="right-post">
 									<span class="news-pic">
-					<img src="<?=$baseurl.$type_news;?>/viewimage/<?=$topic['ben_id'];?>"class="floated" width="74" height="74" alt=""/>
+				<img src="<?=$baseurl.$type_news;?>/viewimage/<?=$topic['ben_id'];?>"class="floated" alt="" style="height:74px; width:74px;"/>
 									</span>
 									<h2><?=$topic['ben_title'];?></h2>
 									<p><?=$topic['ben_note'];?></p>

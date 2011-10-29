@@ -36,10 +36,6 @@
 			<section id="auth1">
 				<div class="container_12 framing">
 					<div class="grid_12">
-						<hr size="2"/>
-						<div class="">
-							<?=anchor('admin','Панель администрирования',array('class'=>'lnk-submit'));?>
-						</div>
 						<h1>Регистрация регионального менеджера</h1>
 						<?php $this->load->view('forms/frmsignupmanager');?>
 					</div>
@@ -55,6 +51,9 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$("#btnReturn").click(function(){
+				window.location="<?=$baseurl;?>admin/control-panel/<?=$userinfo['uconfirmation'];?>";
+			});
 			$("#btnSubmit").click(function(event){
 				var err = false;
 				$(".inputValid").css('border-color','#D0D0D0');

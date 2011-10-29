@@ -12,7 +12,7 @@
 		<input class="reg-form-input inputValid" type="password" name="confirmpass" value="<?=set_value('confirmpass');?>"/>
 		<div class="regLabel">Фото</div>
 		<?= form_error('userfile'); ?>
-		<input class="reg-form-input" type="file" name="userfile" accept="image/jpeg,png,gif" size="30"/>
+		<input class="reg-form-input" type="file" name="userfile" accept="image/jpeg,png,gif" size="32"/>
 		<div class="form-reqs">Поддерживаемые форматы: JPG, GIF, PNG.<br/>Изображение должно быть по пояс на белом фоне.</div>
 	</div>
 	<div class="grid_4 prefix_2">
@@ -76,6 +76,7 @@
 		<div class="grid_4 prefix_1">
 			<div id="activityList">
 				<h2>Сфера деятельности <span class="necessarily" title="Обязательно нужно указать">*</span></h2>
+				<span style="font-size:12px;">&nbsp;</span>
 				<div class="box">
 					<div class="box-header"><?=form_error('activity');?>&nbsp;</div>
 						<div class="box-content w280 h250">

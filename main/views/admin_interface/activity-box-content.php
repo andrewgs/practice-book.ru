@@ -253,7 +253,7 @@
 							<div id="hdngroup" class="btnHidden"><?=$group;?></div>
 							<h2>Группа: <?=$groupname;?></h2>
 							<div id="pulist">
-								<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width: 250px;">
+								<select name="productlist" id="single-select-products" class="mixed-combo" size="1" style="width:345px;">
 								<?php for($i=0;$i<count($units);$i++):?>
 									<option value="<?=$units[$i]['pri_id'];?>"><?=$units[$i]['pri_title'];?></option>
 								<?php endfor; ?>

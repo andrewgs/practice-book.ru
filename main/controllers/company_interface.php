@@ -184,6 +184,29 @@ class Company_interface extends CI_Controller{
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'representative'=> $this->usersmodel->read_representative($this->user['cid']),
 			);
+		$cmp_paid = $this->session->userdata('cmp_paid');
+		if(!$cmp_paid):
+			if($pagevar['company']['cmp_status']):
+				$this->session->set_userdata('cmp_paid',TRUE);
+				$cmp_paid = TRUE;
+			endif;
+		endif;
+		if(!$cmp_paid):
+			$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'msglink'		=> $this->uri->uri_string()
+			);
+			$pagevar['text'] = '<br><br><b>Вы не оплатили за пользованием нашим ресурсом</b><br><b>Пожалуйста произведите платеж в ближайшее время</b>';
+			$this->load->view('company_interface/paid-message',$pagevar);
+			$this->session->set_userdata('cmp_paid',TRUE);
+			return FALSE;
+		endif;
 		if($this->input->post('fileupload')):
 			$this->form_validation->set_rules('userfile','','callback_userfile_check');
 			if(!$this->form_validation->run()):
@@ -596,8 +619,10 @@ class Company_interface extends CI_Controller{
 			$this->form_validation->set_rules('description',' "Содержание" ','required|trim');
 			$this->form_validation->set_rules('pdatebegin',' "Начальная дата" ','required');
 			$this->form_validation->set_rules('activity',' "Отрасль" ','required');
-			$this->form_validation->set_rules('actoffers',' "Отрасль" ','required');
-			$this->form_validation->set_rules('regoffers[]',' "Регионы" ','required');
+			if($pagevar['offers']):
+				$this->form_validation->set_rules('actoffers',' "Отрасль" ','required');
+				$this->form_validation->set_rules('regoffers[]',' "Регионы" ','required');
+			endif;
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
@@ -611,6 +636,7 @@ class Company_interface extends CI_Controller{
 					$_POST['photo'] = $this->resize_avatar($_FILES['userfile']['tmp_name'],64,48,TRUE);
 				else:
 					$_POST['image'] = file_get_contents(base_url().'images/no_photo.jpg');
+					$_POST['dimage'] = file_get_contents(base_url().'images/no_photo.jpg');
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
@@ -4298,7 +4324,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		endif;
 		
 		$this->commentsmodel->delete_records('activitynews',$topic);
-		$this->benewsmodel->delete_record($topic,$this->user['uid']);
+		$this->benewsmodel->delete_record($topic,$this->user['uid'],$group);
 		redirect($this->session->userdata('backpath'));
 	}
 	
