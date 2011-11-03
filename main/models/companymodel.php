@@ -42,7 +42,7 @@ class Companymodel extends CI_Model{
 		return $this->db->insert_id();
 	}
 	
-	function insert_record($data){
+	function insert_record($dealer,$data){
 			
 		$this->cmp_name 		= strip_tags($data['title']);
 		$this->cmp_region		= $data['region'];
@@ -61,6 +61,7 @@ class Companymodel extends CI_Model{
 		$this->cmp_destroy		= '3000-01-01';
 		$this->cmp_date 		= date("Y-m-d");
 		$this->cmp_rating 		= 0;
+		$this->cmp_dealer		= $dealer;
 		
 		$this->db->insert('tbl_company',$this);
 		return $this->db->insert_id();

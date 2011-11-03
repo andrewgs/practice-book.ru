@@ -1,5 +1,5 @@
 <?php if($userinfo['manager']): ?>
-	<?php $link = 'manager/set-cpanel/'.$userinfo['uconfirmation']; ?>
+	<?php $link = 'managers/set-cpanel/'.$userinfo['uconfirmation']; ?>
 	<div class="other-nav">
 		<form id="ManActData" method="post" action="<?=$baseurl.$link;?>">
 			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="width: 200px;">
@@ -29,7 +29,7 @@
 	</div>
 	<section id="auth">
 		<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
-		<?php $cablink = 'manager/cabinet/'.$userinfo['uconfirmation']; ?>
+		<?php $cablink = 'managers/cabinet/'.$userinfo['uconfirmation']; ?>
 		<?= anchor($cablink,'Личный кабинет',array('class'=>'lnk-submit','type'=>'button'));?>&nbsp;
 		<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 	</section>

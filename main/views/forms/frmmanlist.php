@@ -1,4 +1,4 @@
-<?= form_open('manager/set-manager-region/'.$userinfo['uconfirmation'],array('id'=>'formSetManager')); ?>
+<?= form_open('managers/set-manager-region/'.$userinfo['uconfirmation'],array('id'=>'formSetManager')); ?>
 	<div class="grid_12">
 	<label class="label-input">Список менеджеров текущей отрасли: <span class="necessarily" title="Обязательно нужно указать">*</span></label> 
 		<div class="box-content" >

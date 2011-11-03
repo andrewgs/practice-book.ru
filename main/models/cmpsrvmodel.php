@@ -6,6 +6,7 @@ class Cmpsrvmodel extends CI_Model {
 	var $cs_cmpid = 1;
 	var $cs_srvid = 1;
 	var $cs_note = '';
+	var $cs_close = 0;
 	
 	function __construct(){
         
@@ -34,6 +35,20 @@ class Cmpsrvmodel extends CI_Model {
 	
 		$this->db->where('cs_cmpid',$cid);
 		$this->db->delete('tbl_companyservices');
+		return $this->db->affected_rows();
+	}
+	
+	function close_record($id){
+		$this->db->set('cs_close',1);
+		$this->db->where('cs_id',$id);
+		$this->db->update('tbl_companyservices');
+		return $this->db->affected_rows();
+	}
+	
+	function open_record($id){
+		$this->db->set('cs_close',0);
+		$this->db->where('cs_id',$id);
+		$this->db->update('tbl_companyservices');
 		return $this->db->affected_rows();
 	}
 }

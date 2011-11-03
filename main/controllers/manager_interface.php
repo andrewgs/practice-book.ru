@@ -1,6 +1,6 @@
-<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Manager_interface extends CI_Controller{
+class manager_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','status'=>TRUE,'activity'=>0,'priority'=>0);
 	var $months = array("01"=>"января","02"=>"февраля","03"=>"марта","04"=>"апреля",
@@ -10,7 +10,7 @@ class Manager_interface extends CI_Controller{
 	function __construct(){
 	
 		parent::__construct();
-		
+	
 		$this->load->model('companymodel');
 		$this->load->model('activitymodel');
 		$this->load->model('usersmodel');
@@ -134,7 +134,7 @@ class Manager_interface extends CI_Controller{
 				$message = 'Логин - '.$_POST['login']."\n".'Пароль - '.$_POST['password']."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
 				
 				if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
-					redirect('manager/cabinet/'.$this->user['uconfirmation']);
+					redirect('managers/cabinet/'.$this->user['uconfirmation']);
 				else:
 					$this->email->print_debugger();
 					exit;
@@ -159,7 +159,7 @@ class Manager_interface extends CI_Controller{
 		$this->session->set_userdata('activity',$activity);
 		$this->session->set_userdata('region',$region);
 		$this->session->set_userdata('parent_act',$parent_act);
-		redirect('manager/control-panel/'.$this->user['uconfirmation']);
+		redirect('managers/control-panel/'.$this->user['uconfirmation']);
 	}
 	
 	function cpanel(){
@@ -505,7 +505,7 @@ class Manager_interface extends CI_Controller{
 					'product'		=> array(),
 					'manager'		=> array(),
 					'valid'			=> $error,
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','названия','required|trim');
@@ -569,7 +569,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'pitfalls'		=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['manager']['activitypath'] = "Подводные камни";
@@ -588,7 +588,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->pitfallsmodel->insert_record($mraid,$_POST);
-				redirect('manager/edit-pitfalls/'.$this->user['uconfirmation']);
+				redirect('managers/edit-pitfalls/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		
@@ -637,7 +637,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'questions'		=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['manager']['activitypath'] = "Вопросы по отрасли";
@@ -656,7 +656,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->mraquestionsmodel->insert_answer($mraid,$_POST);
-				redirect('manager/edit-questions/'.$this->user['uconfirmation']);
+				redirect('managers/edit-questions/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		$this->load->view('manager_interface/questions-edit',$pagevar);
@@ -707,7 +707,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'tips'			=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['manager']['activitypath'] = "Советы";
@@ -726,7 +726,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->tipsmodel->insert_record($mraid,$_POST);
-				redirect('manager/edit-tips/'.$this->user['uconfirmation']);
+				redirect('managers/edit-tips/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		
@@ -775,7 +775,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'news'			=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		$pagevar['manager']['activitypath'] = "Новости отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
@@ -808,7 +808,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->activitynewsmodel->insert_record($mraid,$_POST);
 				$this->benewsmodel->insert_record($_POST,$activity,0,0,0,1);
-				redirect('manager/edit-news/'.$this->user['uconfirmation']);
+				redirect('managers/edit-news/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		$this->load->view('manager_interface/news-edit',$pagevar);
@@ -858,7 +858,7 @@ class Manager_interface extends CI_Controller{
 					'persona'		=> array(),
 					'manager'		=> array(),
 					'valid'			=> $error,
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','заголовок','required|trim');
@@ -885,12 +885,12 @@ class Manager_interface extends CI_Controller{
 						$_POST['image'] = $this->personamodel->get_image($pid);
 					endif;
 					$this->personamodel->save_persons($activity,$_POST);
-					redirect('manager/control-panel/'.$this->user['uconfirmation']);
+					redirect('managers/control-panel/'.$this->user['uconfirmation']);
 				endif;
 				$mraid = $this->manregactmodel->record_exist($region,$activity);
 				if($mraid):
 					$this->personamodel->update_record($mraid,$activity,$_POST);
-					redirect('manager/control-panel/'.$this->user['uconfirmation']);
+					redirect('managers/control-panel/'.$this->user['uconfirmation']);
 				else:
 		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 				endif;
@@ -924,7 +924,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'documents'		=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['manager']['activitypath'] = "Документооборот";
@@ -946,7 +946,7 @@ class Manager_interface extends CI_Controller{
 				$_FILES['userfile']['name'] = preg_replace('/.+(.)(\.)+/',date("Ymdhis")."\$2", $_FILES['userfile']['name']);
 				$_POST['link'] = 'documents/'.$_FILES['userfile']['name'];
 				if(!$this->fileupload('userfile',FALSE)):
-					redirect('manager/edit-documents/'.$this->user['uconfirmation']);
+					redirect('managers/edit-documents/'.$this->user['uconfirmation']);
 				endif;
 				switch ($_POST['doctype']):
 					case '1' : $_POST['image'] = file_get_contents(base_url().'images/documents/msword.png'); break;
@@ -956,7 +956,7 @@ class Manager_interface extends CI_Controller{
 				endswitch;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->documentsmodel->insert_record($mraid,$_POST);
-				redirect('manager/edit-documents/'.$this->user['uconfirmation']);
+				redirect('managers/edit-documents/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		
@@ -1013,7 +1013,7 @@ class Manager_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'specials'		=> array(),
 					'manager'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		$pagevar['manager']['activitypath'] = "Новинки отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
@@ -1047,7 +1047,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->specialsmodel->insert_record($mraid,$_POST);
 				$this->bediscountmodel->insert_record($_POST,$activity,0,0,0,1);
-				redirect('manager/edit-specials/'.$this->user['uconfirmation']);
+				redirect('managers/edit-specials/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		$this->load->view('manager_interface/specials-edit',$pagevar);
@@ -1096,7 +1096,7 @@ class Manager_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'banner'		=> "",
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['manager']['activitypath'] = "Кто-главный";
@@ -1104,10 +1104,10 @@ class Manager_interface extends CI_Controller{
 		if($this->input->post('submit')):
 			if($this->user['priority'] && isset($_POST['all'])):
 				$this->manregactmodel->save_banners($activity,$_POST['banner']);
-				redirect('manager/control-panel/'.$this->user['uconfirmation']);
+				redirect('managers/control-panel/'.$this->user['uconfirmation']);
 			endif;
 			$this->manregactmodel->save_banner($mraid,$_POST['banner']);
-			redirect('manager/control-panel/'.$this->user['uconfirmation']);
+			redirect('managers/control-panel/'.$this->user['uconfirmation']);
 		endif;
 		$pagevar['banner'] = $this->manregactmodel->read_field($mraid,'mra_banner');
 		$this->load->view('manager_interface/edit-banner',$pagevar);
@@ -1139,7 +1139,7 @@ class Manager_interface extends CI_Controller{
 				if(!$pg):
 					$this->productgroupmodel->insert_record($_POST['title'],$activity);
 				endif;
-				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+				redirect('managers/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		
@@ -1175,7 +1175,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['advantages'] = preg_replace('/\n{2}/','<br>',$_POST['advantages']);
 				
 				$this->productionunitmodel->update_record($_POST['productlist'],$mraid,$_POST,$_POST['grouplist']);
-				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+				redirect('managers/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		
@@ -1220,7 +1220,7 @@ class Manager_interface extends CI_Controller{
 					endif;
 				endfor;
 				$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
-				redirect('manager/edit-coordinator/'.$this->user['uconfirmation']);
+				redirect('managers/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		$pagevar['group'] = $this->productgroupmodel->read_records($activity);
@@ -1265,7 +1265,7 @@ class Manager_interface extends CI_Controller{
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->consultationmodel->insert_record($this->user['uid'],$_POST);
-				redirect('manager/consultation/'.$this->user['uconfirmation']);
+				redirect('managers/consultation/'.$this->user['uconfirmation']);
 			endif;
 		endif;
 		$pagevar['consult'] = $this->consultationmodel->read_records($this->user['uid']);
@@ -1677,7 +1677,7 @@ class Manager_interface extends CI_Controller{
 			$mraid = $this->manregactmodel->record_exist($region,$activity);
 			if($mraid):
 				$this->manregactmodel->set_manager_on_region($mraid,$_POST['manager']);
-				redirect('manager/manager-list/'.$this->user['uconfirmation']);
+				redirect('managers/manager-list/'.$this->user['uconfirmation']);
 			else:
 		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 			endif;
@@ -1804,7 +1804,7 @@ class Manager_interface extends CI_Controller{
 					'manager' 		=> array(),
 					'managers' 		=> array(),
 					'federal'		=> array(),
-					'backpath'		=> 'manager/control-panel/'.$this->user['uconfirmation']
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
 			);
 		
 		$pagevar['federal'] = $this->usersmodel->read_federal($activity);

@@ -1,7 +1,7 @@
 <header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
-			<?php $link = 'manager/control-panel/'.$userinfo['uconfirmation'].'/'.$userinfo['region'].'/'.$userinfo['activity'];?>
+			<?php $link = 'managers/control-panel/'.$userinfo['uconfirmation'].'/'.$userinfo['region'].'/'.$userinfo['activity'];?>
 			<?= anchor($link,'Управление',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>
 		</div>
 		<div class="other-nav">

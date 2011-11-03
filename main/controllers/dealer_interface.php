@@ -278,7 +278,7 @@ class Dealer_interface extends CI_Controller{
 					$_POST['logo'] = file_get_contents(base_url().'images/no_photo.jpg');
 					$_POST['thumb'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
-				$company_id = $this->companymodel->insert_record($_POST);
+				$company_id = $this->companymodel->insert_record($this->user['uid'],$_POST);
 				$this->session->set_userdata('companyid',$company_id);
 				$this->session->set_userdata('regstatus',2);
 				redirect('dealer/register-company/'.$this->user['uconfirmation'].'/step-2');

@@ -840,7 +840,7 @@
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="right">
-									<?= anchor('manager/manager-list/'.$userinfo['uconfirmation'],'Менеджеры');?>
+									<?= anchor('managers/manager-list/'.$userinfo['uconfirmation'],'Менеджеры');?>
 								</div>
 								<div class="clear"></div>
 							</div>
@@ -849,7 +849,7 @@
 						<div class="box-consustation">
 							<div class="box-header w220">
 								<h2 style="text-align:center">
-									<?php $link = 'manager/consultation/'.$userinfo['uconfirmation'];?>
+									<?php $link = 'managers/consultation/'.$userinfo['uconfirmation'];?>
 									<?= anchor($link,'&nbsp;&nbsp;&nbsp;Консультирование &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
 								</h2>
 								<div class="box-search h20">
@@ -1207,7 +1207,7 @@
 		$("#select-region").change(function(){change_region($(this));});
 		$("#select-activity").change(function(){change_activity($(this));});
 		$(".edit").click(function(){
-			window.location.href="<?=$baseurl;?>manager/edit-"+this.id+"/<?=$userinfo['uconfirmation']?>";
+			window.location.href="<?=$baseurl;?>managers/edit-"+this.id+"/<?=$userinfo['uconfirmation']?>";
 		});
 		
 		$("#select-group").change(function(){
@@ -1222,7 +1222,7 @@
 						$("#select-products").live('change',function(){
 							if($("#select-products").val()>0){
 								$.post(
-									"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+									"<?=$baseurl;?>managers/product-unit-info/<?=$userinfo['uconfirmation'];?>",
 									{'group':$("#select-group").val(),'unit':$("#select-products").val()},
 									function(data){
 										$(".unitImage").html(data.image);
@@ -1250,7 +1250,7 @@
 		$("#single-select-products").change(function(){
 			if($(this).val()>0){
 				$.post(
-					"<?=$baseurl;?>manager/product-unit-info/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>managers/product-unit-info/<?=$userinfo['uconfirmation'];?>",
 					{'group':$("#hdngroup").text(),'unit':$(this).val()},
 					function(data){
 						$(".unitImage").html(data.image);
@@ -1363,7 +1363,7 @@
 		
 		function offer_list(product,bprice,eprice){
 			$("#offerTitle").html(product);
-			$("#offerList").load("<?=$baseurl;?>manager/offer-list/<?=$userinfo['uconfirmation'];?>",{'product':product,'bprice':bprice,'eprice':eprice},function(){$("#offer-modal-content").modal();});
+			$("#offerList").load("<?=$baseurl;?>managers/offer-list/<?=$userinfo['uconfirmation'];?>",{'product':product,'bprice':bprice,'eprice':eprice},function(){$("#offer-modal-content").modal();});
 		}
 		
 		function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}

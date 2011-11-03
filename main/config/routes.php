@@ -34,7 +34,7 @@ $route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list
 $route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
 $route['product-info/region/:num/activity/:num'] = "users_interface/product_unit_info";
 $route['offer-list/region/:num'] = "users_interface/offer_list";
-$route['consultation/manager/:num'] = "users_interface/consultation_list";
+$route['consultation/managers/:num'] = "users_interface/consultation_list";
 /* ----------------------------------------------- company ------------------------------------------------*/
 
 $route['company-info/:num'] = "users_interface/company_info";
@@ -102,51 +102,51 @@ $route['add-question'] = "users_interface/ajax_add_question";
 $route['add-tips'] = "users_interface/ajax_add_tips";
 
 /***********************************	MANAGER INTRERFACE	***********************************************/
-$route['manager/control-panel/:any'] = "manager_interface/cpanel";
-$route['manager/set-cpanel/:any'] = "manager_interface/set_cpanel";
-$route['manager/cabinet/:any'] = "manager_interface/profile";
-$route['manager/add-job/:any'] = "manager_interface/insert_job";
+$route['managers/control-panel/:any'] = "manager_interface/cpanel";
+$route['managers/set-cpanel/:any'] = "manager_interface/set_cpanel";
+$route['managers/cabinet/:any'] = "manager_interface/profile";
+$route['managers/add-job/:any'] = "manager_interface/insert_job";
 $route['views/job-list/:any'] = "manager_interface/views";
-$route['manager/delete-job/:any'] = "manager_interface/delete_job";
-$route['manager/registration/:any'] = "manager_interface/register";
-$route['manager/save-profile/:any'] = "manager_interface/save_profile";
+$route['managers/delete-job/:any'] = "manager_interface/delete_job";
+$route['managers/registration/:any'] = "manager_interface/register";
+$route['managers/save-profile/:any'] = "manager_interface/save_profile";
 $route['views/form-job/:any'] = "manager_interface/views";
 $route['views/manager-list/:any'] = "manager_interface/views";
-$route['manager/set-manager-region/:any'] = "manager_interface/set_manager_on_region";
-$route['manager/manager-list/:any'] = "manager_interface/manager_list";
+$route['managers/set-manager-region/:any'] = "manager_interface/set_manager_on_region";
+$route['managers/manager-list/:any'] = "manager_interface/manager_list";
 
 $route['listbox/product-unit-list/:any'] = "manager_interface/product_unit_load";
 $route['listbox/product-unit-form/:any'] = "manager_interface/product_form_load";
 
-$route['manager/edit-product/:any'] = "manager_interface/edit_product";
-$route['manager/edit-pitfalls/:any'] = "manager_interface/edit_pitfalls";
-$route['manager/delete-pitfalls/:any'] = "manager_interface/delete_pitfalls";
-$route['manager/save-pitfalls/:any'] = "manager_interface/save_pitfalls";
-$route['manager/edit-questions/:any'] = "manager_interface/edit_questions";
-$route['manager/delete-question/:any'] = "manager_interface/delete_question";
-$route['manager/save-question/:any'] = "manager_interface/save_question";
-$route['manager/edit-news/:any'] = "manager_interface/edit_news";
-$route['manager/delete-news/:any'] = "manager_interface/delete_news";
-$route['manager/save-news/:any'] = "manager_interface/save_news";
-$route['manager/edit-persona/:any'] = "manager_interface/edit_persona";
-$route['manager/edit-documents/:any'] = "manager_interface/edit_documents";
-$route['manager/delete-document/:any'] = "manager_interface/delete_document";
-$route['manager/save-document/:any'] = "manager_interface/save_document";
-$route['manager/edit-specials/:any'] = "manager_interface/edit_specials";
-$route['manager/delete-specials/:any'] = "manager_interface/delete_specials";
-$route['manager/save-specials/:any'] = "manager_interface/save_specials";
-$route['manager/edit-tips/:any'] = "manager_interface/edit_tips";
-$route['manager/delete-tips/:any'] = "manager_interface/delete_tips";
-$route['manager/save-tips/:any'] = "manager_interface/save_tips";
-$route['manager/edit-whomain/:any'] = "manager_interface/edit_whomain";
-$route['manager/edit-coordinator/:any'] = "manager_interface/edit_coordinator";
-$route['manager/product-unit-dalete/:any'] = "manager_interface/product_unit_dalete";
-$route['manager/product-unit-info/:any'] = "manager_interface/product_unit_info";
-$route['manager/offer-list/:any'] = "manager_interface/offer_list";
-$route['manager/consultation/:any'] = "manager_interface/consultation";
-$route['manager/delete-consultation/:any'] = "manager_interface/delete_consultation";
-$route['manager/save-consultation/:any'] = "manager_interface/save_consultation";
-$route['manager/close-consultation/:any'] = "manager_interface/close_consultation";
+$route['managers/edit-product/:any'] = "manager_interface/edit_product";
+$route['managers/edit-pitfalls/:any'] = "manager_interface/edit_pitfalls";
+$route['managers/delete-pitfalls/:any'] = "manager_interface/delete_pitfalls";
+$route['managers/save-pitfalls/:any'] = "manager_interface/save_pitfalls";
+$route['managers/edit-questions/:any'] = "manager_interface/edit_questions";
+$route['managers/delete-question/:any'] = "manager_interface/delete_question";
+$route['managers/save-question/:any'] = "manager_interface/save_question";
+$route['managers/edit-news/:any'] = "manager_interface/edit_news";
+$route['managers/delete-news/:any'] = "manager_interface/delete_news";
+$route['managers/save-news/:any'] = "manager_interface/save_news";
+$route['managers/edit-persona/:any'] = "manager_interface/edit_persona";
+$route['managers/edit-documents/:any'] = "manager_interface/edit_documents";
+$route['managers/delete-document/:any'] = "manager_interface/delete_document";
+$route['managers/save-document/:any'] = "manager_interface/save_document";
+$route['managers/edit-specials/:any'] = "manager_interface/edit_specials";
+$route['managers/delete-specials/:any'] = "manager_interface/delete_specials";
+$route['managers/save-specials/:any'] = "manager_interface/save_specials";
+$route['managers/edit-tips/:any'] = "manager_interface/edit_tips";
+$route['managers/delete-tips/:any'] = "manager_interface/delete_tips";
+$route['managers/save-tips/:any'] = "manager_interface/save_tips";
+$route['managers/edit-whomain/:any'] = "manager_interface/edit_whomain";
+$route['managers/edit-coordinator/:any'] = "manager_interface/edit_coordinator";
+$route['managers/product-unit-dalete/:any'] = "manager_interface/product_unit_dalete";
+$route['managers/product-unit-info/:any'] = "manager_interface/product_unit_info";
+$route['managers/offer-list/:any'] = "manager_interface/offer_list";
+$route['managers/consultation/:any'] = "manager_interface/consultation";
+$route['managers/delete-consultation/:any'] = "manager_interface/delete_consultation";
+$route['managers/save-consultation/:any'] = "manager_interface/save_consultation";
+$route['managers/close-consultation/:any'] = "manager_interface/close_consultation";
 
 /************************************	DEALERS INTRERFACE	***********************************************/
 
@@ -242,6 +242,8 @@ $route['admin/delete-dealer/:any']= "admin_interface/dalete_dealer";
 $route['admin/activate-dealer/:any']= "admin_interface/activate_dealer";
 $route['admin/dealers-regions/:any']= "admin_interface/dealers_regions";
 $route['admin/dealers-company/:any']= "admin_interface/dealers_company";
+
+$route['admin/activity-company/:any']= "admin_interface/activity_company";
 
 $route['admin/save-region/:any']= "admin_interface/save_region";
 $route['admin/save-activity/:any']= "admin_interface/save_activity";

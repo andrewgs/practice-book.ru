@@ -141,7 +141,7 @@
 				var curID = $(this).attr("nID");
 				var newsID = $("#id"+curID).text();
 				$.post(
-					"<?=$baseurl;?>manager/delete-question/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>managers/delete-question/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID},
 					function(data){
 						if(data.status){
@@ -177,7 +177,7 @@
 					msgerror('Пропущены обязательные поля');
 					return false;
 				}else{
-					$.post("<?=$baseurl;?>manager/save-question/<?=$userinfo['uconfirmation'];?>",
+					$.post("<?=$baseurl;?>managers/save-question/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID,'title':valTitle,'desc':valDesc,'priority':valPriority},
 					function(data){
 						if(data.status){

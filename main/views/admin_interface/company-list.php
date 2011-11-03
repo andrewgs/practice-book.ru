@@ -19,9 +19,16 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/admin.css">
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
+	<!--[if lt IE 7]>
+	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
+	<![endif]-->
 	<style type="text/css">
 		.h960{max-height: none; min-height: 470px;}
 		.w918{width: 918px;}
+		.w960{width: 960px;}
+		.h365{height: 365px;}
+		.w575{width: 575px;}
 		div.ButtonOperation{min-height:30px;}
 	</style>
 </head>
@@ -37,12 +44,27 @@
 				<div class="container_12">
 					<?php $this->load->view("admin_interface/company-list-content");?>
 				</div>
+				<div id="offer-modal-content">
+					<div class="box">
+						<div class="box-header"><div id="mdTitle">&nbsp;</div>
+							<div class="box-search">&nbsp;</div>
+						</div>
+						<div class="box-content h365 w575">
+							<div id="mdList">&nbsp;</div>
+						</div>
+						<div class="box-bottom-links h20">&nbsp;
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
 			</section>
 		</div>
 	</div><!-- end of #container -->
 	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -117,6 +139,15 @@
 					msgerror(data.message);
 				},"json");
 		});
+		
+		$(".btnActivity").click(function(e){
+			var curID = $(this).attr("rID");
+			var cmpID = $("td[rID='"+curID+"']").text();
+			var title = $("#cn"+curID).text();
+			$("#mdTitle").html(title);
+			$("#mdList").load("<?=$baseurl;?>admin/activity-company/<?=$userinfo['uconfirmation'];?>",{'id':cmpID},function(){$("#offer-modal-content").modal();});
+		});
+	
 		function msgerror(msg){
 			$.blockUI({
 				message: msg,

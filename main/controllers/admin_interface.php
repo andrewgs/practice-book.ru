@@ -2032,6 +2032,15 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function activity_company(){
+	
+		$pagevar = array('baseurl'=>base_url(),'activity'=>array());
+		$cid = trim($this->input->post('id'));
+		if(!$cid) show_404();
+		$pagevar['activity'] = $this->unionmodel->company_activity($cid,1);
+		$this->load->view('admin_interface/company-activity-list',$pagevar);
+	}
+	
 	function dalete_activity(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');

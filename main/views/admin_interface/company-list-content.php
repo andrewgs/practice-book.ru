@@ -12,11 +12,12 @@
 					<th scope="col" abbr="ID">ID</th>
 					<th scope="col" abbr="НАЗВАНИЕ">НАЗВАНИЕ</th>	
 					<th scope="col" abbr="E-MAIL">E-MAIL</th>
-					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛЕФОН</th>
+					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛ.</th>
 					<th scope="col" abbr="ЗАРЕГ.">ЗАРЕГ.</th>
+					<th scope="col" abbr="ОТРАСЛИ">ОТРАСЛИ</th>
 					<th scope="col" abbr="РЕЙТИНГ">РЕЙТИНГ</th>
-					<th scope="col" abbr="ПРЕДЛОЖЕНИЕ КОНТРАГЕНТАМ">КА(0|1)</th>
-					<th scope="col" abbr="СТАТУС">СТАТУС(0|1)</th>
+					<th scope="col" abbr="ПРЕДЛОЖЕНИЕ КОНТРАГЕНТАМ">КА</th>
+					<th scope="col" abbr="СТАТУС">СТАТУС</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>
 				</tr>	
 			</thead>
@@ -31,14 +32,17 @@
 					<tr class="odd"> 
 				<?php endif; ?>
 					<td rID="<?=$i?>"><?=$list[$i]['cmp_id'];?></td>
-						<?php if($list[$i]['cmp_name'] != ''):?>
-							<td><?=anchor('company-info/'.$list[$i]['cmp_id'],$list[$i]['cmp_name'],array('target'=>'_blank'));?></td>
-						<?php else:?>
-							<td>Нет имени</td>
-						<?php endif;?>
+					<?php if($list[$i]['cmp_name'] != ''):?>
+						<td id="cn<?=$i?>"><?=anchor('company-info/'.$list[$i]['cmp_id'],$list[$i]['cmp_name'],array('target'=>'_blank'));?></td>
+					<?php else:?>
+						<td>Нет имени</td>
+					<?php endif;?>
 						<td><?=$list[$i]['cmp_email'];?></td>
 						<td><?=$list[$i]['cmp_phone'];?></td>
 						<td><?=$list[$i]['cmp_date'];?></td>
+						<td>
+	<input type="image" title="Список отраслей" class="btnActivity" id="act<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/document-task.png" />
+						</td>
 						<td>
 		<input class="reg-form-small parentid" id="vRating<?=$i?>" rID="<?=$i?> name="rating" type="text" value="<?=$list[$i]['cmp_rating'];?>">
 						</td>

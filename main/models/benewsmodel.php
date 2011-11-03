@@ -21,14 +21,14 @@ class Benewsmodel extends CI_Model {
 		parent::__construct();
 	}
 	
-	function insert_record($insertdata,$activity,$environment,$department,$userid,$group){
+	function insert_record($data,$activity,$environment,$department,$userid,$group){
 		
 		if(!$environment) $department = 0;
-		$this->ben_title		= htmlspecialchars($insertdata['title']);
-		$this->ben_note			= strip_tags($insertdata['description'],'<br>');
-		$this->ben_photo		= $insertdata['photo'];
-		$this->ben_date			= $insertdata['pdatebegin'];
-		$this->ben_source		= htmlspecialchars($insertdata['source']);
+		$this->ben_title		= htmlspecialchars($data['title']);
+		$this->ben_note			= strip_tags($data['note'],'<br>');
+		$this->ben_photo		= $data['photo'];
+		$this->ben_date			= $data['date'];
+		$this->ben_source		= htmlspecialchars($data['source']);
 		$this->ben_activity		= $activity;
 		$this->ben_environment	= $environment;
 		$this->ben_department	= $department;

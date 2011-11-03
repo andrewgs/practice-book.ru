@@ -1,6 +1,6 @@
 <div class="box">
 	<div class="box-header">
-		Список регионов:
+		Список групп товаров:
 		<div class="box-search">
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>

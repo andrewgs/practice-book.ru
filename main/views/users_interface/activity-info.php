@@ -927,7 +927,7 @@
 						<div class="box-consustation">
 							<div class="box-header w220">
 								<h2 style="text-align:center">
-									<?php $link = 'consultation/manager/'.$manager['uid'];?>
+									<?php $link = 'consultation/managers/'.$manager['uid'];?>
 									<?= anchor($link,'&nbsp;&nbsp;&nbsp;Консультирование &nbsp;&nbsp;&nbsp;',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button','style'=>'font-size: 120%;'));?>
 								</h2>
 								<div class="box-search h20">

@@ -127,7 +127,7 @@
 												$("#UnitDel").live('click',function(event){
 													event.preventDefault();
 													$.post(
-														"<?=$baseurl;?>manager/product-unit-dalete/<?=$userinfo['uconfirmation'];?>",
+														"<?=$baseurl;?>managers/product-unit-dalete/<?=$userinfo['uconfirmation'];?>",
 														{'group':$("#select-group").val(),'unit':$("#select-products").val()},
 														function(data){
 															if(data.status){

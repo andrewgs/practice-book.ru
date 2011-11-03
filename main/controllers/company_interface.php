@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 class Company_interface extends CI_Controller{
 
@@ -311,7 +311,7 @@ class Company_interface extends CI_Controller{
 					'regions'		=> array(),
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'cmpregion'		=> $this->regionmodel->read_record($this->user['region']),
-					'activity'		=> $this->unionmodel->company_activity($this->user['cid'])
+					'activity'		=> $this->unionmodel->company_activity($this->user['cid'],0)
 			);
 		if($this->input->post('fileupload')):
 			$this->form_validation->set_rules('userfile','','callback_userfile_check');
@@ -504,7 +504,7 @@ class Company_interface extends CI_Controller{
 					'regions'		=> array(),
 					'name'			=> 'Новости компании',
 					'typeavatar'	=> 'cnavatar',
-					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid']),
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'],0),
 					'offers'		=> FALSE
 			);
 		if($this->input->post('submit')):
@@ -610,7 +610,7 @@ class Company_interface extends CI_Controller{
 					'regions'		=> $this->regionmodel->read_records_by_district(),
 					'name'			=> 'Акции компании',
 					'typeavatar'	=> 'cshavatar',
-					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid']),
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'],0),
 					'offers'		=> $this->companymodel->read_field($this->user['cid'],'cmp_offers'),
 					'activity'		=> $this->activitymodel->read_activity_final()
 			);
@@ -687,7 +687,7 @@ class Company_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
-					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'])
+					'cmpactivity'	=> $this->unionmodel->company_activity($this->user['cid'],0)
 			);
 			
 		if($this->input->post('sbmpg')):
@@ -899,7 +899,7 @@ class Company_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
-					'activity'		=> $this->unionmodel->company_activity($this->user['cid']),
+					'activity'		=> $this->unionmodel->company_activity($this->user['cid'],0),
 					'actenvironment'=> 0,
 					'environment'	=> 0
 			);
@@ -4724,7 +4724,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$pagevar['pages'] = $this->pagination->create_links();
 		
 		for($i=0;$i<count($pagevar['companylist']);$i++):
-			$pagevar['companylist'][$i]['activity'] = $this->unionmodel->company_activity($pagevar['companylist'][$i]['cmp_id']);
+			$pagevar['companylist'][$i]['activity'] = $this->unionmodel->company_activity($pagevar['companylist'][$i]['cmp_id'],0);
 		endfor;
 		
 		if(!$pagevar['topic']['wmn_over'] && $pagevar['topic']['minutes'] <= 0):

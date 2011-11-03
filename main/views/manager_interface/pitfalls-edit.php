@@ -128,7 +128,7 @@
 				var curID = $(this).attr("nID");
 				var newsID = $("#id"+curID).text();
 				$.post(
-					"<?=$baseurl;?>manager/delete-pitfalls/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>managers/delete-pitfalls/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID},
 					function(data){
 						if(data.status){
@@ -162,7 +162,7 @@
 					msgerror('Пропущены обязательные поля');
 					return false;
 				}else{
-					$.post("<?=$baseurl;?>manager/save-pitfalls/<?=$userinfo['uconfirmation'];?>",
+					$.post("<?=$baseurl;?>managers/save-pitfalls/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID,'title':valTitle,'desc':valDesc},
 					function(data){
 						if(data.status){

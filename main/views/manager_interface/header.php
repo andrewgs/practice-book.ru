@@ -1,7 +1,7 @@
 <header role="contentinfo">
 	<div class="container_12 highlight" id="loginstatus">
 		<div class="other-nav">
-		<?php $link = 'manager/set-cpanel/'.$userinfo['uconfirmation']; ?>
+		<?php $link = 'managers/set-cpanel/'.$userinfo['uconfirmation']; ?>
 		<form id="ManActData" method="post" action="<?=$baseurl.$link;?>">
 			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="width: 200px;">
 				<option value="0">Выберите отрасль</option>
@@ -30,7 +30,7 @@
 	</div>
 		<section id="auth">
 			<span class="welcome-message"><?= $userinfo['ufullname']; ?></span>
-			<?= anchor('manager/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
+			<?= anchor('managers/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет',array('class'=>'lnk-submit','id'=>'lnk-sign-in','type'=>'button'));?>&nbsp;
 			<input type="button" class="lnk-submit" id="lnk-logout" value="Выход"/>
 		</section>
 		<div class="clear"></div>

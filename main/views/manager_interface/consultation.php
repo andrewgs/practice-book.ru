@@ -97,7 +97,7 @@
 				var curID = $(this).attr("nID");
 				var newsID = $("#id"+curID).text();
 				$.post(
-					"<?=$baseurl;?>manager/delete-consultation/<?=$userinfo['uconfirmation'];?>",
+					"<?=$baseurl;?>managers/delete-consultation/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID},
 					function(data){
 						if(data.status){
@@ -140,7 +140,7 @@
 					msgerror('Пропущены обязательные поля');
 					return false;
 				}else{
-					$.post("<?=$baseurl;?>manager/save-consultation/<?=$userinfo['uconfirmation'];?>",
+					$.post("<?=$baseurl;?>managers/save-consultation/<?=$userinfo['uconfirmation'];?>",
 					{'id':newsID,'title':valTitle,'price':valPrice,'period':valPeriod,'desc':valDesc},
 					function(data){
 						if(data.status){
@@ -160,7 +160,7 @@
 				if(this.checked) check = 1;
 				else check = 0;
 				
-				$.post("<?=$baseurl;?>manager/close-consultation/<?=$userinfo['uconfirmation'];?>",{'check':check},
+				$.post("<?=$baseurl;?>managers/close-consultation/<?=$userinfo['uconfirmation'];?>",{'check':check},
 					function(data){
 						if(data.status){
 							$("#msgCloseConsult").text(data.message);
