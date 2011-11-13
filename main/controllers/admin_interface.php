@@ -41,6 +41,7 @@ class Admin_interface extends CI_Controller{
 		$this->load->model('cmpunitsmodel');
 		$this->load->model('whomainmodel');
 		$this->load->model('wmcompanymodel');
+		$this->load->model('pricingmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -1291,6 +1292,81 @@ class Admin_interface extends CI_Controller{
 		$this->load->view('manager_interface/price-coordinator/offer-list',$pagevar);
 	}
 	
+	function edit_season(){
+		
+	}
+
+	function edit_pricing(){
+	
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Редактирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'graph'			=> array(),
+					'comment'		=> '',
+					'manager'		=> array(),
+					'backpath'		=> 'admin/edit-activity/'.$this->user['uconfirmation'].'/region/'.$region.'/activity/'.$activity
+			);
+		$pagevar['manager']['activitypath'] = "Редактирование графика формирования стоимости";
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('exp[]',' ','required');
+			$this->form_validation->set_rules('comment',' ','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_pricing(TRUE);
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['comment'] = preg_replace('/\n{2}/','<br>',$_POST['comment']);
+				
+				$countpricing = count($_POST['exp']);
+				$pricinglist = array();
+				if($countpricing > 0):
+					for($i=0,$j=0;$i<$countpricing;$i+=2,$j++):
+						if(empty($_POST['exp'][$i])) continue;
+						$pricinglist[$j]['title'] = $_POST['exp'][$i];
+						$pricinglist[$j]['percent'] = $_POST['exp'][$i+1];
+					endfor;
+				endif;
+				if($this->user['priority'] && isset($_POST['all'])):
+					$this->unionmodel->delete_pricing($activity);
+					$regions = $this->regionmodel->get_allid();
+					if($regions):
+						for($i=0;$i<count($regions);$i++):
+							$curmraid = $this->manregactmodel->record_exist($regions[$i]['id'],$activity);
+							if($curmraid):
+								$this->pricingmodel->group_insert($curmraid,$pricinglist);
+							endif;
+						endfor;
+					endif;
+					$this->manregactmodel->save_actpricing($activity,$_POST['comment']);
+				else:
+					$this->manregactmodel->save_pricing($mraid,$_POST['comment']);
+					$this->pricingmodel->delete_record($mraid);
+					$this->pricingmodel->group_insert($mraid,$pricinglist);
+				endif;
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
+		if(!$pagevar['graph']):
+			$this->pricingmodel->insert_empty($mraid);
+			$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
+		endif;
+		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_pricing');
+		$this->load->view('admin_interface/edit-activity/pricing-edit',$pagevar);
+	}
+	
 	/* ======================================== END EDIT CONTROL PANEL =============================================*/
 	
 	function create_search_activity(){
@@ -1765,6 +1841,10 @@ class Admin_interface extends CI_Controller{
 	function view_formjob(){
 	
 		$this->load->view('forms/frmnewjob');
+	}
+	
+	function view_prnposition(){
+		$this->load->view('forms/frmprnposition');
 	}
 	
 	function cabinet(){

@@ -33,6 +33,7 @@ class manager_interface extends CI_Controller{
 		$this->load->model('consultationmodel');
 		$this->load->model('benewsmodel');
 		$this->load->model('bediscountmodel');
+		$this->load->model('pricingmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -1318,6 +1319,81 @@ class manager_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function edit_season(){
+		
+	}
+
+	function edit_pricing(){
+	
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Редактирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'graph'			=> array(),
+					'comment'		=> '',
+					'manager'		=> array(),
+					'backpath'		=> 'managers/control-panel/'.$this->user['uconfirmation']
+			);
+		$pagevar['manager']['activitypath'] = "Редактирование графика формирования стоимости";
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('exp[]',' ','required');
+			$this->form_validation->set_rules('comment',' ','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_pricing(TRUE);
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['comment'] = preg_replace('/\n{2}/','<br>',$_POST['comment']);
+				
+				$countpricing = count($_POST['exp']);
+				$pricinglist = array();
+				if($countpricing > 0):
+					for($i=0,$j=0;$i<$countpricing;$i+=2,$j++):
+						if(empty($_POST['exp'][$i])) continue;
+						$pricinglist[$j]['title'] = $_POST['exp'][$i];
+						$pricinglist[$j]['percent'] = $_POST['exp'][$i+1];
+					endfor;
+				endif;
+				if($this->user['priority'] && isset($_POST['all'])):
+					$this->unionmodel->delete_pricing($activity);
+					$regions = $this->regionmodel->get_allid();
+					if($regions):
+						for($i=0;$i<count($regions);$i++):
+							$curmraid = $this->manregactmodel->record_exist($regions[$i]['id'],$activity);
+							if($curmraid):
+								$this->pricingmodel->group_insert($curmraid,$pricinglist);
+							endif;
+						endfor;
+					endif;
+					$this->manregactmodel->save_actpricing($activity,$_POST['comment']);
+				else:
+					$this->manregactmodel->save_pricing($mraid,$_POST['comment']);
+					$this->pricingmodel->delete_record($mraid);
+					$this->pricingmodel->group_insert($mraid,$pricinglist);
+				endif;
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
+		if(!$pagevar['graph']):
+			$this->pricingmodel->insert_empty($mraid);
+			$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
+		endif;
+		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_pricing');
+		$this->load->view('manager_interface/pricing-edit',$pagevar);
+	}
+
 	/* ====================================== END EDIT CONTROL PANEL ===========================================*/
 	
 	function filedelete($file){
@@ -1541,6 +1617,9 @@ class manager_interface extends CI_Controller{
 								$this->load->view('manager_interface/joblist',$pagevar);
 								break;
 			case 'form-job'	:	$this->load->view('forms/frmnewjob');
+								break;
+			case 'form-prnposition':
+								$this->load->view('forms/frmprnposition');
 								break;
 			case 'manager-list':$pagevar = array('magager'=>array(),'userinfo'=>$this->user);
 								$activity = $this->session->userdata('activity');

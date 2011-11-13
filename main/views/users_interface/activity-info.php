@@ -44,6 +44,7 @@
 		#formUnit,.unitImage{margin-top:20px;}
 		#pulist{margin-top:10px;}
 		.btnHidden,#addPitfallsForm,#AskQuestionForm,#addTipsForm{display:none;}
+		.price-schema:hover{cursor:pointer;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -435,8 +436,8 @@
 											<input type="button" id="lowOfferList" class="goog-button" tabindex="0" value="Список предложений">
 											<input type="button" id="winRisks" class="goog-button window" tabindex="1" value="Возможные риски">
 										</div>
-										<div class="price-schema">
-											<img alt="" title="Перейти к графику изменения цены" src="<?=$baseurl;?>images/diagram.png" />
+										<div class="price-schema" id="pricing">
+									<img alt="Формирование стоимости" title="Формирование стоимости" src="<?=$baseurl;?>images/diagramma.png"/>
 										</div>
 										<div class="clear"></div>
 									</div>
@@ -463,8 +464,8 @@
 										<div class="price-actions">
 											<input type="button" id="optimumOfferList" class="goog-button" tabindex="0" value="Список предложений">
 										</div>
-										<div class="price-schema">
-											<img alt="" title="" src="<?=$baseurl;?>images/diagram.png" />
+										<div class="price-schema" id="season">
+									<img alt="Сезонное изменение цен" title="Сезонное изменение цен" src="<?=$baseurl;?>images/season.png"/>
 										</div>
 										<div class="clear"></div>
 									</div>
@@ -1285,7 +1286,11 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-
+		
+		$(".price-schema").click(function(){
+		window.location.href="<?=$baseurl;?>"+this.id+"-information/region/<?=$this->uri->segment(3);?>/activity/<?=$this->uri->segment(5);?>";
+		});
+		
 		$("#select-group").change(function(){
 			$("#select-products").die();
 			$("#select-products").remove();
@@ -1567,7 +1572,6 @@
 			var tprice = parseFloat($("#topprice").text());
 			offer_list(product,tprice,0);
 		});
-		
 		function offer_list(product,bprice,eprice){
 			$("#offerTitle").html(product);
 			$("#offerList").load("<?=$baseurl;?>offer-list/region/<?=$curregion;?>",{'product':product,'bprice':bprice,'eprice':eprice},function(){$("#offer-modal-content").modal();});

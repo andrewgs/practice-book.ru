@@ -7,6 +7,8 @@ class Manregactmodel extends CI_Model {
 	var $mra_rid = "";
 	var $mra_aid = "";
 	var $mra_banner = "";
+	var $mra_pricing = "";
+	var $mra_season = "";
 	
 	function __construct(){
 
@@ -29,6 +31,8 @@ class Manregactmodel extends CI_Model {
 		$this->mra_rid 		= $rid;
 		$this->mra_aid 		= $aid;
 		$this->mra_banner 	= "";
+		$this->mra_pricing 	= "";
+		$this->mra_season 	= "";
 		$this->db->insert('tbl_mra',$this);
 		return $this->db->insert_id();
 	}
@@ -56,13 +60,27 @@ class Manregactmodel extends CI_Model {
 		$this->db->update('tbl_mra');
 	}
 	
-	function save_banners($activity,$banner){
+	function save_pricing($mra_id,$pricing){
 		
-		$this->db->set('mra_banner',$banner);
+		$this->db->set('mra_pricing',$pricing);
+		$this->db->where('mra_id',$mra_id);
+		$this->db->update('tbl_mra');
+	}
+	
+	function save_actpricing($activity,$pricing){
+		
+		$this->db->set('mra_pricing',$pricing);
 		$this->db->where('mra_aid',$activity);
 		$this->db->update('tbl_mra');
 	}
-
+	
+	function save_season($mra_id,$season){
+		
+		$this->db->set('mra_season',$season);
+		$this->db->where('mra_id',$mra_id);
+		$this->db->update('tbl_mra');
+	}
+	
 	function update_managers($uid,$rid,$aid){
 		
 		$this->db->set('mra_uid',$uid);

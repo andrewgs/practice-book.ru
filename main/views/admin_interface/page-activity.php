@@ -45,6 +45,7 @@
 		.btnHidden{display:none;}
 		.activity,.region{font: bold normal 110% serif;margin: 0px;}
 		#search-result,#region-result{margin-top:10px;}
+		.price-schema:hover{cursor:pointer;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -108,7 +109,11 @@
 <script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-	
+		
+		$(".price-schema").click(function(){
+			window.location.href="<?=$baseurl;?>admin/edit-"+this.id+"/<?=$userinfo['uconfirmation']?>";
+		});
+		
 		$("#ActivityName").keyup(function(){
 				var SearchVal = $(this).val();
 				if(SearchVal.length > 2){

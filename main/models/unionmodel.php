@@ -523,5 +523,12 @@ class Unionmodel extends CI_Model{
 		if(count($data)) return $data;
 		else return null;
 	}
+
+	function delete_pricing($activity){
+	
+		$query = "DELETE FROM tbl_pricing WHERE prn_mraid IN (SELECT mra_id FROM tbl_mra WHERE mra_aid = $activity)";
+		$this->db->query($query);
+		return $this->db->affected_rows();
+	}
 }
 ?>

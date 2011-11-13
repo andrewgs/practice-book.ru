@@ -42,6 +42,7 @@ class Users_interface extends CI_Controller{
 		$this->load->model('offerstopicmodel');
 		$this->load->model('benewsmodel');
 		$this->load->model('bediscountmodel');
+		$this->load->model('pricingmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -750,6 +751,39 @@ class Users_interface extends CI_Controller{
 		$pagevar['manager']['jobs'] = $this->jobsmodel->read_records_year($pagevar['manager']['uid'],2);
 		$pagevar['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
 		$this->load->view('users_interface/activity-info',$pagevar);
+	}
+	
+	function pricing_information(){
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Формирование стоимости - '.$this->activitymodel->read_field($activity,'act_title').' - Practice-Book',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'graph'			=> array(),
+					'comment'		=> '',
+					'curactivity'	=> $activity,
+					'curregion'		=> $region,
+			);
+		
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if(!$mraid):
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		endif;
+		$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
+		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_pricing');
+		$this->load->view('users_interface/pricing',$pagevar);
+	}
+	
+	function season_information(){
+		echo "Находится в разработке!";
 	}
 	
 	function manager_list(){

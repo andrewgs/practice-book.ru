@@ -302,8 +302,8 @@
 								<input type="button" id="lowOfferList" class="goog-button" tabindex="0" value="Список предложений">
 								<input type="button" id="winRisks" class="goog-button window" tabindex="1" value="Возможные риски">
 							</div>
-							<div class="price-schema">
-								<img alt="" title="Перейти к графику изменения цены" src="<?=$baseurl;?>images/diagram.png" />
+							<div class="price-schema" id="pricing">
+								<img alt="Формирование стоимости" title="Формирование стоимости" src="<?=$baseurl;?>images/diagramma.png"/>
 							</div>
 							<div class="clear"></div>
 						</div>
@@ -330,8 +330,8 @@
 							<div class="price-actions">
 							<input type="button" id="optimumOfferList" class="goog-button" tabindex="0" value="Список предложений">
 							</div>
-							<div class="price-schema">
-								<img alt="" title="" src="<?=$baseurl;?>images/diagram.png" />
+							<div class="price-schema" id="season">
+								<img alt="Сезонное изменение цен" title="Сезонное изменение цен" src="<?=$baseurl;?>images/season.png"/>
 							</div>
 							<div class="clear"></div>
 						</div>

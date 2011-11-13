@@ -29,6 +29,8 @@ $route['users/search-activity'] = "users_interface/create_search_activity";
 $route['users/search-region'] = "users_interface/create_search_region";
 $route['activity-information/region/:num/activity/:num'] = "users_interface/activity_information";
 $route['activity-information/region/:num/activity/:num/product/:num'] = "users_interface/activity_information";
+$route['pricing-information/region/:num/activity/:num'] = "users_interface/pricing_information";
+$route['season-information/region/:num/activity/:num'] = "users_interface/season_information";
 $route['announce-tender/region/:num/activity/:num'] = "users_interface/announce_tender";
 $route['manager-list/region/:num/activity/:num'] = "users_interface/manager_list";
 $route['product-unit/region/:num/activity/:num'] = "users_interface/product_unit_load";
@@ -112,6 +114,7 @@ $route['managers/delete-job/:any'] = "manager_interface/delete_job";
 $route['managers/registration/:any'] = "manager_interface/register";
 $route['managers/save-profile/:any'] = "manager_interface/save_profile";
 $route['views/form-job/:any'] = "manager_interface/views";
+$route['views/form-prnposition/:any'] = "manager_interface/views";
 $route['views/manager-list/:any'] = "manager_interface/views";
 $route['managers/set-manager-region/:any'] = "manager_interface/set_manager_on_region";
 $route['managers/manager-list/:any'] = "manager_interface/manager_list";
@@ -148,6 +151,9 @@ $route['managers/consultation/:any'] = "manager_interface/consultation";
 $route['managers/delete-consultation/:any'] = "manager_interface/delete_consultation";
 $route['managers/save-consultation/:any'] = "manager_interface/save_consultation";
 $route['managers/close-consultation/:any'] = "manager_interface/close_consultation";
+
+$route['managers/edit-pricing/:any'] = "manager_interface/edit_pricing";
+$route['managers/edit-season/:any'] = "manager_interface/edit_season";
 
 /************************************	DEALERS INTRERFACE	***********************************************/
 
@@ -217,6 +223,9 @@ $route['admin/product-unit-dalete/:any'] = "admin_interface/product_unit_dalete"
 $route['admin/product-unit-info/:any'] = "admin_interface/product_unit_info";
 $route['admin/offer-list/:any'] = "admin_interface/offer_list";
 
+$route['admin/edit-pricing/:any'] = "admin_interface/edit_pricing";
+$route['admin/edit-season/:any'] = "admin_interface/edit_season";
+
 $route['admin-listbox/product-unit-list/:any'] = "admin_interface/product_unit_load";
 $route['admin-listbox/product-unit-form/:any'] = "admin_interface/product_form_load";
 
@@ -231,6 +240,7 @@ $route['admin/cabinet/:any'] = "admin_interface/cabinet";
 $route['admin/shutdown/:any'] = "admin_interface/shutdown";
 
 $route['admin/form-job/:any'] = "admin_interface/view_formjob";
+$route['admin/form-prnposition/:any'] = "admin_interface/view_prnposition";
 
 $route['admin/save-group/:any']= "admin_interface/save_group";
 $route['admin/delete-group/:any']= "admin_interface/dalete_group";

@@ -92,6 +92,15 @@ class Regionmodel extends CI_Model {
 		else NULL;
 	}
 	
+	function get_allid(){
+		
+		$this->db->select('reg_id AS id');
+		$query = $this->db->get('tbl_regions');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else NULL;
+	}
+	
 	function insert_record($insertdata){
 			
 		$this->reg_name 	= $insertdata['name'];
