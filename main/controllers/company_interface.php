@@ -534,7 +534,7 @@ class Company_interface extends CI_Controller{
 					$_POST['pdateend'] = "3000-01-01";
 				endif;
 				$_POST['source'] = '';
-//				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
 				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpnewsmodel->insert_record($this->user['cid'],$_POST);
 				$this->benewsmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
@@ -619,7 +619,7 @@ class Company_interface extends CI_Controller{
 			$this->form_validation->set_rules('description',' "Содержание" ','required|trim');
 			$this->form_validation->set_rules('pdatebegin',' "Начальная дата" ','required');
 			$this->form_validation->set_rules('activity',' "Отрасль" ','required');
-			if($pagevar['offers']):
+			if($_POST['offers']):
 				$this->form_validation->set_rules('actoffers',' "Отрасль" ','required');
 				$this->form_validation->set_rules('regoffers[]',' "Регионы" ','required');
 			endif;
@@ -650,7 +650,7 @@ class Company_interface extends CI_Controller{
 				$desc = $_POST['description'];
 				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
-				$_POST['description'] = preg_replace('/\n{2}/','<br>',$desc);
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$desc);
 				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
 				if($pagevar['offers']):
 					if(isset($_POST['offers'])):
@@ -4114,7 +4114,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 			$this->form_validation->set_rules('title','Название','required|trim');
 			$this->form_validation->set_rules('source','Название','prep_url|trim');
 			$this->form_validation->set_rules('userfile','','callback_userfile_check');
-			$this->form_validation->set_rules('description','Содержание','required|trim');
+			$this->form_validation->set_rules('note','Содержание','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
@@ -4127,9 +4127,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 				else:
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
-				$_POST['description'] = preg_replace('/\n{2}/','<br>',$_POST['description']);
-				$_POST['pdatebegin'] = date("Y-m-d");
-//				$_POST['note'] = nl2br($_POST['note']);
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$this->benewsmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
 				redirect($pagevar['backpath']);
 			endif;
@@ -4846,10 +4844,10 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 		$pagevar['pages'] = $this->pagination->create_links();
 		
 		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Рейтинг';
+			$pagevar['title'] .= 'Общая бизнес среда | Авторитет';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Рейтинг';
+			$pagevar['title'] .= 'Частная бизнес среда | Авторитет';
 			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
 		endif;
 		

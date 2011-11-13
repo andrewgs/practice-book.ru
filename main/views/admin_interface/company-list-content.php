@@ -15,7 +15,7 @@
 					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛ.</th>
 					<th scope="col" abbr="ЗАРЕГ.">ЗАРЕГ.</th>
 					<th scope="col" abbr="ОТРАСЛИ">ОТРАСЛИ</th>
-					<th scope="col" abbr="РЕЙТИНГ">РЕЙТИНГ</th>
+					<th scope="col" abbr="АВТОРИТЕТ">АВТОРИТЕТ</th>
 					<th scope="col" abbr="ПРЕДЛОЖЕНИЕ КОНТРАГЕНТАМ">КА</th>
 					<th scope="col" abbr="СТАТУС">СТАТУС</th>
 					<th scope="col" abbr="ДЕЙСТВИЯ">&nbsp;</th>

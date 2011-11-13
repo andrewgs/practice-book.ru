@@ -63,7 +63,7 @@
 							<div style="padding: 15px"> 
 								<div class="floated">
 									<img src="<?=$baseurl;?>companylogo/viewimage/<?=$company['cmp_id'];?>" alt=""/>
-									<div class="company-rate">рейтинг: <?=$company['cmp_rating'];?></div>
+									<div class="company-rate">авторитет: <?=$company['cmp_rating'];?></div>
 									<div class="company-rate-graph" style="width:<?=$company['cmp_graph'];?>px;">&nbsp;</div>
 								</div>
 								<div class="company-name"><?=$company['cmp_name'];?></div>

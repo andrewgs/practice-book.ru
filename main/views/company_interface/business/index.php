@@ -147,7 +147,7 @@
 					<div class="biznesbox lastbiznesbox"><div class="biznesboxbg">
 						<div class="biznesphoto"><a href="#"><img src="<?=$baseurl;?>images/biz12.png" alt="" /></a></div>
 						<div class="biznestext">
-							<h2>Рейтинг</h2>
+							<h2>Авторитет</h2>
 							<p>В данном разделе представлен список компаний и специалистов отсортированных на проекте в зависимости от степени признания их другими игроками рынка.</p>
 							<div class="biznesmore">
 			<?=anchor('business-environment/rating/'.$userinfo['uconfirmation'],'<img src="'.$baseurl.'images/vrazdel.png" alt="" />');?>

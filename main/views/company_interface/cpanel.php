@@ -60,7 +60,7 @@
 							<div style="padding: 15px"> 
 								<div class="floated">
 									<img src="<?=$baseurl;?>companylogo/viewimage/<?=$company['cmp_id'];?>" alt=""/>
-									<div class="company-rate">рейтинг: <?=$company['cmp_rating'];?></div>
+									<div class="company-rate">авторитет: <?=$company['cmp_rating'];?></div>
 									<div class="company-rate-graph" style="width:<?=$company['cmp_graph'];?>px;">&nbsp;</div>
 								</div>
 								<div class="company-name"><?=$company['cmp_name'];?></div>
@@ -188,6 +188,26 @@
 								<div class="clear"></div>
 							</div>
 						</div>
+						
+						<div class="box">
+							<div class="box-header w278">
+								<h2>Документы</h2>
+								<div class="box-search"></div>
+							</div>
+							<div class="box-content">
+								<div class="content-separator">
+									<img src="<?=$baseurl;?>images/documents/msword.png" class="floated" alt=""/>
+									<div class="nsh-title">
+										<?=anchor($baseurl.'documents/for-companies/dogovor-oferta.doc',"ДОГОВОР-ОФЕРТА на оказание услуг")?>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="box-bottom-links h20">
+								<div class="clear"></div>
+							</div>
+						</div>
+						
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Новости компании</h2>

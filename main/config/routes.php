@@ -54,6 +54,7 @@ $route['activation/([a-zA-Z0-9])*'] = "users_interface/activation";
 $route['dealer-activation/([a-zA-Z0-9])*'] = "users_interface/dealer_activation";
 
 /* ----------------------------------- authorization/shutdown ---------------------------------------------*/
+$route['lost-password'] = "users_interface/lost_password";
 $route['authorization'] = "users_interface/authorization";
 $route['shutdown'] = "users_interface/shutdown";
 $route['admin']	= "users_interface/admin_login";

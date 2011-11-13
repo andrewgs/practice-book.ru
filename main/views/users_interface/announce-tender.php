@@ -95,7 +95,7 @@
 									<div class="content-separator">
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$company[$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$company[$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$company[$i]['cmp_rating'];?></div>
 										<?php if($company[$i]['cmp_graph'] <= $low_rating): ?>
 										<div class="company-rate-bad" style="width:<?=$company[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>

@@ -495,7 +495,7 @@
 									<div class="content-separator">
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$company['all'][$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$company['all'][$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$company['all'][$i]['cmp_rating'];?></div>
 											<?php if($company['all'][$i]['cmp_graph'] <= $low_rating): ?>
 											<div class="company-rate-bad" style="width:<?=$company['all'][$i]['cmp_graph'];?>px;">&nbsp;</div>
 											<?php else: ?>
@@ -518,7 +518,7 @@
 									<div class="content-separator">
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$company['trustee'][$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$company['trustee'][$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$company['trustee'][$i]['cmp_rating'];?></div>
 											<?php if($company['trustee'][$i]['cmp_graph'] <= $low_rating): ?>
 										<div class="company-rate-bad" style="width:<?=$company['trustee'][$i]['cmp_graph'];?>px;">&nbsp;</div>
 											<?php else: ?>
@@ -541,7 +541,7 @@
 									<div class="content-separator">
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$company['blacklist'][$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$company['blacklist'][$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$company['blacklist'][$i]['cmp_rating'];?></div>
 											<?php if($company['blacklist'][$i]['cmp_graph'] <= $low_rating): ?>
 									<div class="company-rate-bad" style="width:<?=$company['blacklist'][$i]['cmp_graph'];?>px;">&nbsp;</div>
 											<?php else: ?>
@@ -576,7 +576,7 @@
 										<div class="content-separator">
 											<div class="floated">
 												<img src="<?=$baseurl;?>companythumb/viewimage/<?=$company['all'][$i]['cmp_id'];?>" alt=""/>
-												<div class="company-rate">рейтинг: <?=$company['all'][$i]['cmp_rating'];?></div>
+												<div class="company-rate">авторитет: <?=$company['all'][$i]['cmp_rating'];?></div>
 											<?php if($company['all'][$i]['cmp_graph'] <= $low_rating): ?>
 											<div class="company-rate-bad" style="width:<?=$company['all'][$i]['cmp_graph'];?>px;">&nbsp;</div>
 											<?php else: ?>
@@ -704,7 +704,7 @@
 								<div class="box-content h365 w575">
 									<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$companynews[$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$companynews[$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$companynews[$i]['cmp_rating'];?></div>
 										<?php if($companynews[$i]['cmp_graph'] <= $low_rating): ?>
 										<div class="company-rate-bad" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>
@@ -757,7 +757,7 @@
 										<div class="nshDate"><?=$companynews[$i]['cn_pdatebegin'];?></div>
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$companynews[$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$companynews[$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$companynews[$i]['cmp_rating'];?></div>
 										<?php if($companynews[$i]['cmp_graph'] <= $low_rating): ?>
 										<div class="company-rate-bad" style="width:<?=$companynews[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>
@@ -1092,7 +1092,7 @@
 									<div class="box-content h365 w575">
 										<div class="floated">
 											<img src="<?=$baseurl;?>companythumb/viewimage/<?=$shares[$i]['cmp_id'];?>" alt=""/>
-											<div class="company-rate">рейтинг: <?=$shares[$i]['cmp_rating'];?></div>
+											<div class="company-rate">авторитет: <?=$shares[$i]['cmp_rating'];?></div>
 										<?php if($shares[$i]['cmp_graph'] <= $low_rating): ?>
 											<div class="company-rate-bad" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>
@@ -1146,7 +1146,7 @@
 											<div class="nshDate"><?=$shares[$i]['sh_pdatebegin'];?></div>
 											<div class="floated">
 												<img src="<?=$baseurl;?>companythumb/viewimage/<?=$shares[$i]['cmp_id'];?>" alt=""/>
-												<div class="company-rate">рейтинг: <?=$shares[$i]['cmp_rating'];?></div>
+												<div class="company-rate">авторитет: <?=$shares[$i]['cmp_rating'];?></div>
 										<?php if($shares[$i]['cmp_graph'] <= $low_rating): ?>
 											<div class="company-rate-bad" style="width:<?=$shares[$i]['cmp_graph'];?>px;">&nbsp;</div>
 										<?php else: ?>

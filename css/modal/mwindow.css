@@ -10,7 +10,7 @@
 #offer-modal-content,#consultations-modal-content,
 #single-news-modal-content,#single-cmpnews-modal-content,
 #single-specials-modal-content,#single-shares-modal-content,
-#registering-modal-content{
+#registering-modal-content,#lost-password-modal-content{
 	display:none;
 }
 #simplemodal-overlay {background-color:#000; cursor:wait;}

@@ -1553,7 +1553,49 @@ class Users_interface extends CI_Controller{
 			show_404();
 		endif;
 	}
-
+	
+	function lost_password(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Создание нового пароля',
+					'baseurl' 		=> base_url(),
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> ''
+			);
+		
+		if($this->input->post('submit')):
+			$cookieuid = $this->session->userdata('login_id');
+			if($cookieuid) redirect('');
+			$uemail = $this->input->post('uemail');
+			if(!$uemail) redirect('');
+			$newpass = $this->randomPassword(8);
+			$result = $this->usersmodel->update_password($newpass,$uemail);
+			if($result):
+				$userid = $this->usersmodel->user_id('uemail',$uemail);
+				$userinfo = $this->usersmodel->read_info($userid);
+				$message = 'Здравствуйте '.$userinfo['uname'].' '.$userinfo['usubname'].' '.$userinfo['uthname']."\n\nВаш новый пароль:\n\n----------------------------\nЛогин: ".$userinfo['uemail']."\nПароль: ".$newpass."\n----------------------------\n";
+				if($this->sendmail($uemail,$message,"Новый пароль на сайте practice-book.com","admin@practice-book.com")):
+					$pagevar['text'] = '<br><br><b>Сгенерирован новый пароль.</b><p><b>На адрес "'.$uemail.'" выслано письмо.</b></p>';
+					$this->load->view('users_interface/message',$pagevar);
+					return TRUE;
+				else:
+					$this->email->print_debugger();
+				endif;
+			else:
+				redirect('');
+			endif;
+		else:
+			show_404();
+		endif;
+	}
+	
 	/* ----------------------------------- authorization/shutdown ----------------------------------------------*/
 	function authorization(){
 		
@@ -2204,5 +2246,18 @@ class Users_interface extends CI_Controller{
 		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
 		$replacement = "\$5-\$3-\$1"; 
 		return preg_replace($pattern, $replacement,$field);
+	}
+
+	function randomPassword($length,$allow="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789"){
+		$i = 1;
+		$ret = '';
+		while($i<=$length):
+			$max   = strlen($allow)-1;
+			$num   = rand(0, $max);
+			$temp  = substr($allow, $num, 1);
+			$ret  .= $temp;
+			$i++;
+		endwhile;
+		return $ret;
 	}
 }

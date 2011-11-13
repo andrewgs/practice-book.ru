@@ -72,7 +72,7 @@
 							<?php for($i=0;$i<count($topics);$i++):?>
 								<div class="right-post">
 									<span class="news-pic">
-				<img src="<?=$baseurl.$type_discounts;?>/viewimage/<?=$topics[$i]['bed_id'];?>"class="floated" width="74" height="74" alt=""/>
+		<img src="<?=$baseurl.$type_discounts;?>/viewimage/<?=$topics[$i]['bed_id'];?>"class="floated" style="width:74px;height:74px;" alt=""/>
 									</span>
 									<h2><?=$topics[$i]['bed_title'];?></h2>
 									<p><?=$topics[$i]['bed_note'];?></p>

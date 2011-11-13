@@ -71,8 +71,8 @@
 					<input class="edit450-form-input" id="source" maxlength="50" name="source" type="text" value="<?=set_value('source');?>"/>
 									<div class="clear"></div>
 					<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
-									<?= form_error('description'); ?>
-			<textarea class="edit700-form-textarea" name="description" id="note" cols="50" rows="10"><?=set_value('description');?></textarea>
+									<?= form_error('note'); ?>
+			<textarea class="edit700-form-textarea" name="note" id="note" cols="50" rows="10"><?=set_value('note');?></textarea>
 									<div class="clear"></div>
 						<input class="btn-action margin-1em" id="addNews" type="submit" name="submit" value="Добавить"/>
 								<?= form_close(); ?>

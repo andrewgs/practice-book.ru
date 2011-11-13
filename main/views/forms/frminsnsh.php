@@ -36,7 +36,7 @@
 		<div class="clear"></div>
 	<?php if($offers):?>	
 		<div style="margin: 15px 0px;">
-			<input type="checkbox" name="offers" id="chOffers" value="offers">Как предложение контрагентам
+			<input type="checkbox" name="offers" id="chOffers" value="1">Как предложение контрагентам
 		</div>
 		<div class="clear"></div>
 		<div class="grid_12">

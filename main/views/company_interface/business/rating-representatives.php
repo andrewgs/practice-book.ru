@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Рейтинг</h1>
+					<h1>Business Environment (Бизнес-Среда): Авторитет</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -58,7 +58,7 @@
 									<span class="sort sortleft">
 										Сортировать:
 								<?php if($bysort == 'rating'):?><strong><?php endif;?>
-				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-rating','по рейтингу');?> / 
+				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-rating','по авторитету');?> / 
 								<?php if($bysort == 'rating'):?></strong><?php endif;?>
 								<?php if($bysort == 'cmp_name'):?><strong><?php endif;?>
 				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-cmpname','по компании');?>
@@ -90,7 +90,7 @@
 												</span>
 											</div>
 											<div class="rtd-info">
-												<div class="green">Рейтинг: <span><?=$topics[$i]['urating'];?></span></div>
+												<div class="green">Авторитет: <span><?=$topics[$i]['urating'];?></span></div>
 												<div class="silver">Месяцев на сайте: <span><?=$topics[$i]['months'];?></span></div>
 											</div>
 											<div class="clear">&nbsp;</div>

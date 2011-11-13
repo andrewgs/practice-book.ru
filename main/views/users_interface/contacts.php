@@ -34,6 +34,8 @@
 		.federal-skype-icq img{margin:5px 5px 0 10px;cursor: pointer;}
 		.manager-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		.online{position:relative;left: 25px;}
+		.w575{width: 575px;}
+		.h20{min-height: 20px;}
 	</style> 
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -87,6 +89,9 @@
 		</div>
 		<div id="support-modal-content">
 			<?php $this->load->view('forms/frmsupport'); ?>
+		</div>
+		<div id="lost-password-modal-content">
+			<?php $this->load->view('forms/frmlostpassword'); ?>
 		</div>
 		<?php $this->load->view('users_interface/footer/footer'); ?>
 	</div> <!-- end of #container -->
@@ -151,9 +156,15 @@
 					}
 			}
 				
-			function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});}});};
+			function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};
 				
 			function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});}else msgerror(data.message);},"json");}};
+			
+			$("#lost-pass").click(function(){lostpass();})
+			
+			function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:192}});}
+		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
+			
 			$("a#Support").click(function(e){
 			$("#support-modal-content").modal();
 			return false;

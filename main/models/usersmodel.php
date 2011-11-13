@@ -27,7 +27,7 @@ class Usersmodel extends CI_Model{
 	var $uactivity		= 1;	/* Отрасль пользователя*/
 	var $uachievement	= "";	/* Достижения пользователя*/
 	var $ucloseconsult	= 0;	/* Закрыто консультирование*/
-	var $urating		= 0;	/* Рейтинг*/
+	var $urating		= 0;	/* Авторитет*/
 	
 	function __construct(){
         

@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Рейтинг</h1>
+					<h1>Business Environment (Бизнес-Среда): Авторитет</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">

@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Benewsmodel extends CI_Model {
+class Benewsmodel extends CI_Model{
 	
 	var $ben_id 		= 0;
 	var $ben_title		= "";
@@ -27,7 +27,7 @@ class Benewsmodel extends CI_Model {
 		$this->ben_title		= htmlspecialchars($data['title']);
 		$this->ben_note			= strip_tags($data['note'],'<br>');
 		$this->ben_photo		= $data['photo'];
-		$this->ben_date			= $data['date'];
+		$this->ben_date			= date("Y-m-d");
 		$this->ben_source		= htmlspecialchars($data['source']);
 		$this->ben_activity		= $activity;
 		$this->ben_environment	= $environment;

@@ -12,6 +12,6 @@
 	<option value="news">Новости</option>
 	<option value="discounts">Новинки и скидки</option>
 	<option value="who-main">Кто главный?</option>
-	<option value="rating">Рейтинг</option>
+	<option value="rating">Авторитет</option>
 <?php endif;?>
 </select>

@@ -10,7 +10,7 @@
 					<th scope="col" abbr="НАЗВАНИЕ">НАЗВАНИЕ</th>	
 					<th scope="col" abbr="E-MAIL">E-MAIL</th>
 					<th scope="col" abbr="ТЕЛЕФОН">ТЕЛЕФОН</th>
-					<th scope="col" abbr="РЕЙТИНГ">РЕЙТИНГ</th>
+					<th scope="col" abbr="АВТОРИТЕТ">АВТОРИТЕТ</th>
 				</tr>	
 			</thead>
 		    <tfoot>	
