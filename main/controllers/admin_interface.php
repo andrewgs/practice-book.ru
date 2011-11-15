@@ -42,6 +42,7 @@ class Admin_interface extends CI_Controller{
 		$this->load->model('whomainmodel');
 		$this->load->model('wmcompanymodel');
 		$this->load->model('pricingmodel');
+		$this->load->model('seasonalpricesmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -1293,7 +1294,81 @@ class Admin_interface extends CI_Controller{
 	}
 	
 	function edit_season(){
+		$activity = $this->session->userdata('activity');
+		$parent = $this->session->userdata('parent_act');
+		$region = $this->session->userdata('region');
+		if(!$activity || !$region) show_404();
 		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Редактирование',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'graph'			=> array(),
+					'comment'		=> '',
+					'manager'		=> array(),
+					'backpath'		=> 'admin/edit-activity/'.$this->user['uconfirmation'].'/region/'.$region.'/activity/'.$activity
+			);
+		$months = array("","Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь");
+		$pagevar['manager']['activitypath'] = "Редактирование графика сезонного изменения цен";
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('exp[]',' ','required');
+			$this->form_validation->set_rules('comment',' ','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->edit_season(TRUE);
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$_POST['comment'] = preg_replace('/\n{2}/','<br>',$_POST['comment']);
+				
+				$cnt = count($_POST['exp']);
+				$list = array();
+				if($cnt > 0):
+					for($i=0,$j=0;$i<$cnt;$i+=3,$j++):
+						if(empty($_POST['exp'][$i])) continue;
+						$list[$j]['title'] = $_POST['exp'][$i+1];
+						$list[$j]['percent'] = $_POST['exp'][$i+2];
+					endfor;
+				endif;
+				if($this->user['priority'] && isset($_POST['all'])):
+					$this->unionmodel->delete_season($activity);
+					$regions = $this->regionmodel->get_allid();
+					if($regions):
+						for($i=0;$i<count($regions);$i++):
+							$curmraid = $this->manregactmodel->record_exist($regions[$i]['id'],$activity);
+							if($curmraid):
+								$this->seasonalpricesmodel->group_insert($curmraid,$list);
+							endif;
+						endfor;
+					endif;
+					$this->manregactmodel->save_actseason($activity,$_POST['comment']);
+				else:
+					$this->manregactmodel->save_season($mraid,$_POST['comment']);
+					$this->seasonalpricesmodel->delete_record($mraid);
+					$this->seasonalpricesmodel->group_insert($mraid,$list);
+				endif;
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		
+		$pagevar['graph'] = $this->seasonalpricesmodel->read_record($mraid);
+		if(!$pagevar['graph']):
+			$this->seasonalpricesmodel->insert_empty($mraid);
+			$pagevar['graph'] = $this->seasonalpricesmodel->read_record($mraid);
+		endif;
+		for($i=0;$i<count($pagevar['graph']);$i++):
+			$pagevar['graph'][$i]['snp_month'] = $months[$pagevar['graph'][$i]['snp_month']];
+		endfor;
+		$max = $this->seasonalpricesmodel->read_percentmax($mraid);
+		if($max>=150) $pagevar['axismax'] = $max + 50;
+		if($max<150) $pagevar['axismax'] = 200;
+		if($pagevar['axismax']<=100) $pagevar['axismax'] = 125;
+		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_season');
+		$this->load->view('admin_interface/edit-activity/season-edit',$pagevar);
 	}
 
 	function edit_pricing(){
