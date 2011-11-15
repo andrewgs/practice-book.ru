@@ -81,6 +81,13 @@ class Manregactmodel extends CI_Model {
 		$this->db->update('tbl_mra');
 	}
 	
+	function save_actseason($activity,$season){
+		
+		$this->db->set('mra_season',$season);
+		$this->db->where('mra_aid',$activity);
+		$this->db->update('tbl_mra');
+	}
+	
 	function update_managers($uid,$rid,$aid){
 		
 		$this->db->set('mra_uid',$uid);

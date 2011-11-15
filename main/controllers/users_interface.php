@@ -43,6 +43,7 @@ class Users_interface extends CI_Controller{
 		$this->load->model('benewsmodel');
 		$this->load->model('bediscountmodel');
 		$this->load->model('pricingmodel');
+		$this->load->model('seasonalpricesmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -779,11 +780,45 @@ class Users_interface extends CI_Controller{
 		endif;
 		$pagevar['graph'] = $this->pricingmodel->read_record($mraid);
 		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_pricing');
-		$this->load->view('users_interface/pricing',$pagevar);
+		$this->load->view('users_interface/pricing-information',$pagevar);
 	}
 	
 	function season_information(){
-		echo "Находится в разработке!";
+		$region = $this->uri->segment(3);
+		$activity = $this->uri->segment(5);
+		
+		if(!$this->regionmodel->region_exist($region)) show_404();
+		if(!$this->activitymodel->activity_exist($activity)) show_404();
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Формирование стоимости - '.$this->activitymodel->read_field($activity,'act_title').' - Practice-Book',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'graph'			=> array(),
+					'comment'		=> '',
+					'curactivity'	=> $activity,
+					'curregion'		=> $region,
+					'axismax'		=> 200
+			);
+		$months = array("","Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь");
+		$mraid = $this->manregactmodel->record_exist($region,$activity);
+		if(!$mraid):
+		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
+		endif;
+		$pagevar['graph'] = $this->seasonalpricesmodel->read_record($mraid);
+		for($i=0;$i<count($pagevar['graph']);$i++):
+			$pagevar['graph'][$i]['snp_month'] = $months[$pagevar['graph'][$i]['snp_month']];
+		endfor;
+		$max = $this->seasonalpricesmodel->read_percentmax($mraid);
+		if($max>=150) $pagevar['axismax'] = $max + 50;
+		if($max<150) $pagevar['axismax'] = 200;
+		if($pagevar['axismax']<=100) $pagevar['axismax'] = 125;
+		$pagevar['comment'] = $this->manregactmodel->read_field($mraid,'mra_season');
+//		print_r($pagevar['graph']);
+		$this->load->view('users_interface/season-information',$pagevar);
 	}
 	
 	function manager_list(){

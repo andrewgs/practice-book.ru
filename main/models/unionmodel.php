@@ -530,5 +530,11 @@ class Unionmodel extends CI_Model{
 		$this->db->query($query);
 		return $this->db->affected_rows();
 	}
+	function delete_season($activity){
+	
+		$query = "DELETE FROM tbl_seasonal_prices WHERE snp_mraid IN (SELECT mra_id FROM tbl_mra WHERE mra_aid = $activity)";
+		$this->db->query($query);
+		return $this->db->affected_rows();
+	}
 }
 ?>

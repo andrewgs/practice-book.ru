@@ -256,9 +256,11 @@ footer[role="contentinfo"] {
 .w520 { width: 520px; }
 .w460 { width: 460px; }
 .w300 { width: 300px; }
+.w204{ width: 204px; }
 .w805 { width: 805px; }
 .w70  { width: 70px; }
 .w80  { width: 80px; }
+.w94  { width: 94px; }
 .w280 { width: 280px; }
 .w940 { width: 940px; }
 .w100{ width: 100px; }
@@ -317,7 +319,8 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .reg-form-small,.small200-form-input,.small100-form-input,
 .edit250-form-input,.edit350-form-input,.edit60-form-input,
 .edit750-form-input,.edit450-form-input,.edit285-form-input,
-.edit265-form-input,.small150-form-input,.edit275-form-input{
+.edit265-form-input,.small150-form-input,.edit275-form-input,
+.edit180-form-input,.edit70-form-input{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -334,6 +337,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .edit265-form-input{
 	width: 265px;
+}
+.edit180-form-input{
+	width: 180px;
 }
 .edit275-form-input{
 	width: 275px;
@@ -356,6 +362,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .edit60-form-input{
 	width: 60px;
 }
+.edit70-form-input{
+	width: 70px;
+}
 .edit250-form-input{
 	width: 250px;
 }
@@ -375,7 +384,8 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 .edit285-form-textarea,.edit600-form-textarea,
 .edit270-form-textarea,.edit700-form-textarea,
 .edit680-form-textarea,.edit560-form-textarea,
-.edit390-form-textarea,.edit360-form-textarea{
+.edit390-form-textarea,.edit360-form-textarea,
+.edit840-form-textarea{
     background: none repeat scroll 0 0 #FAFAFA;
     border: 1px solid #D0D0D0;
     font: 12px arial,sans-serif;
@@ -395,6 +405,9 @@ ul.bottom-nav { float: left; list-style: none; margin: 5px 0 0; }
 }
 .edit360-form-textarea{
     width: 360px;
+}
+.edit840-form-textarea{
+    width: 840px;
 }
 .edit600-form-textarea{
    width: 600px;

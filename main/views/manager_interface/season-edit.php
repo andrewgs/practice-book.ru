@@ -19,6 +19,9 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/jqplot/jquery.jqplot.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/jqplot/shCoreDefault.min.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/jqplot/shThemejqPlot.min.css">
+<!--[if lt IE 9]>
+	<script language="javascript" type="text/javascript" src="<?=$baseurl;?>css/jqplot/excanvas.js"></script>
+<![endif]-->
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
@@ -27,6 +30,8 @@
 		.w918{width: 918px;}
 		.chackForAll{float:right;margin: 10px 0 0 0;font: normal bold 125% normal;}
 		.msgForAll{float:right;margin: 5px 0 0 0;}
+		.jqplot-point-label {white-space: nowrap;}
+		div.jqplot-target{height: 400px;width: 750px;margin: 10px 0 10px 70px;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -38,7 +43,7 @@
 	<?php $this->load->view('manager_interface/header-noregion'); ?>
 		<div id="main">
 			<div class="container_12">
-			<?php $this->load->view('forms/frmpricingedit'); ?>
+			<?php $this->load->view('forms/frmseasonedit'); ?>
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -52,46 +57,48 @@
     <script type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/shCore.min.js"></script>
     <script type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/shBrushJScript.min.js"></script>
     <script type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/shBrushXml.min.js"></script>
-	<script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.pieRenderer.min.js"></script>
-    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.donutRenderer.min.js"></script>
+	<script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.logAxisRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.canvasTextRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.canvasAxisTickRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.dateAxisRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
+    <script class="include" type="text/javascript" src="<?=$baseurl;?>javascript/jqplot/jqplot.barRenderer.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-		<?php if(count($graph)<2):?>
-			$("#btnDelPosition").addClass("hedden");
-		<?php endif;?>
 		$("#forAllRegion").removeAttr("checked");
-		var data = [];
+		var data1 = [];
+		var data2 = [];
 		<?php for($i=0;$i<count($graph);$i++):?>
-			data[<?=$i;?>] = ["<?=$graph[$i]['prn_title'];?>",<?=$graph[$i]['prn_percent'];?>]
+			data1[<?=$i;?>] = ["<?=$graph[$i]['snp_month'];?>",<?=$graph[$i]['snp_percent'];?>]
+			data2[<?=$i;?>] = ["<?=$graph[$i]['snp_month'];?>",100]
 		<?php endfor;?>
-			var plot = jQuery.jqplot('diagramma',[data],{seriesDefaults:{renderer: jQuery.jqplot.PieRenderer,rendererOptions:{showDataLabels: true}},legend:{show:true,placement: 'outside',location:'s',marginTop: '15px'}});
+			
+			var plot = $.jqplot('diagramma',[data1,data2,data1],{animate: !$.jqplot.use_excanvas,animateReplot: true,seriesColors: ["#00c4c4", "#ff0000","#0000ff"],seriesDefaults: {rendererOptions: {smooth: true,animation: {show: true}},showMarker: false},series:[{renderer:$.jqplot.BarRenderer,rendererOptions: {animation:{speed: 2500},barWidth: 40,highlightMouseOver: false}}],axes:{xaxis:{renderer: $.jqplot.CategoryAxisRenderer,label: 'Месяцы года',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickRenderer: $.jqplot.CanvasAxisTickRenderer,tickOptions:{angle: -45,fontFamily: 'Courier New',fontSize: '10pt'}},yaxis: {label: 'Cтоимость, %',labelRenderer: $.jqplot.CanvasAxisLabelRenderer,tickOptions:{fontFamily: 'Courier New',fontSize: '10pt'},min: 0,max: <?=$axismax;?>,tickInterval: 10,}}});
+			
+			$(".digital").keypress(function(e){
+				if($(this).val() == '' && e.which == 48) return false;
+				if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+				if($(this).val().length > 2) {$(this).val('')}
+			});
 			$("#forAllRegion").click(function(){if(this.checked)$("#msgAllRegion").text("Информация в других регионах будет перезаписана");else $("#msgAllRegion").html("&nbsp;");});
-			$("#savePricing").click(function(event){
+			
+			$("#saveSeason").click(function(event){
 				var err = false;
 				$(".inpval").css('border-color','#C0C0C0 #D9D9D9 #D9D9D9');
-				$(".inpval").each(function(i,element){if($(this).val()===''){$(this).css('border-color','#FF0000');err = true;}});
+				$(".inpval").each(function(i,element){if($(this).val()==''){$(this).css('border-color','#FF0000');err = true;}});
 				if(err){
 					event.preventDefault();
 					msgerror("Пропущены обязательные поля!");
 					return false;
 				}
-				$(".percent").each(function(i,element){if(isNaN($(this).val())){$(this).css('border-color','#FF0000');err = true;}});
+				$(".digital").each(function(i,element){if(isNaN($(this).val())){$(this).css('border-color','#FF0000');err = true;}});
 				if(err){
 					event.preventDefault();
 					msgerror("Проценты должны быть указаны цифрами!");
 					return false;
 				}
-				var total = 0;
-				$(".percent").each(function(i,element){total += parseInt($(this).val());});
-				if(!err && total != 100){
-					event.preventDefault();
-					$(".percent").css('border-color','#FF0000');
-					msgerror("Сумма не равна 100%!");
-					return false;
-				}
 			});
-			$("#btnAddPosition").click(function(){var lastObj = $("div[list='jobLine']:last");$(lastObj).after('<div list="jobLine"></div>');lastObj = $("div[list='jobLine']:last");$(lastObj).load("<?=$baseurl;?>views/form-prnposition/<?=$userinfo['uconfirmation'];?>",function(){var cnt = $("div[list='jobLine']").size();if(cnt > 1) $("#btnDelPosition").show();});});
-			$("#btnDelPosition").click(function(){$("div[list='jobLine']:last").remove();var cnt = $("div[list='jobLine']").size();if(cnt <= 1) $("#btnDelPosition").hide();});
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);}});});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;};
 		});
