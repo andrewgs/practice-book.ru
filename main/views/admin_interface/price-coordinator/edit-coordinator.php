@@ -28,6 +28,8 @@
 		.rep-container{font: bold normal 125% serif;margin: 10px 0 10px 0;padding: 5px 0 5px 0;}
 		#lists select{margin-right: 10px;font: bold normal 125% serif;}
 		#formUnit{margin-top:10px;}
+		.chackForAll{float:right;margin: 10px 0 0 0;font: normal bold 125% normal;}
+		.msgForAll{float:right;margin: 35px -155px 0 0;}
 	</style>
 </head>
 <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
@@ -69,7 +71,8 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			$("#forAllRegion").removeAttr("checked");
+			$("#forAllRegion").click(function(){if(this.checked)$("#msgAllRegion").text("Товар будет добавлен в другие регионы");else $("#msgAllRegion").html("&nbsp;");});
 			$("#select-group").change(function(){
 				$("#select-unit").die();
 				$(".digital").die();

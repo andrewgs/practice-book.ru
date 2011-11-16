@@ -1173,7 +1173,19 @@ class Admin_interface extends CI_Controller{
 						$this->cmpunitsmodel->insert_empty($cmplist[$i]['cmp_id'],$_POST,$_POST['groupvalue']);
 					endif;
 				endfor;
-				$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
+				if($this->user['priority'] && isset($_POST['all'])):
+					$regions = $this->regionmodel->get_allid();
+					if($regions):
+						for($i=0;$i<count($regions);$i++):
+							$curmraid = $this->manregactmodel->record_exist($regions[$i]['id'],$activity);
+							if($curmraid):
+								$this->productionunitmodel->insert_record($curmraid,$_POST,$_POST['groupvalue']);
+							endif;
+						endfor;
+					endif;
+				else:
+					$this->productionunitmodel->insert_record($mraid,$_POST,$_POST['groupvalue']);
+				endif;
 				redirect('admin/edit-coordinator/'.$this->user['uconfirmation']);
 			endif;
 		endif;
