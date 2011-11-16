@@ -17,6 +17,7 @@ $route['conditions-cooperation'] = "users_interface/cooperation";
 $route['support'] = "users_interface/support";
 $route['information'] = "users_interface/information";
 $route['for-dealers'] = "users_interface/for_dealers";
+$route['license'] = "users_interface/license";
 
 $route['dealers-list'] = "users_interface/dealers_list";
 $route['dealers-list/region/:num'] = "users_interface/dealers_list";

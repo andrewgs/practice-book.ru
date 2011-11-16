@@ -11,9 +11,9 @@
 		</div>
 	</nav>
 	<div class="copyright">
-		<div class="centerizer w805">
+		<div class="centerizer w940">
 			<p>© 2011 PRACTICE BOOK  Все права защищены. Полное или частичное копирование материалов запрещено.
-			<?= anchor('license','Лицензионное соглашение',array('id'=>'lnk-license')); ?></p>
+			<?= anchor('license','Пользовательское соглашение',array('id'=>'lnk-license')); ?></p>
 		</div>
 	</div>
 </footer>

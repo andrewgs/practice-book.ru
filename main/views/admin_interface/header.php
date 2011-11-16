@@ -18,6 +18,7 @@
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/dilers','Страница "Дилерам"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/jobs','Страница "Работа"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/about','Страница "О проекте"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/license','Страница "Пользовательское соглашение"');?></li>
 			<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/conditions-cooperation','Страница "Условия сотрудничества"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/no-activity','Страница "Отсутствие услуги"');?></li>
 				</ul>

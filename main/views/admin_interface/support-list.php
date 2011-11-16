@@ -26,8 +26,8 @@
 					<td><?=$list[$i]['spt_date'];?></td>
 					<td><?=$list[$i]['spt_name'];?></td>
 					<td><?=$list[$i]['spt_email'];?></td>
-					<td><?=$list[$i]['spt_theme'];?></td>
-					<td><?=$list[$i]['spt_message'];?></td>
+					<td style="text-align:left;"><?=$list[$i]['spt_theme'];?></td>
+					<td style="text-align:justify;"><?=$list[$i]['spt_message'];?></td>
 					<td>
 						<div class="ButtonOperation">
 			<input type="image" title="Удалить" class="btnDelete"rID="<?=$i?>" src="<?=$baseurl;?>images/delete.png" />

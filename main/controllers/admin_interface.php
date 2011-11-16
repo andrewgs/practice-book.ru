@@ -101,6 +101,7 @@ class Admin_interface extends CI_Controller{
 			case 'no-activity'				: $record_id = 55; break;
 			case 'information'				: $record_id = 56; break;
 			case 'dilers'					: $record_id = 57; break;
+			case 'license'					: $record_id = 58; break;
 			default : show_404();
 		endswitch;
 		if($this->input->post('submit')):
@@ -1315,7 +1316,6 @@ class Admin_interface extends CI_Controller{
 		$pagevar['manager']['activitypath'] = "Редактирование графика сезонного изменения цен";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		if($this->input->post('submit')):
-			$this->form_validation->set_rules('exp[]',' ','required');
 			$this->form_validation->set_rules('comment',' ','required|trim');
 			if(!$this->form_validation->run()):
 				$_POST['submit'] = NULL;
