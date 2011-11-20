@@ -273,6 +273,15 @@
 				if(err){
 					event.preventDefault();
 					msgerror('Пропущены обязательные поля');
+					return false;
+				}else{
+					if($("#chOffers").attr("checked")){
+						var actoff = $("#sActOffers option:selected").size();
+						var regoff = $("#sRegOffers option:selected").size();
+						if(!confirm("Предложение будет размещено в "+regoff+" городах\nпо "+actoff+" отраслям. Продолжить?"))
+							event.preventDefault();
+					}
+					$("#formAddNews").submit();
 				}
 			});
 			

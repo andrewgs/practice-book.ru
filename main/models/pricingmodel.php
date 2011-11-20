@@ -43,6 +43,7 @@ class Pricingmodel extends CI_Model {
 		$this->prn_title	= htmlspecialchars($data['title']);
 		$this->prn_percent	= htmlspecialchars($data['percent']);
 		$this->db->insert('tbl_pricing',$this);
+		return $this->db->insert_id();
 	}
 	
 	function group_insert($mraid,$data){

@@ -184,6 +184,12 @@ $route['admin/edit-activity/:any'] = "admin_interface/edit_activity";
 $route['admin/manage-whomain/:any/start-auctions'] = "admin_interface/start_auctions";
 $route['admin/manage-whomain/:any/finish-auctions'] = "admin_interface/finish_auctions";
 
+$route['admin/manage-business-environment/:any'] = "admin_interface/be_index";
+$route['admin/manage-be-information/:any'] = "admin_interface/be_information";
+$route['admin/manage-be-edit/:any'] = "admin_interface/be_edit";
+$route['admin/manage-be-delete/:any'] = "admin_interface/be_delete";
+$route['admin/manage-log-delete/:any'] = "admin_interface/log_delete";
+
 $route['admin/begin-auction/:any'] = "admin_interface/begin_auction";
 $route['admin/end-auction/:any'] = "admin_interface/end_auction";
 
@@ -266,6 +272,8 @@ $route['admin/activate-user/:any']= "admin_interface/activate_user";
 $route['admin/save-company/:any']= "admin_interface/save_company";
 $route['admin/save-profile/:any']= "admin_interface/save_profile";
 $route['admin/delete-message/:any']= "admin_interface/delete_message";
+
+$route['admin/add-company-activity/:any'] = "admin_interface/add_company_activity";
 
 /************************************	COMPANY INTRERFACE	***********************************************/
 

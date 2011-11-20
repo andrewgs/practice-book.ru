@@ -1,6 +1,6 @@
 <?php
 
-class Cmpsrvmodel extends CI_Model {
+class Cmpsrvmodel extends CI_Model{
 	
 	var $cs_id = 0;
 	var $cs_cmpid = 1;
@@ -23,6 +23,24 @@ class Cmpsrvmodel extends CI_Model {
 		endfor;
 		$this->db->query($query);
 	}
+	
+	function insert_record($activity,$cmpid){
+		
+		$this->cs_cmpid = $cmpid;
+		$this->cs_srvid = $activity;
+		$this->db->insert('tbl_companyservices',$this);
+		return $this->db->insert_id();
+	}
+	
+	function read_record($id){
+		
+		$this->db->where('cs_id',$id);
+		$query = $this->db->get('tlb_survey',1);
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0];
+		return NULL;
+	}
+	
 	function activity_exist($activity){
 	
 		$this->db->where('cs_srvid',$activity);
@@ -31,6 +49,7 @@ class Cmpsrvmodel extends CI_Model {
 		if(count($data)>0) return TRUE;
 		return FALSE;
 	}
+	
 	function delete_records($cid){
 	
 		$this->db->where('cs_cmpid',$cid);

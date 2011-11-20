@@ -25,6 +25,15 @@ class Unionmodel extends CI_Model{
 		else return null;
 	}
 	
+	function company_ones_activity($id){
+		
+		$query = "SELECT tbl_activity.act_id,tbl_activity.act_fulltitle,tbl_activity.act_title,tbl_companyservices.cs_close from tbl_companyservices inner join tbl_activity ON tbl_companyservices.cs_srvid = tbl_activity.act_id WHERE tbl_companyservices.cs_id = $id LIMIT 1";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0];
+		return NULL;
+	}
+	
 	function select_company_by_region($activity,$region){
 		
 		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_rating FROM tbl_company INNER JOIN tbl_companyservices ON tbl_company.cmp_id = tbl_companyservices.cs_cmpid WHERE tbl_companyservices.cs_srvid = ? AND tbl_company.cmp_destroy = '3000-01-01' AND tbl_company.cmp_region = ? ORDER BY tbl_company.cmp_rating DESC";
@@ -177,7 +186,7 @@ class Unionmodel extends CI_Model{
 
 	function offer_list($product,$bprice,$eprice,$region){
 	
-		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND (CONCAT(tbl_companyunits.cu_price,0) >= $bprice AND CONCAT(tbl_companyunits.cu_price,0) <= $eprice) ORDER BY tbl_companyunits.cu_price ASC";
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND (tbl_companyunits.cu_price $bprice AND tbl_companyunits.cu_price $eprice) ORDER BY tbl_companyunits.cu_price ASC";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -186,7 +195,7 @@ class Unionmodel extends CI_Model{
 	
 	function offer_list_top($product,$bprice,$region){
 	
-		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND CONCAT(tbl_companyunits.cu_price,0) >= $bprice ORDER BY tbl_companyunits.cu_price ASC";
+		$query = "SELECT tbl_company.cmp_id,tbl_company.cmp_name,tbl_companyunits.cu_id,tbl_companyunits.cu_note,tbl_companyunits.cu_price,tbl_companyunits.cu_priceunit,tbl_companyunits.cu_unitscode FROM tbl_company INNER JOIN tbl_companyunits ON tbl_company.cmp_id = tbl_companyunits.cu_cmpid WHERE tbl_companyunits.cu_title = '$product' AND tbl_company.cmp_region = $region AND tbl_companyunits.cu_price $bprice ORDER BY tbl_companyunits.cu_price ASC";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -315,7 +324,7 @@ class Unionmodel extends CI_Model{
 	
 	function dtn_topics_limit_records($count,$from,$dtn){
 		
-		$query = "SELECT dtt_id,dtt_title,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_dtnid = $dtn ORDER BY dtt_date DESC, dtt_id DESC LIMIT $from,$count";
+		$query = "SELECT dtt_id,dtt_note,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_dtnid = $dtn ORDER BY dtt_date DESC, dtt_id DESC LIMIT $from,$count";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;
@@ -324,7 +333,7 @@ class Unionmodel extends CI_Model{
 
 	function dtn_topic_records($topic){
 		
-		$query = "SELECT dtt_id,dtt_title,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_id = $topic";
+		$query = "SELECT dtt_id,dtt_note,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -530,11 +539,30 @@ class Unionmodel extends CI_Model{
 		$this->db->query($query);
 		return $this->db->affected_rows();
 	}
+
 	function delete_season($activity){
 	
 		$query = "DELETE FROM tbl_seasonal_prices WHERE snp_mraid IN (SELECT mra_id FROM tbl_mra WHERE mra_aid = $activity)";
 		$this->db->query($query);
 		return $this->db->affected_rows();
+	}
+
+	function read_belog($date){
+	
+		$query = "SELECT belg_id,belg_edit,belg_delete,belg_activity,belg_table,belg_environment,act_title,dep_title FROM tbl_be_log,tbl_activity,tbl_departments WHERE tbl_be_log.belg_department IN (tbl_departments.dep_id,0) AND tbl_be_log.belg_activity = tbl_activity.act_id AND tbl_be_log.belg_date = '$date' group by belg_id ORDER BY belg_id DESC";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	function read_belog_information($id){
+	
+		$query = "SELECT belg_id,belg_title_field,belg_note_field,belg_table,belg_model,belg_object_id,belg_object_field,uid,uemail,uskype,uicq,uphone,uposition,uname,usubname,uthname,uactive,urating,cmp_id,cmp_name,cmp_rating FROM tbl_be_log,tbl_user,tbl_company WHERE tbl_be_log.belg_userid = tbl_user.uid AND tbl_be_log.belg_cmpid = tbl_company.cmp_id AND tbl_be_log.belg_id = $id";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(isset($data[0])) return $data[0];
+		return NULL;
 	}
 }
 ?>

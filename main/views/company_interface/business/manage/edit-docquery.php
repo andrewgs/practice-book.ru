@@ -60,7 +60,7 @@
 								<?=form_open($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
 						<label class="label-input">Текст вопроса: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('title');?>
-					<textarea class="edit700-form-textarea" name="title" id="title" cols="50" rows="10"><?=$topic['dtt_title'];?></textarea>
+					<textarea class="edit700-form-textarea" name="title" id="title" cols="50" rows="10"><?=$topic['dtt_note'];?></textarea>
 									<div class="clear"></div>
 						<input class="btn-action margin-1em" id="addQuestion" type="submit" name="submit" value="Сохранить"/>
 								<?= form_close(); ?>

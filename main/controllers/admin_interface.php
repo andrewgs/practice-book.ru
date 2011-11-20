@@ -43,6 +43,7 @@ class Admin_interface extends CI_Controller{
 		$this->load->model('wmcompanymodel');
 		$this->load->model('pricingmodel');
 		$this->load->model('seasonalpricesmodel');
+		$this->load->model('belogmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -1454,6 +1455,135 @@ class Admin_interface extends CI_Controller{
 		$this->load->view('admin_interface/edit-activity/pricing-edit',$pagevar);
 	}
 	
+	/* ======================================== BUSINESS ENVIRONMENT =============================================*/
+	
+	function be_index(){
+		
+		$logdate = $this->session->userdata('logdate');
+		if(!$logdate):
+			$logdate = date("Y-m-d");
+			$this->session->set_userdata('logdate',$logdate);
+		endif;
+		$type = array('tbl_discussions'=>'Тема раздел "Обсуждения"','tbl_dsc_topics'=>'Обсуждение','tbl_comments'=>'Комментарий','tbl_question_answer'=>'Тема раздел "Вопрос-ответ"','tbl_qa_topics'=>'Вопрос','tbl_interaction'=>'Тема раздел "Взаим. с Госстр."','tbl_inttopics'=>'Запрос на взаимодействие','tbl_articles'=>'Тема раздел "Cтатьи"','tbl_art_topics'=>'Статья','tbl_documentation'=>'Тема раздел "Обмен документами"','tbl_dtn_topics'=>'Запрос на документ','tbl_doclist'=>'Документ','tbl_survey'=>'Тема раздел "Опрос"','tbl_assproc'=>'Тема раздел "Объединения для закупок"','tbl_asptopics'=>'Запрос на закупку','tbl_be_news'=>'Новость отрасли','tbl_be_discount'=>'Новинка отрасли');
+		$envir = array('Общая','Частная');
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Управления бизнес средой',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'log'			=> array(),
+					'setdate'		=> $this->session->userdata('logdate')
+			);
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('date','','required|trim');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->be_index();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$this->session->set_userdata('logdate',$_POST['date']);
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
+		if($this->input->post('subsave')):
+			$_POST['subsave'] = NULL;
+			$loginfo = $this->belogmodel->read_record($_POST['id']);
+			if(!empty($_POST['title'])):
+				$this->belogmodel->save_table_field($loginfo['belg_table'],$loginfo['belg_object_id'],$loginfo['belg_object_field'],$loginfo['belg_title_field'],htmlspecialchars($_POST['title']));
+			endif;
+			if(!empty($_POST['note'])):
+				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
+				$this->belogmodel->save_table_field($loginfo['belg_table'],$loginfo['belg_object_id'],$loginfo['belg_object_field'],$loginfo['belg_note_field'],strip_tags($_POST['note'],'<br>'));
+			endif;
+			redirect($this->uri->uri_string());
+		endif;
+		$pattern = "/(\d+)\/(\w+)\/(\d+)/i";
+		$replacement = "\$3-\$2-\$1";
+		$setdate = preg_replace($pattern,$replacement,$pagevar['setdate']);
+		$pagevar['log'] = $this->unionmodel->read_belog($setdate);
+		for($i=0;$i<count($pagevar['log']);$i++):
+			$pagevar['log'][$i]['theme'] = $type[$pagevar['log'][$i]['belg_table']];
+			$pagevar['log'][$i]['envir'] = $envir[$pagevar['log'][$i]['belg_environment']];
+			if(!$pagevar['log'][$i]['belg_environment']):
+				$pagevar['log'][$i]['dep_title'] = '';
+			endif; 
+		endfor;
+		$this->load->view("admin_interface/manage-be",$pagevar);
+	}
+	
+	function be_information(){
+	
+		$pagevar = array('baseurl'=>base_url(),'information'=>array());
+		$id = trim($this->input->post('id'));
+		if(!$id) show_404();
+		$pagevar['information'] = $this->unionmodel->read_belog_information($id);
+		if(!empty($pagevar['information']['belg_title_field'])):
+			$pagevar['information']['title'] = $this->belogmodel->read_table_field($pagevar['information']['belg_table'],$pagevar['information']['belg_object_id'],$pagevar['information']['belg_object_field'],$pagevar['information']['belg_title_field']);
+		else:
+			$pagevar['information']['title'] = FALSE;
+		endif;
+		if(!empty($pagevar['information']['belg_note_field'])):
+			$pagevar['information']['note'] = $this->belogmodel->read_table_field($pagevar['information']['belg_table'],$pagevar['information']['belg_object_id'],$pagevar['information']['belg_object_field'],$pagevar['information']['belg_note_field']);
+		else:
+			$pagevar['information']['note'] = FALSE;
+		endif;
+		$pagevar['information']['cmp_graph'] = $pagevar['information']['cmp_rating'];
+		if($pagevar['information']['cmp_rating'] > 175):
+			$pagevar['information']['cmp_graph'] = 175;
+		endif;
+		$this->load->view('admin_interface/be_information',$pagevar);
+	}
+	
+	function be_edit(){
+	
+		$pagevar = array('baseurl'=>base_url(),'information'=>array());
+		$id = trim($this->input->post('id'));
+		if(!$id) show_404();
+		$pagevar['information'] = $this->unionmodel->read_belog_information($id);
+		if(!empty($pagevar['information']['belg_title_field'])):
+			$pagevar['information']['title'] = $this->belogmodel->read_table_field($pagevar['information']['belg_table'],$pagevar['information']['belg_object_id'],$pagevar['information']['belg_object_field'],$pagevar['information']['belg_title_field']);
+		else:
+			$pagevar['information']['title'] = FALSE;
+		endif;
+		if(!empty($pagevar['information']['belg_note_field'])):
+			$pagevar['information']['note'] = $this->belogmodel->read_table_field($pagevar['information']['belg_table'],$pagevar['information']['belg_object_id'],$pagevar['information']['belg_object_field'],$pagevar['information']['belg_note_field']);
+			$pagevar['information']['note'] = preg_replace('/<br>/',"\n",$pagevar['information']['note']);
+		else:
+			$pagevar['information']['note'] = FALSE;
+		endif;
+		$this->load->view('admin_interface/be_edit',$pagevar);
+	}
+	
+	function be_delete(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$id = trim($this->input->post('id'));
+		if(!$id) show_404();
+		$information = $this->unionmodel->read_belog_information($id);
+		if($information):
+			$type = array('tbl_dsc_topics'=>'top_comments','tbl_qa_topics'=>'qat_comments','tbl_inttopics'=>'itp_comments','tbl_art_topics'=>'atp_comments','tbl_dtn_topics'=>'dtt_comments','tbl_doclist'=>'dls_comments','tbl_asptopics'=>'ast_comments','tbl_be_news'=>'ben_comments','tbl_be_discount'=>'bed_comments');
+			$success = $this->belogmodel->delete_table_record($information['belg_table'],$information['belg_object_id'],$information['belg_object_field']);
+			if($success):
+				$success = $this->belogmodel->delete_table_comment($information['belg_table'],$information['belg_object_id'],$information['belg_object_field'],$type[$information['belg_table']]);
+				$statusval['status'] = TRUE;
+			endif;
+		endif;
+		echo json_encode($statusval);
+	}
+	
+	function log_delete(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$id = trim($this->input->post('id'));
+		if(!$id) show_404();
+		$success = $this->belogmodel->delete_record($id);
+		if($success) $statusval['status'] = TRUE;
+		echo json_encode($statusval);
+	}
+	
 	/* ======================================== END EDIT CONTROL PANEL =============================================*/
 	
 	function create_search_activity(){
@@ -1725,6 +1855,9 @@ class Admin_interface extends CI_Controller{
 									$this->load->view("admin_interface/users-list",$pagevar);
 								break;
 			case 'company'		: 	$pagevar['list'] = $this->companymodel->read_records();
+									$pagevar['actlist'] = array();
+									$pagevar['actlist'] = $this->activitymodel->read_activity_final();
+//									print_r($pagevar['actlist']);exit;
 									$this->load->view("admin_interface/company-list",$pagevar);
 									break;
 			case 'dielers'		: 	$pagevar['list'] = $this->dealersmodel->read_records();
@@ -1732,6 +1865,22 @@ class Admin_interface extends CI_Controller{
 									break;
 			default : show_404();
 		endswitch;
+	}
+	
+	function add_company_activity(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при добавлении','actid'=>'','acttitle'=>'');
+		$сid = $this->input->post('id');
+		$activity = trim($this->input->post('activity'));
+		if(!$activity && !$сid) show_404();
+		$success = $this->cmpsrvmodel->insert_record($activity,$сid);
+		if($success){
+			$service = $this->unionmodel->company_ones_activity($success);
+			$statusval['status'] = TRUE;
+			$statusval['actid'] = $service['act_id'];
+			$statusval['acttitle'] = $service['act_fulltitle'];
+		}
+		echo json_encode($statusval);
 	}
 	
 	function registration_users(){
@@ -2400,7 +2549,6 @@ class Admin_interface extends CI_Controller{
 	function operation_date_slash($field){
 		
 		$list = preg_split("/-/",$field);
-		$nmonth = $this->months[$list[1]];
 		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
 		$replacement = "\$5/\$3/\$1"; 
 		return preg_replace($pattern, $replacement,$field);
@@ -2409,7 +2557,6 @@ class Admin_interface extends CI_Controller{
 	function operation_date_minus($field){
 		
 		$list = preg_split("/-/",$field);
-		$nmonth = $this->months[$list[1]];
 		$pattern = "/(\d+)(-)(\w+)(-)(\d+)/i";
 		$replacement = "\$5-\$3-\$1"; 
 		return preg_replace($pattern, $replacement,$field);

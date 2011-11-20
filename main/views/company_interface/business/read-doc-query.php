@@ -59,7 +59,7 @@
 							<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
 								<div class="right-post">
-									<h2><?=$topic['dtt_title'];?></h2>
+									<h2><?=$topic['dtt_note'];?></h2>
 									<span class="date"><?=$topic['dtt_date'];?></span>
 									<span class="green">
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/documents-list','документов ('.$topic['dtt_documents'].')');?>

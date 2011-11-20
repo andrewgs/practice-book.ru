@@ -5,7 +5,7 @@
 			<?=anchor('admin/control-panel/'.$userinfo['uconfirmation'],'Вернуться назад',array('class'=>'lnk-submit'));?>
 		</div>
 	</div>
-	<div class="box-content h960 w918">
+	<div class="box-content h960 w960">
 		<table summary="Список компаний">
 			<thead>
 				<tr class="odd">
@@ -44,7 +44,7 @@
 	<input type="image" title="Список отраслей" class="btnActivity" id="act<?=$i?>" rID="<?=$i?>" src="<?=$baseurl;?>images/document-task.png" />
 						</td>
 						<td>
-		<input class="reg-form-small parentid" id="vRating<?=$i?>" rID="<?=$i?> name="rating" type="text" value="<?=$list[$i]['cmp_rating'];?>">
+		<input class="reg-form-small digital" id="vRating<?=$i?>" rID="<?=$i?> name="rating" type="text" value="<?=$list[$i]['cmp_rating'];?>">
 						</td>
 						<td>
 		<input class="reg-form-small final" id="vOffers<?=$i?>" rID="<?=$i?> name="offers" type="text" value="<?=$list[$i]['cmp_offers'];?>">

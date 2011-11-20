@@ -61,8 +61,8 @@ class Tipsmodel extends CI_Model {
 		$this->tps_note	= strip_tags($insertdata['note'],'<br>');
 		$this->tps_date	= date("Y-m-d");
 		$this->tps_status = 1;
-		
 		$this->db->insert('tbl_tips',$this);
+		return $this->db->insert_id();
 	}
 
 	function insert_empty($mraid){

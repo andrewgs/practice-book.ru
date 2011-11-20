@@ -38,8 +38,8 @@ class Supportmodel extends CI_Model {
 		$this->spt_theme	= $insertdata['theme'];
 		$this->spt_message	= $insertdata['message'];
 		$this->spt_date		= date("Y-m-d");
-		
 		$this->db->insert('tbl_support',$this);
+		return $this->db->insert_id();
 	}
 
 	function update_record($id,$updatedata){

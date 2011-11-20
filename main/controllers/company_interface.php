@@ -48,6 +48,7 @@ class Company_interface extends CI_Controller{
 		$this->load->model('aspregionsmodel');
 		$this->load->model('whomainmodel');
 		$this->load->model('wmcompanymodel');
+		$this->load->model('belogmodel');
 		
 		$cookieuid = $this->session->userdata('login_id');
 		if(isset($cookieuid) and !empty($cookieuid)):
@@ -620,7 +621,7 @@ class Company_interface extends CI_Controller{
 			$this->form_validation->set_rules('pdatebegin',' "Начальная дата" ','required');
 			$this->form_validation->set_rules('activity',' "Отрасль" ','required');
 			if($_POST['offers']):
-				$this->form_validation->set_rules('actoffers',' "Отрасль" ','required');
+				$this->form_validation->set_rules('actoffers[]',' "Отрасль" ','required');
 				$this->form_validation->set_rules('regoffers[]',' "Регионы" ','required');
 			endif;
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -651,11 +652,14 @@ class Company_interface extends CI_Controller{
 				$_POST['description'] = nl2br($_POST['description']);
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$desc);
-				$this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
+				$objid = $this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
+$this->belogmodel->insert_record('bed_title','bed_note',1,1,$activity,'tbl_be_discount',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'bediscountmodel',$objid,'bed_id');
 				if($pagevar['offers']):
 					if(isset($_POST['offers'])):
-						for($i=0;$i<count($_POST['regoffers']);$i++):
-							$this->offerstopicmodel->insert_records($_POST,$this->user['uid'],$this->user['cid'],$pagevar['company']['cmp_name'],$_POST['actoffers'],0,0,$_POST['regoffers'][$i]);
+						for($i=0;$i<count($_POST['actoffers']);$i++):
+							for($j=0;$j<count($_POST['regoffers']);$j++):
+								$this->offerstopicmodel->insert_records($_POST,$this->user['uid'],$this->user['cid'],$pagevar['company']['cmp_name'],$_POST['actoffers'][$i],0,0,$_POST['regoffers'][$j]);
+							endfor;
 						endfor;
 					endif;
 				endif;
@@ -887,7 +891,7 @@ class Company_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
-	/* --------------------------------------------- business environment ------------------------------------------------------*/
+	/* --------------------------------------------- business environment ------------------------------------------------*/
 	
 	function business(){
 		
@@ -967,30 +971,37 @@ class Company_interface extends CI_Controller{
 		switch ($segment):
 			case 'discussions':		$model = 'discussionsmodel';
 									$field = 'dsc_';
+									$table = 'tbl_discussions';
 									$name  = 'Обсуждения';
  									break;
 			case 'question-answer': $model = 'questionanswermodel';
 									$field = 'qa_';
+									$table = 'tbl_question_answer';
 									$name  = 'Вопрос-ответ';
 									break;
 			case 'interactions': 	$model = 'interactionmodel';
 									$field = 'int_';
+									$table = 'tbl_interaction';
 									$name  = 'Взаимодействие с Госструктурами';
 									break;
 			case 'documentation': 	$model = 'documentationmodel';
 									$field = 'dtn_';
+									$table = 'tbl_documentation';
 									$name  = 'Обмен документами';
 									break;
 			case 'surveys': 		$model = 'surveymodel';
 									$field = 'sur_';
+									$table = 'tbl_survey';
 									$name  = 'Опрос';
 									break;
 			case 'articles': 		$model = 'articlesmodel';
 									$field = 'art_';
+									$table = 'tbl_articles';
 									$name  = 'Cтатьи';
 									break;
 			case 'associations': 	$model = 'assprocmodel';
 									$field = 'asp_';
+									$table = 'tbl_assproc';
 									$name  = 'Объединения для закупок';
 									break;
 			default:	redirect($this->session->userdata('backpath'));
@@ -1020,7 +1031,8 @@ class Company_interface extends CI_Controller{
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
-				$this->$model->insert_records($_POST['title'],$activity,$environment,$this->user['department']);
+				$objid = $this->$model->insert_records($_POST['title'],$activity,$environment,$this->user['department']);
+$this->belogmodel->insert_record($field.'title',"",1,1,$activity,$table,$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],$model,$objid,$field.'id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -1227,7 +1239,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 //				$_POST['note'] = nl2br($_POST['note']);
-				$this->dsctopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+				$objid = $this->dsctopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+$this->belogmodel->insert_record('top_title','top_note',1,0,$activity,'tbl_dsc_topics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'dsctopicsmodel',$objid,'top_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -1284,8 +1297,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'discussions',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'discussions',$topic);
 				$this->dsctopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -1520,7 +1534,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 				$_POST['submit'] = NULL;
 				$_POST['title'] = preg_replace('/\n{2}/','<br>',$_POST['title']);
 //				$_POST['note'] = nl2br($_POST['note']);
-				$this->qatopicsmodel->insert_records($_POST['title'],$section,$this->user['uid']);
+				$objid = $this->qatopicsmodel->insert_records($_POST['title'],$section,$this->user['uid']);
+$this->belogmodel->insert_record('qat_title','',1,0,$activity,'tbl_qa_topics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'qatopicsmodel',$objid,'qat_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -1577,8 +1592,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'question',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'question',$topic);
 				$this->qatopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -1820,7 +1836,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 //				$_POST['note'] = nl2br($_POST['note']);
-				$this->inttopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+				$objid = $this->inttopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+$this->belogmodel->insert_record('itp_title','itp_note',1,0,$activity,'tbl_inttopics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'inttopicsmodel',$objid,'itp_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -1877,8 +1894,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'interactions',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'interactions',$topic);
 				$this->inttopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2130,7 +2148,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 //				$_POST['note'] = nl2br($_POST['note']);
-				$this->arttopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+				$objid = $this->arttopicsmodel->insert_record($_POST,$section,$this->user['uid']);
+$this->belogmodel->insert_record('atp_title','atp_note',1,0,$activity,'tbl_art_topics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'arttopicsmodel',$objid,'atp_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -2187,8 +2206,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'articles',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'articles',$topic);
 				$this->arttopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2426,7 +2446,8 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 				$_POST['submit'] = NULL;
 				$_POST['title'] = preg_replace('/\n{2}/','<br>',$_POST['title']);
 //				$_POST['note'] = nl2br($_POST['note']);
-				$this->dtntopicsmodel->insert_record($_POST['title'],$section,$this->user['uid']);
+				$objid = $this->dtntopicsmodel->insert_record($_POST['title'],$section,$this->user['uid']);
+$this->belogmodel->insert_record('dtt_note','',1,0,$activity,'tbl_dtn_topics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'dtntopicsmodel',$objid,'dtt_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -2483,8 +2504,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentation',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentation',$topic);
 				$this->dtntopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2563,7 +2585,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 			);
-		$pagevar['topic']['dtt_title'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['dtt_title']);
+		$pagevar['topic']['dtt_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['dtt_note']);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Текст','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -2659,8 +2681,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					case '4' : $_POST['image'] = file_get_contents(base_url().'images/documents/pdf.png'); break;
 				endswitch;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->doclistmodel->insert_record($_POST,$topic,$this->user['uid']);
+				$objid = $this->doclistmodel->insert_record($_POST,$topic,$this->user['uid']);
 				$this->dtntopicsmodel->insert_document($topic);
+$this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_doclist',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'doclistmodel',$objid,'dls_id');
 				redirect('business-environment/documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/documents-list');
 			endif;
 		endif;
@@ -2892,8 +2915,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentlist',$docid);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentlist',$docid);
 				$this->doclistmodel->insert_comment($docid);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3120,7 +3144,6 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 						$surlist[$i]['sname'] = $_POST['sur'][$i];
 					endfor;
 				endif;
-//				print_r($surlist);exit;
 				$this->votemodel->group_insert($surtopic,$surlist);
 				redirect($pagevar['backpath']);
 			endif;
@@ -3179,8 +3202,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'surveys',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'surveys',$topic);
 				$this->surtopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3442,8 +3466,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$astid = $this->asptopicsmodel->insert_record($_POST,$section,$this->user['uid'],$this->user['cid']);
+				$objid = $astid = $this->asptopicsmodel->insert_record($_POST,$section,$this->user['uid'],$this->user['cid']);
 				$this->aspregionsmodel->group_insert($astid,$_POST['region']);
+$this->belogmodel->insert_record('ast_title','ast_note',1,0,$activity,'tbl_asptopics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'asptopicsmodel',$objid,'ast_id');
 				redirect('business-environment/associations/'.$this->user['uconfirmation'].'/association/'.$astid);
 			endif;
 		endif;
@@ -3500,8 +3525,9 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'association',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'association',$topic);
 				$this->asptopicsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3875,8 +3901,9 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'offers',$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'offers',$topic);
 				$this->offerstopicmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -4128,7 +4155,8 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->benewsmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+				$objid = $this->benewsmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+$this->belogmodel->insert_record('ben_title','ben_note',1,0,$activity,'tbl_be_news',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'benewsmodel',$objid,'ben_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -4187,8 +4215,9 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
 				$this->benewsmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -4443,7 +4472,8 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					$_POST['photo'] = file_get_contents(base_url().'images/no_photo.jpg');
 				endif;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->bediscountmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+				$objid = $this->bediscountmodel->insert_record($_POST,$activity,$environment,$this->user['department'],$this->user['uid'],1);
+$this->belogmodel->insert_record('bed_title','bed_note',1,0,$activity,'tbl_be_discount',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'bediscountmodel',$objid,'bed_id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -4502,8 +4532,9 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 			else:
 				$_POST['submit'] = NULL;
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
+				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
 				$this->bediscountmodel->insert_comment($topic);
+$this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
 				redirect($this->uri->uri_string());
 			endif;
 		endif;

@@ -8,6 +8,7 @@
 				<ul>
 					<li><?=anchor('admin/edit-activity/'.$userinfo['uconfirmation'],'Управление отраслью');?></li>
 					<li><?=anchor('admin/manage-whomain/'.$userinfo['uconfirmation'],'Управление аукционами "Кто главный?"');?></li>
+					<li><?=anchor('admin/manage-business-environment/'.$userinfo['uconfirmation'],'Управление бизнес средой');?></li>
 				</ul>
 			</li>
 			<li>

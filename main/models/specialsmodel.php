@@ -23,7 +23,6 @@ class Specialsmodel extends CI_Model {
 		$this->spc_image	= $insertdata['image'];
 		$this->spc_date		= $insertdata['date'];
 		$this->spc_source	= htmlspecialchars($insertdata['source']);
-		
 		$this->db->insert('tbl_specials',$this);
 		return $this->db->insert_id();
 	}

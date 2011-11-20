@@ -61,8 +61,8 @@ class Pitfallsmodel extends CI_Model {
 		$this->pf_note	= strip_tags($insertdata['note'],'<br>');
 		$this->pf_date	= date("Y-m-d");
 		$this->pf_status = 1;
-		
 		$this->db->insert('tbl_pitfalls',$this);
+		return $this->db->insert_id();
 	}
 	
 	function user_insert_record($mraid,$title,$note){

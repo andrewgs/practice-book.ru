@@ -26,7 +26,8 @@
 	<style type="text/css">
 		.h960{max-height: none; min-height: 470px;}
 		.w960{width: 960px;}
-		.h365{height: 365px;}
+		.w935{width: 935px;}
+		.h365{min-height: 365px;}
 		.w575{width: 575px;}
 		div.ButtonOperation{min-height:30px;}
 	</style>
@@ -48,7 +49,7 @@
 						<div class="box-header"><div id="mdTitle">&nbsp;</div>
 							<div class="box-search">&nbsp;</div>
 						</div>
-						<div class="box-content h365 w575">
+						<div class="box-content h365 w935">
 							<div id="mdList">&nbsp;</div>
 						</div>
 						<div class="box-bottom-links h20">&nbsp;
@@ -134,7 +135,7 @@
 			var dlrID = $("td[rID='"+curID+"']").text();
 			var title = $("#sp"+curID).text();
 			$("#mdTitle").html(title);
-			$("#mdList").load("<?=$baseurl;?>admin/dealers-regions/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal();});
+			$("#mdList").load("<?=$baseurl;?>admin/dealers-regions/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal({containerCss:{width:960}});});
 		});
 		
 		$(".btnCompany").click(function(e){
@@ -142,7 +143,7 @@
 			var dlrID = $("td[rID='"+curID+"']").text();
 			var title = $("#sp"+curID).text();
 			$("#mdTitle").html(title);
-			$("#mdList").load("<?=$baseurl;?>admin/dealers-company/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal();});
+			$("#mdList").load("<?=$baseurl;?>admin/dealers-company/<?=$userinfo['uconfirmation'];?>",{'id':dlrID},function(){$("#offer-modal-content").modal({containerCss:{width:960}});});
 		});
 		
 		function msgerror(msg){

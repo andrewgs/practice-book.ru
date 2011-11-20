@@ -47,8 +47,8 @@ class Productsmodel extends CI_Model {
 		$this->pr_note	= $insertdata['note'];
 		$this->pr_image	= $insertdata['image'];
 		$this->pr_date	= date("Y-m-d");
-		
 		$this->db->insert('tbl_products',$this);
+		return $this->db->insert_id();
 	}
 
 	function update_record($mraid,$updatedata){

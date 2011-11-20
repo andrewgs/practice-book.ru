@@ -43,10 +43,11 @@
 			<div class="btnHidden" id="dRegActOffers">
 				<div class="grid_6">
 					<h2>Выберите отрасль:</h2>
+					<span style="font-size:12px;">Для выбора нескольких отраслей пользуйтесь &lt;Ctrl&gt; или &lt;Shift&gt; </span>
 					<div class="box">
-						<div class="box-header"><?=form_error('activity');?>&nbsp;</div>
+						<div class="box-header"><?=form_error('actoffers[]');?>&nbsp;</div>
 							<div class="box-content w280 h250">
-								<select name="actoffers" id="sActOffers" class="mixed-combo inpvalue" size="16" title="Укажите в какую отрасли отправить предложение" style="width: 280px;">
+								<select name="actoffers[]" id="sActOffers" class="mixed-combo inpvalue" size="16" multiple title="Укажите в какую отрасли отправить предложение" style="width: 280px;">
 								<?php for($i=0;$i<count($activity);$i++): ?>
 									<option value="<?=$activity[$i]['act_id'];?>"><?=$activity[$i]['act_title'];?></option>
 								<?php endfor; ?>
@@ -56,7 +57,8 @@
 					</div>
 				</div>
 				<div class="grid_5">
-				<h2>Выберите регионы: </h2>
+					<h2>Выберите регионы: </h2>
+					<span style="font-size:12px;">Для выбора нескольких регионов пользуйтесь &lt;Ctrl&gt; или &lt;Shift&gt; </span>
 					<div class="box">
 						<div class="box-header"><?=form_error('region[]');?>&nbsp;</div>
 							<div class="box-content w280 h250">

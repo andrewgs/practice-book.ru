@@ -51,6 +51,7 @@
 						</div>
 						<div class="box-content h365 w575">
 							<div id="mdList">&nbsp;</div>
+							<?php $this->load->view("forms/add-company-activity");?>
 						</div>
 						<div class="box-bottom-links h20">&nbsp;
 							<div class="clear"></div>
@@ -67,6 +68,7 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		var curID = 0;
 		
 		$(".parentid").keypress(function(e){
 			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
@@ -75,9 +77,30 @@
 			if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>49))return false;
 			if($(this).val().length > 0){$(this).val('');}
 		});
+		$(".digital").keypress(function(e){
+				if($(this).val() == '' && e.which == 48) return false;
+				if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+				if($(this).val().length > 3) {$(this).val('')}
+			});
+		$("#addActivity").click(function(){
+			var cID = $("td[rID='"+curID+"']").text();
+			var actID =$("#AddActivity").val();
+			if(cID && actID){
+				$.post("<?=$baseurl;?>admin/add-company-activity/<?=$userinfo['uconfirmation'];?>",
+					{'id':cID,'activity':actID},
+					function(data){
+						if(data.status){
+							$(".region-table > tbody").append("<tr><td>"+data.actid+"</td><td style='text-align:left;'>"+data.acttitle+"</td><td><span style='color:#00FF00'>Открыта</span></td><td>&nbsp;</td></tr>");
+						}else{
+							msgerror(data.message);
+						}
+					},"json");
+			}
+		});
+		
 		$(".btnSave").click(function(){
 			var err = false;
-			var curID = $(this).attr("rID");
+			curID = $(this).attr("rID");
 			var cID = $("td[rID='"+curID+"']").text();
 			var objRating = $("#vRating"+curID);
 			var valRating = $(objRating).val();
@@ -113,7 +136,7 @@
 		});	
 		$(".btnDel").click(function(){
 			if(!confirm('Закрыть компанию?')) return false;
-			var curID = $(this).attr("rID");
+			curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			var btnID = this.id;
 			$.post(
@@ -127,7 +150,7 @@
 		});
 		$(".StatusOff").click(function(){
 			if(!confirm('Восстановить компанию?')) return false;
-			var curID = $(this).attr("rID");
+			curID = $(this).attr("rID");
 			var uID = $("td[rID='"+curID+"']").text();
 			var btnID = this.id;
 			$.post(
@@ -141,7 +164,7 @@
 		});
 		
 		$(".btnActivity").click(function(e){
-			var curID = $(this).attr("rID");
+			curID = $(this).attr("rID");
 			var cmpID = $("td[rID='"+curID+"']").text();
 			var title = $("#cn"+curID).text();
 			$("#mdTitle").html(title);

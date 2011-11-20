@@ -62,7 +62,7 @@
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/upload-document','<img src="'.$baseurl.'images/add_document.png" alt="добавить документ"/>',array('title'=>'добавить документ'));?>
 								</div>
 								<div class="right-post">
-									<h2><?=$topic['dtt_title'];?></h2>
+									<h2><?=$topic['dtt_note'];?></h2>
 									<span class="date"><?=$topic['dtt_date'];?></span>
 									<span class="green">
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topic['dtt_id'].'/comments','комментарии ('.$topic['dtt_comments'].')');?>

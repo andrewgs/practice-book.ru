@@ -62,7 +62,7 @@
 								</div>
 							<?php for($i=0;$i<count($topics);$i++):?>
 								<div class="right-post">
-									<h2><?=$topics[$i]['dtt_title'];?></h2>
+									<h2><?=$topics[$i]['dtt_note'];?></h2>
 									<span class="date"><?=$topics[$i]['dtt_date'];?></span>
 									<span class="green">
 <?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$topics[$i]['dtt_id'].'/documents-list','документов ('.$topics[$i]['dtt_documents'].')');?>

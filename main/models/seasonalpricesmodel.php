@@ -52,6 +52,7 @@ class Seasonalpricesmodel extends CI_Model {
 		$this->snp_title	= htmlspecialchars($data['title']);
 		$this->snp_percent	= htmlspecialchars($data['percent']);
 		$this->db->insert('tbl_seasonal_prices',$this);
+		return $this->db->insert_id();
 	}
 	
 	function group_insert($mraid,$data){

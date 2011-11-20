@@ -16,7 +16,7 @@ class Surveymodel extends CI_Model {
 	function read_record_byid($id){
 		
 		$this->db->where('sur_id',$id);
-		$query = $this->db->get('tlb_survey',1);
+		$query = $this->db->get('tbl_survey',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return NULL;
@@ -30,7 +30,7 @@ class Surveymodel extends CI_Model {
 		$this->db->where('sur_environment',$environment);
 		$this->db->where('sur_department',$department);
 		$this->db->order_by('sur_title');
-		$query = $this->db->get('tlb_survey',1);
+		$query = $this->db->get('tbl_survey',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return NULL;
@@ -44,7 +44,7 @@ class Surveymodel extends CI_Model {
 		$this->db->where('sur_environment',$environment);
 		$this->db->where('sur_department',$department);
 		$this->db->order_by('sur_title');
-		$query = $this->db->get('tlb_survey');
+		$query = $this->db->get('tbl_survey');
 		return $query->result_array();
 	}
 	
@@ -55,7 +55,7 @@ class Surveymodel extends CI_Model {
 		$this->sur_activity 	= $activity;
 		$this->sur_environment 	= $environment;
 		$this->sur_department 	= $department;
-		$this->db->insert('tlb_survey',$this);
+		$this->db->insert('tbl_survey',$this);
 		return $this->db->insert_id();
 	}
 	
@@ -63,14 +63,14 @@ class Surveymodel extends CI_Model {
 	
 		$this->db->set('sur_title',$data['title']);
 		$this->db->where('sur_id',$id);
-		$this->db->update('tlb_survey');
+		$this->db->update('tbl_survey');
 		return $this->db->affected_rows();
 	}
 	
 	function delete_records($id){
 	
 		$this->db->where('sur_id',$id);
-		$this->db->delete('tlb_survey');
+		$this->db->delete('tbl_survey');
 		return $this->db->affected_rows();
 	}
 
@@ -81,7 +81,7 @@ class Surveymodel extends CI_Model {
 		$this->db->where('sur_activity',$sur_activity);
 		$this->db->where('sur_environment',$environment);
 		$this->db->where('sur_department',$department);
-		$query = $this->db->get('tlb_survey',1);
+		$query = $this->db->get('tbl_survey',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;
 		return FALSE;
@@ -90,7 +90,7 @@ class Surveymodel extends CI_Model {
 	function read_field($section,$field){
 			
 		$this->db->where('sur_id',$section);
-		$query = $this->db->get('tlb_survey',1);
+		$query = $this->db->get('tbl_survey',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];
 		return NULL;
@@ -103,7 +103,7 @@ class Surveymodel extends CI_Model {
 		$this->db->where('sur_activity',$activity);
 		$this->db->where('sur_environment',$environment);
 		$this->db->where('sur_department',$department);
-		$query = $this->db->get('tlb_survey',1);
+		$query = $this->db->get('tbl_survey',1);
 		$data = $query->result_array();
 		if(count($data)) return TRUE;
 		return FALSE;

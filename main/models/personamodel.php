@@ -51,8 +51,8 @@ class Personamodel extends CI_Model {
 		$this->prs_image	= $insertdata['image'];
 		$this->prs_date		= date("Y-m-d");
 		$this->prs_source 	= htmlspecialchars($insertdata['source']);
-		
 		$this->db->insert('tbl_persona',$this);
+		return $this->db->insert_id();
 	}
 
 	function update_record($mraid,$activity,$updatedata){

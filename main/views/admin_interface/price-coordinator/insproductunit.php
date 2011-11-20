@@ -84,6 +84,12 @@
 				</tbody>
 			</table>
 			<input class="btn-action margin-1em" id="addProductUnit" type="submit" name="sbmpu" value="Добавить позицию"/>
+			<?php if($userinfo['priority']): ?>
+				<div class="chackForAll">
+					<input type="checkbox" name="all" value="1" id="forAllRegion" title="Для всех регионов"> Для всех регионов
+				</div>
+				<div class="msgForAll fvalid_error" id="msgAllRegion">&nbsp;</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

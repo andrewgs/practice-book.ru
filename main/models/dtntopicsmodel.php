@@ -2,7 +2,7 @@
 class Dtntopicsmodel extends CI_Model {
 	
 	var $dtt_id 		= 0;
-	var $dtt_title 		= "";
+	var $dtt_note 		= "";
 	var $dtt_date 		= "";
 	var $dtt_dtnid		= 0;
 	var $dtt_usrid		= 0;
@@ -25,7 +25,7 @@ class Dtntopicsmodel extends CI_Model {
 	
 	function read_records($dtt_dtnid){
 	
-		$this->db->select('dtt_id,dtt_title,dtt_date,dtt_usrid,dtt_comments,dtt_documents');
+		$this->db->select('dtt_id,dtt_note,dtt_date,dtt_usrid,dtt_comments,dtt_documents');
 		$this->db->where('dtt_dtnid',$dtt_dtnid);
 		$this->db->order_by('dtt_date DESC');
 		return $this->db->get('tbl_dtn_topics');
@@ -33,7 +33,7 @@ class Dtntopicsmodel extends CI_Model {
 	
 	function insert_record($title,$dsc,$usr){
 	
-		$this->dtt_title 	= strip_tags($title,'<br>');
+		$this->dtt_note 	= strip_tags($title,'<br>');
 		$this->dtt_date 	= date("Y-m-d");
 		$this->dtt_dtnid 	= $dsc;
 		$this->dtt_usrid 	= $usr;
@@ -45,7 +45,7 @@ class Dtntopicsmodel extends CI_Model {
 	
 	function update_record($id,$title,$userid){
 	
-		$this->db->set('dtt_title',strip_tags($title,'<br>'));
+		$this->db->set('dtt_note',strip_tags($title,'<br>'));
 		$this->db->where('dtt_id',$id);
 		$this->db->where('dtt_usrid',$userid);
 		$this->db->update('tbl_dtn_topics');

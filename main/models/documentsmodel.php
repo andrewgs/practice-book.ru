@@ -57,8 +57,8 @@ class Documentsmodel extends CI_Model {
 		$this->doc_image	= $insertdata['image'];
 		$this->doc_date		= date("Y-m-d");
 		$this->doc_link		= $insertdata['link'];
-		
 		$this->db->insert('tbl_documents',$this);
+		return $this->db->insert_id();
 	}
 
 	function update_record($mraid,$updatedata){
