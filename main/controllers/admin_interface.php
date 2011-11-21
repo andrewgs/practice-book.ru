@@ -1287,7 +1287,17 @@ class Admin_interface extends CI_Controller{
 		$eprice = trim($this->input->post('eprice'));
 		if(!$product) show_404();
 		if(!$bprice) $bprice = 0;
-		if(!$eprice) $eprice = FALSE;
+		if(!$bprice && $eprice):
+			$bprice = '>= '.$bprice;
+			$eprice = '<= '.$eprice;
+		elseif($bprice && $eprice):
+			$bprice = '> '.$bprice;
+			$eprice = '< '.$eprice;
+		endif;
+		if(!$eprice):
+			$bprice = '>= '.$bprice;
+			$eprice = FALSE;
+		endif;
 		if($eprice):
 			$pagevar['products'] = $this->unionmodel->offer_list($product,$bprice,$eprice,$region);
 		else:

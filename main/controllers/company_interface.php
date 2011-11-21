@@ -653,7 +653,7 @@ class Company_interface extends CI_Controller{
 				$this->cmpsharesmodel->insert_record($this->user['cid'],$_POST);
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$desc);
 				$objid = $this->bediscountmodel->insert_record($_POST,$_POST['activity'],0,0,$this->user['uid'],2);
-$this->belogmodel->insert_record('bed_title','bed_note',1,1,$activity,'tbl_be_discount',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'bediscountmodel',$objid,'bed_id');
+$this->belogmodel->insert_record('bed_title','bed_note',1,0,$activity,'tbl_be_discount',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'bediscountmodel',$objid,'bed_id');
 				if($pagevar['offers']):
 					if(isset($_POST['offers'])):
 						for($i=0;$i<count($_POST['actoffers']);$i++):
@@ -1032,7 +1032,7 @@ $this->belogmodel->insert_record('bed_title','bed_note',1,1,$activity,'tbl_be_di
 			else:
 				$_POST['submit'] = NULL;
 				$objid = $this->$model->insert_records($_POST['title'],$activity,$environment,$this->user['department']);
-$this->belogmodel->insert_record($field.'title',"",1,1,$activity,$table,$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],$model,$objid,$field.'id');
+$this->belogmodel->insert_record($field.'title',"",1,0,$activity,$table,$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],$model,$objid,$field.'id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
