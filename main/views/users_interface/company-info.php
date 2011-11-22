@@ -152,28 +152,40 @@
 					<div class="grid_4">
 						<div class="box">
 							<div class="box-header w278">
-								<h2>Представитель компании</h2>
+								<h2>Представители компании</h2>
 								<div class="box-search"></div>	
 							</div>
 							<div class="box-content">
-								<img src="<?=$baseurl;?>cravatar/viewimage/<?=$representative['uid'];?>" class="floated" alt=""/>
-								<div class="rep-name">
-									<?=$representative['uname'].' '.$representative['usubname'].' '.$representative['uthname'];?>
-								</div>
-								<div class="company-data"><span class="text">Должность: </span><?=$representative['uposition'];?></div>
-								<div class="company-data"><span class="text">Tелефон: </span><?=$representative['uphone'];?></div>
-								<div class="company-data"><span class="text">E-Mail: </span>
-									<?=safe_mailto($representative['uemail'],$representative['uemail']);?>
-								</div>
-								<div style="clear:both"></div>
-								<?php if($representative['uactive'] and $representative['uid'] != $userinfo['uid']): ?>
+							<?php for($i=0;$i<count($representative); $i++):?>
+								<div class="content-separator" id="drep<?=$i;?>" rID="<?=$representative[$i]['uid'];?>">
+					<img src="<?=$baseurl;?>cravatar/viewimage/<?=$representative[$i]['uid'];?>" vspace="10" border="0" class="floated" alt=""/>
+									<div class="rep-name">
+									<?=$representative[$i]['uname'].' '.$representative[$i]['usubname'].' '.$representative[$i]['uthname'];?>
+									</div>
+						<div class="rep-phone"><nobr><span class="text">Тел.:</span></nobr><?= $representative[$i]['uphone']; ?></div>
+						<div class="rep-email"><nobr><span class="text">E-mail:</span></nobr><?=$representative[$i]['uemail']; ?></div>
+						<div class="rep-posiotion"><nobr><span class="text">Должность:</span></nobr><?=$representative[$i]['uposition'];?></div>
+									<?php if($representative[$i]['uskype']): ?>
+										<div class="federal-skype-icq">
+											<img src="<?=$baseurl;?>images/skype.png" border="0" title="skype" alt=""/>
+											<span class="text"><?=$representative[$i]['uskype'];?></span>
+										</div>
+									<?php endif; ?>
+									<?php if($representative[$i]['uicq']): ?>
+										<div class="federal-skype-icq">
+											<img src="<?=$baseurl;?>images/icq.png" border="0" title="icq" alt=""/>
+											<span class="text"><?=$representative[$i]['uicq'];?></span>
+										</div>
+									<?php endif; ?>
+									<div style="clear:both"></div>
+								<?php if($representative[$i]['uactive'] && ($representative[$i]['uid'] != $userinfo['uid'])): ?>
 									<img src="<?=$baseurl;?>images/online.gif" class="online" border="0" title="Пользователь в сети" alt=""/>
 								<?php endif; ?>
+								</div>
+							<?php endfor; ?>
 							</div>
 							<div class="box-bottom-links">
-								<div class="right">
-							<?=anchor('representatives/company/'.$company['cmp_id'],'Все представители');?>
-								</div>
+								<div class="right">&nbsp;</div>
 								<div class="clear"></div>
 							</div>
 						</div>

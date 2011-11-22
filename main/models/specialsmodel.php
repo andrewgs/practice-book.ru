@@ -1,9 +1,9 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Specialsmodel extends CI_Model {
+class Specialsmodel extends CI_Model{
 	
-	var $spc_id 			= 0;
-	var $spc_mraid		= 0;
+	var $spc_id 		= 0;
+	var $spc_activity	= 0;
 	var $spc_title		= "";
 	var $spc_note 		= "";
 	var $spc_image 		= "";
@@ -15,9 +15,9 @@ class Specialsmodel extends CI_Model {
 		parent::__construct();
 	}
 	
-	function insert_record($mraid,$insertdata){
+	function insert_record($activity,$insertdata){
 			
-		$this->spc_mraid	= $mraid;
+		$this->spc_activity	= $activity;
 		$this->spc_title	= htmlspecialchars($insertdata['title']);
 		$this->spc_note		= strip_tags($insertdata['note'],'<br>');
 		$this->spc_image	= $insertdata['image'];
@@ -27,20 +27,20 @@ class Specialsmodel extends CI_Model {
 		return $this->db->insert_id();
 	}
 	
-	function read_record($nid,$mraid){
+	function read_record($nid,$activity){
 		
 		$this->db->where('spc_id',$nid);
-		$this->db->where('spc_mraid',$mraid);
+		$this->db->where('spc_activity',$activity);
 		$query = $this->db->get('tbl_specials',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
 	
-	function read_records($mraid){
+	function read_records($activity){
 		
-		$this->db->select('spc_id,spc_mraid,spc_title,spc_note,spc_date,spc_source');
-		$this->db->where('spc_mraid',$mraid);
+		$this->db->select('spc_id,spc_activity,spc_title,spc_note,spc_date,spc_source');
+		$this->db->where('spc_activity',$activity);
 		$this->db->order_by('spc_date','DESC');
 		$query = $this->db->get('tbl_specials');
 		$data = $query->result_array();
@@ -48,10 +48,10 @@ class Specialsmodel extends CI_Model {
 		return NULL;
 	}
 	
-	function read_limit_records($mraid,$limit){
+	function read_limit_records($activity,$limit){
 	
-		$this->db->select('spc_id,spc_mraid,spc_title,spc_note,spc_date');
-		$this->db->where('spc_mraid',$mraid);
+		$this->db->select('spc_id,spc_activity,spc_title,spc_note,spc_date');
+		$this->db->where('spc_activity',$activity);
 		$this->db->where('spc_date <=',date("Y-m-d"));
 		$this->db->order_by('spc_id desc, spc_date desc');
 		$query = $this->db->get('tbl_specials',$limit);
@@ -69,10 +69,10 @@ class Specialsmodel extends CI_Model {
 		return $data[0]['spc_image'];
 	}
 
-	function save_single_data($nid,$mraid,$field,$data){
+	function save_single_data($nid,$activity,$field,$data){
 		
 		$this->db->where('spc_id',$nid);
-		$this->db->where('spc_cmpid',$mraid);
+		$this->db->where('spc_activity',$activity);
 		$this->db->set($field,$data);
 		$this->db->update('tbl_specials');
 		return $this->db->affected_rows();
@@ -87,17 +87,17 @@ class Specialsmodel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 	
-	function delete_record($aid){
+	function delete_record($id){
 	
-		$this->db->where('spc_id',$aid);
+		$this->db->where('spc_id',$id);
 		$this->db->delete('tbl_specials');
 		return $this->db->affected_rows();
 	}
 
-	function read_field($nid,$mraid,$field){
+	function read_field($nid,$activity,$field){
 			
 		$this->db->where('spc_id',$nid);
-		$this->db->where('spc_mraid',$mraid);
+		$this->db->where('spc_activity',$activity);
 		$query = $this->db->get('tbl_specials',1);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0][$field];

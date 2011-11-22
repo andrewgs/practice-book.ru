@@ -127,6 +127,7 @@
 													}
 												});
 												$("#UnitDel").live('click',function(event){
+													if(!confirm("Удалить товар?")) return false;
 													event.preventDefault();
 													$.post(
 														"<?=$baseurl;?>managers/product-unit-dalete/<?=$userinfo['uconfirmation'];?>",

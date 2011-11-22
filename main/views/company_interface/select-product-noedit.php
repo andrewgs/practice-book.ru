@@ -46,7 +46,7 @@
 			</td>
 			<td> 
 				<label class="label-input">Изображение:</label><br/>
-				<img src="<?=$baseurl;?>curavatar/viewimage/<?=$unit['cu_id'];?>" alt=""/><br/>
+				<img src="<?=$baseurl;?>curavatar/viewimage/<?=$unit['cu_id'];?>" alt=""/>
 			</td>
 		</tr>
 		<tr>

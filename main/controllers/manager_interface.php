@@ -255,7 +255,7 @@ class manager_interface extends CI_Controller{
 					$pagevar['activitynews'][$i]['an_note'] .= ' ... ';
 				endif;
 			endfor;
-			$pagevar['specials'] = $this->specialsmodel->read_limit_records($mraid,25);
+			$pagevar['specials'] = $this->specialsmodel->read_limit_records($activity,25);
 			for($i = 0;$i < count($pagevar['specials']); $i++):
 				$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
 				$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
@@ -1019,7 +1019,7 @@ class manager_interface extends CI_Controller{
 			);
 		$pagevar['manager']['activitypath'] = "Новинки отрасли";
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
-		$pagevar['specials'] = $this->specialsmodel->read_records($mraid);
+		$pagevar['specials'] = $this->specialsmodel->read_records($activity);
 		for($i = 0;$i < count($pagevar['specials']); $i++):
 			$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
 		endfor;
@@ -1047,7 +1047,7 @@ class manager_interface extends CI_Controller{
 				$replacement = "\$3-\$2-\$1";
 				$_POST['date'] = preg_replace($pattern,$replacement,$_POST['date']);
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
-				$this->specialsmodel->insert_record($mraid,$_POST);
+				$this->specialsmodel->insert_record($activity,$_POST);
 				$this->bediscountmodel->insert_record($_POST,$activity,0,0,0,1);
 				redirect('managers/edit-specials/'.$this->user['uconfirmation']);
 			endif;

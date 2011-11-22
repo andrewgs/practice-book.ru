@@ -1129,7 +1129,7 @@ class Users_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'company'		=> $this->companymodel->read_record($company),
 					'regions'		=> array(),
-					'representative'=> $this->usersmodel->read_representative($company),
+					'representative'=> $this->usersmodel->read_representatives($company),
 					'news'			=> $this->cmpnewsmodel->read_limit_records($company,3),
 					'shares'		=> $this->cmpsharesmodel->read_limit_records($company,3),
 					'unitgroups'	=> array(),
@@ -1139,7 +1139,6 @@ class Users_interface extends CI_Controller{
 					'activitypath'	=> ''
 					
 			);
-			
 		if(!$pagevar['company']):
 		
 			$pagevar = array(

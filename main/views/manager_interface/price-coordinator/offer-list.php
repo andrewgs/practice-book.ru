@@ -11,7 +11,10 @@
 	<tbody>
 	<?php for($i=0;$i<count($products);$i++):?>
 		<tr>
-			<td><img src="<?=$baseurl;?>companylogo/viewimage/<?=$products[$i]['cmp_id'];?>" alt=""/></td>
+			<td>
+		<?php $img='<img src="'.$baseurl.'companythumb/viewimage/'.$products[$i]['cmp_id'].'" alt=""/>';?>
+		<?= anchor('company-info/'.$products[$i]['cmp_id'],$img,array('target'=>'_blank'));?>
+			</td>
 			<td><b><?=$products[$i]['cmp_name'];?></b></td>
 			<td><p><?=$products[$i]['cu_note'];?></p></td>
 			<td class="col-price-company"><?=$products[$i]['cu_price'];?></td>
