@@ -7,7 +7,6 @@ class Admin_interface extends CI_Controller{
 						"05"=>"мая","06"=>"июня","07"=>"июля","08"=>"августа",
 						"09"=>"сентября","10"=>"октября","11"=>"ноября","12"=>"декабря");
 	
-	
 	function __construct(){
 	
 		parent::__construct();
@@ -203,7 +202,7 @@ class Admin_interface extends CI_Controller{
 						$pagevar['activitynews'][$i]['an_note'] .= ' ... ';
 					endif;
 				endfor;
-				$pagevar['specials'] = $this->specialsmodel->read_limit_records($mraid,25);
+				$pagevar['specials'] = $this->specialsmodel->read_limit_records($activity,25);
 				for($i = 0;$i < count($pagevar['specials']); $i++):
 					$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
 					$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
@@ -976,7 +975,7 @@ class Admin_interface extends CI_Controller{
 					'backpath'		=> 'admin/edit-activity/'.$this->user['uconfirmation'].'/region/'.$region.'/activity/'.$activity
 			);
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
-		$pagevar['specials'] = $this->specialsmodel->read_records($mraid);
+		$pagevar['specials'] = $this->specialsmodel->read_records($activity);
 		for($i = 0;$i < count($pagevar['specials']); $i++):
 			$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
 		endfor;
@@ -1881,10 +1880,16 @@ class Admin_interface extends CI_Controller{
 	
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при добавлении','actid'=>'','acttitle'=>'');
 		$сid = $this->input->post('id');
-		$activity = trim($this->input->post('activity'));
-		if(!$activity && !$сid) show_404();
-		$success = $this->cmpsrvmodel->insert_record($activity,$сid);
+		$activity[0] = trim($this->input->post('activity'));
+		if(!$activity[0] && !$сid) show_404();
+		$success = $this->cmpsrvmodel->insert_record($activity[0],$сid);
 		if($success){
+			$units = $this->unionmodel->units_by_activity($activity);
+			if(count($units)):
+				for($i=0;$i<count($units);$i++):
+					$cui = $this->cmpunitsmodel->insert_empty($сid,$units[$i],$units[$i]['groupe']);
+				endfor;
+			endif;
 			$service = $this->unionmodel->company_ones_activity($success);
 			$statusval['status'] = TRUE;
 			$statusval['actid'] = $service['act_id'];
@@ -2206,7 +2211,7 @@ class Admin_interface extends CI_Controller{
 		}
 		echo json_encode($statusval);
 	}
-
+	
 	function save_department(){
 	
 		$statusval = array('status'=>FALSE,'message'=>'Данные не изменились','name'=>'');
@@ -2299,7 +2304,7 @@ class Admin_interface extends CI_Controller{
 		endif;
 		return $mas;
 	}
-
+	
 	function dalete_user(){
 		
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');

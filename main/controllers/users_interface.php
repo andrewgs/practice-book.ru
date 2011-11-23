@@ -675,7 +675,7 @@ class Users_interface extends CI_Controller{
 				$pagevar['activitynews'][$i]['an_note'] .= ' ... ';
 			endif;
 		endfor;
-		$pagevar['specials'] = $this->specialsmodel->read_limit_records($mraid,25);
+		$pagevar['specials'] = $this->specialsmodel->read_limit_records($activity,25);
 		for($i = 0;$i < count($pagevar['specials']); $i++):
 			$pagevar['specials'][$i]['full_note'] = $pagevar['specials'][$i]['spc_note'];
 			$pagevar['specials'][$i]['spc_date'] = $this->operation_date($pagevar['specials'][$i]['spc_date']);
