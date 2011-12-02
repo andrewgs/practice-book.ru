@@ -1,4 +1,4 @@
-<select name="category" id="select-category" class="mixed-combo" size="1" style="width:325px;">
+<select name="category" id="select-category" class="mixed-combo" size="1">
 	<option value="empty">Выберите категорию</option>
 	<option value="discussions">Обсуждения</option>
 	<option value="question-answer">Вопрос-ответ</option>

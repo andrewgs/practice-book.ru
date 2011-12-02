@@ -28,7 +28,8 @@ input, select { vertical-align:middle; }
 
 body { font:13px sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
 table { font-size:inherit; font:100%; }
-select, input, textarea { font:99% sans-serif; }
+select, input, textarea { font: 13px trebuchet MS, sans-serif; }
+select { text-transform: capitalize; }
 pre, code, kbd, samp { font-family: monospace, sans-serif; }
  
 body, select, input, textarea { color:#444; }
@@ -1528,10 +1529,3 @@ div.regLabel{
 .activeTheme{
 	font: bold 18px arial;
 }
-
-a.benv-action { display: block; height: 27px; float: left; }  
-		a.benv-action .btn-l { background: url("../images/pb-button/btn-left.jpg") no-repeat; display: block; float: left; height: 27px; margin-top: 2px; text-decoration: none; width: 8px; }
-		a.benv-action .btn-c { background: url("../images/pb-button/btn-center.jpg") repeat-x; color: #FFF; display: block; float: left; font: bold 12px arial,sans-serif; height: 27px; letter-spacing: 0.2px; margin-top: 2px; padding: 3px 5px 0; text-decoration: none; text-transform: uppercase; }
-		a.benv-action .btn-r { background: url("../images/pb-button/btn-right.jpg") no-repeat; display: block; float: left; height: 27px; text-decoration: none; width: 39px; }
-
-.clear { clear: both; display: block; height: 0; overflow: hidden; visibility: hidden; width: 0; }
