@@ -478,8 +478,10 @@ class Users_interface extends CI_Controller{
 					'activity'		=> array(),
 					'region'		=> array(),
 					'boxtitle'		=> 'Регион/Округ',
-					'activitypath'	=> FALSE
+					'activitypath'	=> FALSE,
+					'othertext'		=> array(),
 			);
+		$pagevar['othertext'] = $this->othertextmodel->read_group(22,23);
 		$pagevar['region'] = $this->regionmodel->read_districts();
 		$pagevar['activity'] = $this->activitymodel->level_activity(0);
 		$this->load->view('users_interface/select-settings',$pagevar);

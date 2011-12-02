@@ -43,7 +43,7 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-									<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
+									<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title'],array('id'=>'link'.$sections[$i]['dtn_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -111,6 +111,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addDocument").click(function(event){
 				var err = false;

@@ -39,8 +39,8 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-									<li><?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'],'Новости отрасли');?></li>
-									<li><?=anchor('business-environment/company-news/'.$userinfo['uconfirmation'],'Новости компаний');?></li>
+				<li><?=anchor('business-environment/activity-news/'.$userinfo['uconfirmation'],'Новости отрасли',array('id'=>'link1'));?></li>
+				<li><?=anchor('business-environment/company-news/'.$userinfo['uconfirmation'],'Новости компаний',array('id'=>'link2'));?></li>
 								</ul>
 							</div>
 						</div>
@@ -181,6 +181,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$('#SetComment').click(function(){$('#FormComment').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");return false;});
 			$("#Cancel").click(function(){$('#FormComment').fadeToggle('slow',function(){$("#note").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});

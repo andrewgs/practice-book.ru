@@ -25,7 +25,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="javascript:void(0);">Страница отрасли</a>
+				<a href="javascript:void(0);">Информационные блоки</a>
 				<ul>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/product','Продукт отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/pitfalls','Подводные камни');?></li>
@@ -41,6 +41,8 @@
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/whomain','Кто главный?');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/documents','Документооборот');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/specials','Новинки и скидки');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/search-region','Поиск региона');?></li>
+					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/search-activity','Поиск отрасли');?></li>
 				</ul>
 			</li>
 			<li>

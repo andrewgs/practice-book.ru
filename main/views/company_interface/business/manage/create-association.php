@@ -40,7 +40,7 @@
 							<div class="left-menu">
 								<ul>
 							<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title']);?></li>
+<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title'],array('id'=>'link'.$sections[$i]['asp_id']));?></li>
 							<?php endfor; ?>
 								</ul>
 								<br />
@@ -63,7 +63,7 @@
 								<?=validation_errors(); ?>
 					<label class="label-input">Название: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?=form_error('title');?>
-					<input class="edit450-form-input inpv" id="title" maxlength="50" name="title" type="text" value="<?=set_value('title');?>"/>
+				<input class="edit450-form-input inpv" id="title" maxlength="150" name="title" type="text" value="<?=set_value('title');?>"/>
 									<div class="clear"></div>
 					<label class="label-input">Изображение:</label>
 									<?=form_error('userfile');?>
@@ -139,6 +139,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addAssociation").click(function(event){
 				var err = false;

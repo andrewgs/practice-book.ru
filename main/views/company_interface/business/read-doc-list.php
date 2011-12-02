@@ -40,11 +40,15 @@
 							<div class="left-menu">
 								<ul>
 							<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title']);?></li>
+<li><?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['dtn_id'],$sections[$i]['dtn_title'],array('id'=>'link'.$sections[$i]['dtn_id']));?></li>
 							<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<a class="benv-action" title="Создать тему" href="<?=$baseurl?>business-environment/documentation/<?=$userinfo['uconfirmation'];?>/create-section">
+									<span class="btn-l"></span>
+									<span class="btn-c">Создать тему</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">
 							</div>
 						</div>
 					</div>
@@ -59,7 +63,11 @@
 								<?=anchor($backpath,'Вернуться назад',array('class'=>'lnk-submit'));?>
 								<hr size="2"/>
 								<div class="add_events">
-<?=anchor('business-environment/documentation/'.$userinfo['uconfirmation'].'/document-query/'.$this->uri->segment(5).'/upload-document','<img src="'.$baseurl.'images/add_document.png" alt="добавить документ"/>',array('title'=>'добавить документ'));?>
+<a class="benv-action" title="Добавить документ" href="<?=$baseurl?>business-environment/documentation/<?=$userinfo['uconfirmation'];?>/document-query/<?=$this->uri->segment(5);?>/upload-document">
+									<span class="btn-l"></span>
+									<span class="btn-c">Добавить документ</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">								
 								</div>
 								<div class="right-post">
 									<h2><?=$topic['dtt_note'];?></h2>
@@ -164,6 +172,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>

@@ -85,8 +85,8 @@ class manager_interface extends CI_Controller{
 			$this->form_validation->set_rules('fname','фамилия','required|trim');
 			$this->form_validation->set_rules('sname','имя','required|trim');
 			$this->form_validation->set_rules('tname','отчество','required|trim');
-			$this->form_validation->set_rules('phones','телефон','required|min_length[6]|integer|trim');
-			$this->form_validation->set_rules('icq','ICQ','min_length[4]|integer|trim');
+			$this->form_validation->set_rules('phones','телефон','required|min_length[6]|trim');
+			$this->form_validation->set_rules('icq','ICQ','min_length[4]|trim');
 			$this->form_validation->set_rules('activity','отрасли','required');
 			$this->form_validation->set_rules('region[]','регионы','required');
 			$this->form_validation->set_message('integer','Только целые числа');
@@ -185,7 +185,6 @@ class manager_interface extends CI_Controller{
 					'product'		=> array(),
 					'regions'		=> array(),
 					'manager' 		=> array(),
-					'othertext'		=> array(),
 					'activitynews'	=> array(),
 					'company'		=> array(),
 					'news'			=> array(),

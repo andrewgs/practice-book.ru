@@ -43,7 +43,7 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-									<li><?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['sur_id'],$sections[$i]['sur_title']);?></li>
+									<li><?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['sur_id'],$sections[$i]['sur_title'],array('id'=>'link'.$sections[$i]['sur_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -110,6 +110,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addSurvay").click(function(event){$("#title").css('border-color','#D0D0D0');if($("#title").val() == ''){$("#title").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();};});
 			$(".ajaxsave").click(function(){var SUR = $(this).attr('SUR');var btnID = this.id;var txtObj = $("#inp"+SUR);$(txtObj).css('border-color','#D0D0D0');var inputVal = $(txtObj).val();var avtID = txtObj.attr('vtid');if(inputVal == ""){msgerror('Поле не может быть пустым');txtObj.css('border-color','#ff0000');txtObj.focus();}else{$.ajax({url:"<?=$baseurl;?>business-environment/surveys/<?=$userinfo['uconfirmation'];?>/save-vote",type: "POST",data: ({id:avtID,value:inputVal,stp:<?=$topic['stp_id'];?>}),dataType: "JSON",beforeSend: function(){$("#"+btnID).hide();$("#"+btnID).after('<img id="loading" src="<?=$baseurl;?>images/progress.gif"/>');},success: function(data){if(data.status){txtObj.css('border-color','#00ff00');$('#d'+btnID).text(data.retvalue);}else{msgerror(data.message);txtObj.css('border-color','#ff0000');}$("#"+btnID).show();$("#loading").remove();},error: function(){$("#"+btnID).show();$("#loading").remove();txtObj.css('border-color','#ff0000');msgerror("Ошибка при сохранении!");}})}});

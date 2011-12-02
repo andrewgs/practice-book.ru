@@ -39,8 +39,8 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-								<li><?=anchor('business-environment/rating-representatives/'.$userinfo['uconfirmation'],'Сотрудники');?></li>
-								<li><?=anchor('business-environment/rating-company/'.$userinfo['uconfirmation'],'Компании');?></li>
+	<li><?=anchor('business-environment/rating-representatives/'.$userinfo['uconfirmation'],'Сотрудники',array('class'=>'activeTheme'));?></li>
+	<li><?=anchor('business-environment/rating-company/'.$userinfo['uconfirmation'],'Компании');?></li>
 								</ul>
 							</div>
 						</div>
@@ -54,7 +54,7 @@
 							</div>
 							<div class="right-text">
 								<div class="add_events add_marg">
-										<?php if(count($topics)):?>
+							<?php if(count($topics) && !$setsch):?>
 									<span class="sort sortleft">
 										Сортировать:
 								<?php if($bysort == 'rating'):?><strong><?php endif;?>
@@ -64,15 +64,19 @@
 				<?=anchor('business-environment/'.$type_rating.'/'.$userinfo['uconfirmation'].'/sort-cmpname','по компании');?>
 								<?php if($bysort == 'cmp_name'):?></strong><?php endif;?>
 									</span>
+							<?php else:?>
+								<span class="sort sortleft">Поиск завершен. Результатов: <?=count($topics);?></span>
 							<?php endif; ?>
+							<?=form_open($this->uri->uri_string(),array('id'=>'formSearch'));?>
 									<div class="searchblock">
 										<div class="searchtext">
-											<input type="text" name="" />
+											<input type="text" id="SearchValue" name="schvalue" value=""/>
 										</div>
 										<div class="searchsubmit">
-											<input type="image" src="<?=$baseurl;?>images/searchsubmit.png" name="" />
+											<input type="image" src="<?=$baseurl;?>images/searchsubmit.png" id="setSearch" name="schsubmit" />
 										</div>
 									</div>
+							<?= form_close(); ?>
 								</div>
 							<?php for($i=0;$i<count($topics);$i++):?>
 								<div class="rtdblock">
@@ -140,11 +144,24 @@
 	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
 	<![endif]-->
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery-ui.min.js?v=1.8.5"></script>
+	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+			$("#SearchValue").val('<?=$valsch;?>');
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
+			$("#setSearch").click(function(event){
+				var schvalue = $("#SearchValue").val();
+				if(schvalue == ''){
+					msgerror("Поле поиска не может быть пустым");
+					$("#SearchValue").focus();
+					event.preventDefault();
+				}else{
+					$("#formSearch").submit();
+				}
+			});
+			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}
 		});
 </script>
 </body>

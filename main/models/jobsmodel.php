@@ -20,7 +20,7 @@ class Jobsmodel extends CI_Model {
 		$this->job_cname 	= htmlspecialchars($insertdata['jcname']);
 		$this->job_position = htmlspecialchars($insertdata['jposition']);
 		$this->job_dbegin 	= $insertdata['jdbegin']."-01-01";
-		$this->job_dend 	= $insertdata['jdend'];
+		$this->job_dend 	= $insertdata['jdend']."-01-01";
 		
 		$this->db->insert('tbl_jobs',$this);
 		return $this->db->insert_id();

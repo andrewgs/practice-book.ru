@@ -39,8 +39,8 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-								<li><?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'],'Новинки отрасли');?></li>
-								<li><?=anchor('business-environment/company-discounts/'.$userinfo['uconfirmation'],'Скидки компаний');?></li>
+			<li><?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'],'Новинки отрасли',array('id'=>'link1'));?></li>
+			<li><?=anchor('business-environment/company-discounts/'.$userinfo['uconfirmation'],'Скидки компаний',array('id'=>'link2'));?></li>
 								</ul>
 							</div>
 						</div>
@@ -55,7 +55,11 @@
 							<div class="right-text">
 								<div class="add_events">
 							<?php if($type_discounts == 'activity-discounts'):?>
-<?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'].'/create-discount','<img src="'.$baseurl.'images/add_news.png" alt="добавить новинку"/>',array('title'=>'добавить новинку'));?>
+<a class="benv-action" title="Добавить новинку" href="<?=$baseurl?>business-environment/activity-discounts/<?=$userinfo['uconfirmation'];?>/create-discount">
+									<span class="btn-l"></span>
+									<span class="btn-c">Добавить новинку</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">
 							<?php endif; ?>
 								<?php if(count($topics)):?>
 									<span class="sort">
@@ -142,6 +146,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>

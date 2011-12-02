@@ -40,11 +40,15 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['sur_id'],$sections[$i]['sur_title']);?></li>
+<li><?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['sur_id'],$sections[$i]['sur_title'],array('id'=>'link'.$sections[$i]['sur_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/surveys/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<a class="benv-action" title="Создать тему" href="<?=$baseurl?>business-environment/surveys/<?=$userinfo['uconfirmation'];?>/create-section">
+								<span class="btn-l"></span>
+								<span class="btn-c">Создать тему</span>
+								<span class="btn-r"></span>
+								</a><br class="clear">
 							</div>
 						</div>
 					</div>
@@ -192,6 +196,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$('#SetComment').click(function(){$('#FormComment').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");return false;});
 			$("#Cancel").click(function(){$('#FormComment').fadeToggle('slow',function(){$("#note").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});

@@ -1285,8 +1285,8 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
-		
+	$(document).ready(function(){
+	
 		$(".price-schema").click(function(){
 		window.location.href="<?=$baseurl;?>"+this.id+"-information/region/<?=$this->uri->segment(3);?>/activity/<?=$this->uri->segment(5);?>";
 		});

@@ -39,8 +39,8 @@
 						<div class="content-left-text">
 							<div class="left-menu">
 								<ul>
-								<li><?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'],'Новинки отрасли');?></li>
-								<li><?=anchor('business-environment/company-discounts/'.$userinfo['uconfirmation'],'Скидки компаний');?></li>
+			<li><?=anchor('business-environment/activity-discounts/'.$userinfo['uconfirmation'],'Новинки отрасли',array('id'=>'link1'));?></li>
+			<li><?=anchor('business-environment/company-discounts/'.$userinfo['uconfirmation'],'Скидки компаний',array('id'=>'link2'));?></li>
 								</ul>
 							</div>
 						</div>
@@ -59,10 +59,10 @@
 								<?=form_open_multipart($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
 					<label class="label-input">Название новинки: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('title'); ?>
-					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=$topic['bed_title'];?>"/>
+					<input class="edit450-form-input" id="title" maxlength="150" name="title" type="text" value="<?=$topic['bed_title'];?>"/>
 									<div class="clear"></div>
 									<span class="news-pic">
-					<img src="<?=$baseurl;?>activity-discounts/viewimage/<?=$topic['bed_id'];?>"class="floated" width="74" height="74" alt=""/>
+					<img src="<?=$baseurl;?>activity-discounts/viewimage/<?=$topic['bed_id'];?>"class="floated" style="width:74px;height:74px;" alt=""/>
 									</span>
 					<label class="label-input">Изображение:</label>
 									<?= form_error('userfile'); ?>
@@ -104,6 +104,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addDiscount").click(function(event){
 				$("#title").css('border-color','#D0D0D0');

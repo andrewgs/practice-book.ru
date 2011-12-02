@@ -40,7 +40,7 @@
 							<div class="left-menu">
 								<ul>
 									<?php for($i=0;$i<count($regions);$i++): ?>		
-<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name'],array('id'=>'link'.$regions[$i]['reg_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -105,6 +105,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addDiscussion").click(function(event){
 				$("#title").css('border-color','#D0D0D0');

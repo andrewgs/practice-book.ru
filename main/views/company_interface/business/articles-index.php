@@ -40,11 +40,15 @@
 							<div class="left-menu">
 								<ul>
 									<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title'],array('id'=>'link'.$sections[$i]['art_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<a class="benv-action" title="Создать тему" href="<?=$baseurl?>business-environment/articles/<?=$userinfo['uconfirmation'];?>/create-section">
+									<span class="btn-l"></span>
+									<span class="btn-c">Создать тему</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">								
 							</div>
 						</div>
 					</div>
@@ -58,7 +62,11 @@
 							</div>
 							<div class="right-text">
 								<div class="add_events">
-								<?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/create-article','<img src="'.$baseurl.'images/add_events2.png" alt="Добавить статью"/>',array('title'=>'Добавить статью'));?>
+<a class="benv-action" title="Подать запрос" href="<?=$baseurl?>business-environment/articles/<?=$userinfo['uconfirmation'];?>/create-article">
+									<span class="btn-l"></span>
+									<span class="btn-c">Добавить статью</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">
 							<?php if(count($articles)):?>
 									<span class="sort">
 										Сортировать:
@@ -140,6 +148,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$this->uri->segment(5);?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>

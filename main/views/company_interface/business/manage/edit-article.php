@@ -40,7 +40,7 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-									<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+									<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title'],array('id'=>'link'.$sections[$i]['art_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -60,7 +60,7 @@
 								<?=form_open($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
 					<label class="label-input">Название обсуждения: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('title'); ?>
-					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=$topic['atp_title'];?>"/>
+					<input class="edit450-form-input" id="title" maxlength="150" name="title" type="text" value="<?=$topic['atp_title'];?>"/>
 									<div class="clear"></div>
 					<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('note'); ?>
@@ -97,6 +97,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addDiscussion").click(function(event){$("#title").css('border-color','#D0D0D0');$("#note").css('border-color','#D0D0D0');if($("#title").val() == ''){$("#title").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}if($("#note").val() == ''){$("#note").css('border-color','#ff0000');msgerror("Пропущены обязательные поля!");event.preventDefault();}});
 			function msgerror(msg){$.blockUI({message: msg,css:{border:'none',padding:'15px', size:'12.0pt',backgroundColor:'#000',color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,1000);return false;}

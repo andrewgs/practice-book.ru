@@ -40,7 +40,7 @@
 							<div class="left-menu">
 								<ul>
 								<?php for($i=0;$i<count($sections);$i++): ?>		
-									<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title']);?></li>
+									<li><?=anchor('business-environment/articles/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['art_id'],$sections[$i]['art_title'],array('id'=>'link'.$sections[$i]['art_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -60,7 +60,7 @@
 								<?=form_open($this->uri->uri_string(),array('id'=>'formAddSection','class'=>'formular')); ?>
 					<label class="label-input">Название статьи: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('title'); ?>
-					<input class="edit450-form-input" id="title" maxlength="50" name="title" type="text" value="<?=set_value('title');?>"/>
+					<input class="edit450-form-input" id="title" maxlength="150" name="title" type="text" value="<?=set_value('title');?>"/>
 									<div class="clear"></div>
 					<label class="label-input">Содержание: <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 									<?= form_error('note'); ?>
@@ -97,6 +97,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$("#addDiscussion").click(function(event){
 				$("#title").css('border-color','#D0D0D0');

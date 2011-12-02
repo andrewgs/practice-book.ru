@@ -1,5 +1,4 @@
 <?php
-
 class Company_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','region'=>1,'priority'=>0,'department'=>0,'cmpstatus'=>FALSE);
@@ -1225,6 +1224,7 @@ if($this->$model->title_exist($title,$this->session->userdata('activity'),$this-
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->discussionsmodel->read_field($section,'dsc_title').' - Создание обсуждения',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -1276,12 +1276,13 @@ $this->belogmodel->insert_record('top_title','top_note',1,0,$activity,'tbl_dsc_t
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'environment'	=> $environment,
-					'discussion'	=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
+					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> $this->discussionsmodel->read_field($section,'dsc_title'),
 					'topic'			=> $this->unionmodel->dsc_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
+					'section_id'	=> $section,
 					'count'			=> 0,
 					'pages'			=> ''
 			);
@@ -1376,6 +1377,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'sections'		=> $this->discussionsmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->discussionsmodel->read_field($section,'dsc_title').' - Редактирование обсуждения',
 					'backpath'		=> $this->session->userdata('backpath'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->dsc_topic_records($topic),
 			);
 		$pagevar['topic']['top_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['top_note']);
@@ -1521,6 +1523,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->questionanswermodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->questionanswermodel->read_field($section,'qa_title').' - Создание вопроса',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -1575,6 +1578,7 @@ $this->belogmodel->insert_record('qat_title','',1,0,$activity,'tbl_qa_topics',$e
 					'sections'		=> $this->questionanswermodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->questionanswermodel->read_field($section,'qa_title'),
 					'question'		=> $this->unionmodel->qa_topic_records($topic),
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -1670,6 +1674,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->questionanswermodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->questionanswermodel->read_field($section,'qa_title').' - Редактирование вопроса',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->qa_topic_records($topic),
 			);
@@ -1723,7 +1728,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 		redirect($this->session->userdata('backpath'));
 	}
 	
-	/*================================================ interactions ================================================*/
+		/*=========================================== interactions ==============================================*/
 	
 	function interactions(){
 		
@@ -1822,6 +1827,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->interactionmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->interactionmodel->read_field($section,'int_title').' - Создание взаимодействия',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -1877,6 +1883,7 @@ $this->belogmodel->insert_record('itp_title','itp_note',1,0,$activity,'tbl_intto
 					'sections'		=> $this->interactionmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->interactionmodel->read_field($section,'int_title'),
 					'topic'			=> $this->unionmodel->int_topic_records($topic),
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -1972,6 +1979,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->interactionmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->interactionmodel->read_field($section,'int_title').' - Редактирование взаимодействия',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->int_topic_records($topic),
 			);
@@ -2026,7 +2034,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 		redirect($this->session->userdata('backpath'));
 	}
 	
-	/*============================================= articles ============================================*/
+		/*============================================== articles ===============================================*/
 	
 	function articles(){
 		
@@ -2134,6 +2142,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->articlesmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->articlesmodel->read_field($section,'art_title').' - Создание статьи',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -2189,6 +2198,7 @@ $this->belogmodel->insert_record('atp_title','atp_note',1,0,$activity,'tbl_art_t
 					'sections'		=> $this->articlesmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->articlesmodel->read_field($section,'art_title'),
 					'article'		=> $this->unionmodel->article_topic_records($topic),
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -2286,6 +2296,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->articlesmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->articlesmodel->read_field($section,'art_title').' - Редактирование статьи',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->article_topic_records($topic),
 			);
@@ -2433,6 +2444,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title').' - Создание запроса',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -2486,6 +2498,7 @@ $this->belogmodel->insert_record('dtt_note','',1,0,$activity,'tbl_dtn_topics',$e
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
@@ -2582,6 +2595,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title').' - Редактирование запроса',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 			);
@@ -2655,6 +2669,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title').' - Загрузка документа',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -2722,6 +2737,7 @@ $this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_docli
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'documents'		=> array(),
@@ -2792,6 +2808,7 @@ $this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_docli
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title').' - Редактирование документа',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpathdoc'),
 					'document'		=> $this->doclistmodel->read_record($document),
 			);
@@ -2897,6 +2914,7 @@ $this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_docli
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title'),
+					'section_id'	=> $section,
 					'document'		=> $this->unionmodel->dls_document_record($docid),
 					'backpath'		=> $this->session->userdata('backpathdoc'),
 					'comments'		=> array(),
@@ -3121,6 +3139,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->surveymodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->surveymodel->read_field($section,'sur_title').' - Создание опроса',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -3183,6 +3202,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'sections'		=> $this->surveymodel->read_records($activity,$environment,$this->user['department']),
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> $this->surveymodel->read_field($section,'sur_title'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->sur_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
@@ -3281,6 +3301,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'sections'		=> $this->surveymodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->surveymodel->read_field($section,'sur_title').' - Редактирование опроса',
 					'backpath'		=> $this->session->userdata('backpath'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->sur_topic_records($topic),
 					'vote'			=> $this->votemodel->read_records($topic),
 			);
@@ -3441,6 +3462,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title').' - Создание объединения',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'regions'		=> $this->regionmodel->read_records_by_district()
 			);
@@ -3507,6 +3529,7 @@ $this->belogmodel->insert_record('ast_title','ast_note',1,0,$activity,'tbl_aspto
 					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->asp_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
@@ -3601,6 +3624,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title'),
+					'section_id'	=> $section,
 					'topic'			=> $this->unionmodel->asp_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'companylist'	=> array(),
@@ -3707,11 +3731,12 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'sections'		=> $this->assprocmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->assprocmodel->read_field($section,'asp_title').' - Редактирование объединения',
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->asp_topic_records($topic),
 			);
 		$pagevar['topic']['ast_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['ast_note']);
-		if($pagevar['topic']['ast_collected'] > 0) redirect($pagevar['backpath']);
+	//	if($pagevar['topic']['ast_collected'] > 0) redirect($pagevar['backpath']);
 		
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim');
@@ -3767,6 +3792,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 			show_404();
 		endif;
 		$this->aspregionsmodel->delete_records($topic);
+		$this->collectedmodel->delete_records($topic);
 		$this->commentsmodel->delete_records('association',$topic);
 		$this->asptopicsmodel->delete_record($topic,$this->user['uid']);
 		redirect($this->session->userdata('backpath'));
@@ -3794,13 +3820,15 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'pages'			=> '',
 					'bysort'		=> '',
 					'regions'		=> $this->regionmodel->read_records(),
-					'section_name'	=> ''
+					'section_name'	=> '',
+					'section_id'	=> 0
 					
 			);
 		$curregion = $this->session->userdata('offerregion');
 		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
 		
 		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name');
+		$pagevar['section_id'] = $curregion;
 		if($this->uri->segment(4) == 'sort-date'): 
 			$this->session->set_userdata('offers_sort','oft_date DESC');
 		elseif($this->uri->segment(4) == 'sort-company'):
@@ -3882,6 +3910,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$curregion),
+					'section_id'	=> $section,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -3978,6 +4007,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$curregion),
+					'section_id'	=> $section,
 					'comments'		=> array(),
 					'count'			=> 0,
 					'pages'			=> '',
@@ -4062,12 +4092,13 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'pages'			=> '',
 					'section_name'	=> 'Новости отрасли',
 					'type_news'		=> $this->uri->segment(2),
+					'section_id'	=> 0,
 					'bysort'		=> ''
 			);
 			
 		switch ($pagevar['type_news']):
-			case 'activity-news': $group = 1; break;
-			case 'company-news': $group = 2; $pagevar['section_name'] = 'Новости компании'; break;
+			case 'activity-news': $group = 1; $pagevar['section_id'] = 1; break;
+			case 'company-news': $group = 2; $pagevar['section_id'] = 2; $pagevar['section_name'] = 'Новости компании'; break;
 		endswitch;
 		
 		if($this->uri->segment(4) == 'sort-views'): 
@@ -4135,6 +4166,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> 'Новости отрасли - Создание новости',
+					'section_id'	=> 1,
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -4198,12 +4230,16 @@ $this->belogmodel->insert_record('ben_title','ben_note',1,0,$activity,'tbl_be_ne
 					'comments'		=> array(),
 					'count'			=> 0,
 					'pages'			=> '',
+					'section_id'	=> 1,
 					'section_name'	=> 'Новости отрасли',
 					'type_news'		=> $this->uri->segment(2),
 			);
 		$pagevar['topic']['ben_date'] = $this->operation_date($pagevar['topic']['ben_date']);
 		
-		if($group == 2) $pagevar['section_name'] = 'Новости компании';
+		if($group == 2): 
+			$pagevar['section_name'] = 'Новости компании';
+			$pagevar['section_id'] = 2;
+		endif;
 		
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('note','Текст','required|trim');
@@ -4297,6 +4333,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'section_name'	=> 'Новости отрасли - Редактирование новости',
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->ben_topic_record($topic,$environment,$this->user['department'],$activity,$group),
+					'section_id'	=> $group
 			);
 		$pagevar['topic']['ben_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['ben_note']);
 		if($this->input->post('submit')):
@@ -4380,14 +4417,14 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'pages'			=> '',
 					'section_name'	=> 'Новинки отрасли',
 					'type_discounts'=> $this->uri->segment(2),
-					'bysort'		=> ''
+					'bysort'		=> '',
+					'section_id'	=> 0
 			);
 			
 		switch ($pagevar['type_discounts']):
-			case 'activity-discounts': $group = 1; break;
-			case 'company-discounts': $group = 2; $pagevar['section_name'] = 'Скидки компаний'; break;
+			case 'activity-discounts': $group = 1; $pagevar['section_id'] = 1; break;
+			case 'company-discounts': $group = 2; $pagevar['section_id'] = 2; $pagevar['section_name'] = 'Скидки компаний'; break;
 		endswitch;
-		
 		if($this->uri->segment(4) == 'sort-views'): 
 			$this->session->set_userdata('discounts_sort','bed_views');
 		elseif($this->uri->segment(4) == 'sort-date'):
@@ -4453,7 +4490,8 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'section_name'	=> 'Новинки отрасли - Создание новинки',
-					'backpath'		=> $this->session->userdata('backpath')
+					'backpath'		=> $this->session->userdata('backpath'),
+					'section_id'	=> 1
 			);
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('title','Название','required|trim');
@@ -4517,6 +4555,7 @@ $this->belogmodel->insert_record('bed_title','bed_note',1,0,$activity,'tbl_be_di
 					'pages'			=> '',
 					'section_name'	=> 'Новинки отрасли',
 					'type_discounts'=> $this->uri->segment(2),
+					'section_id'	=> $group
 			);
 		$pagevar['topic']['bed_date'] = $this->operation_date($pagevar['topic']['bed_date']);
 		
@@ -4614,6 +4653,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'section_name'	=> 'Новинки отрасли - Редактирование новинки',
 					'backpath'		=> $this->session->userdata('backpath'),
 					'topic'			=> $this->unionmodel->bed_topic_record($topic,$environment,$this->user['department'],$activity,$group),
+					'section_id'	=> $group
 			);
 		$pagevar['topic']['bed_note'] = preg_replace('/<br>/',"\n\n",$pagevar['topic']['bed_note']);
 		if($this->input->post('submit')):
@@ -4700,14 +4740,14 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'minutes'		=> '',
 					'auc_title'		=> 'До завершения аукциона осталось:',
 					'auc_text'		=> 'Обновление данных происходит<br/>ежедневно в 20:00',
-					'auc_close'		=> FALSE
-					
+					'auc_close'		=> FALSE,
+					'section_id'	=> 0
 			);
 			
 		
 		$curregion = $this->session->userdata('whomainregion');
 		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
-		
+		$pagevar['section_id']	= $curregion;
 		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name').' - Кто главный?';
 		$pagevar['topic'] = $this->whomainmodel->read_record($activity,$environment,$this->user['department'],$curregion);
 		
@@ -4832,9 +4872,37 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'pages'			=> '',
 					'section_name'	=> 'Сотрудники',
 					'type_rating'	=> $this->uri->segment(2),
-					'bysort'		=> ''
+					'bysort'		=> '',
+					'setsch'		=> FALSE,
+					'valsch'		=> ''
 			);
+			
+		if(!$environment):
+			$pagevar['title'] .= 'Общая бизнес среда | Авторитет';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		else:
+			$pagevar['title'] .= 'Частная бизнес среда | Авторитет';
+			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
+		endif;
+		$this->session->unset_userdata('backpathdoc');
 		
+		if($this->input->post('schvalue')):
+			$pagevar['setsch'] = TRUE;
+			$pagevar['valsch'] = $_POST['schvalue'];
+			switch ($pagevar['type_rating']):
+				case 'rating-representatives':
+								$pagevar['topics'] = $this->unionmodel->rating_search_repsentatives($_POST['schvalue'],$activity);
+								$this->load->view('company_interface/business/rating-representatives',$pagevar);
+								break;
+				case 'rating-company':
+								$pagevar['topics'] = $this->unionmodel->rating_search_company($_POST['schvalue'],$activity);
+								$pagevar['section_name'] = 'Компании';
+								$this->load->view('company_interface/business/rating-company',$pagevar);
+								break;
+			endswitch;
+			$_POST['schvalue'] = NULL;
+			return TRUE;
+		endif;
 		if($this->uri->segment(4) == 'sort-rating'): 
 			$this->session->set_userdata('rating_sort','rating');
 		elseif($this->uri->segment(4) == 'sort-cmpname'):
@@ -4874,15 +4942,6 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 		$this->pagination->initialize($config);
 		$pagevar['pages'] = $this->pagination->create_links();
 		
-		if(!$environment):
-			$pagevar['title'] .= 'Общая бизнес среда | Авторитет';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Общая бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		else:
-			$pagevar['title'] .= 'Частная бизнес среда | Авторитет';
-			$pagevar['company']['cmp_name'] = $pagevar['company']['cmp_name'].'<br/>Частная бизнес среда: '.$this->activitymodel->read_field($activity,'act_title');
-		endif;
-		
-		$this->session->unset_userdata('backpathdoc');
 		switch ($pagevar['type_rating']):
 			case 'rating-representatives':
 							$this->load->view('company_interface/business/rating-representatives',$pagevar);

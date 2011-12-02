@@ -55,7 +55,14 @@ class Collectedmodel extends CI_Model {
 		$this->db->delete('tbl_collected');
 		return $this->db->affected_rows();
 	}
-
+	
+	function delete_records($astid){
+	
+		$this->db->where('cll_astid',$astid);
+		$this->db->delete('tbl_collected');
+		return $this->db->affected_rows();
+	}
+	
 	function read_field($id,$field){
 			
 		$this->db->where('cll_id',$id);

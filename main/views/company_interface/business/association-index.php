@@ -40,11 +40,15 @@
 							<div class="left-menu">
 								<ul>
 							<?php for($i=0;$i<count($sections);$i++): ?>		
-<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title']);?></li>
+<li><?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/section/'.$sections[$i]['asp_id'],$sections[$i]['asp_title'],array('id'=>'link'.$sections[$i]['asp_id']));?></li>
 							<?php endfor; ?>
 								</ul>
 								<br />
-<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-section','<img src="'.$baseurl.'images/add_events.png" alt="Создать тему"/>',array('title'=>'Создать тему'));?>
+<a class="benv-action" title="Создать тему" href="<?=$baseurl?>business-environment/associations/<?=$userinfo['uconfirmation'];?>/create-section">
+									<span class="btn-l"></span>
+									<span class="btn-c">Создать тему</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">
 							</div>
 						</div>
 					</div>
@@ -58,7 +62,11 @@
 							</div>
 							<div class="right-text">
 								<div class="add_events">
-								<?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/create-association','<img src="'.$baseurl.'images/add_zapros.png" alt="добавить запрос"/>',array('title'=>'добавить запрос'));?>
+<a class="benv-action" title="Создать запрос" href="<?=$baseurl?>business-environment/associations/<?=$userinfo['uconfirmation'];?>/create-association">
+									<span class="btn-l"></span>
+									<span class="btn-c">Создать запрос</span>
+									<span class="btn-r"></span>
+								</a><br class="clear">
 								</div>
 							<?php for($i=0;$i<count($topics);$i++):?>
 								<div class="right-post zakup">
@@ -97,7 +105,7 @@
 											<tr>
 												<td class="right-option">
 													<div class="opt-bg">
-												<?php if($topics[$i]['ast_usrid'] == $userinfo['uid'] && $topics[$i]['ast_collected'] == 0):?>
+												<?php if($topics[$i]['ast_usrid'] == $userinfo['uid']):?>
 														<div class="opt-bgg">
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/edit-association/'.$topics[$i]['ast_id'],'Редактировать',array('class'=>'first','title'=>'Редактировать'));?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/delete-association/'.$topics[$i]['ast_id'],'Удалить',array('title'=>'Удалить'));?>
@@ -149,6 +157,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$this->uri->segment(5);?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 		});
 </script>

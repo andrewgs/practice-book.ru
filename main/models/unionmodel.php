@@ -463,6 +463,15 @@ class Unionmodel extends CI_Model{
 		else return null;
 	}
 	
+	function rating_search_repsentatives($schvalue,$activity){
+		
+		$query = "SELECT uid,ucompany,uemail,uname,usubname,uthname,uicq,uphone,ustatus,usignupdate,ulastlogindate,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(usignupdate,'%Y%m')) AS months,uskype,uposition,uachievement,urating,cmp_id,cmp_name FROM tbl_user,tbl_company,tbl_companyservices WHERE tbl_user.ucompany = tbl_company.cmp_id AND tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity AND (uname LIKE '%$schvalue%' OR usubname LIKE '%$schvalue%' OR uthname LIKE '%$schvalue%') GROUP BY tbl_user.uid LIMIT 10";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
 	function count_repsentatives($activity){
 		
 		$query = "SELECT uid AS cnt FROM tbl_user,tbl_company,tbl_companyservices WHERE tbl_user.ucompany = tbl_company.cmp_id AND tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY tbl_user.uid";
@@ -482,6 +491,15 @@ class Unionmodel extends CI_Model{
 	function rating_company($count,$from,$activity,$field){
 		
 		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_site,cmp_email,cmp_phone,cmp_uraddress,cmp_realaddress,cmp_rating,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(cmp_date,'%Y%m')) AS months FROM tbl_company,tbl_companyservices WHERE tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity GROUP BY cmp_id ORDER BY $field DESC LIMIT $from,$count";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	function rating_search_company($schvalue,$activity){
+		
+		$query = "SELECT cmp_id,cmp_name,cmp_description,cmp_site,cmp_email,cmp_phone,cmp_uraddress,cmp_realaddress,cmp_rating,PERIOD_DIFF(date_format(now(),'%Y%m'), date_format(cmp_date,'%Y%m')) AS months FROM tbl_company,tbl_companyservices WHERE tbl_company.cmp_id = tbl_companyservices.cs_cmpid AND tbl_companyservices.cs_srvid = $activity AND cmp_name LIKE '%$schvalue%' GROUP BY cmp_id LIMIT 10";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

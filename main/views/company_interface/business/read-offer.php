@@ -40,7 +40,7 @@
 							<div class="left-menu">
 								<ul>
 									<?php for($i=0;$i<count($regions);$i++): ?>		
-<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name']);?></li>
+<li><?=anchor('business-environment/offers/'.$userinfo['uconfirmation'].'/region/'.$regions[$i]['reg_id'],$regions[$i]['reg_name'],array('id'=>'link'.$regions[$i]['reg_id']));?></li>
 								<?php endfor; ?>
 								</ul>
 							</div>
@@ -176,6 +176,7 @@
 		$(document).ready(function(){
 			$("#lnk-logout").click(function(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){window.setTimeout("window.location='<?=$baseurl;?>'",1000);},error: function(){msgerror("Выход не выполнен!");}});});
 			$("#select-category").change(function(){change_category($(this));});
+			$("#link<?=$section_id;?>").addClass("activeTheme");
 			function change_category(obj){if(obj.val() != 'empty')window.location='<?=$baseurl;?>'+'business-environment/'+obj.val()+'/<?=$userinfo['uconfirmation'];?>';};
 			$('#SetComment').click(function(){$('#FormComment').fadeToggle('slow');$('html, body').animate({scrollTop:'400px'},"slow");return false;});
 			$("#Cancel").click(function(){$('#FormComment').fadeToggle('slow',function(){$("#note").val('');});$('html, body').animate({scrollTop:'400px'},"slow");});

@@ -75,6 +75,10 @@
 					</div>
 					<div class="searhcblock">
 						<div class="searhcbox">
+							<a class="tooltip" href="" style="float:right;">
+								<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+								<span class="classic"><?=$othertext[0]['otxt_help'];?></span>
+							</a>
 							<b>Поиск региона</b>
 							<p>от 3-х символов</p>
 							<div class="">
@@ -85,6 +89,10 @@
 							</div>
 						</div>
 						<div class="searhcbox">
+							<a class="tooltip" href="" style="float:right;">
+								<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+								<span class="classic"><?=$othertext[1]['otxt_help'];?></span>
+							</a>
 							<b>Поиск отрасли/товаров/услуг</b>
 							<p>от 3-х символов</p>
 							<div class="">
@@ -163,14 +171,12 @@
 		$(document).ready(function(){
 			$('#mycarousel').jcarousel();
 			$('#mycarousel2').jcarousel();
+			$(".tooltip").click(function(event){event.preventDefault();})
+			$("#RegionName").val('');	
 			
-			$(".region").change(function(){
-				changeRegionList(this);
-			});
+			$(".region").change(function(){changeRegionList(this);});
 			
-			$(".activity").change(function(){
-				changeActivityList(this);
-			});
+			$(".activity").change(function(){changeActivityList(this);});
 			
 			$("#ActivityName").keyup(function(){
 				var SearchVal = $(this).val();
