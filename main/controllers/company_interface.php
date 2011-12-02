@@ -1031,7 +1031,7 @@ $this->belogmodel->insert_record('bed_title','bed_note',1,0,$_POST['activity'],'
 			else:
 				$_POST['submit'] = NULL;
 				$objid = $this->$model->insert_records($_POST['title'],$activity,$environment,$this->user['department']);
-$this->belogmodel->insert_record($field.'title',"",1,0,$activity,$table,$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],$model,$objid,$field.'id');
+$this->belogmodel->insert_record($field.'title',"",1,1,$activity,$table,$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],$model,$objid,$field.'id');
 				redirect($pagevar['backpath']);
 			endif;
 		endif;

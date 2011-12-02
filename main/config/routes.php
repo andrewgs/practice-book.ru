@@ -187,7 +187,7 @@ $route['admin/manage-whomain/:any/finish-auctions'] = "admin_interface/finish_au
 $route['admin/manage-business-environment/:any'] = "admin_interface/be_index";
 $route['admin/manage-be-information/:any'] = "admin_interface/be_information";
 $route['admin/manage-be-edit/:any'] = "admin_interface/be_edit";
-$route['admin/manage-be-delete/:any'] = "admin_interface/be_delete";
+$route['admin/manage-be-delete/:any'] = "admin_interface/be_theme_delete";
 $route['admin/manage-log-delete/:any'] = "admin_interface/log_delete";
 
 $route['admin/begin-auction/:any'] = "admin_interface/begin_auction";

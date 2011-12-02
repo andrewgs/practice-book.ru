@@ -129,5 +129,14 @@ class Belogmodel extends CI_Model{
 		$this->db->update($table);
 		return $this->db->affected_rows();
 	}
+
+	function find_sub($table,$id,$field){
+	
+		$this->db->where($field,$id);
+		$query = $this->db->get($table);
+		$data = $query->result_array();
+		if(count($data)) return TRUE;
+		return FALSE;
+	}
 }
 ?>

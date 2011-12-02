@@ -1583,6 +1583,31 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
+	function be_theme_delete(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$id = trim($this->input->post('id'));
+		if(!$id) show_404();
+		$information = $this->unionmodel->read_belog_information($id);
+		if($information):
+			$table = array('tbl_discussions'=>'tbl_dsc_topics','tbl_question_answer'=>'tbl_qa_topics','tbl_interaction'=>'tbl_inttopics','tbl_articles'=>'tbl_art_topics','tbl_documentation'=>'tbl_dtn_topics','tbl_survey'=>'tbl_surtopics','tbl_association'=>'tbl_asptopics');
+			$field = array('tbl_discussions'=>'top_dscid','tbl_question_answer'=>'qat_qaid','tbl_interaction'=>'itp_intid','tbl_articles'=>'atp_artid','tbl_documentation'=>'dtt_dtnid','tbl_survey'=>'stp_surid','tbl_association'=>'ast_aspid');
+			
+	$sub = $this->belogmodel->find_sub($table[$information['belg_table']],$information['belg_object_id'],$field[$information['belg_table']]);
+			if(!$sub):
+$success = $this->belogmodel->delete_table_record($information['belg_table'],$information['belg_object_id'],$information['belg_object_field']);
+				if($success):
+					$success = $this->belogmodel->delete_record($id);
+					$statusval['status'] = TRUE;
+				endif;
+			else:
+				$statusval['message'] = "Тема не пустая.<br/>Удалить не возможно.";
+				$statusval['status'] = FALSE;
+			endif;
+		endif;
+		echo json_encode($statusval);
+	}
+	
 	function log_delete(){
 	
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
@@ -1593,7 +1618,7 @@ class Admin_interface extends CI_Controller{
 		echo json_encode($statusval);
 	}
 	
-	/* ======================================== END EDIT CONTROL PANEL =============================================*/
+	/* ======================================== END EDIT CONTROL PANEL ============================================= */
 	
 	function create_search_activity(){
 	
