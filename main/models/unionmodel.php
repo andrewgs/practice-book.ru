@@ -251,7 +251,7 @@ class Unionmodel extends CI_Model{
 
 	function dsc_topic_records($topic){
 		
-		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic";
+		$query = "SELECT top_id,top_title,top_note,top_date,top_usrid,top_comments,uemail,uname,usubname,uthname,uposition,uconfirmation,cmp_id,cmp_name FROM tbl_dsc_topics,tbl_user,tbl_company WHERE tbl_dsc_topics.top_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dsc_topics.top_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -278,7 +278,7 @@ class Unionmodel extends CI_Model{
 
 	function qa_topic_records($topic){
 		
-		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_id = $topic";
+		$query = "SELECT qat_id,qat_title,qat_date,qat_usrid,qat_comments,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_qa_topics,tbl_user,tbl_company WHERE tbl_qa_topics.qat_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_qa_topics.qat_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -297,7 +297,7 @@ class Unionmodel extends CI_Model{
 	
 	function article_topic_records($article){
 		
-		$query = "SELECT atp_id,atp_title,atp_note,atp_date,atp_usrid,atp_comments,atp_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_art_topics,tbl_user,tbl_company WHERE tbl_art_topics.atp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_art_topics.atp_id = $article";
+		$query = "SELECT atp_id,atp_title,atp_note,atp_date,atp_usrid,atp_comments,atp_views,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_art_topics,tbl_user,tbl_company WHERE tbl_art_topics.atp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_art_topics.atp_id = $article";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -315,7 +315,7 @@ class Unionmodel extends CI_Model{
 
 	function int_topic_records($topic){
 		
-		$query = "SELECT itp_id,itp_title,itp_note,itp_date,itp_usrid,itp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_inttopics,tbl_user,tbl_company WHERE tbl_inttopics.itp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_inttopics.itp_id = $topic";
+		$query = "SELECT itp_id,itp_title,itp_note,itp_date,itp_usrid,itp_comments,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_inttopics,tbl_user,tbl_company WHERE tbl_inttopics.itp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_inttopics.itp_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -333,7 +333,7 @@ class Unionmodel extends CI_Model{
 
 	function dtn_topic_records($topic){
 		
-		$query = "SELECT dtt_id,dtt_note,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_id = $topic";
+		$query = "SELECT dtt_id,dtt_note,dtt_date,dtt_usrid,dtt_comments,dtt_documents,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_dtn_topics,tbl_user,tbl_company WHERE tbl_dtn_topics.dtt_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_dtn_topics.dtt_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -351,7 +351,7 @@ class Unionmodel extends CI_Model{
 
 	function dls_document_record($id){
 
-		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,dls_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_id = $id";
+		$query = "SELECT dls_id,dls_title,dls_note,dls_date,dls_link,dls_usrid,dls_comments,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_doclist,tbl_user,tbl_company WHERE tbl_doclist.dls_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_doclist.dls_id = $id";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -369,7 +369,7 @@ class Unionmodel extends CI_Model{
 
 	function sur_topic_records($topic){
 		
-		$query = "SELECT stp_id,stp_title,stp_clicks,stp_date,stp_usrid,stp_comments,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_surtopics,tbl_user,tbl_company WHERE tbl_surtopics.stp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_surtopics.stp_id = $topic";
+		$query = "SELECT stp_id,stp_title,stp_clicks,stp_date,stp_usrid,stp_comments,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_surtopics,tbl_user,tbl_company WHERE tbl_surtopics.stp_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_surtopics.stp_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -387,7 +387,7 @@ class Unionmodel extends CI_Model{
 
 	function asp_topic_records($topic){
 		
-		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_company,ast_apply,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
+		$query = "SELECT ast_id,ast_title,ast_note,ast_date,ast_usrid,ast_comments,ast_price,ast_collected,ast_must1,ast_must2,ast_must3,ast_company,ast_apply,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_asptopics,tbl_user,tbl_company WHERE tbl_asptopics.ast_usrid = tbl_user.uid AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_asptopics.ast_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -407,7 +407,7 @@ class Unionmodel extends CI_Model{
 	function oft_topic_record($topic,$environment,$department,$region){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND oft_region = $region";
+		$query = "SELECT oft_id,oft_title,oft_date,oft_note,oft_userid,oft_comments,oft_cmpid,oft_cmpname,uemail,uconfirmation,uname,usubname,uthname,uposition FROM tbl_offertopic,tbl_user WHERE tbl_offertopic.oft_userid = tbl_user.uid AND tbl_offertopic.oft_id = $topic AND tbl_offertopic.oft_environment = $environment AND tbl_offertopic.oft_department = $department AND oft_region = $region";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -427,7 +427,7 @@ class Unionmodel extends CI_Model{
 	function ben_topic_record($topic,$environment,$department,$activity,$group){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group AND tbl_be_news.ben_id = $topic";
+		$query = "SELECT ben_id,ben_title,ben_note,ben_date,ben_source,ben_userid,ben_comments,ben_views,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_news,tbl_user,tbl_company WHERE tbl_be_news.ben_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_news.ben_environment = $environment AND tbl_be_news.ben_department = $department AND tbl_be_news.ben_activity = $activity AND tbl_be_news.ben_group = $group AND tbl_be_news.ben_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];
@@ -447,7 +447,7 @@ class Unionmodel extends CI_Model{
 	function bed_topic_record($topic,$environment,$department,$activity,$group){
 		
 		if(!$environment) $department = 0;
-		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group AND tbl_be_discount.bed_id = $topic";
+		$query = "SELECT bed_id,bed_title,bed_note,bed_date,bed_userid,bed_comments,bed_views,uemail,uconfirmation,uname,usubname,uthname,uposition,cmp_id,cmp_name FROM tbl_be_discount,tbl_user,tbl_company WHERE tbl_be_discount.bed_userid IN(0,tbl_user.uid) AND tbl_user.ucompany = tbl_company.cmp_id AND tbl_be_discount.bed_environment = $environment AND tbl_be_discount.bed_department = $department AND tbl_be_discount.bed_activity = $activity AND tbl_be_discount.bed_group = $group AND tbl_be_discount.bed_id = $topic";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data[0];

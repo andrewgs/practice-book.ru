@@ -31,7 +31,7 @@
 			<div class="contentblock">
 				<div class="content-top">
 					<span class="category"><?php $this->load->view('company_interface/business/choise-category'); ?></span>
-					<h1>Business Environment (Бизнес-Среда): Обсуждения</h1>
+					<h1>Business Environment (Бизнес-Среда): Объединения для закупок</h1>
 				</div>
 				<div class="content-left">
 					<div class="content-left-box">
@@ -83,7 +83,7 @@
 										</table>
 										</div></div></div>
 										<span class="green">
-									<?php if(!$cmpexist):?>
+									<?php if(!$cmpexist && $topic['ast_company'] != $userinfo['cid']):?>
 										<a href="" id="SetPurchase">подать заявку</a>
 									<?php endif;?>
 <?=anchor('business-environment/associations/'.$userinfo['uconfirmation'].'/association/'.$topic['ast_id'],'читать полностью');?>

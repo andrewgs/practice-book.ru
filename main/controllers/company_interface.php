@@ -1287,7 +1287,6 @@ $this->belogmodel->insert_record('top_title','top_note',1,0,$activity,'tbl_dsc_t
 					'pages'			=> ''
 			);
 		$pagevar['topic']['top_date'] = $this->operation_date($pagevar['topic']['top_date']);
-		
 		if($this->input->post('submit')):
 			$this->form_validation->set_rules('note','Текст','required|trim');
 			$this->form_validation->set_error_delimiters('<div class="flvalid_error">','</div>');
@@ -1301,6 +1300,13 @@ $this->belogmodel->insert_record('top_title','top_note',1,0,$activity,'tbl_dsc_t
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'discussions',$topic);
 				$this->dsctopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['top_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/discussions/'.$pagevar['topic']['uconfirmation'].'/discussion/'.$pagevar['topic']['top_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваше обсуждение прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Обсуждения","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -1599,6 +1605,13 @@ $this->belogmodel->insert_record('qat_title','',1,0,$activity,'tbl_qa_topics',$e
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'question',$topic);
 				$this->qatopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['question']['qat_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/question-answer/'.$pagevar['question']['uconfirmation'].'/question/'.$pagevar['question']['qat_id'].'/answers#answers';
+					$message = 'Здравствуйте, '.$pagevar['question']['usubname'].' '.$pagevar['question']['uthname']."\n".'На Ваш вопрос дан ответ. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['question']['uemail'],$message,"Бизнес среда: Вопрос-ответ","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -1904,6 +1917,13 @@ $this->belogmodel->insert_record('itp_title','itp_note',1,0,$activity,'tbl_intto
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'interactions',$topic);
 				$this->inttopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['itp_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/interactions/'.$pagevar['topic']['uconfirmation'].'/interaction/'.$pagevar['topic']['itp_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваш запрос прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Взаимодействие с Госструктурами","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2219,6 +2239,13 @@ $this->belogmodel->insert_record('atp_title','atp_note',1,0,$activity,'tbl_art_t
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'articles',$topic);
 				$this->arttopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['article']['atp_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/articles/'.$pagevar['article']['uconfirmation'].'/article/'.$pagevar['article']['atp_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['article']['usubname'].' '.$pagevar['article']['uthname']."\n".'Вашу статью прокомментировали. Что бы просмотреть ее авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['article']['uemail'],$message,"Бизнес среда: Статьи","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2460,6 +2487,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 //				$_POST['note'] = nl2br($_POST['note']);
 				$objid = $this->dtntopicsmodel->insert_record($_POST['title'],$section,$this->user['uid']);
 $this->belogmodel->insert_record('dtt_note','',1,0,$activity,'tbl_dtn_topics',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'dtntopicsmodel',$objid,'dtt_id');
+				
 				redirect($pagevar['backpath']);
 			endif;
 		endif;
@@ -2520,6 +2548,13 @@ $this->belogmodel->insert_record('dtt_note','',1,0,$activity,'tbl_dtn_topics',$e
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentation',$topic);
 				$this->dtntopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['dtt_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/documentation/'.$pagevar['topic']['uconfirmation'].'/document-query/'.$pagevar['topic']['dtt_id'].'/comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваш запрос прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Обмен документами","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2670,6 +2705,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 					'sections'		=> $this->documentationmodel->read_records($activity,$environment,$this->user['department']),
 					'section_name'	=> $this->documentationmodel->read_field($section,'dtn_title').' - Загрузка документа',
 					'section_id'	=> $section,
+					'topic'			=> $this->unionmodel->dtn_topic_records($topic),
 					'backpath'		=> $this->session->userdata('backpath')
 			);
 		if($this->input->post('submit')):
@@ -2699,6 +2735,13 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 				$objid = $this->doclistmodel->insert_record($_POST,$topic,$this->user['uid']);
 				$this->dtntopicsmodel->insert_document($topic);
 $this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_doclist',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'doclistmodel',$objid,'dls_id');
+				if($pagevar['topic']['dtt_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/documentation/'.$pagevar['topic']['uconfirmation'].'/document-query/'.$pagevar['topic']['dtt_id'].'/documents-list';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'На Ваш запрос был загружен документ. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Обмен документами","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect('business-environment/documentation/'.$this->user['uconfirmation'].'/document-query/'.$topic.'/documents-list');
 			endif;
 		endif;
@@ -2936,6 +2979,13 @@ $this->belogmodel->insert_record('dls_title','dls_note',1,0,$activity,'tbl_docli
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'documentlist',$docid);
 				$this->doclistmodel->insert_comment($docid);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['document']['dls_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/documentation/'.$pagevar['document']['uconfirmation'].'/document-query/'.$topic.'/document/'.$pagevar['document']['dls_id'].'/comments';
+					$message = 'Здравствуйте, '.$pagevar['document']['usubname'].' '.$pagevar['document']['uthname']."\n".'Ваш загруженый документа был прокомментирован. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['document']['uemail'],$message,"Бизнес среда: Обмен документами","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -2996,7 +3046,7 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 			show_404();
 		endif;
 		$topic = $this->uri->segment(5);
-		if(!$this->dtntopicsmodel->topic_owner($topic,$section,$this->user['uid'])):
+		if(!$this->dtntopicsmodel->topic_owner_nouser($topic,$section)):
 			show_404();
 		endif;
 		$docid = $this->uri->segment(7);
@@ -3225,6 +3275,13 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'surveys',$topic);
 				$this->surtopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['stp_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/surveys/'.$pagevar['topic']['uconfirmation'].'/survey/'.$pagevar['topic']['stp_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваш опрос прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Опрос","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3551,6 +3608,13 @@ $this->belogmodel->insert_record('ast_title','ast_note',1,0,$activity,'tbl_aspto
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'association',$topic);
 				$this->asptopicsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['ast_usrid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/associations/'.$pagevar['topic']['uconfirmation'].'/association/'.$pagevar['topic']['ast_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваш запрос прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Объединения для закупок","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3646,6 +3710,13 @@ $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$env
 				$_POST['submit'] = NULL;
 				$this->asptopicsmodel->insert_collected($topic,$_POST['count']);
 				$this->collectedmodel->insert_record($this->user['cid'],$pagevar['company']['cmp_name'],$this->user['uid'],$this->user['ufullname'],$_POST['count'],$topic);
+				if($pagevar['topic']['ast_company'] != $this->user['cid']):
+					$link = $pagevar['baseurl'].'business-environment/associations/'.$pagevar['topic']['uconfirmation'].'/association/'.$pagevar['topic']['ast_id'].'/company#company';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Произошло изменение в запросе. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Объединения для закупок","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -3910,7 +3981,7 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 					'environment'	=> $environment,
 					'company'		=> $this->companymodel->read_record($this->user['cid']),
 					'topic'			=> $this->unionmodel->oft_topic_record($topic,$environment,$this->user['department'],$curregion),
-					'section_id'	=> $section,
+					'section_id'	=> $curregion,
 					'backpath'		=> $this->session->userdata('backpath'),
 					'comments'		=> array(),
 					'count'			=> 0,
@@ -3933,6 +4004,13 @@ $pagevar['topics'] = $this->unionmodel->oft_topics_limit_records(5,$from,$enviro
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],'offers',$topic);
 				$this->offerstopicmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['oft_userid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/offers/'.$pagevar['topic']['uconfirmation'].'/offer/'.$pagevar['topic']['oft_id'].'/comments#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Ваше предложение прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Предложения контрагентов","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -4254,6 +4332,13 @@ $this->belogmodel->insert_record('ben_title','ben_note',1,0,$activity,'tbl_be_ne
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
 				$this->benewsmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['ben_userid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/'.$this->uri->segment(2).'/'.$pagevar['topic']['uconfirmation'].'/news/'.$pagevar['topic']['ben_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Размещенную Вами новость прокомментировали. Что бы просмотреть его авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Новости","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;
@@ -4574,6 +4659,13 @@ $this->belogmodel->insert_record('bed_title','bed_note',1,0,$activity,'tbl_be_di
 				$objid = $this->commentsmodel->insert_record($_POST['note'],$this->user['uid'],$type,$topic);
 				$this->bediscountmodel->insert_comment($topic);
 $this->belogmodel->insert_record('','cmn_note',1,0,$activity,'tbl_comments',$environment,$this->user['department'],$this->user['uid'],$this->user['cid'],'commentsmodel',$objid,'cmn_id');
+				if($pagevar['topic']['bed_userid'] != $this->user['uid']):
+					$link = $pagevar['baseurl'].'business-environment/'.$this->uri->segment(2).'/'.$pagevar['topic']['uconfirmation'].'/discount/'.$pagevar['topic']['bed_id'].'#comments';
+					$message = 'Здравствуйте, '.$pagevar['topic']['usubname'].' '.$pagevar['topic']['uthname']."\n".'Размещенную Вами новинку/скидку прокомментировали. Что бы просмотреть ее авторизируйтесь на сайте <a href="'.$pagevar['baseurl'].'">'.$pagevar['baseurl'].'</a> и перейдите по ссылке:  <a href="'.$link.'">'.$link.'</a>';
+					if(!$this->sendmail($pagevar['topic']['uemail'],$message,"Бизнес среда: Новинки и скидки","info@practice-book.com")):
+						$this->email->print_debugger();
+					endif;
+				endif;
 				redirect($this->uri->uri_string());
 			endif;
 		endif;

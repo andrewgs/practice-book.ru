@@ -26,7 +26,11 @@
 				<?php endif; ?>
 					<td rID="<?=$i?>"><?=$auctions[$i]['wmn_id'];?></td>
 						<td><?=$auctions[$i]['reg_name'];?></td>
+					<?php if($auctions[$i]['wmn_cmpid']):?>
+						<td id="c<?=$i?>"><?=anchor('company-info/'.$auctions[$i]['wmn_cmpid'],$auctions[$i]['wmn_cmpname'],array('target'=>'_blank'));?></td>
+					<?php else:?>
 						<td id="c<?=$i?>"><?=$auctions[$i]['wmn_cmpname'];?></td>
+					<?php endif;?>
 						<td id="p<?=$i?>"><?=$auctions[$i]['wmn_price'];?></td>
 <td><input class="small150-form-input" id="vDate<?=$i?>" rID="<?=$i?> name="name" type="text" value="<?=$auctions[$i]['wmn_edate'];?>"></td>
 					<td>
