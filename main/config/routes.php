@@ -174,9 +174,22 @@ $route['dealer/register-company/:any/finish'] = "dealer_interface/register_step4
 
 $route['dealer/register-company/:any'] = "dealer_interface/register_step1";
 
+$route['dealer/applications-received/:any'] = "dealer_interface/applications_received";
+$route['dealer/delete-applications-received/:any'] = "dealer_interface/delete_applications_received";
+
 /************************************	ADMIN INTRERFACE	***********************************************/
 
 $route['admin/control-panel/:any'] = "admin_interface/cpanel";
+
+/*========================================== REPORTS ====================================================*/
+
+$route['admin/reports/:any/regionals/activity'] = "admin_interface/report_activity_regionals";
+$route['admin/reports/:any/regionals/activity/:num'] = "admin_interface/report_activity_regionals";
+
+/*======================================================================================================*/
+
+$route['admin/create-activity-regions/:any'] = "admin_interface/create_activity_regions";
+$route['admin/create-activity-regions/:any/activity/:num'] = "admin_interface/create_activity_regions";
 
 $route['admin/edit-activity/:any/region/:num/activity/:num'] = "admin_interface/edit_activity";
 $route['admin/edit-activity/:any'] = "admin_interface/edit_activity";

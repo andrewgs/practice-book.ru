@@ -285,7 +285,8 @@ class Users_interface extends CI_Controller{
 					'baseurl' 		=> base_url(),
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
-					'activitylist'	=> array()
+					'activitylist'	=> array(),
+					'text'			=> $this->othertextmodel->read_text(59)
 			);
 		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
 		if($this->user['manager']):
@@ -453,13 +454,37 @@ class Users_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'regions'		=> $this->regionmodel->read_records(),
 					'section_name'	=> '',
-					'dealers'		=> array()
+					'dealers'		=> array(),
+					'message'		=> $this->session->userdata('msg'),
 			);
+		$this->session->unset_userdata('msg');
 		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
 		$curregion = $this->uri->segment(3);
 		if(!$curregion) $curregion = $pagevar['regions'][0]['reg_id'];
 		$pagevar['section_name'] = $this->regionmodel->read_field($curregion,'reg_name');
 		$pagevar['dealers'] = $this->unionmodel->dealers_region($curregion);
+		if($this->input->post('dsubmit')):
+			$this->form_validation->set_rules('dlrid',' ','required|trim');
+			$this->form_validation->set_rules('name',' ','required|trim');
+			$this->form_validation->set_rules('email',' ','required|valid_email|trim');
+			$this->form_validation->set_rules('phone',' ','required|trim');
+			$this->form_validation->set_rules('region',' ','required|trim');
+			$this->form_validation->set_rules('message',' ','trim');
+			if(!$this->form_validation->run()):
+				$_POST['dsubmit'] = NULL;
+				$this->session->set_userdata('msg','Ошибка при отравке!');
+				$this->dealers_list();
+				return FALSE;
+			else:
+				$_POST['dsubmit'] = NULL;
+				$this->load->model('dealermailmodel');
+				if($this->dealersmodel->user_exist('dlr_id',$_POST['dlrid'])):
+					$this->dealermailmodel->insert_record($_POST);
+					$this->session->set_userdata('msg','Заявка отправлена!');
+				endif;
+				redirect($this->uri->uri_string());
+			endif;
+		endif;
 		$this->session->unset_userdata('regstatus');
 		$this->load->view('users_interface/dealers-list',$pagevar);
 	}
@@ -1795,7 +1820,7 @@ class Users_interface extends CI_Controller{
 	function dealers_login(){
 		
 		if($this->session->userdata('dealerid')):
-			redirect('dealers/control-panel/'.$this->session->userdata('dealerconfirm'));
+			redirect('dealer/control-panel/'.$this->session->userdata('dealerconfirm'));
 		endif;
 		$pagevar = array(
 					'description'	=> '',

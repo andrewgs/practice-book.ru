@@ -1,7 +1,7 @@
 <?= form_open('registering',array('class'=>'formular','id'=>'formValidCode')); ?>
 	<div class="box">
 		<div class="box-header"><b>Проверка кода регистрации компании</b>
-			<div class="box-search" id="error">&nbsp;</div>
+			<div class="box-search">&nbsp;</div>
 		</div>
 		<div class="box-content w575">
 			<input class="reg-form-input" id="code" name="code" type="text" placeholder="Введите код" value="" title="Введите полученный от дилера код"/>

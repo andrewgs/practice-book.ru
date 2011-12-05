@@ -202,6 +202,13 @@
 									</div>
 									<div class="clear"></div>
 								</div>
+								<div class="content-separator">
+									<img src="<?=$baseurl;?>images/documents/pdf.png" class="floated" alt=""/>
+									<div class="nsh-title">
+										<?=anchor($baseurl.'documents/for-companies/manual.pdf',"Руководство по Practice-Book")?>
+									</div>
+									<div class="clear"></div>
+								</div>
 							</div>
 							<div class="box-bottom-links h20">
 								<div class="clear"></div>

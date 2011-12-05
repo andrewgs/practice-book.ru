@@ -53,9 +53,10 @@
 			<div class="container_12 framing">
 				<div class="grid_12">
 					<h1 align="center">На данной странице Вы можете ознакомится с полным списком отраслей<br/> и получить подробную информацию о сотрудниках нашей компании</h1>
-					
-					<?php
-						function build_tree($cats,$parent_id){
+					<div>
+						<?=$text;?>
+					</div>
+					<?php function build_tree($cats,$parent_id){
 							if(isset($cats[$parent_id])):
 								$tree = '<div class="accordion">';
 								foreach($cats[$parent_id] as $cat):
@@ -162,7 +163,7 @@
 			
 			$("#lost-pass").click(function(){lostpass();})
 			
-			function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:192}});}
+			function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:195}});}
 		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
 			
 			$("a#Support").click(function(e){

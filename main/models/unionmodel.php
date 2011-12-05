@@ -582,5 +582,18 @@ class Unionmodel extends CI_Model{
 		if(isset($data[0])) return $data[0];
 		return NULL;
 	}
+	
+	/* =============================================== REPORTS =================================================*/
+	
+	function report_activity_regionals($activity){
+		
+		$query = "SELECT uid,uemail,CONCAT(uname,' ',usubname,' ',uthname) AS name,usignupdate,ulastlogindate,udestroy,reg_area,reg_name FROM tbl_user,tbl_regions,tbl_mra WHERE tbl_user.uid = tbl_mra.mra_uid AND tbl_regions.reg_id = tbl_mra.mra_rid AND tbl_mra.mra_aid = $activity AND umanager = 1 AND upriority = 0 ORDER BY reg_name,uname";
+		$query = $this->db->query($query);
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		else return null;
+	}
+	
+	/* ============================================= REPORTS END ================================================*/
 }
 ?>

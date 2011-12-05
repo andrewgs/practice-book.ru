@@ -74,7 +74,7 @@
 		
 		$("#lost-pass").click(function(){lostpass();})
 			
-		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:192}});}
+		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:195}});}
 		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
 		
 		$("#SendSupport").click(function(event){

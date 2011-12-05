@@ -42,7 +42,7 @@
 				<div class="grid_12">
 					<div class="box wide">
 						<div class="box-header">
-							<h2>Новости</h2>
+							<h2>О проекте</h2>
 							<div class="box-search"></div>
 						</div>
 						<div class="box-content">
@@ -74,7 +74,7 @@
 		
 		$("#lost-pass").click(function(){lostpass();})
 			
-		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:192}});}
+		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:195}});}
 		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
 		
 		$("a#Support").click(function(e){

@@ -14,6 +14,7 @@
 				<a href="javascript:void(0);">Администрирование</a>
 				<ul>
 					<li><?=anchor('dealer/cabinet/'.$userinfo['uconfirmation'],'Личный кабинет');?></li>
+					<li><?=anchor('dealer/applications-received/'.$userinfo['uconfirmation'],'Заявки на регистрацию');?></li>
 					<li><?=anchor('dealer/shutdown/'.$userinfo['uconfirmation'],'Завершить сеанс');?></li>
 				</ul>
 			</li>

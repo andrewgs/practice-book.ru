@@ -19,7 +19,7 @@
 			<img src="<?=$baseurl;?>companylogo/viewimage/<?=$company['cmp_id'];?>" vspace="10" border="0" class="floated" alt=""/>
 			<div class="vRight" id="dscavatar"><?= form_error('userfile'); ?></div>
 			<?= form_open_multipart($this->uri->uri_string(),array('id'=>'formAvatar','class'=>'formular')); ?>
-				<input class="reg-form-input" type="file" id="vcavatar" name="userfile">
+				<input class="reg-form-input" type="file" id="vcavatar" name="userfile" size="32">
 				<?= form_hidden('fileupload',TRUE); ?>
 			<?= form_close(); ?>
 			<span class="btnsave" id="svcavatar">

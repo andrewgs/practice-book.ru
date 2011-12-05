@@ -102,6 +102,7 @@ class Admin_interface extends CI_Controller{
 			case 'information'				: $record_id = 56; break;
 			case 'dilers'					: $record_id = 57; break;
 			case 'license'					: $record_id = 58; break;
+			case 'contacts'					: $record_id = 59; break;
 			default : show_404();
 		endswitch;
 		if($this->input->post('submit')):
@@ -457,6 +458,78 @@ class Admin_interface extends CI_Controller{
 		$statusval['company'] = $winner['cmp_name'];
 		$statusval['price'] = $winner['wmc_price'];
 		echo json_encode($statusval);
+	}
+	
+	function create_activity_regions(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Создание все регионов по отрасли',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'message'		=> $this->session->userdata('msg'),
+					'count'			=> 0
+			);
+		$this->session->unset_userdata('msg');
+		if($this->uri->total_segments() == 5):
+			$activity = $this->uri->segment(5);
+			if(!$this->activitymodel->activity_exist($activity)) show_404();
+			$parent = $this->activitymodel->read_field($activity,'act_parentid');
+			$manager = $this->usersmodel->read_federal($activity);
+			if(!$manager):
+				$manager = $this->usersmodel->read_federal($parent);
+				if(!$manager):
+					$manager = $this->usersmodel->read_single_federal($activity);
+				endif;
+			endif;
+			if($manager):
+				$regions = $this->regionmodel->read_records();
+				$pagevar['count'] = 0;
+				for($i=0;$i<count($regions);$i++):
+					$mraid = $this->manregactmodel->record_exist($regions[$i]['reg_id'],$activity);
+					if(!$mraid):
+						$mraid = $this->manregactmodel->insert_record($manager['uid'],$regions[$i]['reg_id'],$activity);
+						$this->productsmodel->insert_empty($mraid);
+						$this->personamodel->insert_empty($mraid,$activity);
+						$pagevar['count']++;
+					endif;
+				endfor;
+				if($pagevar['count'] > 0):
+					$this->session->set_userdata('msg','Создано '.$pagevar['count'].' новых записей из возможных '.count($regions));
+				endif;
+			else:
+				$this->session->set_userdata('msg','Не возможно открыть отрасль.<br/>На отрасли нет федерального менеджера!');
+			endif;
+			redirect('admin/create-activity-regions/'.$this->user['uconfirmation'].'/activity');
+		endif;
+		$this->load->view("admin_interface/create-activity-regions",$pagevar);
+	}
+	
+	/* =============================================== REPORTS =================================================*/
+	
+	function report_activity_regionals(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Список закрепленных менеджеров за отраслью',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'setActivity'	=> FALSE,
+					'managers'		=> array(),
+					'boxtitile'		=> ''
+			);
+		if($this->uri->total_segments() == 6):
+			$activity = $this->uri->segment(6);
+			if(!$this->activitymodel->activity_exist($activity)) show_404();
+			$pagevar['setActivity'] = TRUE;
+			$pagevar['managers'] = $this->unionmodel->report_activity_regionals($activity);
+			$pagevar['boxtitile'] = 'Список закрепленных менеджеров за отраслью: <strong>'.$this->activitymodel->read_field($activity,'act_title').'</strong>';
+		endif;
+		$this->load->view("admin_interface/reports/activity-regionals",$pagevar);
 	}
 	
 	/* ======================================== EDIT CONTROL PANEL =============================================*/

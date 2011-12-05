@@ -69,6 +69,7 @@
 								<div class="rtdblock">
 									<div class="rtblockbg">
 										<div class="rtdblockwrap">
+											<span id="dlr<?=$i;?>" style="display:none;"><?=$dealers[$i]['dlr_id'];?></span>
 											<span class="rtd-num"><?=$this->uri->segment(5)+$i+1;?></span>
 											<span class="news-pic">
 						<img src="<?=$baseurl;?>davatar/viewimage/<?=$dealers[$i]['dlr_id'];?>" alt="" align="left" width="74" height="74"/>
@@ -84,6 +85,9 @@
 												<div class="silver">Месяцев на сайте: <span><?=$dealers[$i]['months'];?></span></div>
 											</div>
 											<div class="clear">&nbsp;</div>
+											<div>
+												<?=anchor($this->uri->uri_string(),'Подать заявку',array('class'=>'sendDealer','dlr'=>$i));?>
+											</div>
 											<div class="rtd-contact">
 											<?php if($dealers[$i]['dlr_skype']):?>
 												<span class="skype"><?=$dealers[$i]['dlr_skype'];?></span>
@@ -112,6 +116,9 @@
 		<div id="lost-password-modal-content">
 			<?php $this->load->view('forms/frmlostpassword'); ?>
 		</div>
+		<div id="dealers-modal-content">
+			<?php $this->load->view('forms/frmsenddealers'); ?>
+		</div>
 		<?php $this->load->view('users_interface/footer/footer'); ?>
 	</div> <!-- end of #container -->
 <script src="http://code.jquery.com/jquery-1.5.min.js"></script>
@@ -123,14 +130,36 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
-		$(document).ready(function(){$(".btn-user-action").click(function(){location.href='<?=$baseurl;?>registering/step-1';});$(".imaging").click(function(){location.href='<?=$baseurl;?>begin-work';});$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){
-			$("#support-modal-content").modal();
+		$(document).ready(function(){$(".btn-user-action").click(function(){location.href='<?=$baseurl;?>registering/step-1';});$(".imaging").click(function(){location.href='<?=$baseurl;?>begin-work';});$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){$("#support-modal-content").modal();return false;});
+		<?php if($message):?>
+			msgerror('<?=$message;?>');
+		<?php endif;?>
+		$(".sendDealer").click(function(e){
+			var dlr = $(this).attr('dlr');
+			var dlrID = $("#dlr"+dlr).text();
+			$("#dlrid").val(dlrID);
+			$("#dealers-modal-content").modal();
 			return false;
+		});
+		$("#SendDealer").click(function(event){
+			var err = false;
+			$("#formDlr .inpvalue").css('border-color','#D0D0D0');
+			var name = $("#dname").val();
+			var email = $("#demail").val();
+			var phone = $("#dphone").val();
+			var region = $("#dregion").val();
+			var message = $("#dmessage").val();
+			if(name == ''){err = true;$("#dname").css('border-color','#ff0000');}
+			if(email == ''){err = true;$("#demail").css('border-color','#ff0000');}
+			if(phone == ''){err = true;$("#dphone").css('border-color','#ff0000');}
+			if(region == ''){err = true;$("#dregion").css('border-color','#ff0000');}
+			if(err){event.preventDefault();	$("#derror").html('<font size="3" color="#FF0000"><b>Пропущены обязательные поля</b></font>');
+			}else if(!isValidEmailAddress(email)){event.preventDefault();$("#derror").html('<font size="3" color="#FF0000"><b>Не верный E-mail</b></font>');}
 		});
 		
 		$("#lost-pass").click(function(){lostpass();})
 			
-		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:192}});}
+		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:195}});}
 		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
 		
 		$("#SendSupport").click(function(event){

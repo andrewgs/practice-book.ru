@@ -126,7 +126,7 @@
 		$("#lost-pass").click(function(){lostpass();})
 		
 		function lostpass(){
-			$("#lost-password-modal-content").modal({containerCss:{height:192}});
+			$("#lost-password-modal-content").modal({containerCss:{height:195}});
 		}
 		
 		$("a#Support").click(function(e){

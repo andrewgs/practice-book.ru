@@ -23,6 +23,7 @@ class Dealer_interface extends CI_Controller{
 		$this->load->model('supportmodel');
 		$this->load->model('departmentsmodel');
 		$this->load->model('cmpunitsmodel');
+		$this->load->model('dealermailmodel');
 		
 		$cookieaid = $this->session->userdata('cookieaid');
 		if(isset($cookieaid) and !empty($cookieaid)):
@@ -99,7 +100,31 @@ class Dealer_interface extends CI_Controller{
 		$pagevar['dealer'] = $this->dealersmodel->read_record($this->user['uid']);
 		$this->load->view('dealer_interface/cabinet',$pagevar);
 	}
-
+	
+	function applications_received(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Список заявок на регистрацию',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'list'			=> $this->dealermailmodel->read_records($this->user['uid'])
+			);
+		$this->load->view('dealer_interface/applications-received',$pagevar);
+	}
+	
+	function delete_applications_received(){
+	
+		$statusval = array('status'=>FALSE,'message'=>'Ошибка при удалении');
+		$did = trim($this->input->post('id'));
+		if(!$did) show_404();
+		$success = $this->dealermailmodel->delete_record($did);
+		if($success) $statusval['status'] = TRUE;
+		echo json_encode($statusval);
+	}
+	
 	function save_profile(){
 	
 		$statusval = array('status'=>FALSE,'message'=>'Ошибка при сохранении','retvalue'=>'');

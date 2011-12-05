@@ -1,7 +1,7 @@
 <?= form_open('lost-password',array('class'=>'formular','id'=>'formLostPassword')); ?>
 	<div class="box">
 		<div class="box-header"><b>Забыли свой пароль?</b>
-			<div class="box-search" id="error">&nbsp;</div>
+			<div class="box-search">&nbsp;</div>
 		</div>
 		<div class="box-content w575">
 			<span>Введите адрес электронной почты,<br/>который Вы использовали при регистрации в Practice-book.</span>
