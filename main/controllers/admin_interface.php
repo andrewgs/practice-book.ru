@@ -2049,7 +2049,7 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 						$_POST['position'] = $_POST['icq'] = $_POST['skype'] = '';$_POST['birthday'] = "0000-00-00";
 						$newmanager = $this->usersmodel->insert_record($_POST);
 						$message = 'Логин - '.$_POST['login']."\n".'Пароль - federal'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
-						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 							redirect('admin/control-panel/'.$this->user['uconfirmation']);
 						else:
 							$this->email->print_debugger();
@@ -2121,7 +2121,7 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 						
 						$message = 'Логин - '.$_POST['login']."\n".'Пароль - '.$_POST['password']."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
 						
-						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 							redirect('admin/control-panel/'.$this->user['uconfirmation']);
 						else:
 							$this->email->print_debugger();
@@ -2151,10 +2151,10 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 						$_POST['photo'] = file_get_contents(base_url().'images/no_avatar.png');
 						$_POST['cmpid'] = $_POST['priority'] = $_POST['manager'] = $_POST['activity'] = 0;
 						$_POST['confirm'] = md5($_SERVER['HTTP_USER_AGENT'].$_SERVER['REMOTE_ADDR'].mktime());
-						$_POST['position'] = '';$_POST['birthday'] = "0000-00-00";
+						$_POST['position'] = ''; $_POST['department'] = 0; $_POST['birthday'] = "0000-00-00";
 						$newmanager = $this->usersmodel->insert_record($_POST);
-						$message = 'Для допуска с панели администрирования необходимо авторизироваться.'."\n".'Ссылка для авторизации http://practice-book.ru/admin'."\n".'Логин - '.$_POST['login']."\n".'Пароль - administrator'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
-						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+						$message = 'Для допуска с панели администрирования необходимо авторизироваться.'."\n".'Ссылка для авторизации http://practice-book.com/admin'."\n".'Логин - '.$_POST['login']."\n".'Пароль - administrator'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 							redirect('admin/control-panel/'.$this->user['uconfirmation']);
 						else:
 							$this->email->print_debugger();
@@ -2187,8 +2187,8 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 						if(count($_POST['region'])):
 							$this->dlrregionmodel->group_insert($newdialer,$_POST['region']);
 						endif;
-						$message = 'Для допуска с панели администрирования необходимо авторизироваться.'."\n".'Ссылка для авторизации http://practice-book.ru/dealers'."\n".'Логин - '.$_POST['login']."\n".'Пароль - dealer'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'dealer-activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'dealer-activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
-						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+						$message = 'Для допуска с панели администрирования необходимо авторизироваться.'."\n".'Ссылка для авторизации http://practice-book.com/dealers'."\n".'Логин - '.$_POST['login']."\n".'Пароль - dealer'."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'dealer-activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'dealer-activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
+						if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 							redirect('admin/control-panel/'.$this->user['uconfirmation']);
 						else:
 							$this->email->print_debugger();

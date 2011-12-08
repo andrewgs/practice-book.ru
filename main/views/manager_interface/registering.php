@@ -71,7 +71,7 @@
 					$(actObj).css('border-color','#ff0000');
 				}else $(actObj).css('border-color','#D0D0D0');
 				
-				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');}
+				if(err){event.preventDefault();msgerror('Пропущены обязательные поля');return false;}
 				var email = $("#email").val();
 				if(email != '' && !email.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){
 					msgerror('Не верный формат E-mail');$("#email").css('border-color','#ff0000');

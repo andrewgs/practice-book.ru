@@ -75,6 +75,17 @@ class Activitymodel extends CI_Model{
 		return NULL;
 	}
 	
+	function read_ones_activity($id){
+		
+		$this->db->where('act_id',$id);
+		$this->db->where('act_final',1);
+		$query = $this->db->get('tbl_activity');
+		$data = $query->result_array();
+		if(count($data)) return $data;
+		return NULL;
+	}
+	
+	
 	function read_records(){
 		
 		$this->db->order_by('act_id');

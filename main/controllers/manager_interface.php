@@ -135,7 +135,7 @@ class manager_interface extends CI_Controller{
 				
 				$message = 'Логин - '.$_POST['login']."\n".'Пароль - '.$_POST['password']."\n".'Не забудьте сменить пароль'."\n".'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.base_url().'activation/'.$_POST['confirm'].'</a>'."\n или скопируйте ссылку в окно ввода адреса браузера и нажмите enter";
 				
-				if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+				if($this->sendmail($_POST['login'],$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 					redirect('managers/cabinet/'.$this->user['uconfirmation']);
 				else:
 					$this->email->print_debugger();
@@ -144,6 +144,12 @@ class manager_interface extends CI_Controller{
 			endif;
 		endif;
 		$pagevar['activity'] = $this->activitymodel->read_records_by_pid($this->user['activity']);
+		if(!$pagevar['activity']):
+			$pagevar['activity'] = $this->activitymodel->read_ones_activity($this->user['activity']);
+			if(!$pagevar['activity']):
+				show_error('Ошибка! Не возможно получить информацию об отросли. Обратитесь к тех.службе за помощью');
+			endif;
+		endif;
 		$pagevar['manager']['activitypath'] = 'Регистрация менеджера';
 		$pagevar['regions'] = $this->regionmodel->read_records_by_district();
 		$this->load->view('manager_interface/registering',$pagevar);

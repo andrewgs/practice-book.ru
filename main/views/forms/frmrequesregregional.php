@@ -17,7 +17,7 @@
 	<div class="grid_4 prefix_2">
 		<label class="label-input">Номер контактного телефона <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('phones'); ?>
-		<input class="reg-form-input inputValid" name="phones" maxlength="100" type="text" value="<?=set_value('phones');?>"/>
+		<input class="reg-form-input inputValid number" name="phones" maxlength="100" type="text" value="<?=set_value('phones');?>"/>
 		<label class="label-input">Семейное положение <span class="necessarily" title="Поле не может быть пустым">*</span></label>
 		<?= form_error('status'); ?>
 		<input class="reg-form-input inputValid" name="status" type="text" maxlength="45" value="<?=set_value('status');?>"/>

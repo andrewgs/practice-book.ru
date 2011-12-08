@@ -379,8 +379,8 @@ class Company_interface extends CI_Controller{
 				"\n".'<a href="'.base_url().'activation/'.$_POST['confirm'].'" target="_blank">'.
 				base_url().'activation/'.$_POST['confirm'].'</a>'.
 				"\nили скопируйте ссылку в окно ввода адреса браузера и нажмите enter.\n";
-				$subject = "Подтверждение регистрации на сайте http://practice-book.ru/";
-				if(!$this->sendmail($_POST['login'],$message,$subject,"admin@practice-book.ru")):
+				$subject = "Подтверждение регистрации на сайте http://practice-book.com/";
+				if(!$this->sendmail($_POST['login'],$message,$subject,"admin@practice-book.com")):
 					$this->email->print_debugger();
 				endif;
 				redirect('company/representatives/'.$this->user['uconfirmation']);

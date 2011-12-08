@@ -99,8 +99,9 @@
 					}
 				);
 			}
-			
-			
+			$(".number").keypress(function(e){
+				if(e.which!=45 && e.which!=32 && e.which!=8 && e.which!=0 && (e.which<48 || e.which>57)){return false;}
+			});
 			$("#sentRequest").click(function(event){
 				var err = false;
 				$(".inputValid").css('border-color','#D0D0D0');

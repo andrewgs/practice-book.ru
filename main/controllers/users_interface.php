@@ -481,6 +481,18 @@ class Users_interface extends CI_Controller{
 				if($this->dealersmodel->user_exist('dlr_id',$_POST['dlrid'])):
 					$this->dealermailmodel->insert_record($_POST);
 					$this->session->set_userdata('msg','Заявка отправлена!');
+					$email = $this->dealersmodel->read_field($_POST['dlrid'],'dlr_email');
+					$message = "Анкета на регистрацию компании.\n";
+					$message .= 'Название компании - '.$_POST['name']."\n";
+					$message .= 'E-Mail - '.$_POST['email']."\n";
+					$message .= 'Телефон - '.$_POST['phone']."\n";
+					$message .= 'Регион - '.$_POST['region']."\n";
+					if(!empty($_POST['message'])):
+						$message .= 'Текст сообщения - '.$_POST['message']."\n";
+					endif;
+					if(!$this->sendmail($email,strip_tags($message,'<br>'),'Анкета на регистрацию компании',$_POST['email'])):
+						$this->email->print_debugger();
+					endif;
 				endif;
 				redirect($this->uri->uri_string());
 			endif;
@@ -1614,7 +1626,7 @@ class Users_interface extends CI_Controller{
 		$confirm = $this->usersmodel->read_field($userid,'uconfirmation');
 		$email = $this->usersmodel->read_field($userid,'uemail');
 		$message = 'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$confirm.'" target="_blank">'.base_url().'activation/'.$confirm.'</a>'."\nИли скопируйте ссылку в окно ввода адреса браузера и нажмите enter.\n";
-		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.ru","admin@practice-book.ru")):
+		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
 			$pagevar['text'] = '<br><br><b>Учетная запись создана.</b><p><b>На адрес "'.$email.'" выслано письмо.</b></p><p><b>Для активации учетной записи перейдите по ссылке указанной в письме</b></p>';
 			$this->load->view('users_interface/message',$pagevar);
 			return TRUE;
@@ -2065,7 +2077,7 @@ class Users_interface extends CI_Controller{
 			$this->form_validation->set_rules('fname','','required|trim');
 			$this->form_validation->set_rules('sname','','required|trim');
 			$this->form_validation->set_rules('tname','','required|trim');
-			$this->form_validation->set_rules('phones','','required|min_length[6]|integer|trim');
+			$this->form_validation->set_rules('phones','','required|trim');
 			$this->form_validation->set_rules('status','','required|trim');
 			$this->form_validation->set_rules('education','','required|trim');
 			$this->form_validation->set_rules('birthday','','required|trim');
@@ -2086,7 +2098,7 @@ class Users_interface extends CI_Controller{
 					show_error("Отсутствуют данные<br/>Обратитесь в техподдержку");
 				else:
 					$_POST['experience'] = preg_replace('/\n{2}/','<br>',$_POST['experience']);
-					$email = 'admin@practice-book.ru';
+					$email = 'admin@practice-book.com';
 					$message = "Анкета на регистрацию менеджера \n";
 					$message .= 'ФИО - '.$_POST['fname'].' '.$_POST['sname'].' '.$_POST['tname']."\n";
 					$message .= 'E-Mail - '.$_POST['login']."\n";
@@ -2111,7 +2123,7 @@ class Users_interface extends CI_Controller{
 														if(!$manemail):
 															$manemail = $this->usersmodel->read_federal($_POST['actValue']);
 															if($manemail):
-																$email = $manemail['uemail'];
+																$email = $manemail['uemail'].',admin@practice-book.com';
 															endif;
 														endif;
 													endif;
@@ -2191,13 +2203,12 @@ class Users_interface extends CI_Controller{
 	}
 	
 	function sendmail($email,$msg,$subject,$from){
-		
 		$this->email->clear(TRUE);
 		$config['smtp_host'] = 'localhost';
 		$config['charset'] = 'utf-8';
 		$config['wordwrap'] = TRUE;
 		$this->email->initialize($config);
-		$this->email->from($from,'Practice-book.ru');
+		$this->email->from($from,'Practice-book.com');
 		$this->email->to($email);
 		$this->email->bcc('');
 		$this->email->subject($subject);
