@@ -15,8 +15,10 @@ $route['about'] = "users_interface/about_project";
 $route['contacts'] = "users_interface/contacts";
 $route['conditions-cooperation'] = "users_interface/cooperation";
 $route['support'] = "users_interface/support";
-$route['information'] = "users_interface/information";
+$route['for-partners'] = "users_interface/for_partners";
 $route['for-dealers'] = "users_interface/for_dealers";
+$route['for-specialist-consultant'] = "users_interface/for_specialist_consultant";
+$route['for-regional-dealer'] = "users_interface/for_regional_dealer";
 $route['license'] = "users_interface/license";
 
 $route['dealers-list'] = "users_interface/dealers_list";
@@ -100,6 +102,7 @@ $route['send-manager-email'] = "users_interface/send_manager_mail";
 
 $route['registration-request/federal-manager'] = "users_interface/registration_request";
 $route['registration-request/regional-manager'] = "users_interface/registration_request";
+$route['registration-request/dealer'] = "users_interface/registration_request_dealer";
 
 $route['add-pitfall'] = "users_interface/ajax_add_pitfall";
 $route['add-question'] = "users_interface/ajax_add_question";

@@ -171,7 +171,7 @@ class Usersmodel extends CI_Model{
 	
 	function read_single_manager_byid($uid,$text){
 			
-		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,uachievement,ucloseconsult FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND udestroy = '3000-01-01' AND uid = $uid ORDER BY uid";
+		$sql = "SELECT uid,uemail,uname,usubname,uthname,uphone,uskype,uicq,uactive,ustatus,udestroy,uachievement,ucloseconsult FROM tbl_user WHERE umanager=1 $text AND ustatus='enabled' AND uid = $uid ORDER BY uid";
 		$query = $this->db->query($sql);
 		$data = $query->result_array();
 		if(isset($data[0])) return $data[0];

@@ -16,9 +16,11 @@
 				<a href="javascript:void(0);">Содержание страниц</a>
 				<ul>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/main','Страница "Главная"');?></li>
-					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/information','Страница "Партнерам"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/partners','Страница "Партнерам"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/dilers','Страница "Дилерам"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/jobs','Страница "Работа"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/consultants','Страница "Специалист консультант"');?></li>
+					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/region-diler','Страница "Региональный дилер"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/about','Страница "О проекте"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/contacts','Страница "Контакты"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/license','Страница "Пользовательское соглашение"');?></li>

@@ -363,7 +363,7 @@ class Users_interface extends CI_Controller{
 		$this->load->view('users_interface/cooperation',$pagevar);
 	}
 
-	function information(){
+	function for_partners(){
 		
 		$pagevar = array(
 					'description'	=> '',
@@ -400,7 +400,7 @@ class Users_interface extends CI_Controller{
 			$pagevar['regions'] = $this->regionmodel->read_records();
 		endif;
 		$this->session->unset_userdata('regstatus');
-		$this->load->view('users_interface/information',$pagevar);
+		$this->load->view('users_interface/partners',$pagevar);
 	}
 
 	function for_dealers(){
@@ -441,6 +441,86 @@ class Users_interface extends CI_Controller{
 		endif;
 		$this->session->unset_userdata('regstatus');
 		$this->load->view('users_interface/dilers',$pagevar);
+	}
+	
+	function for_specialist_consultant(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(60)
+			);
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		if($this->user['manager']):
+			if($this->user['priority']):
+				$pagevar['regions'] = $this->regionmodel->read_records();
+			else:
+				$pagevar['regions'] = $this->unionmodel->mra_region($this->user['uid']);	
+			endif;
+			$final = $this->activitymodel->read_field($this->user['activity'],'act_final');
+			if(!$final):
+				$activity = $this->activitymodel->read_records();
+				if(count($activity) > 0):
+					for($i = 0; $i < count($activity); $i++):
+						$activitylist[$activity[$i]['act_parentid']][] = $activity[$i];
+					endfor;
+				endif;
+				$mas = array();
+				$mas = $this->activity_select($activitylist,$this->user['activity'],$mas);
+				$pagevar['activity'] = $mas;
+			else:
+				$pagevar['activity'] = $this->activitymodel->read_activity($this->user['activity']);
+			endif;
+		else:
+			$pagevar['regions'] = $this->regionmodel->read_records();
+		endif;
+		$this->session->unset_userdata('regstatus');
+		$this->load->view('users_interface/for-specialist-consultant',$pagevar);
+	}
+	
+	function for_regional_dealer(){
+		
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'regions'		=> array(),
+					'text'			=> $this->othertextmodel->read_text(61)
+			);
+		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
+		if($this->user['manager']):
+			if($this->user['priority']):
+				$pagevar['regions'] = $this->regionmodel->read_records();
+			else:
+				$pagevar['regions'] = $this->unionmodel->mra_region($this->user['uid']);	
+			endif;
+			$final = $this->activitymodel->read_field($this->user['activity'],'act_final');
+			if(!$final):
+				$activity = $this->activitymodel->read_records();
+				if(count($activity) > 0):
+					for($i = 0; $i < count($activity); $i++):
+						$activitylist[$activity[$i]['act_parentid']][] = $activity[$i];
+					endfor;
+				endif;
+				$mas = array();
+				$mas = $this->activity_select($activitylist,$this->user['activity'],$mas);
+				$pagevar['activity'] = $mas;
+			else:
+				$pagevar['activity'] = $this->activitymodel->read_activity($this->user['activity']);
+			endif;
+		else:
+			$pagevar['regions'] = $this->regionmodel->read_records();
+		endif;
+		$this->session->unset_userdata('regstatus');
+		$this->load->view('users_interface/for-regional-dealer',$pagevar);
 	}
 	
 	function dealers_list(){
@@ -933,7 +1013,7 @@ class Users_interface extends CI_Controller{
 		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 		endif;
 		$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
-		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,'AND upriority=0');
+		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,"AND upriority=0");
 		if($pagevar['manager']):
 			$pagevar['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
 		elseif($pagevar['federal']):
@@ -2152,6 +2232,66 @@ class Users_interface extends CI_Controller{
 										break;
 			default					:	show_404();
 		endswitch;
+	}
+	
+	function registration_request_dealer(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Опыт профессионалов из первых рук',
+					'baseurl' 		=> base_url(),
+					'activitypath'	=> 'Анкета на регистрацию дилера',
+					'text' 			=> '',
+					'logo' 			=> 'default',
+					'timer' 		=> 5000,
+					'cmpid' 		=> 1,
+					'cmpname'		=> '',
+					'uri'			=> '',
+					'regions'	 	=> $this->regionmodel->read_records()
+			);
+		
+		if($this->input->post('submit')):
+			$this->form_validation->set_rules('login','','required|valid_email|trim');
+			$this->form_validation->set_message('valid_email','Укажите правильный адрес');
+			$this->form_validation->set_rules('company','','trim');
+			$this->form_validation->set_rules('name','','required|trim');
+			$this->form_validation->set_rules('phones','','required|trim');
+			$this->form_validation->set_rules('region','','required|trim');
+			$this->form_validation->set_rules('count','','required|trim');
+			$this->form_validation->set_rules('note','','required|trim');
+			$this->form_validation->set_error_delimiters('<div class="fvalid_error">','</div>');
+			if(!$this->form_validation->run()):
+				$_POST['submit'] = NULL;
+				$this->registration_request_dealer();
+				return FALSE;
+			else:
+				$_POST['submit'] = NULL;
+				$email = 'admin@practice-book.com';
+				$message = "Анкета на регистрацию дилера \n";
+				$message .= 'ФИО - '.$_POST['name']."\n";
+				if(!empty($_POST['company'])):
+					$message .= 'Название компании - '.$_POST['company']."\n";
+				else:
+					$message .= 'Название компании - не указано'."\n";
+				endif;
+				$message .= 'E-Mail - '.$_POST['login']."\n";
+				$message .= 'Телефоны - '.$_POST['phones']."\n";
+				$message .= 'Регион - '.$this->regionmodel->read_field($_POST['region'],'reg_name')."\n";
+				$message .= 'Количество человек в отделе - '.$_POST['count']."\n";
+				$message .= 'Комментарий - '.preg_replace('/\n{2}/','<br>',$_POST['note'])."\n";
+				$theme = 'Анкета на регистрацию дилера';
+				if($this->sendmail($email,strip_tags($message,'<br>'),$theme,$_POST['login'])):
+					$pagevar['text'] = 'Сообщение отправлено';
+					$this->load->view('users_interface/message',$pagevar);
+					return TRUE;
+				else:
+					$this->email->print_debugger();
+				endif;
+			endif;
+		endif;
+		$this->load->view('users_interface/registration-request-dealer',$pagevar);
 	}
 	
 	function support(){

@@ -920,9 +920,11 @@
 									<?= anchor("manager-list/region/$curregion/activity/$curactivity",'Менеджеры');?>
 								</div>
 								<div class="left">
+								<?php if($manager['udestroy'] == '3000-01-01'):?>
 									<a href="#" id="winEmail" class="window" title="Отправить менеджеру личное сообщение">
 										<img src="<?=$baseurl?>images/email.png"/>
 									</a>
+								<?php endif;?>
 								</div>
 								<div class="clear"></div>
 							</div>

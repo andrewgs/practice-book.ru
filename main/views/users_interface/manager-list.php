@@ -83,6 +83,9 @@
 									<img src="<?=$baseurl;?>mavatar/viewimage/<?=$manager['uid'];?>"class="floated" alt=""/>
 									<div class="rep-name">
 										<?=$manager['uname'].' '.$manager['usubname'].' '.$manager['uthname'];?>
+										<?php if($manager['udestroy'] != '3000-01-01'):?>
+											<div class="UserClose" style="color:#ff0000">Пользователь закрыт</div>
+										<?php endif;?>
 									</div>
 									<div class="rep-phone"><span class="text">Тел.:</span><?= $manager['uphone']; ?></div>
 									<div class="rep-email"><span class="text">E-mail:</span><?=$manager['uemail']; ?></div>

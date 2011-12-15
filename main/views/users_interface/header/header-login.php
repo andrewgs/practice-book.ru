@@ -9,7 +9,7 @@
 				<li><?= anchor('','Главная'); ?></li>
 				<li><?= anchor('about','О проекте'); ?></li>
 				<li><div id="contact-form"><?= anchor('#','Техподдержка',array('id'=>'Support')); ?></div></li>
-				<li><?= anchor('information','Партнерам'); ?></li>
+				<li><?= anchor('for-partners','Партнерам'); ?></li>
 				<li><?= anchor('job','Работа'); ?></li>
 				<li><?= anchor('for-dealers','Дилерам'); ?></li>
 				<li><?= anchor('contacts','Контакты'); ?></li>

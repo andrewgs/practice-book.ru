@@ -15,10 +15,12 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/acc.css">
 	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
-	<![endif]--> 
+	<![endif]-->
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
@@ -31,23 +33,18 @@
 <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
-	<div id="container">
+	<div id="container" class="main-wrap">
 		<?php if($userinfo['status']): ?>
 			<?php $this->load->view('users_interface/header/header-login'); ?>
 		<?php else: ?>
 			<?php $this->load->view('users_interface/header/header-logout'); ?>
 		<?php endif; ?>
-		<div id="main">
-			<div class="container_12">
-				<div class="grid_12">
-					<div class="box wide">
-						<div class="box-header">
-							<h2>Идеи</h2>
-							<div class="box-search"></div>
-						</div>
-						<div class="box-content">
-							<?=$text;?>
-						</div>
+		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="work">
+					<div class="work-title"><h3>Специалист-консультант</h3></div>
+					<div class="work-text">
+						<?=$text;?>
 					</div>
 				</div>
 			</div>
@@ -61,14 +58,28 @@
 		</div>
 		<?php $this->load->view('users_interface/footer/footer'); ?>
 	</div> <!-- end of #container -->
-	<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
-	<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-	<script src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
-	<script src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
-	<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
-	<script type="text/javascript" src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
-	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
-	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>	
+<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
+<script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
+<script src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
+<script src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/linkedselect.js"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/script.js?v=1"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/script2.js"></script> 	
+<!--LiveInternet counter--><script type="text/javascript"><!--
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random();//--></script><!--/LiveInternet-->
+ 
+	<script type="text/javascript">
+		var parentAccordion=new TINY.accordion.slider("parentAccordion");
+		parentAccordion.init("acc","h2",false,40000000,"acc-selected");
+	</script>
+
 	<script type="text/javascript">
 		$(document).ready(function(){$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){
 			$("#support-modal-content").modal();
@@ -116,20 +127,20 @@
 			return pattern.test(emailAddress);
 		};});
 	</script>
-	<!--[if lt IE 7 ]>
-		<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
-	<![endif]-->
-	
-	<!--
-		<script src="<?=$baseurl;?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
-		<script src="<?=$baseurl;?>javascript/profiling/config.js?v=1"></script>
-	<script>
-		var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; 
-		(function(d, t) {
-			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-			g.async = true; g.src = '//www.google-analytics.com/ga.js'; s.parentNode.insertBefore(g, s);
-		})(document, 'script');
-	</script>
-	-->
+<!--[if lt IE 7 ]>
+	<script src="<?=$baseurl;?>javascript/dd_belatedpng.js?v=1"></script>
+<![endif]-->
+
+<!--
+	<script src="<?=$baseurl;?>javascript/profiling/yahoo-profiling.min.js?v=1"></script>
+	<script src="<?=$baseurl;?>javascript/profiling/config.js?v=1"></script>
+<script>
+	var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']]; 
+	(function(d, t) {
+		var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+		g.async = true; g.src = '//www.google-analytics.com/ga.js'; s.parentNode.insertBefore(g, s);
+	})(document, 'script');
+</script>
+-->
 </body>
 </html>

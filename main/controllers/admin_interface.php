@@ -99,10 +99,12 @@ class Admin_interface extends CI_Controller{
 			case 'about'					: $record_id = 53; break;
 			case 'conditions-cooperation'	: $record_id = 54; break;
 			case 'no-activity'				: $record_id = 55; break;
-			case 'information'				: $record_id = 56; break;
+			case 'partners'					: $record_id = 56; break;
 			case 'dilers'					: $record_id = 57; break;
 			case 'license'					: $record_id = 58; break;
 			case 'contacts'					: $record_id = 59; break;
+			case 'consultants'				: $record_id = 60; break;
+			case 'region-diler'				: $record_id = 61; break;
 			default : show_404();
 		endswitch;
 		if($this->input->post('submit')):

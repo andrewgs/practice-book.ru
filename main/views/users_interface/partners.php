@@ -42,7 +42,7 @@
 		<div id="main" class="whitebg">
 			<div class="contentblock">
 				<div class="work">
-					<div class="work-title"><h3>Работа</h3></div>
+					<div class="work-title"><h3>Коммерческое предложение</h3></div>
 					<div class="work-text">
 						<?=$text;?>
 					</div>
@@ -60,68 +60,41 @@
 	</div> <!-- end of #container -->
 <script src="http://code.jquery.com/jquery-1.5.min.js"></script>
 <script>!window.jQuery && document.write('<script src="<?=$baseurl;?>javascript/jquery-1.5.1.min.js"><\/script>')</script>
-<script src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
-<script src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.bgiframe.min.js?v=1"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.sexy-combo.pack.js?v=1"></script>
 <script type="text/javascript" src="<?=$baseurl;?>javascript/modal/jquery.simplemodal.js"></script>
-<script type="text/javascript" src="<?=$baseurl;?>javascript/linkedselect.js"></script>
-<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 <script type="text/javascript" src="<?=$baseurl;?>javascript/cufon-yui.js"></script>
+<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 <script type="text/javascript" src="<?=$baseurl;?>javascript/script.js?v=1"></script>
-<script type="text/javascript" src="<?=$baseurl;?>javascript/script2.js"></script> 	
-<!--LiveInternet counter--><script type="text/javascript"><!--
-new Image().src = "//counter.yadro.ru/hit?r"+
-escape(document.referrer)+((typeof(screen)=="undefined")?"":
-";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-";"+Math.random();//--></script><!--/LiveInternet-->
- 
+<script type="text/javascript" src="<?=$baseurl;?>javascript/script2.js"></script>
 	<script type="text/javascript">
 		var parentAccordion=new TINY.accordion.slider("parentAccordion");
 		parentAccordion.init("acc","h2",false,40000000,"acc-selected");
 	</script>
-
 	<script type="text/javascript">
-		$(document).ready(function(){$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){
-			$("#support-modal-content").modal();
-			return false;
-		});
-		
+		var parentAccordion2=new TINY.accordion.slider("parentAccordion2");
+		parentAccordion2.init("acc2","h2",false,40000000,"acc-selected");
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){$("#support-modal-content").modal();return false;});
 		$("#lost-pass").click(function(){lostpass();})
-			
 		function lostpass(){$("#lost-password-modal-content").modal({containerCss:{height:195}});}
 		$("#getpassword").click(function(event){var uemail = $("#uemail").val();if(uemail == ''){$("#uemail").css('border-color','#ff0000');msgerror("Поле не может быть пустым!");event.preventDefault();}else if(!isValidEmailAddress(uemail)){$("#uemail").css('border-color','#ff0000');msgerror("Не верный E-mail");event.preventDefault();}else $("#formLostPassword").submit();});
 		
 		$("#SendSupport").click(function(event){
 			var err = false;
-			 $("#formRep .inpvalue").css('border-color','#D0D0D0');
-			 var name = $("#name").val();
-			 var email = $("#email").val();
-			 var theme = $("#theme").val();
-			 var message = $("#message").val();
-			if(name == ''){
-				err = true;
-				$("#name").css('border-color','#ff0000');
-			}
-			if(email == ''){
-				err = true;
-				$("#email").css('border-color','#ff0000');
-			}
-			if(theme == ''){
-				err = true;
-				$("#theme").css('border-color','#ff0000');
-			}
-			if(message == ''){
-				err = true;
-				$("#message").css('border-color','#ff0000');
-			}
-			if(err){
-				event.preventDefault();
-				$("#error").html('<font size="3" color="#FF0000"><b>Пропущены обязательные поля</b></font>');
-			}else if(!isValidEmailAddress(email)){
-				event.preventDefault();
-				$("#error").html('<font size="3" color="#FF0000"><b>Не верный E-mail</b></font>');
-			}
-		});
+			$("#formRep .inpvalue").css('border-color','#D0D0D0');
+			var name = $("#name").val();
+			var email = $("#email").val();
+			var theme = $("#theme").val();
+			var message = $("#message").val();
+			if(name == ''){err = true;$("#name").css('border-color','#ff0000');}
+			if(email == ''){err = true;	$("#email").css('border-color','#ff0000');}
+			if(theme == ''){err = true;$("#theme").css('border-color','#ff0000');}
+			if(message == ''){err = true;$("#message").css('border-color','#ff0000');}
+			if(err){event.preventDefault();$("#error").html('<font size="3" color="#FF0000"><b>Пропущены обязательные поля</b></font>');
+			}else if(!isValidEmailAddress(email)){event.preventDefault();$("#error").html('<font size="3" color="#FF0000"><b>Не верный E-mail</b></font>');}});
+		
 		function isValidEmailAddress(emailAddress){
 			var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
 			return pattern.test(emailAddress);

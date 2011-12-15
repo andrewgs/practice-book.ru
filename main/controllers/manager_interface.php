@@ -1998,7 +1998,7 @@ class manager_interface extends CI_Controller{
 		show_error("Отсутствует запись в БД!<br/>Регион ID = $region, Отрасль ID = $activity<br/>Сообщите о возникшей ошибке разработчикам.");
 		endif;
 		$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
-		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,'AND upriority=0');
+		$pagevar['manager'] = $this->usersmodel->read_single_manager_byid($uid,"AND upriority=0");
 		if($pagevar['manager']):
 			$pagevar['manager']['activitypath'] = $this->unionmodel->mra_activity_region($pagevar['manager']['uid'],$activity,$region);
 		elseif($pagevar['federal']):

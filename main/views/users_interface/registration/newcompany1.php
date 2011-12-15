@@ -29,7 +29,7 @@
 			<section id="frmsignup">
 				<div class="container_12 framing">
 					<h1 align="center">Регистрация новой компании </h1>
-					<img src='<?=$baseurl;?>images/step1.png'>
+					<img src="<?=$baseurl;?>images/step1.png">
 					<?php $this->load->view('forms/frmsignupstep1'); ?>
 				</div>
 			</section>

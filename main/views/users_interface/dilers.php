@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy-combo.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/sexy.css">
 	<link rel="stylesheet" href="<?=$baseurl;?>css/custom.css">
+	<link rel="stylesheet" href="<?=$baseurl;?>css/new.css">
 	<link rel="stylesheet" type="text/css" href="<?=$baseurl;?>css/modal/mwindow.css" media="screen">
 	<!--[if lt IE 7]>
 	<link type="text/css" href="<?=$baseurl;?>css/modal/mwindow_ie.css" rel="stylesheet" media="screen" />
@@ -31,19 +32,17 @@
 <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
-	<div id="container">
+	<div id="container" class="main-wrap">
 		<?php if($userinfo['status']): ?>
 			<?php $this->load->view('users_interface/header/header-login'); ?>
 		<?php else: ?>
 			<?php $this->load->view('users_interface/header/header-logout'); ?>
 		<?php endif; ?>
-		<div id="main">
-			<div class="container_12 framing">
-				<div class="grid_12">
-					<div class="box-header" style="margin:20px 0px 40px 0px;">
-						<h2>Предложение для SEO и Web студий.</h2>
-					</div>
-					<div style="margin-top">
+		<div id="main" class="whitebg">
+			<div class="contentblock">
+				<div class="work">
+					<div class="work-title"><h3>Предложение для SEO  и Web  студий.</h3></div>
+					<div class="work-text">
 						<?=$text;?>
 					</div>
 				</div>
@@ -67,7 +66,7 @@
 	<script type="text/javascript" src="<?=$baseurl;?>javascript/jquery.blockUI.js"></script>
 	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
-		$(document).ready(function(){$(".btn-user-action").click(function(){location.href='<?=$baseurl;?>registering/step-1';});$(".imaging").click(function(){location.href='<?=$baseurl;?>begin-work';});$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){
+		$(document).ready(function(){$("#lnk-login").click(function(event){autorized(event);});$("#lnk-logout").click(function(){shotduwn();});$("#select-region").change(function(){change_region($(this));});$("#select-activity").change(function(){change_activity($(this));});function change_activity(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-region").val() > 0){$("#select-region").after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function change_region(obj){$("#change-region").remove();if(obj.val() > 0 && $("#select-activity").val() > 0){obj.after('<input type="button" class="lnk-submit" id="change-region" value="ОК"/>');$("#change-region").css({'float':'right','margin': '-1px 10px 2px 5px'});$("#change-region").live('click',function(){$("#ManActData").submit()});}}function shotduwn(){$.ajax({url:"<?=$baseurl;?>shutdown",success: function(data){$("#loginstatus").load("<?=$baseurl;?>views/logout");$("#lnk-login").live('click',function(event){autorized(event);});$("#lost-pass").live('click',function(event){lostpass(event);});}});};function autorized(event){event.preventDefault();var login = $("#npt-login-name").val();var pass = $("#npt-login-pass").val();if(login === '' || pass === ''){msgerror('Введите логин и пароль');}else if(!login.match(/^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,4}$/i)){msgerror('Не верный формат E-mail');}else{$.post("<?=$baseurl;?>authorization",{'login':login,'password':pass},function(data){if(data.status){$("#loginstatus").load("<?=$baseurl;?>views/login");$("#lnk-logout").live('click',function(){shotduwn();});$("#select-region").live('change',function(){change_region($(this));});$("#select-activity").live('change',function(){change_activity($(this));});}else msgerror(data.message);},"json");}};function msgerror(msg){$.blockUI({message: msg,css:{border:'none', padding:'15px', size:'12.0pt',backgroundColor:'#000', color:'#fff',opacity:'.8','-webkit-border-radius': '10px','-moz-border-radius': '10px'}});window.setTimeout($.unblockUI,2000);return false;}$("a#Support").click(function(e){
 			$("#support-modal-content").modal();
 			return false;
 		});
