@@ -15,7 +15,7 @@
 	<?php endif; ?>
 	<?php if(count($activity) > 1):?>
 		<form id="ManActData" method="post" action="<?=$baseurl;?><?=$this->uri->uri_string();?>" style="float:right; margin-left:10px;">
-			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="width:250px;padding:3px;">
+			<select name="activity" id="select-activity" class="mixed-combo" size="1" style="font: 12px trebuchet MS,sans-serif; padding: 1px 0;">
 				<option value="0">Выберите отрасль</option>
 			<?php for($i=0;$i<count($activity);$i++): ?>
 				<option value="<?=$activity[$i]['act_id'];?>"><?=$activity[$i]['act_title'];?></option>
