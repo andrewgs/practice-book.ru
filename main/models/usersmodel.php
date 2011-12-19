@@ -372,5 +372,24 @@ class Usersmodel extends CI_Model{
 		$this->db->update('tbl_user');
 		return $this->db->affected_rows();
 	}
+
+	function clear_data_user($uid){
+		
+		$this->db->set('uname','');
+		$this->db->set('usubname','');
+		$this->db->set('uthname','');
+		$this->db->set('uphoto',file_get_contents(base_url().'images/userclose.jpg'));
+		$this->db->set('uicq','');
+		$this->db->set('uphone','');
+		$this->db->set('uactive',0);
+		$this->db->set('ubirthday','');
+		$this->db->set('uskype','');
+		$this->db->set('uposition','');
+		$this->db->set('uachievement','');
+		$this->db->set('ucloseconsult',0);
+		$this->db->where('uid',$uid);
+		$this->db->update('tbl_user');
+		return $this->db->affected_rows();
+	}
 }
 ?>

@@ -1962,6 +1962,7 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 													for($i=0;$i<count($pagevar['list'])-2;$i++):
 														$pagevar['list'][$i]['consult'] = $this->consultationmodel->count_records($pagevar['list'][$i]['uid']);
 													endfor;
+//													print_r($pagevar['list']);exit;
 													break;
 									case 'regionals' :
 													$pagevar['list'] = $this->usersmodel->read_records(2);
@@ -1999,18 +2000,18 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 		$activity[0] = trim($this->input->post('activity'));
 		if(!$activity[0] && !$сid) show_404();
 		$success = $this->cmpsrvmodel->insert_record($activity[0],$сid);
-		if($success){
+		if($success):
 			$units = $this->unionmodel->units_by_activity($activity);
 			if(count($units)):
 				for($i=0;$i<count($units);$i++):
-					$cui = $this->cmpunitsmodel->insert_empty($сid,$units[$i],$units[$i]['groupe']);
+					$this->cmpunitsmodel->insert_empty($сid,$units[$i],$units[$i]['groupe']);
 				endfor;
 			endif;
 			$service = $this->unionmodel->company_ones_activity($success);
 			$statusval['status'] = TRUE;
 			$statusval['actid'] = $service['act_id'];
 			$statusval['acttitle'] = $service['act_fulltitle'];
-		}
+		endif;
 		echo json_encode($statusval);
 	}
 	
@@ -2383,6 +2384,10 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 		if(!isset($activity) or empty($activity)) $activity = 0;
 		$success = $this->usersmodel->save_user($uid,$date,$priority,$activity);
 		if($success){
+			if($date != '3000-01-01'):
+				$this->usersmodel->clear_data_user($uid);
+				$this->jobsmodel->delete_records($uid);
+			endif;
 			$statusval['status'] = TRUE;
 			$statusval['date'] = $date;
 			$statusval['priority'] = $priority;

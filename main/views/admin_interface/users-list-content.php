@@ -33,10 +33,14 @@
 				<?php endif; ?>
 					<td rID="<?=$k?>"><?=$list[$i]['uid'];?></td>
 						<td>
+						<?php if($list[$i]['udestroy'] == '3000-01-01'):?>
 							<?=$list[$i]['uname'].'<br/>'.$list[$i]['usubname'].'<br/>'.$list[$i]['uthname'];?>
 							<?php if($list[$i]['uactive']): ?>
 								<br/><img src="<?=$baseurl;?>images/online.gif" border="0" title="Пользователь в сети" alt=""/>
 							<?php endif; ?>
+						<?php else:?>
+							<font style="color:#ff0000">Пользователь закрыт</font>
+						<?php endif; ?>
 						</td>
 						<td><?=$list[$i]['uemail'];?></td>
 						<td><?=$list[$i]['usignupdate'];?></td>

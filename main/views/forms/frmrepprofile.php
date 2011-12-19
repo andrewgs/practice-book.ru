@@ -14,6 +14,24 @@
 			<input type="image" title="Сменить пароль" class="ajaxsave" id="pass" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
 			</span>
 			<div class="clear"></div>
+			Фамилия: <div class="vRight" id="dname"><?=$representative['uname'];?></div><br>
+			<input class="reg-form-input" name="name" id="vname" type="text">
+			<span class="btnsave" id="svname">
+				<input type="image" title="Сохранить" class="ajaxsave" id="name" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
+			</span>
+			<div class="clear"></div>
+			Имя: <div class="vRight" id="dsubname"><?=$representative['usubname'];?></div><br>
+			<input class="reg-form-input" name="subname" id="vsubname" type="text">
+			<span class="btnsave" id="svsubname">
+				<input type="image" title="Сохранить" class="ajaxsave" id="subname" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
+			</span>
+			<div class="clear"></div>
+			Отчество: <div class="vRight" id="dthname"><?=$representative['uthname'];?></div><br>
+			<input class="reg-form-input" name="thname" id="vthname" type="text">
+			<span class="btnsave" id="svthname">
+				<input type="image" title="Сохранить" class="ajaxsave" id="thname" src="<?=$baseurl;?>images/save.png" vspace="3" hspace="2" />
+			</span>
+			<div class="clear"></div>
 			Аватар:<br>
 			<img src="<?=$baseurl;?>cravatar/viewimage/<?=$representative['uid'];?>"class="floated" alt=""/>
 			<div class="clear"></div>

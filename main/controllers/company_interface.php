@@ -251,7 +251,18 @@ class Company_interface extends CI_Controller{
 								$statusval['message'] 	= 'Не верный формат E-mail';
 							endif;
 							break;
-							
+			case 'vname': 	$this->usersmodel->save_single_data($this->user['uid'],'uname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+			case 'vsubname': 	$this->usersmodel->save_single_data($this->user['uid'],'usubname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+			case 'vthname': 	$this->usersmodel->save_single_data($this->user['uid'],'uthname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;				
 			case 'vpass': 	if(mb_strlen($fdata,'UTF-8') >= 6):
 								$this->usersmodel->save_single_data($this->user['uid'],'upassword',md5($fdata));
 								$this->usersmodel->save_single_data($this->user['uid'],'ucryptpassword',$this->encrypt->encode($fdata));
@@ -487,6 +498,7 @@ class Company_interface extends CI_Controller{
 		$repid = trim($this->input->post('id'));
 		if(!$repid) show_404();
 		$this->usersmodel->close_user($repid);
+		$this->usersmodel->clear_data_user($repid);
 		echo json_encode($statusval);
 	}
 

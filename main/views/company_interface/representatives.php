@@ -123,13 +123,14 @@
 			});
 			
 			$(".ajaxdel").click(function(){
+				if(!confirm("Удалить пользователя?\nВнимание: что бы восставновить пользователя обратитесь к администраторам сайта!")) return false;
 				var btnRep = $(this).attr("rep");
 				var repID = $("#drep"+btnRep).attr("rID");
 				$.post("<?=$baseurl;?>company/delete-representatives/<?=$userinfo['uconfirmation'];?>",
 					{'id':repID},
 					function(data){
 						if(data.status)
-							$("#drep"+btnRep).remove();
+							$("#drep"+btnRep).fadeOut("slow",function(){$("#drep"+btnRep).remove();});
 						else
 							msgerror(data.message);
 					},"json");

@@ -61,8 +61,16 @@ class Jobsmodel extends CI_Model {
 	}
 
 	function delete_record($id){
+	
 		$this->db->where('job_id',$id);
 		$this->db->delete('tbl_jobs');
+	}
+
+	function delete_records($uid){
+	
+		$this->db->where('job_uid',$uid);
+		$this->db->delete('tbl_jobs');
+		return $this->db->affected_rows();
 	}
 }
 ?>

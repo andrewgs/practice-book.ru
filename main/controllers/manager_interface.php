@@ -1218,12 +1218,11 @@ class manager_interface extends CI_Controller{
 				$_POST['note'] = preg_replace('/\n{2}/','<br>',$_POST['note']);
 				$_POST['riskslowprice'] = preg_replace('/\n{2}/','<br>',$_POST['riskslowprice']);
 				$_POST['advantages'] = preg_replace('/\n{2}/','<br>',$_POST['advantages']);
-				
 				$cmplist = $this->unionmodel->select_company_by_region($activity,$region);
 				for($i=0;$i<count($cmplist);$i++):
 					$cmpunit = $this->cmpunitsmodel->unit_exist($cmplist[$i]['cmp_id'],$_POST['groupvalue'],$_POST['title']);
 					if(!$cmpunit):
-						$this->cmpunitsmodel->insert_empty($cmplist[$i]['cmp_id'],$_POST,$_POST['groupvalue']);
+						$id = $this->cmpunitsmodel->insert_empty($cmplist[$i]['cmp_id'],$_POST,$_POST['groupvalue']);
 					endif;
 				endfor;
 				if($this->user['priority'] && isset($_POST['all'])):
@@ -1607,7 +1606,22 @@ class manager_interface extends CI_Controller{
 								$statusval['message'] 	= 'Не верный формат E-mail';
 							endif;
 							break;
-							
+			case 'vname': 	$this->usersmodel->save_single_data($this->user['uid'],'uname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+			case 'vname': 	$this->usersmodel->save_single_data($this->user['uid'],'uname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+			case 'vsubname': 	$this->usersmodel->save_single_data($this->user['uid'],'usubname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
+			case 'vthname': 	$this->usersmodel->save_single_data($this->user['uid'],'uthname',strip_tags($fdata));
+							$statusval['status'] 	= TRUE;
+							$statusval['retvalue'] 	= strip_tags($fdata);
+							break;
 			case 'vpass': 	if(mb_strlen($fdata,'UTF-8') >= 6):
 								$this->usersmodel->save_single_data($this->user['uid'],'upassword',md5($fdata));
 								$this->usersmodel->save_single_data($this->user['uid'],'ucryptpassword',$this->encrypt->encode($fdata));

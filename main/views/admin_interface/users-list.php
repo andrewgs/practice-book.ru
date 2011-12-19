@@ -66,6 +66,7 @@
 			var objPriority = $("#vPriority"+curID);
 			var objActivity = $("#vActivity"+curID);
 			var valDate = $(objDate).val();
+			if(valDate != '3000-01-01') if(!confirm("Закрыть пользователя?\nВнимание: данные пользователя будут затерты!")) return false;
 			var valPriority = $(objPriority).val();
 			var valActivity = $(objActivity).val();
 			if(valActivity == undefined) valActivity = 0;
