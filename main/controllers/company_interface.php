@@ -100,6 +100,7 @@ class Company_interface extends CI_Controller{
 					'unitgroups'	=> array(),
 					'units'			=> array(),
 					'association'	=> array(),
+					'othertext'		=> $this->othertextmodel->read_group(24,29),
 					'group'			=> 0
 					
 			);

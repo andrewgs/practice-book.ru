@@ -2077,11 +2077,19 @@ class Users_interface extends CI_Controller{
 		if(!isset($note) or empty($note)) show_404();
 		if(!isset($activity) or empty($activity)) show_404();
 		if(!isset($region) or empty($region)) show_404();
-		
 		$note = preg_replace('/\n{2}/','<br>',$note);
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$success = $this->pitfallsmodel->user_insert_record($mraid,$title,$note);
 		if($success){
+			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
+			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
+			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
+				$message .= 'Получены новые "Подводные камни" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
+				$message .= 'Название - '.$title."\n";
+				$message .= 'Содержание - '.$note."\n";
+				$this->sendmail($manager['uemail'],strip_tags($message,'<br>'),'Practice-book.com - Подводные камни','info@practice-book.ru');
+			endif;
 			$statusval['status'] = TRUE;
 			$statusval['message'] = "Отправлено на проверку";
 		}
@@ -2105,6 +2113,15 @@ class Users_interface extends CI_Controller{
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$success = $this->tipsmodel->user_insert_record($mraid,$title,$note);
 		if($success){
+			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
+			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
+			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
+				$message .= 'Получены новые "Советы" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
+				$message .= 'Название - '.$title."\n";
+				$message .= 'Содержание - '.$note."\n";
+				$this->sendmail($manager['uemail'],strip_tags($message,'<br>'),'Practice-book.com - Советы','info@practice-book.ru');
+			endif;
 			$statusval['status'] = TRUE;
 			$statusval['message'] = "Отправлено на проверку";
 		}
@@ -2125,6 +2142,14 @@ class Users_interface extends CI_Controller{
 		$mraid = $this->manregactmodel->record_exist($region,$activity);
 		$success = $this->mraquestionsmodel->insert_record($mraid,$title);
 		if($success){
+			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
+			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
+			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
+				$message .= 'Получен новый "Вопрос" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
+				$message .= 'Вопрос - '.$title."\n";
+				$this->sendmail($manager['uemail'],strip_tags($message,'<br>'),'Practice-book.com - Вопросы','info@practice-book.ru');
+			endif;
 			$statusval['status'] = TRUE;
 			$statusval['message'] = "Отправлено на проверку";
 		}

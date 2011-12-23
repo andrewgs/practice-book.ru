@@ -1873,6 +1873,72 @@ $success = $this->belogmodel->delete_table_record($information['belg_table'],$in
 		$this->load->view("admin_interface/activity-content",$pagevar);
 	}
 	
+	function company_content(){
+	
+		$pagevar = array(
+					'description'	=> '',
+					'keywords'		=> '',
+					'author'		=> '',
+					'title'			=> 'Practice-Book - Администрирование | Панель управления',
+					'baseurl' 		=> base_url(),
+					'userinfo'		=> $this->user,
+					'text'			=> array()
+			);
+		$case = $this->uri->segment(4);
+		switch ($case):
+			case 'information'				: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(24,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(24,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(24,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(24,'otxt_help');
+											 	break;
+			case 'price'					: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(25,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(25,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(25,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(25,'otxt_help');
+											 	break;
+			case 'representatives'			: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(26,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(26,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(26,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(26,'otxt_help');
+											 	break;
+			case 'documents'				: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(27,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(27,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(27,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(27,'otxt_help');
+											 	break;
+			case 'cmpnews'					: 	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(28,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(28,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(28,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(28,'otxt_help');
+											 	break;
+			case 'cmpspecials'				:	if($this->input->post('submit')):
+													$this->othertextmodel->write_field(29,$_POST['note'],'otxt_content');
+													$this->othertextmodel->write_field(29,$_POST['help'],'otxt_help');
+													redirect('admin/control-panel/'.$this->user['uconfirmation']);
+												endif;
+												$pagevar['text']['note'] = $this->othertextmodel->read_field(29,'otxt_content');
+												$pagevar['text']['help'] = $this->othertextmodel->read_field(29,'otxt_help');
+											 	break;
+			default : show_404();
+		endswitch;
+		$this->load->view("admin_interface/activity-content",$pagevar);
+	}
+	
 	function information_list(){
 	
 		$pagevar = array(

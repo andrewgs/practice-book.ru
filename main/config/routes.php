@@ -219,6 +219,7 @@ $route['admin/search-region/:any'] = "admin_interface/create_search_region";
 
 $route['admin/page-content/:any/:any'] = "admin_interface/page_content";
 $route['admin/activity-content/:any/:any'] = "admin_interface/activity_content";
+$route['admin/company-content/:any/:any'] = "admin_interface/company_content";
 
 $route['admin/edit-product/:any'] = "admin_interface/edit_product";
 $route['admin/edit-pitfalls/:any'] = "admin_interface/edit_pitfalls";

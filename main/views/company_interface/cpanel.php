@@ -54,7 +54,10 @@
 							<div class="box-header w600">
 								<h2>Данные о компании</h2>
 								<div class="box-search">
-									<br/>
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[0]['otxt_help'];?></span>
+									</a>
 								</div>	
 							</div>
 							<div style="padding: 15px"> 
@@ -93,7 +96,12 @@
 						<div class="box">
 							<div class="box-header w600">
 								<h2>Прайс компании</h2>
-								<div class="box-search"></div>
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[1]['otxt_help'];?></span>
+									</a>
+								</div>
 							</div>
 							<div class="box-content h150">
 							<?php if($unitgroups || $units): ?>
@@ -151,7 +159,12 @@
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Представители компании</h2>
-								<div class="box-search"></div>	
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[2]['otxt_help'];?></span>
+									</a>
+								</div>
 							</div>
 							<div class="box-content">
 							<?php for($i=0;$i<count($representative); $i++):?>
@@ -192,7 +205,12 @@
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Документы</h2>
-								<div class="box-search"></div>
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[3]['otxt_help'];?></span>
+									</a>
+								</div>
 							</div>
 							<div class="box-content">
 								<div class="content-separator">
@@ -218,7 +236,12 @@
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Новости компании</h2>
-								<div class="box-search"></div>
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[4]['otxt_help'];?></span>
+									</a>
+								</div>
 							</div>
 							<div class="box-content">
 								<?php if(count($news)): ?>
@@ -242,7 +265,12 @@
 						<div class="box">
 							<div class="box-header w278">
 								<h2>Акции компании</h2>
-								<div class="box-search"></div>
+								<div class="box-search">
+									<a class="tooltip" href="">
+										<img src="<?=$baseurl;?>images/ask_transparent.png"/>
+										<span class="classic"><?=$othertext[5]['otxt_help'];?></span>
+									</a>
+								</div>
 							</div>
 							<div class="box-content">
 								<?php if(count($shares)): ?>

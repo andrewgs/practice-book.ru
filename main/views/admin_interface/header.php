@@ -13,7 +13,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="javascript:void(0);">Содержание страниц</a>
+				<a href="javascript:void(0);">Страницы</a>
 				<ul>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/main','Страница "Главная"');?></li>
 					<li><?=anchor('admin/page-content/'.$userinfo['uconfirmation'].'/partners','Страница "Партнерам"');?></li>
@@ -29,7 +29,7 @@
 				</ul>
 			</li>
 			<li>
-				<a href="javascript:void(0);">Информационные блоки</a>
+				<a href="javascript:void(0);">Блоки отрасли</a>
 				<ul>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/product','Продукт отрасли');?></li>
 					<li><?=anchor('admin/activity-content/'.$userinfo['uconfirmation'].'/pitfalls','Подводные камни');?></li>
@@ -50,7 +50,18 @@
 				</ul>
 			</li>
 			<li>
-				<a href="javascript:void(0);">Информационные списки</a>
+				<a href="javascript:void(0);">Блоки компании</a>
+				<ul>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/information','Данные о компании');?></li>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/price','Прайс компании');?></li>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/representatives','Представители компании');?></li>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/documents','Документы');?></li>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/cmpnews','Новости компании');?></li>
+					<li><?=anchor('admin/company-content/'.$userinfo['uconfirmation'].'/cmpspecials','Акции компании');?></li>
+				</ul>
+			</li>
+			<li>
+				<a href="javascript:void(0);">Списки</a>
 				<ul>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/regions','Список регионов');?></li>
 					<li><?=anchor('admin/information-list/'.$userinfo['uconfirmation'].'/activity','Список отраслей');?></li>
