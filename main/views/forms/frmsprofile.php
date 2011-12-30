@@ -135,7 +135,7 @@
 					<div class="content-separator">
 						<img src="<?=$baseurl;?>images/documents/pdf.png" class="floated" alt=""/>
 						<div class="nsh-title">
-							<?=anchor($baseurl.'documents/for-managers/instructions.pdf',"Инструкция по заполнению")?>
+							<?=anchor($baseurl.'documents/for-managers/instructions.pdf',"Инструкция по заполнению (7 Мб)")?>
 						</div>
 						<div class="clear"></div>
 					</div>

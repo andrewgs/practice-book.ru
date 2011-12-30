@@ -2085,7 +2085,7 @@ class Users_interface extends CI_Controller{
 		if($success){
 			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
 			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
-			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+			if(isset($manager['uemail']) && !empty($manager['uemail']) && $manager['udestroy'] == '3000-01-01'):
 				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
 				$message .= 'Получены новые "Подводные камни" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
 				$message .= 'Название - '.$title."\n";
@@ -2117,7 +2117,7 @@ class Users_interface extends CI_Controller{
 		if($success){
 			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
 			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
-			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+			if(isset($manager['uemail']) && !empty($manager['uemail']) && $manager['udestroy'] == '3000-01-01'):
 				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
 				$message .= 'Получены новые "Советы" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
 				$message .= 'Название - '.$title."\n";
@@ -2146,7 +2146,7 @@ class Users_interface extends CI_Controller{
 		if($success){
 			$uid = $this->manregactmodel->read_field($mraid,'mra_uid');
 			$manager = $this->usersmodel->read_single_manager_byid($uid,'AND TRUE');
-			if(isset($manager['uemail']) && !empty($manager['uemail'])):
+			if(isset($manager['uemail']) && !empty($manager['uemail']) && $manager['udestroy'] == '3000-01-01'):
 				$message = 'Здравствуйте, '.$manager['uname'].' '.$manager['usubname']."\n";
 				$message .= 'Получен новый "Вопрос" в отрасль - '.$this->activitymodel->read_field($activity,'act_title').' и регион - '.$this->regionmodel->read_field($region,'reg_name')."\n";
 				$message .= 'Вопрос - '.$title."\n";
