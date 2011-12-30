@@ -286,7 +286,8 @@ class Users_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
 					'activitylist'	=> array(),
-					'text'			=> $this->othertextmodel->read_text(59)
+					'text'			=> $this->othertextmodel->read_text(59),
+					'admin'			=> $this->session->userdata('adminid')
 			);
 		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
 		if($this->user['manager']):
@@ -683,7 +684,8 @@ class Users_interface extends CI_Controller{
 					'banner'		=> "",
 					'top_rating'	=> 50,
 					'low_rating'	=> 20,
-					'long_note'		=>FALSE
+					'long_note'		=>FALSE,
+					'admin'			=> $this->session->userdata('adminid')
 			);
 		$pagevar['manager']['jobs'] = array();
 		$mraid = $this->manregactmodel->record_exist($region,$activity);

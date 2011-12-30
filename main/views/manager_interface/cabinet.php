@@ -19,6 +19,8 @@
 	<link rel="stylesheet" media="handheld" href="<?=$baseurl;?>css/handheld.css?v=1">
 	<script src="<?=$baseurl;?>javascript/modernizr-1.5.min.js"></script>
 	<style type="text/css">
+		.w440{width: 440px;}
+		.h208{height: 208px;}
 		.ajaxsave,.ajaxdel,.ajaxSaveFile {float: right;padding: 5px;margin-right: 55px;cursor: pointer;}
 		#period-jobs{float: right;padding-bottom: 10px;margin: 0 133px 0 0;}
 		.job-sections h3{margin: 5px 10px 15px 0;float: left;}
@@ -41,18 +43,18 @@
 <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
-	<div id="container">
+	<div id="container" class="main-wrap">
 		<?php $this->load->view('manager_interface/header'); ?>
 		<div id="main">
 		<?php if($regstatus): ?>
 			<div class="container_12
 				<div class="grid_12">
 					<div class="grid_8 prefix_3 messageBox">
-						Менеджер <?= $managerFullName; ?> зарегистрирован
+						Менеджер <?=$managerFullName;?> зарегистрирован
 					</div>
 					<div class="clear"></div>
 					<div class="grid_8 prefix_3 messageBox">
-						На e-mail: <?= $email; ?> выслано письмо для активации
+						На e-mail: <?=$email;?> выслано письмо для активации
 					</div>
 					<div class="clear"></div>
 				</div>

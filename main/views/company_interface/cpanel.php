@@ -45,7 +45,7 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 	<div id="container" class="main-wrap">
-	<?php $this->load->view('company_interface/header'); ?>
+		<?php $this->load->view('company_interface/header'); ?>
 		<div id="main">
 			<section id="info-boxes">
 				<div class="container_12">

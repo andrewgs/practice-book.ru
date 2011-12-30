@@ -75,7 +75,9 @@
 							endif;
 							return $tree;
 						}
-						echo build_tree($activitylist,0);
+						if($admin):
+							echo build_tree($activitylist,0);
+						endif;
 					?>
 					
 					<!--<div class="content-separator">

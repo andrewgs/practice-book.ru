@@ -126,6 +126,24 @@
 					</div>
 				<?php endif; ?>
 			</div>
+			<div class="box">
+				<div class="box-header w440">
+					<h2>Документы</h2>
+					<div class="box-search"></div>
+				</div>
+				<div class="box-content h208" >
+					<div class="content-separator">
+						<img src="<?=$baseurl;?>images/documents/pdf.png" class="floated" alt=""/>
+						<div class="nsh-title">
+							<?=anchor($baseurl.'documents/for-managers/instructions.pdf',"Инструкция по заполнению")?>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="box-bottom-links h20">
+					<div class="clear"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

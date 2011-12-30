@@ -878,7 +878,8 @@
 							</div>
 						</div>
 					<?php endif; ?>
-					<div class="grid_3 omega w240"> 
+					<div class="grid_3 omega w240">
+					<?php if($admin):?>
 						<div class="box">
 							<div class="box-header w220">
 								<h2><?= $othertext[12]['otxt_note'];?></h2>
@@ -929,8 +930,9 @@
 								<div class="clear"></div>
 							</div>
 						</div>
+					<?php endif;?>
 					<?php if($consult): ?>
-						<div class="box-consustation">
+						<!--<div class="box-consustation">
 							<div class="box-header w220">
 								<h2 style="text-align:center">
 									<?php $link = 'consultation/managers/'.$manager['uid'];?>
@@ -943,7 +945,7 @@
 									</a>
 								</div>
 							</div>
-						</div>
+						</div>-->
 					<?php endif; ?>
 						<div class="box">
 							<div class="box-header w220">
