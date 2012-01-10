@@ -1708,7 +1708,7 @@ class Users_interface extends CI_Controller{
 		$confirm = $this->usersmodel->read_field($userid,'uconfirmation');
 		$email = $this->usersmodel->read_field($userid,'uemail');
 		$message = 'Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$confirm.'" target="_blank">'.base_url().'activation/'.$confirm.'</a>'."\nИли скопируйте ссылку в окно ввода адреса браузера и нажмите enter.\n";
-		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
+		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.com","rabota@practice-book.ru")):
 			$pagevar['text'] = '<br><br><b>Учетная запись создана.</b><p><b>На адрес "'.$email.'" выслано письмо.</b></p><p><b>Для активации учетной записи перейдите по ссылке указанной в письме</b></p>';
 			$this->load->view('users_interface/message',$pagevar);
 			return TRUE;
@@ -1819,7 +1819,7 @@ class Users_interface extends CI_Controller{
 				$userid = $this->usersmodel->user_id('uemail',$uemail);
 				$userinfo = $this->usersmodel->read_info($userid);
 				$message = 'Здравствуйте '.$userinfo['uname'].' '.$userinfo['usubname'].' '.$userinfo['uthname']."\n\nВаш новый пароль:\n\n----------------------------\nЛогин: ".$userinfo['uemail']."\nПароль: ".$newpass."\n----------------------------\n";
-				if($this->sendmail($uemail,$message,"Новый пароль на сайте practice-book.com","admin@practice-book.com")):
+				if($this->sendmail($uemail,$message,"Новый пароль на сайте practice-book.com","rabota@practice-book.ru")):
 					$pagevar['text'] = '<br><br><b>Сгенерирован новый пароль.</b><p><b>На адрес "'.$uemail.'" выслано письмо.</b></p>';
 					$this->load->view('users_interface/message',$pagevar);
 					return TRUE;
@@ -2205,7 +2205,7 @@ class Users_interface extends CI_Controller{
 					show_error("Отсутствуют данные<br/>Обратитесь в техподдержку");
 				else:
 					$_POST['experience'] = preg_replace('/\n{2}/','<br>',$_POST['experience']);
-					$email = 'admin@practice-book.com';
+					$email = 'rabota@practice-book.ru';
 					$message = "Анкета на регистрацию менеджера \n";
 					$message .= 'ФИО - '.$_POST['fname'].' '.$_POST['sname'].' '.$_POST['tname']."\n";
 					$message .= 'E-Mail - '.$_POST['login']."\n";
@@ -2230,7 +2230,7 @@ class Users_interface extends CI_Controller{
 														if(!$manemail):
 															$manemail = $this->usersmodel->read_federal($_POST['actValue']);
 															if($manemail):
-																$email = $manemail['uemail'].',admin@practice-book.com';
+																$email = $manemail['uemail'].',rabota@practice-book.ru';
 															endif;
 														endif;
 													endif;
@@ -2295,7 +2295,7 @@ class Users_interface extends CI_Controller{
 				return FALSE;
 			else:
 				$_POST['submit'] = NULL;
-				$email = 'admin@practice-book.com';
+				$email = 'rabota@practice-book.ru';
 				$message = "Анкета на регистрацию дилера \n";
 				$message .= 'ФИО - '.$_POST['name']."\n";
 				if(!empty($_POST['company'])):

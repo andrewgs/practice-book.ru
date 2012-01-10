@@ -238,7 +238,7 @@ class Dealer_interface extends CI_Controller{
 		if($newcmp):
 			if($email):
 				$message = 'Здравствуйте. Предлагаем зарегистрировать Вашу компанию у нас на сайте.'."\n\n".'Для этого введите в интернет браузере адрес: <a href="http://practice-book.com/" target="_blank">http://practice-book.com/</a> и нажмите кнопку "Добавить свою компанию в наш каталог"'."\n\n".'В появившемся окне введите код: '.$data['confirm']."\n\n".'Далее следует стандартная форма регистрации.'."\n\n\n".'Спасибо что пользуетесь нашим проектом. С уважением администрации сайта';
-				if(!$this->sendmail($email,$message,"Код регистрации на сайте practice-book.com","admin@practice-book.com")):
+				if(!$this->sendmail($email,$message,"Код регистрации на сайте practice-book.com","rabota@practice-book.ru")):
 					$statusval['status'] 	= FALSE;
 					$statusval['message'] 	= 'Произошла ошибка при отправке письма';
 				endif;
@@ -453,7 +453,7 @@ class Dealer_interface extends CI_Controller{
 		$confirm = $this->usersmodel->read_field($userid,'uconfirmation');
 		$email = $this->usersmodel->read_field($userid,'uemail');
 		$message = 'Ваша компания зарегистрирована."\n\n"Для активации аккаунта пройдите по следующей ссылке'."\n".'<a href="'.base_url().'activation/'.$confirm.'" target="_blank">'.base_url().'activation/'.$confirm.'</a>'."\nИли скопируйте ссылку в окно ввода адреса браузера и нажмите enter.\n";
-		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.com","admin@practice-book.com")):
+		if($this->sendmail($email,$message,"Подтверждение регистрации на сайте practice-book.com","rabota@practice-book.ru")):
 			$pagevar['text'] = '<br><br><b>Учетная запись создана.</b><p><b>На адрес "'.$email.'" выслано письмо.</b></p>';
 			$this->load->view('dealer_interface/message',$pagevar);
 			return TRUE;
