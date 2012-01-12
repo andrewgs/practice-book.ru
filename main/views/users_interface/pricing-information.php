@@ -44,11 +44,15 @@
 							</div>
 						</div>
 						<div class="box-content h450 w918">
+						<?php if($graph):?>
 							<div id="diagramma" class="grid_6"></div>
 							<div class="grid_5">
 								<label class="label-input">Комментарий</label>
 								<?=$comment;?>
 							</div>
+						<?php else:?>
+							<div style="text-align:center;margin-top:50px;">Информация отсутствует</div>
+						<?php endif;?>
 							<div class="clear"></div>
 						</div>
 					</div>

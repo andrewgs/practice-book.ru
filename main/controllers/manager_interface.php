@@ -1,5 +1,4 @@
 <?php
-
 class manager_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'cid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','status'=>TRUE,'activity'=>0,'priority'=>0);

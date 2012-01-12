@@ -233,7 +233,7 @@ class Unionmodel extends CI_Model{
 			$param .= $activity[$i];
 			if($cnt>1 && $i<$cnt-1) $param .= ',';
 		endfor;
-		$query = "SELECT pri_title AS title, pri_note AS note, pri_unitscode AS unitscode, pri_image AS image, pri_groupcode AS groupe FROM tbl_productionunit INNER JOIN tbl_productgroup ON pri_groupcode = prg_id WHERE prg_activity IN ($param)";
+		$query = "SELECT pri_title AS title, pri_note AS note, pri_unitscode AS unitscode, pri_image AS image, pri_groupcode AS groupe FROM tbl_productionunit INNER JOIN tbl_productgroup ON pri_groupcode = prg_id WHERE prg_activity IN ($param) GROUP BY groupe,title";
 		$query = $this->db->query($query);
 		$data = $query->result_array();
 		if(count($data)) return $data;

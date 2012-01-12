@@ -1,5 +1,4 @@
 <?php
-
 class Dealer_interface extends CI_Controller{
 
 	var $user = array('uid'=>0,'ufullname'=>'','ulogin'=>'','uconfirmation'=>'','priority'=>TRUE);

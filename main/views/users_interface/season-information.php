@@ -49,6 +49,7 @@
 							</div>
 						</div>
 						<div class="box-content h450 w918">
+					<?php if($graph):?>
 							<div id="diagramma"></div>
 							<div class="clear"></div>
 							<hr size="2"/>
@@ -67,6 +68,9 @@
 							<div class="clear"></div>
 							<label class="label-input">Комментарий</label>
 							<?=$comment;?>
+					<?php else:?>
+							<div style="text-align:center;margin-top:50px;">Информация отсутствует</div>
+					<?php endif;?>
 						</div>
 						<div class="clear"></div>
 					</div>
