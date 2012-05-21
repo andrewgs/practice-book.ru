@@ -20,6 +20,8 @@ $route['for-dealers'] = "users_interface/for_dealers";
 $route['for-specialist-consultant'] = "users_interface/for_specialist_consultant";
 $route['for-regional-dealer'] = "users_interface/for_regional_dealer";
 $route['license'] = "users_interface/license";
+$route['catalog'] = "users_interface/catalog";
+$route['catalog/activity/:num'] = "users_interface/catalog";
 
 $route['dealers-list'] = "users_interface/dealers_list";
 $route['dealers-list/region/:num'] = "users_interface/dealers_list";

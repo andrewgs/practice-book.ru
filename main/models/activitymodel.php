@@ -85,7 +85,6 @@ class Activitymodel extends CI_Model{
 		return NULL;
 	}
 	
-	
 	function read_records(){
 		
 		$this->db->order_by('act_id');
