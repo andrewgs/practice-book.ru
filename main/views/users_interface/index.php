@@ -94,13 +94,18 @@
 	<script src="<?=$baseurl;?>javascript/script.js?v=1"></script>	
 	<script type="text/javascript">
 		$(document).ready(function(){
+			
+			<?php if($buimess):?>
+				msgerror("<?=$buimess;?>");
+			<?php endif;?>
+			
 			<?php if(!$userinfo['status']) $userinfo['status'] = 0;?>
 			<?php if(!$userinfo['regstatus']) $userinfo['regstatus'] = 0;?>
 			
 			var status = <?=$userinfo['status'];?>;
 			var regstatus = <?=$userinfo['regstatus'];?>;
 			$(".registering").click(function(){
-				if(regstatus){location.href='<?=$baseurl;?>registering/step-1';return true;}if(status){msgerror("Вы авторизованый пользователь.<br/>Регистрация невозможна!");return false;}$("#registering-modal-content").modal({containerCss:{height:137}});});
+				if(regstatus){location.href='<?=$baseurl;?>registering/step-1';return true;}if(status){msgerror("Вы авторизованый пользователь.<br/>Регистрация невозможна!");return false;}$("#registering-modal-content").modal({containerCss:{height:140}});});
 			$("#next").click(function(event){
 				var code = $("#code").val();
 				if(code == ''){

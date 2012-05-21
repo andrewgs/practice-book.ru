@@ -85,8 +85,10 @@ class Users_interface extends CI_Controller{
 					'userinfo'		=> $this->user,
 					'regions'		=> array(),
 					'activity'		=> array(),
-					'text'			=> $this->othertextmodel->read_text(50)
+					'text'			=> $this->othertextmodel->read_text(50),
+					'buimess'		=> $this->session->userdata('buimess')
 			);
+		$this->session->unset_userdata('buimess');
 		$pagevar['userinfo']['status'] = $this->loginstatus['status'];
 		$pagevar['userinfo']['regstatus'] = $this->session->userdata('regstatus');
 		if($this->user['manager']):
@@ -1491,6 +1493,9 @@ class Users_interface extends CI_Controller{
 				$this->companymodel->save_single_data($cmpid,'cmp_confirmation','');
 				$this->session->set_userdata('regstatus',1);
 				redirect('registering/step-1');
+			else:
+				$this->session->set_userdata('buimess','Введен неверный код!');
+				redirect('');
 			endif;
 		else:
 			show_404();

@@ -1500,7 +1500,7 @@ class manager_interface extends CI_Controller{
 	function fileupload($userfile,$overwrite){
 		
 		$this->load->library('upload');
-		$config['upload_path'] 		= getcwd().'/documents/';
+		$config['upload_path'] 		= getcwd().'/documents/lectures';
 		$config['allowed_types'] 	= 'doc|docx|xls|xlsx|txt|pdf';
 		$config['remove_spaces'] 	= TRUE;
 		$config['overwrite'] 		= $overwrite;
